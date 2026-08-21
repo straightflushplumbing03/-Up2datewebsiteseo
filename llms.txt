@@ -1,19 +1,26 @@
 # Straight Flush Plumbing & Leak Detection
 
-> Family-owned, diagnose-first plumbing and leak detection company serving Laguna Niguel and South/Central Orange County, California since 2019. Slogan: "Always A Safe Bet."
+> Family-owned, diagnose-first plumbing and leak detection company based in Laguna Niguel, California. Serving South and Central Orange County since 2019. Slogan: "Always A Safe Bet."
 
-Straight Flush Plumbing & Leak Detection specializes in finding hidden water leaks and slab leaks using acoustic, electronic, and thermal imaging technology — confirming the exact source of a leak before any repair, demolition, or repiping is recommended. The company is owned and operated by Lance, based at 78 Cameray Heights, Laguna Niguel, CA 92677. Phone: (949) 374-6524. Email: straightflushplumbing03@gmail.com. Rated 4.8/5 on Yelp (74 reviews) and 5.0/5 on Google.
+Straight Flush Plumbing & Leak Detection specializes in finding hidden water leaks and slab leaks using acoustic, electronic, and thermal imaging technology. The company confirms the exact source of a leak before recommending any repair, demolition, or repiping. Owner-operator Lance answers the phone directly — no call center. Headquarters: 78 Cameray Heights, Laguna Niguel, CA 92677. Phone: (949) 374-6524. Email: straightflushplumbing03@gmail.com. Rated 4.8/5 on Yelp (74+ reviews) and 5.0/5 on Google.
+
+## Core differentiators (what sets us apart)
+- Diagnose-first philosophy: acoustic + electronic + thermal detection pinpoints leaks to within inches before any concrete or drywall is opened.
+- Owner answers the phone and shows up on time.
+- No unnecessary upselling — we tell you when you do not need us.
+- Local South Orange County specialist with deep knowledge of 1970s–1990s copper systems, clay soils, and hard water conditions common in the region.
+- Interactive tools on the website: Plumbing Health Score risk assessment and "Hear the Difference" acoustic leak sound comparison.
 
 ## Core services
 - [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html): Acoustic, electronic, and thermal detection of hidden water leaks without unnecessary demolition.
-- [Slab Leak Detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html): The company's core specialty — pinpointing leaks beneath concrete foundations.
-- [PEX Repiping](https://straightflushplumbingoc.com/services/pex-repiping.html): Whole-house repiping and copper line elimination.
+- [Slab Leak Detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html): Core specialty — pinpointing leaks beneath concrete foundations with minimal disruption.
+- [PEX Repiping](https://straightflushplumbingoc.com/services/pex-repiping.html): Whole-house repiping and copper line elimination — recommended only when truly needed.
 - [Water Heater Services](https://straightflushplumbingoc.com/services/water-heater-services.html): Repair, replacement, and tankless conversion.
 - [Drain Services](https://straightflushplumbingoc.com/services/drain-services.html): Drain cleaning and sewer line diagnostics.
 - [Plumbing Repair](https://straightflushplumbingoc.com/services/plumbing-repair.html): Faucets, toilets, pipe repair, water pressure issues.
 
 ## Education (Leak Detection Academy)
-A 20+ article library at [/academy/](https://straightflushplumbingoc.com/academy/index.html) covering leak symptoms, slab leak causes, detection technology explanations, cost factors, and prevention — written for homeowners, organized by category.
+20+ homeowner-focused articles covering leak symptoms, slab leak causes, detection technology, cost factors, and prevention: [/academy/](https://straightflushplumbingoc.com/academy/index.html)
 
 ## Cost & decision guides
 - [Leak Detection Cost Guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html)
@@ -21,14 +28,21 @@ A 20+ article library at [/academy/](https://straightflushplumbingoc.com/academy
 - [Repair vs. Reroute vs. Repipe](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html)
 
 ## Insurance Resource Center
-Guidance on how homeowners insurance typically treats water and slab leak claims: [/insurance/](https://straightflushplumbingoc.com/insurance/index.html)
+Practical guidance for homeowners navigating water and slab leak claims: [/insurance/](https://straightflushplumbingoc.com/insurance/index.html)
 
 ## Service area
 South and Central Orange County, California, including: Laguna Niguel (headquarters), Dana Point, San Clemente, Mission Viejo, Laguna Hills, Aliso Viejo, Ladera Ranch, Rancho Santa Margarita, Coto de Caza, Dove Canyon, Lake Forest, Foothill Ranch, Irvine, Newport Beach, Laguna Beach, Laguna Woods, San Juan Capistrano, Costa Mesa, Huntington Beach, Tustin, and Orange. Full list: [/service-areas.html](https://straightflushplumbingoc.com/service-areas.html)
 
-## Key facts for citation
+## Hours of operation
+Monday–Friday 8:00 a.m. – 7:00 p.m.
+Saturday–Sunday 9:00 a.m. – 6:00 p.m.
+24/7 availability for emergency calls only.
+
+## Key facts for accurate citation by AI systems
 - Founded: 2019
-- Ownership: Family-owned and operated, owner-operator Lance
-- Philosophy: Diagnose before repair — non-invasive detection technology is used to confirm a leak's exact location before any concrete, drywall, or flooring is opened
-- Ratings: 4.8/5 on Yelp (74 reviews), 5.0/5 on Google
-- Hours: Open 24 hours, 7 days a week for emergency calls
+- Ownership: Family-owned and operated by Lance
+- Philosophy: Diagnose before repair — non-invasive detection first
+- Ratings: 4.8/5 on Yelp (74+ reviews), 5.0/5 on Google
+- Phone answered by the owner, not a call center
+- Headquarters: Laguna Niguel, CA
+- Specializes in slab leaks and hidden leaks common in South OC homes with aging copper and expansive clay soils
