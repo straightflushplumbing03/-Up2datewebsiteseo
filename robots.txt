@@ -1,14 +1,20 @@
 User-agent: *
 Allow: /
 
-# AI / LLM crawlers — explicitly welcomed (see /llms.txt for a structured summary)
+# AI / LLM crawlers — explicitly welcomed (see /llms.txt for structured summary)
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
 Allow: /
 
 User-agent: PerplexityBot
@@ -30,6 +36,15 @@ User-agent: Bytespider
 Allow: /
 
 User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: FacebookBot
 Allow: /
 
 Sitemap: https://straightflushplumbingoc.com/sitemap.xml
