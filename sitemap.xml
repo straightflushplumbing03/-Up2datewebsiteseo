@@ -31,8 +31,14 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://straightflushplumbingoc.com/services/</loc>
-    <lastmod>2026-08-21</lastmod>
+    <loc>https://straightflushplumbingoc.com/services</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://straightflushplumbingoc.com/services/emergency-plumbing</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -151,7 +157,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://straightflushplumbingoc.com/academy/</loc>
+    <loc>https://straightflushplumbingoc.com/academy</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -169,7 +175,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://straightflushplumbingoc.com/insurance/</loc>
+    <loc>https://straightflushplumbingoc.com/insurance</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# AI / LLM crawlers — explicitly welcomed (see /llms.txt for structured summary)
+# AI / LLM crawlers — explicitly welcomed
 User-agent: GPTBot
 Allow: /
 
