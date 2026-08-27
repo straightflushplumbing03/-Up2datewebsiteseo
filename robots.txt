@@ -48,4 +48,3 @@ User-agent: FacebookBot
 Allow: /
 
 Sitemap: https://straightflushplumbingoc.com/sitemap.xml
-Sitemap: https://straightflushplumbingoc.com/sitemap-2.xml
