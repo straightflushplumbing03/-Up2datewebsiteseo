@@ -66,62 +66,16 @@
     <div class="reveal">
       <div class="eyebrow">Get in touch</div>
       <h2 style="font-size:1.8rem; margin-bottom:24px;">Tell us what you're noticing</h2>
-      <form id="contactForm" style="display:flex; flex-direction:column; gap:16px;">
+      <form action="mailto:straightflushplumbing03@gmail.com" method="post" enctype="text/plain" style="display:flex; flex-direction:column; gap:16px;">
         <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px;">
-          <input type="text" name="name" id="cf-name" placeholder="Full name" required style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
-          <input type="tel" name="phone" id="cf-phone" placeholder="Phone number" required style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+          <input type="text" name="name" placeholder="Full name" required style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+          <input type="tel" name="phone" placeholder="Phone number" required style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
         </div>
-        <input type="text" name="city" id="cf-city" placeholder="City (Laguna Niguel, Dana Point, San Clemente...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
-        <textarea name="details" id="cf-details" rows="5" placeholder="What are you noticing? (high water bill, sounds behind a wall, warm floor spot, low pressure...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; resize:vertical;"></textarea>
-        <button type="submit" id="cf-submit" class="btn btn-primary btn-block">Send Request</button>
-        <p id="cf-status" style="font-size:0.88rem; min-height:1.4em;"></p>
+        <input type="text" name="city" placeholder="City (Laguna Niguel, Dana Point, San Clemente...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+        <textarea name="details" rows="5" placeholder="What are you noticing? (high water bill, sounds behind a wall, warm floor spot, low pressure...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; resize:vertical;"></textarea>
+        <button type="submit" class="btn btn-primary btn-block">Send Request</button>
         <p class="muted" style="font-size:0.82rem;">Prefer to talk it through? Call <a href="tel:+19493746524" style="color:var(--straight); font-weight:600;">(949) 374-6524</a> directly.</p>
       </form>
-      <script>
-      (function () {
-        var form = document.getElementById('contactForm');
-        var btn = document.getElementById('cf-submit');
-        var status = document.getElementById('cf-status');
-        if (!form) return;
-        form.addEventListener('submit', function (e) {
-          e.preventDefault();
-          btn.disabled = true;
-          btn.textContent = 'Sending…';
-          status.style.color = '';
-          status.textContent = '';
-          var payload = {
-            name: document.getElementById('cf-name').value,
-            phone: document.getElementById('cf-phone').value,
-            city: document.getElementById('cf-city').value,
-            details: document.getElementById('cf-details').value,
-            source_url: window.location.href
-          };
-          fetch('https://straightflushplumbingoc.com/api/lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          })
-          .then(function (res) { return res.json(); })
-          .then(function (data) {
-            if (data.success) {
-              status.style.color = '#2d7a4f';
-              status.textContent = '✓ Got it! We\'ll be in touch soon.';
-              form.reset();
-            } else {
-              throw new Error(data.error || 'Submission failed');
-            }
-          })
-          .catch(function () {
-            status.style.color = '#c0392b';
-            status.textContent = 'Something went wrong — please call (949) 374-6524 directly.';
-          })
-          .finally(function () {
-            btn.disabled = false;
-            btn.textContent = 'Send Request';
-          });
-        });
-      })();
-      </script>
     </div>
     <div class="reveal">
       <div class="qr-block" style="margin-bottom:22px;">
