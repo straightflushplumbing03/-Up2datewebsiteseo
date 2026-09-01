@@ -60,6 +60,19 @@ def p(prefix, path):
     """Resolve a root-relative path against the page's folder depth prefix."""
     return prefix + path
 
+def normalize_public_path(canonical):
+    canonical = canonical.strip()
+    if canonical in ("", "/"):
+        return ""
+    canonical = canonical.lstrip("/")
+    if canonical.endswith("/"):
+        return canonical
+    if os.path.exists(os.path.join(ROOT, canonical, "index.html")):
+        return canonical + "/"
+    if "." in canonical.rsplit("/", 1)[-1]:
+        return canonical
+    return canonical + ".html"
+
 def head(title, description, canonical, prefix, schema=""):
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -68,14 +81,14 @@ def head(title, description, canonical, prefix, schema=""):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <meta name="description" content="{description}">
-<link rel="canonical" href="https://straightflushplumbing.com/{canonical}">
+<link rel="canonical" href="https://straightflushplumbingoc.com/{normalize_public_path(canonical)}">
 <link rel="icon" href="{prefix}assets/img/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://straightflushplumbing.com/{canonical}">
+<meta property="og:url" content="https://straightflushplumbingoc.com/{normalize_public_path(canonical)}">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
 {schema}</head>
