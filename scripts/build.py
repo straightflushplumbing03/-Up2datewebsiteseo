@@ -67,6 +67,8 @@ def normalize_public_path(canonical):
     canonical = canonical.lstrip("/")
     if canonical.endswith("/"):
         return canonical
+    if os.path.exists(os.path.join(ROOT, canonical, "index.html")):
+        return canonical + "/"
     if "." in canonical.rsplit("/", 1)[-1]:
         return canonical
     return canonical + ".html"
