@@ -1,0 +1,6 @@
+interface:
+  display_name: "Up2datewebsiteseo"
+  short_description: "Repo-specific patterns and workflows for -Up2datewebsiteseo"
+  default_prompt: "Use the -Up2datewebsiteseo repo skill to follow existing architecture, testing, and workflow conventions."
+policy:
+  allow_implicit_invocation: true
