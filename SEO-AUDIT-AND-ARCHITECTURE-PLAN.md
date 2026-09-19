@@ -1,9 +1,8 @@
 # Straight Flush Plumbing & Leak Detection — SEO + AI Authority Audit & Architecture Plan
 
-**Status:** STOPPED AFTER AUDIT + ARCHITECTURE, per instruction.
-**Reason for stopping:** An existing SEO/content system was found (`SEO-AI-SF` / "SFGE"). Per your
-direction, the correct move is to **extend it, not build a parallel system**. No site content was
-changed and no pages were created.
+**Status:** Audit + architecture complete. Implementation underway per your "fix everything you
+just suggested" instruction. An existing SEO/content system was found (`SEO-AI-SF` / "SFGE"), so the
+work **extends it rather than building a parallel system**. No new analytics system was created.
 
 - Audit date: 2026-09-19
 - Live site: https://straightflushplumbingoc.com/
@@ -278,3 +277,96 @@ Each step: PR only, `livecheck.py` before/after, full test suite green.
    Phases 13/14 can produce anything genuine.
 
 **Nothing was published, fabricated, or overwritten. No parallel system was created.**
+
+---
+
+## 9. Implementation log (2026-09-19) — "fix everything you just suggested"
+
+### 9.1 Repo hygiene
+- Removed `.git-2/` (a stale nested git repo, 119 tracked files — roughly 40% of the repo) and
+  the byte-identical `.gitignore-2`. Both added to `.gitignore`. They were committed in
+  `c78679b "Initial website upload."` and were not served by Pages, but they inflated clones and
+  carried a full git object store.
+
+### 9.2 Canonical domain trap (would have broken SEO on regeneration)
+- `scripts/build.py` was the only tracked file containing the wrong domain
+  (`straightflushplumbing.com`, missing `oc`) in its canonical and `og:url` output. Nineteen
+  `gen_*.py` scripts route through its `head()`, so regenerating **any** page would have emitted
+  broken canonicals. Replaced with a single `DOMAIN` constant.
+- No remaining wrong-domain references anywhere in the tree.
+
+### 9.3 Entity graph — the single biggest AI-readability gap
+- Before: **zero** `@id` anywhere on the site. Every page re-declared a disconnected `Plumber`
+  node, and `Service.provider` was an inline `Plumber` object. To a search engine or LLM that
+  reads as *many businesses sharing a name*, not one entity.
+- After: one stable entity, `https://straightflushplumbingoc.com/#business`, plus a `#website`
+  node. Nested author/publisher/provider references now point at it by `@id`.
+- Implemented in SFGE (`site_data.py`, `schema_jsonld.py`) so future generated pages inherit it,
+  then applied across the live HTML. 126 of 132 pages declare the entity; **248 `#business`
+  occurrences across 126 pages**.
+- Remaining 6: `404.html`, `privacy-policy.html`, `terms-of-service.html` (intentionally
+  unschema'd) and 2 academy articles that had no JSON-LD at all. The academy pages are canonical
+  sitemap URLs, so they were given `BreadcrumbList` + `Article` + business using their real
+  recorded dates.
+- Documented in `SEO-AI-SF/docs/ENTITY-MODEL.md`.
+
+### 9.4 Review-count reconciliation
+- `scripts/build.py` said "73+" while the site said 74. Reconciled to **74** everywhere, the
+  verified figure from the business index. Nothing was invented.
+
+### 9.5 `/service-areas` metadata
+- The page was missing **all** Open Graph and Twitter tags. Added.
+
+### 9.6 City pages — reference implementation, then replication
+- **San Clemente was built and reviewed first** as the reference implementation, per your
+  instruction. The same *components* — not copied wording — then generated the other 10.
+- Previous city pages were ~310 words across 3 sections. Now **~1,280 words of main content**
+  across the full architecture the brief specifies.
+- Architected as reusable `city_data.py` + `city_page.py`, so adding a city means adding a fact
+  entry rather than hand-writing a page.
+
+**Uniqueness result (the brief's explicit anti-goal was 11 copies of one article):**
+- The first draft scored **0.92 Jaccard token overlap** between pages — a genuine near-duplicate
+  failure, because the sections and all 8 FAQs were shared verbatim.
+- Fixed by branching sections on per-city attributes (`coastal`, `density`, `typical_call`,
+  `focus`) and drawing FAQs from a tagged bank weighted per city.
+- Now: **11 distinct FAQ sets for 11 pages**, and **39% of main-content sentences unique to their
+  page** — the remainder is shared service education that *should* be consistent.
+
+### 9.7 Internal link graph
+- **Dove Canyon was the only one of the 11 target cities missing from the `/service-areas` hub**
+  city grid — reachable only via neighbor chips and the footer. Added.
+- Verified **no orphan pages**: every city page has at least 2 inbound links.
+- City-to-city links are contextual neighbours, not a full mesh (e.g. Laguna Niguel → Aliso
+  Viejo, Dana Point, Mission Viejo, San Clemente).
+
+### 9.8 Validation
+- **SFGE suite: 117 tests passing** (was 83). New: `test_entity_graph.py` (13) and
+  `test_city_pages.py` (18).
+- All 11 city pages: unique title, unique description, single H1, canonical, all 6 OG tags, all 4
+  Twitter tags, 4 JSON-LD types, 0 broken internal links.
+- Sitewide: **391 JSON-LD blocks parse, 0 failures**.
+- `sitemap.xml`: 74 URLs, valid XML, no duplicates, and **no noindex page is listed**.
+- `robots.txt`: valid, explicitly welcoming AI crawlers (GPTBot, OAI-SearchBot, PerplexityBot,
+  ClaudeBot, Google-Extended and others).
+- Intentional noindex duplicates (root-level files canonicalising to nested pages) verified
+  correct and excluded from the sitemap.
+- **All 11 original city URLs preserved** — no redirects needed.
+
+### 9.9 Deliberately NOT done (each would have required fabrication)
+- No projects, case studies, reviews, testimonials, photos, videos, statistics, prices, response
+  times, credentials, licenses or local offices were created, because **none are verified**.
+  Automated tests actively reject such claims so they cannot creep in later.
+- No service pages created for services not confirmed as offered.
+- No citation submissions and no Google Business Profile changes — report only, pending approval.
+
+### 9.10 Still blocked on the owner
+1. **Repo push rights** — the workspace checkout has no remote configured, so nothing can be
+   pushed from here. Commits exist locally on both repos.
+2. **Service confirmation** — which of `acoustic-leak-detection`, `water-leak-detection`,
+   `water-line-repair`, `water-line-reroute`, `repiping` are genuinely distinct offerings?
+3. **License / insurance / address** — needed before any such claim may appear in copy or schema.
+4. **Real photos and video** — required before the image/video authority phases can produce
+   anything genuine.
+5. **Real projects and reviews** — the case-study and testimonial systems are built and awaiting
+   real records; publishing them today would mean inventing them.
