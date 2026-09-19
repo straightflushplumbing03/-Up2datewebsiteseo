@@ -21,3 +21,4 @@ node_modules/
 # Stray nested git metadata (a copy of this repo was once committed by mistake)
 .git-2/
 .gitignore-2
+.live-snapshot/
