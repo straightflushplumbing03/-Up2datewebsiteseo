@@ -17,3 +17,7 @@ __pycache__/
 # Local dev artifacts (not part of this static site's build)
 node_modules/
 .env
+
+# Stray nested git metadata (a copy of this repo was once committed by mistake)
+.git-2/
+.gitignore-2

@@ -9,6 +9,9 @@ structurally consistent with the flagship homepage.
 import os
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+# Canonical site origin. Every generated canonical/OG URL must be built from this.
+DOMAIN = "https://straightflushplumbingoc.com"
+
 PHONE_DISPLAY = "(949) 374-6524"
 PHONE_TEL = "+19493746524"
 EMAIL = "straightflushplumbing03@gmail.com"
@@ -36,7 +39,7 @@ def reviews_section(prefix):
         <footer>&mdash; Paraphrased from Yelp reviews</footer>
       </div>
       <div class="review-note">
-        <p><strong>73+ reviews and counting on Yelp,</strong> plus a growing list on Google. Read every review in full, unedited, straight from the source.</p>
+        <p><strong>74+ reviews and counting on Yelp,</strong> plus a growing list on Google. Read every review in full, unedited, straight from the source.</p>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="{GOOGLE_REVIEWS_URL}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Google Reviews &rarr;</a>
           <a href="{YELP_REVIEWS_URL}" target="_blank" rel="noopener" class="btn btn-outline btn-sm">Yelp Reviews &rarr;</a>
@@ -68,14 +71,14 @@ def head(title, description, canonical, prefix, schema=""):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title}</title>
 <meta name="description" content="{description}">
-<link rel="canonical" href="https://straightflushplumbing.com/{canonical}">
+<link rel="canonical" href="{DOMAIN}/{canonical}">
 <link rel="icon" href="{prefix}assets/img/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://straightflushplumbing.com/{canonical}">
+<meta property="og:url" content="{DOMAIN}/{canonical}">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
 {schema}</head>
