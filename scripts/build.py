@@ -66,16 +66,18 @@ def head(title, description, canonical, prefix, schema=""):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>{title}</title>
 <meta name="description" content="{description}">
-<link rel="canonical" href="https://straightflushplumbing.com/{canonical}">
+<link rel="canonical" href="https://straightflushplumbingoc.com/{canonical}">
 <link rel="icon" href="{prefix}assets/img/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{description}">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://straightflushplumbing.com/{canonical}">
+<meta property="og:url" content="https://straightflushplumbingoc.com/{canonical}">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
 {schema}</head>

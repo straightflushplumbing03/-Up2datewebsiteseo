@@ -3,13 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Contact Straight Flush Plumbing & Leak Detection | Schedule Service</title>
-<meta name="description" content="Schedule leak detection or plumbing service with Straight Flush Plumbing in Laguna Niguel, Dana Point, San Clemente & Orange County. Call, email, or request a callback.">
-<link rel="canonical" href="https://straightflushplumbingoc.com/contact">
+<meta name="description" content="Schedule leak detection or plumbing service in Laguna Niguel and Orange County. Call, email, or request a callback from Straight Flush Plumbing.">
+<link rel="canonical" href="https://straightflushplumbingoc.com/contact.html">
 <meta property="og:title" content="Contact Straight Flush Plumbing & Leak Detection | Schedule Service">
 <meta property="og:description" content="Schedule leak detection or plumbing service with Straight Flush Plumbing in Laguna Niguel, Dana Point, San Clemente & Orange County. Call, email, or request a callback.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://straightflushplumbingoc.com/contact">
+<meta property="og:url" content="https://straightflushplumbingoc.com/contact.html">
 <meta property="og:image" content="https://straightflushplumbingoc.com/assets/img/lance-hero.jpeg">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
@@ -26,7 +28,47 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://straightflushplumbingoc.com/"},
-    {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://straightflushplumbingoc.com/contact"}
+    {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://straightflushplumbingoc.com/contact.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I schedule leak detection or plumbing service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Call (949) 374-6524 and Lance answers the phone directly, or send the request form on this page with what you're noticing. We'll confirm a visit window and give you an up-front time estimate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What areas do you serve?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Laguna Niguel and communities throughout South and Central Orange County, including Dana Point, San Clemente, Mission Viejo, Aliso Viejo, Laguna Hills, Laguna Beach, San Juan Capistrano, Irvine, and more. See the service areas page for the full list."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you handle emergency calls?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Outside regular hours (Mon-Fri 8am-7pm, Sat 9am-6pm, closed Sunday), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What information helps before the visit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A short description of what you're noticing (water bill changes, sounds behind a wall, warm floor spots, pressure drops), when it started, and your home's approximate age. Original copper plumbing in 1970s-1990s South OC homes is especially common in slab leak calls."
+      }
+    }
   ]
 }
 </script>
@@ -66,13 +108,20 @@
     <div class="reveal">
       <div class="eyebrow">Get in touch</div>
       <h2 style="font-size:1.8rem; margin-bottom:24px;">Tell us what you're noticing</h2>
-      <form action="mailto:straightflushplumbing03@gmail.com" method="post" enctype="text/plain" style="display:flex; flex-direction:column; gap:16px;">
+      <!-- Secure form handling: posts to Formspree (form ID xgojqkvb).
+           Anti-spam, server-side validation, and rate limiting are provided by Formspree.
+           The per-page CSP (form-action) only permits submission to https://formspree.io.
+           Keep the hidden _gotcha honeypot field — bots fill it in and are silently dropped. -->
+      <form action="https://formspree.io/f/xgojqkvb" method="post" data-secure-form style="display:flex; flex-direction:column; gap:16px;">
+        <input type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; height:0; width:0; opacity:0;">
+        <input type="hidden" name="_redirect" value="https://straightflushplumbingoc.com/thank-you.html">
         <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px;">
-          <input type="text" name="name" placeholder="Full name" required style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
-          <input type="tel" name="phone" placeholder="Phone number" required style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+          <input type="text" name="name" placeholder="Full name" required maxlength="80" autocomplete="name" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+          <input type="tel" name="phone" placeholder="Phone number" required maxlength="20" pattern="[0-9()+.\s-]{7,20}" autocomplete="tel" title="Phone number, e.g. (949) 555-0123" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
         </div>
-        <input type="text" name="city" placeholder="City (Laguna Niguel, Dana Point, San Clemente...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
-        <textarea name="details" rows="5" placeholder="What are you noticing? (high water bill, sounds behind a wall, warm floor spot, low pressure...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; resize:vertical;"></textarea>
+        <input type="text" name="city" placeholder="City (Laguna Niguel, Dana Point, San Clemente...)" maxlength="60" autocomplete="address-level2" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+        <input type="email" name="email" placeholder="Email (optional — if you'd like a written follow-up)" maxlength="120" autocomplete="email" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+        <textarea name="details" rows="5" maxlength="2000" placeholder="What are you noticing? (high water bill, sounds behind a wall, warm floor spot, low pressure...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; resize:vertical;"></textarea>
         <button type="submit" class="btn btn-primary btn-block">Send Request</button>
         <p class="muted" style="font-size:0.82rem;">Prefer to talk it through? Call <a href="tel:+19493746524" style="color:var(--straight); font-weight:600;">(949) 374-6524</a> directly.</p>
       </form>
@@ -89,6 +138,32 @@
       <div class="check-card" style="margin-bottom:14px;"><span class="mark"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em;" ><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 6.5l8 6.5 8-6.5"/></svg></span><p><strong>Email</strong><a href="mailto:straightflushplumbing03@gmail.com" style="color:var(--flush); font-weight:600;">straightflushplumbing03@gmail.com</a></p></div>
       <div class="check-card" style="margin-bottom:14px;"><span class="mark">&#9679;</span><p><strong>Service Area</strong>Laguna Niguel, Dana Point, San Clemente & South/Central Orange County</p></div>
       <div class="check-card"><span class="mark">&#9733;</span><p><strong>74+ Reviews</strong><a href="https://share.google/WcJBYE3uu5FsppBTR" target="_blank" rel="noopener" style="color:var(--flush); font-weight:600;">Google</a> &middot; <a href="https://www.yelp.com/biz/straight-flush-plumbing-and-leak-detection-laguna-niguel-3" target="_blank" rel="noopener" style="color:var(--flush); font-weight:600;">Yelp</a></p></div>
+    </div>
+  </div>
+</section>
+<section class="section-sand">
+  <div class="wrap">
+    <div class="faq reveal">
+      <div class="section-head" style="margin-bottom:30px;">
+        <div class="eyebrow">Common questions</div>
+        <h2>Before you call</h2>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">How do I schedule leak detection or plumbing service?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Call <a href="tel:+19493746524" style="color:var(--straight); font-weight:600;">(949) 374-6524</a> and Lance answers the phone directly, or send the request form above with what you're noticing. We'll confirm a visit window and give you an up-front time estimate.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What areas do you serve?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Laguna Niguel and communities throughout South and Central Orange County &mdash; see the <a href="service-areas.html" style="text-decoration:underline;">service areas page</a> for the full list.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Do you handle emergency calls?<span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes. Outside regular hours (Mon&ndash;Fri 8am&ndash;7pm, Sat 9am&ndash;6pm, closed Sunday), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">What information helps before the visit?<span class="plus">+</span></button>
+        <div class="faq-a"><p>A short description of what you're noticing (water bill changes, sounds behind a wall, warm floor spots, pressure drops), when it started, and your home's approximate age.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -123,7 +198,7 @@
           <li><a href="tel:+19493746524">(949) 374-6524</a></li>
           <li><a href="mailto:straightflushplumbing03@gmail.com">straightflushplumbing03@gmail.com</a></li>
           <li>78 Cameray Heights, Laguna Niguel, CA 92677</li>
-          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat&ndash;Sun 9am&ndash;6pm<br>24/7 for emergencies</li>
+          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm &middot; Sun closed<br>24/7 for emergency calls</li>
         </ul>
       </div>
       <div>

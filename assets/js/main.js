@@ -77,7 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!d) return;
         symptomButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        symptomResult.innerHTML = `<strong>${d.label} — ${d.urgency}</strong><p>${d.text}</p><a href="${symptomResult.dataset.prefix || ''}${d.href}">Learn more &rarr;</a>`;
+        // XSS-safe rendering: build nodes instead of interpolating into HTML strings.
+        symptomResult.replaceChildren();
+        const strong = document.createElement('strong');
+        strong.textContent = `${d.label} — ${d.urgency}`;
+        const para = document.createElement('p');
+        para.textContent = d.text;
+        const link = document.createElement('a');
+        link.href = (symptomResult.dataset.prefix || '') + d.href;
+        link.textContent = 'Learn more \u2192';
+        symptomResult.append(strong, para, link);
         symptomResult.classList.add('show');
       });
     });
