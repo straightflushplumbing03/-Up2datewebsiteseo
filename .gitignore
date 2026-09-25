@@ -9,11 +9,38 @@ Thumbs.db
 
 # Logs
 *.log
+npm-debug.log*
+yarn-error.log*
 
 # Python (scripts/ generator tooling)
 __pycache__/
 *.pyc
+.venv/
+venv/
+
+# Secrets & local env — never commit these
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.pfx.password
+*.pfx.password.txt
+*.p12.password
+id_rsa*
+id_ed25519*
+*.keystore
+
+# Credentials caches that must never be committed
+.git-credentials
+.netrc
+.npmrc
+
+# Accidental duplicate git object store (removed from tracking; do not re-add)
+.git-2/
 
 # Local dev artifacts (not part of this static site's build)
 node_modules/
-.env
+dist/

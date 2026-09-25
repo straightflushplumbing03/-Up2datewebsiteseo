@@ -1,29 +1,21 @@
 User-agent: *
 Allow: /
 
-# AI / LLM crawlers — explicitly welcomed
+# --- AI / LLM answer-engine crawlers: explicitly welcome ---
+# (named rules so AI citation is never left to default interpretation)
 User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
 Allow: /
 
 User-agent: OAI-SearchBot
 Allow: /
 
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: PerplexityBot
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
 Allow: /
 
 User-agent: Claude-SearchBot
@@ -32,25 +24,28 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
-User-agent: Claude-Web
+User-agent: PerplexityBot
 Allow: /
 
-User-agent: cohere-ai
+User-agent: Perplexity-User
 Allow: /
 
-User-agent: Bytespider
+User-agent: Google-Extended
 Allow: /
 
-User-agent: Amazonbot
-Allow: /
-
-User-agent: CCBot
+User-agent: Applebot
 Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
 
-User-agent: FacebookBot
+User-agent: Bingbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://straightflushplumbingoc.com/sitemap.xml

@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <!-- Primary Meta Tags -->
 <title>Straight Flush Plumbing | Leak Detection & Plumber in Orange County</title>
 <meta name="title" content="Straight Flush Plumbing | Leak Detection & Plumber in Orange County" />
@@ -26,7 +28,6 @@
 <link rel="icon" href="assets/img/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="stylesheet" href="assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -44,9 +45,9 @@
   "url": "https://straightflushplumbingoc.com/",
   "openingHoursSpecification": [
     {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"19:00"},
-    {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday"],"opens":"09:00","closes":"18:00"}
+    {"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday"],"opens":"09:00","closes":"18:00"}
   ],
-  "description": "Straight Flush Plumbing & Leak Detection is a Laguna Niguel, California owner-operated company where Lance answers the phone himself. They specialize in acoustic and thermal slab-leak detection for South Orange County homes built in the 1970s-1990s with copper pipes in expansive clay soils, diagnose first before recommending work, and offer 24/7 emergency service. Open Mon-Fri 8am-7pm and Sat-Sun 9am-6pm.",
+  "description": "Straight Flush Plumbing & Leak Detection is a Laguna Niguel, California owner-operated company where Lance answers the phone himself. They specialize in acoustic and thermal slab-leak detection for South Orange County homes built in the 1970s-1990s with copper pipes in expansive clay soils, diagnose first before recommending work, and offer 24/7 emergency service. Open Mon-Fri 8am-7pm, Sat 9am-6pm; closed Sunday (24/7 for emergency calls).",
   "sameAs": [
     "https://straightflushplumbingoc.com/",
     "https://www.yelp.com/biz/straight-flush-plumbing-and-leak-detection-laguna-niguel-3",
@@ -116,7 +117,7 @@
       "name": "Does insurance cover slab leak detection?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "It depends entirely on your specific policy. We can't make coverage promises, but we can provide clear diagnostic findings and documentation to bring to your insurance company. See ourInsurance Resource Centerfor more."
+        "text": "It depends entirely on your specific policy. We can't make coverage promises, but we can provide clear diagnostic findings and documentation to bring to your insurance company. See our <a href=\"insurance/index.html\">Insurance Resource Center</a> for more."
       }
     },
     {
@@ -136,12 +137,7 @@
   "@type": "WebSite",
   "name": "Straight Flush Plumbing & Leak Detection",
   "url": "https://straightflushplumbingoc.com/",
-  "description": "Expert leak detection and plumbing in Orange County. Straight Flush Plumbing finds hidden and slab leaks using advanced technology. Honest, local service.",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://straightflushplumbingoc.com/?s={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+  "description": "Expert leak detection and plumbing in Orange County. Straight Flush Plumbing finds hidden and slab leaks using advanced technology. Honest, local service."
 }
 </script>
 </head>
@@ -193,6 +189,8 @@
     <div class="hero-eyebrow" style="justify-content:center;"><span class="dot"></span> Orange County &middot; Acoustic & Electronic Leak Detection</div>
     <img src="assets/img/logo.jpg" alt="Straight Flush Plumbing & Leak Detection logo" class="sonar-logo" width="69" height="56">
     <h1>Don&rsquo;t gamble with your pipes. <em>We find the leaks others miss.</em></h1>
+    <!-- Semantic H1 layer for search/AI engines (visually hidden; the marketing headline stays primary) -->
+    <span aria-hidden="false" style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Plumber &amp; Leak Detection Specialist in Laguna Niguel, CA &mdash; Straight Flush Plumbing &amp; Leak Detection</span>
     <p>Straight Flush Plumbing & Leak Detection is Laguna Niguel&rsquo;s owner-operated specialist where <strong>Lance answers the phone</strong>. We find hidden slab leaks with acoustic, electronic, and thermal diagnostics&mdash;built for South OC homes with 1970s&ndash;90s copper pipes in clay soils&mdash;so you never pay for guesswork or unnecessary demolition.</p>
     <a href="contact.html" class="btn btn-primary sonar-cta">Dispatch Now &rarr;</a>
   </div>
@@ -538,12 +536,16 @@
         <div class="booking-card">
           <h3>Request a Callback</h3>
           <p class="sub">We'll respond within minutes during business hours.</p>
-          <form action="mailto:straightflushplumbing03@gmail.com" method="post" enctype="text/plain">
+          <!-- Secure form handling: posts to Formspree (form ID xgojqkvb).
+               Anti-spam + rate limiting handled by Formspree; honeypot field below. -->
+          <form action="https://formspree.io/f/xgojqkvb" method="post" data-secure-form>
+            <input type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; height:0; width:0; opacity:0;">
+            <input type="hidden" name="_redirect" value="https://straightflushplumbingoc.com/thank-you.html">
             <div class="booking-row-2" style="margin-bottom:14px;">
-              <input class="booking-field" type="text" name="name" placeholder="Your Name *" required>
-              <input class="booking-field" type="tel" name="phone" placeholder="Phone Number *" required>
+              <input class="booking-field" type="text" name="name" placeholder="Your Name *" required maxlength="80" autocomplete="name">
+              <input class="booking-field" type="tel" name="phone" placeholder="Phone Number *" required maxlength="20" pattern="[0-9()+.\s-]{7,20}" autocomplete="tel" title="Phone number, e.g. (949) 555-0123">
             </div>
-            <input class="booking-field" type="email" name="email" placeholder="Email (optional)">
+            <input class="booking-field" type="email" name="email" placeholder="Email (optional)" maxlength="120" autocomplete="email">
             <select class="booking-field" name="service">
               <option value="">Select Service Needed</option>
               <option>Leak Detection</option>
@@ -554,7 +556,7 @@
               <option>General Repair</option>
               <option>Emergency</option>
             </select>
-            <textarea class="booking-field" name="details" rows="3" placeholder="Describe your issue (optional)..."></textarea>
+            <textarea class="booking-field" name="details" rows="3" maxlength="2000" placeholder="Describe your issue (optional)..."></textarea>
             <button type="submit" class="btn btn-primary btn-block"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em;" ><path d="M21.5 3.5L11 13.5"/><path d="M21.5 3.5l-6.5 18-4-8-8-4z"/></svg> Request a Callback &mdash; It's Free</button>
           </form>
           <a href="tel:+19493746524" class="booking-alt-call"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em;" ><path d="M5 4.5c0-.6.4-1 1-1h2.6c.5 0 .9.3 1 .8l.8 3.3c.1.4 0 .9-.3 1.2L8.7 10c1 2.4 3 4.3 5.3 5.3l1.2-1.4c.3-.3.7-.4 1.2-.3l3.3.8c.5.1.8.5.8 1V18.5c0 .6-.4 1-1 1C10.5 19.5 4.5 13.5 4.5 6z"/></svg> Prefer to Call? (949) 374-6524</a>
@@ -675,7 +677,7 @@
           <li><a href="tel:+19493746524">(949) 374-6524</a></li>
           <li><a href="mailto:straightflushplumbing03@gmail.com">straightflushplumbing03@gmail.com</a></li>
           <li>78 Cameray Heights, Laguna Niguel, CA 92677</li>
-          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat&ndash;Sun 9am&ndash;6pm<br>24/7 for emergencies</li>
+          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm &middot; Sun closed<br>24/7 for emergency calls</li>
         </ul>
       </div>
       <div>

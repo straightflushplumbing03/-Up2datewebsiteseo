@@ -162,19 +162,35 @@ document.addEventListener('DOMContentLoaded', () => {
       else if (pct >= 55) { label = 'Good, With Some Risk'; color = '#D9432E'; advice = "You're in reasonable shape, but a couple of factors are worth watching. A quick professional check-up could catch small issues early."; }
       else { label = 'Needs Attention'; color = '#B5341F'; advice = "Several factors point to a higher risk of hidden leaks or aging plumbing. We'd recommend scheduling a diagnostic visit soon."; }
 
-      resultEl.innerHTML = `
-        <div class="health-score-circle" style="border-color:${color};">
-          <span class="num" style="color:${color};">${pct}</span>
-          <span class="max">out of 100</span>
-        </div>
-        <h3>${label}</h3>
-        <p>${advice}</p>
-        <a href="${healthTool.dataset.prefix || ''}contact.html" class="btn btn-primary">Schedule A Real Diagnosis</a>
-        <br><button class="health-back" type="button" id="healthRestart">Start over</button>
-      `;
+      // XSS-safe rendering: build nodes instead of interpolating into HTML strings.
+      const circle = document.createElement('div');
+      circle.className = 'health-score-circle';
+      circle.style.borderColor = color;
+      const numSpan = document.createElement('span');
+      numSpan.className = 'num';
+      numSpan.style.color = color;
+      numSpan.textContent = pct;
+      const maxSpan = document.createElement('span');
+      maxSpan.className = 'max';
+      maxSpan.textContent = 'out of 100';
+      circle.append(numSpan, maxSpan);
+      const h3 = document.createElement('h3');
+      h3.textContent = label;
+      const p = document.createElement('p');
+      p.textContent = advice;
+      const link = document.createElement('a');
+      link.href = (healthTool.dataset.prefix || '') + 'contact.html';
+      link.className = 'btn btn-primary';
+      link.textContent = 'Schedule A Real Diagnosis';
+      const br = document.createElement('br');
+      const restartBtn = document.createElement('button');
+      restartBtn.className = 'health-back';
+      restartBtn.type = 'button';
+      restartBtn.id = 'healthRestart';
+      restartBtn.textContent = 'Start over';
+      restartBtn.addEventListener('click', restart);
+      resultEl.replaceChildren(circle, h3, p, link, br, restartBtn);
       resultEl.classList.add('show');
-      const restartBtn = document.getElementById('healthRestart');
-      if (restartBtn) restartBtn.addEventListener('click', restart);
     }
 
     function restart() {
