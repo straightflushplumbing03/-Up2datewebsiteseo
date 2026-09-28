@@ -239,6 +239,27 @@ def write_page(rel_path, html):
     except ImportError:
         pass
     full = os.path.join(ROOT, rel_path)
+
+    # Safety net: the generator scripts predate the site-wide entity graph and
+    # JSON-LD work, so their output strips the business @id and the schema from
+    # any page they touch. Regenerating one of those pages without this check
+    # silently reverts production SEO. Refuse unless forced.
+    if os.path.exists(full) and not os.environ.get("SF_ALLOW_REGEN"):
+        existing = open(full, encoding="utf-8").read()
+        losses = []
+        if "#business" in existing and "#business" not in html:
+            losses.append("business @id (#business)")
+        if existing.count("application/ld+json") > html.count("application/ld+json"):
+            losses.append("JSON-LD blocks")
+        if losses:
+            raise SystemExit(
+                f"\nREFUSING to overwrite {rel_path}.\n"
+                f"The regenerated output would drop: {', '.join(losses)}\n"
+                f"This generator is stale relative to the committed page. Update the\n"
+                f"generator (or edit the page directly) instead of regenerating.\n"
+                f"Set SF_ALLOW_REGEN=1 to override and write anyway.\n"
+            )
+
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
         f.write(html)
