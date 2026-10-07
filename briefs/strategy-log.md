@@ -68,3 +68,6 @@ the "first-hand diagnostic experience" moat.
 The site's on-page SEO/AEO work is already at a high standard; the company's
 real bottleneck is a **deployment/edge misconfiguration**, not content. Fixing
 Cloudflare crawler access is worth more than any month of new pages.
+
+**PR:** #14 — https://github.com/straightflushplumbing03/-Up2datewebsiteseo/pull/14
+**Note:** PR #11 (`chore/repo-hygiene-and-domain-fix`) is stale since 2026-09-28, mergeable=false, and contains ~10k lines of unrelated churn (committed `.git-2/`). Recommend closing it; re-land any wanted pieces in small PRs.
