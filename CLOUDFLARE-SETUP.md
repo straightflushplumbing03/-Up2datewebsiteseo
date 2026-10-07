@@ -5,6 +5,15 @@ Everything in this file is applied in the **Cloudflare dashboard** — GitHub Pa
 ignores `_headers`, so Cloudflare is the only place host-level headers can be set.
 Work top to bottom; each item takes 1–3 minutes on the free plan.
 
+> **⚠️ ACTIVE BLOCKER (verified 2026-10-07).** The live domain currently returns
+> `HTTP 403` with `cf-mitigated: challenge` to *every* crawler on *every* path —
+> Googlebot, Bingbot, GPTBot, Safari and plain curl alike, including
+> `/robots.txt`, `/sitemap.xml` and `/llms.txt`. That is a Cloudflare managed
+> challenge (Security Level "I'm Under Attack" or Bot Fight Mode), and it means
+> Google, Bing and the AI answer engines cannot read the site at all. Fix
+> **§2a and §2b below first** — no amount of on-page SEO can compensate while
+> crawlers receive a 403.
+
 > After finishing, verify with the curl commands at the bottom.
 
 ---
@@ -106,6 +115,13 @@ It rewrites script loading order and conflicts with the strict
 ## 4. One-time verification (after applying the above)
 
 ```bash
+# 0. THE blocker check: homepage + robots must return 200, not a CF challenge.
+#    Expect "200 200 200" and NO "cf-mitigated" header.
+curl -s -o /dev/null -w "%{http_code} " -A "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" https://straightflushplumbingoc.com/
+curl -s -o /dev/null -w "%{http_code} " https://straightflushplumbingoc.com/robots.txt
+curl -s -o /dev/null -w "%{http_code}\n" https://straightflushplumbingoc.com/sitemap.xml
+curl -sI https://straightflushplumbingoc.com/ | grep -i "cf-mitigated"   # expect: no output
+
 # Security headers present on the live homepage?
 curl -sI https://straightflushplumbingoc.com/ | grep -iE "content-security|strict-transport|x-frame|x-content-type|referrer-policy|permissions-policy"
 
