@@ -25,7 +25,7 @@ def article(fname, title, meta_desc, eyebrow, h1, sub, body_sections, faqs, rela
 """
     html = head(title, meta_desc, f"academy/{fname}", PREFIX, schema_faq)
     html += nav(PREFIX)
-    trail_label = h1[:28]+("..." if len(h1)>28 else "")
+    trail_label = h1
     html += page_hero(PREFIX,
         [("Home","index.html"),("Leak Detection Academy","academy/index.html"),(trail_label, None)],
         eyebrow, h1, sub, "Schedule Diagnosis"

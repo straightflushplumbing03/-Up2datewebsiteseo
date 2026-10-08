@@ -5,6 +5,60 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-08
+
+**Status:** Breadcrumb/schema truncation bug fixed across all generated pages and
+root-cause patched in the generators. Slab-leak service page strengthened with a
+diagnostic FAQ cluster.
+
+### Changes deployed (SAFE)
+
+| # | Change | Target | Reason | Expected outcome |
+|---|--------|--------|--------|------------------|
+| 1 | Breadcrumb label truncation removed | `scripts/gen_academy_articles.py` (`h1[:28]+"..."`), `scripts/gen_academy_batch2a.py`, `scripts/gen_academy_batch2b.py` (`trail_label = h1`) | Generated breadcrumbs and BreadcrumbList JSON-LD `name` values were being cut mid-string (e.g. “Why do two plumbers give dif...”) | Clean, full breadcrumb labels in visible UI **and** structured data; no mid-word truncation in SERPs |
+| 2 | Regenerated 38 HTML pages + hand-fixed 2 academy pages | `academy/*.html` and other generated pages | Carry the corrected breadcrumb + JSON-LD strings | Parity between visible breadcrumb and `BreadcrumbList` |
+| 3 | Added 3 diagnostic FAQs (visible + `FAQPage` JSON-LD) | `services/slab-leak-detection.html` | Competitor `barkerandsonsplumbing.com/slab-leak-repair/` (~3,000 words, `BlogPosting`+`BreadcrumbList` schema) surfaces questions our page did not answer; AI answer engines key on exact-match Q&A | Capture “slab leak vs underground leak”, “detect under tile/hardwood”, “does insurance cover slab leaks”; eligible for FAQ rich results + AI extraction |
+| 4 | Added two contextual internal links in the new insurance FAQ | `services/slab-leak-detection.html` → `insurance/documentation-checklist.html`, `insurance/does-insurance-cover-slab-leaks.html` | Service → Insurance internal-link relationship | Stronger topical clustering + crawl paths |
+
+**Generator root cause:** the `build.py` `breadcrumbs(prefix, trail)` helper
+truncated labels; the academy generators also fed a truncated `trail_label`.
+Both paths are now patched so the fix cannot regress on the next build.
+
+**Verification performed:** zero invalid JSON-LD across all HTML; zero breadcrumb
+truncation `...` artifacts; 0 broken internal links on all 74 indexable pages
+(59 root-level stubs remain intentional `noindex`); all 6 FAQ Q&A pairs on the
+slab-leak page parse and match visible copy.
+
+### Competitor watch
+
+- `barkerandsonsplumbing.com` — `/slab-leak-repair/` is ~3,000 words with
+  `BlogPosting` + `BreadcrumbList` schema and a video, but **no `FAQPage`
+  markup**, and its H2 structure is dominated by boilerplate (“Enjoy our video”,
+  “Please complete and submit”). Our page already wins on FAQ schema; we now
+  also close part of the content-depth gap.
+- `saddlebackplumbing.com` — currently has **no reachable slab-leak or
+  leak-detection page**; `/slab-leak-detection/`, `/leak-detection/`,
+  `/plumbing-repair/` all 404. Weak live footprint for the leak intent.
+- Note: sandbox search engines were geo-misleading (returned out-of-market
+  results), so SERP claims are deliberately limited; only directly-fetched
+  competitor site facts are recorded.
+
+### 🚨 BLOCKER (unchanged)
+
+Cloudflare managed challenge still returns `HTTP/2 403 cf-mitigated: challenge`
+to all crawlers. All on-page work above is **inert until Cloudflare Security →
+Settings exposes the site to Googlebot/Bingbot/AI crawlers** (see 2026-10-07
+entry and `CLOUDFLARE-SETUP.md` §2a–2b). This remains the single highest-value
+action and cannot be fixed from the repo.
+
+### Strategic insight
+
+Our on-page markup and FAQ coverage now match or exceed the strongest visible
+local competitor; the business is still capped by the edge block, so the
+Cloudflare fix remains worth more than any further page work.
+
+---
+
 ## 2026-10-07
 
 **Status:** Site-wide indexing blocker confirmed (see Blockers). Safe schema +
