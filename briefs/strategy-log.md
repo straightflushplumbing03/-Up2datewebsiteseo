@@ -55,6 +55,8 @@ obvious AEO gap on the main leak-detection money page. The company's real
 bottleneck remains a **deployment/edge misconfiguration**, not content —
 fixing Cloudflare crawler access is worth more than any month of new pages.
 
+**PR:** #15 — https://github.com/straightflushplumbing03/-Up2datewebsiteseo/pull/15
+
 ---
 
 ## 2026-10-07
