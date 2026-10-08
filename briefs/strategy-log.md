@@ -5,6 +5,60 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-08
+
+**Status:** Cloudflare 403 blocker STILL PRESENT (verified live, unchanged).
+One SAFE on-page AEO fix deployed to the primary non-branded money page.
+
+### 🚨 BLOCKER — unchanged since 2026-10-07
+
+Re-verified today: `https://straightflushplumbingoc.com/` → 403 and
+`/robots.txt` → 403. `CLOUDFLARE-SETUP.md` §2a–2b is still the fix and still
+requires the Cloudflare dashboard (not the repo). No organic, Maps or AI-search
+traffic is possible until this is cleared.
+
+### Changes deployed (SAFE)
+
+| # | Change | Target | Reason | Expected outcome |
+|---|--------|--------|--------|------------------|
+| 1 | Added visible **diagnostic FAQ** (4 Q&A) + matching **FAQPage** JSON-LD | `services/leak-detection.html` | Best commercial-intent service page had no FAQ and no FAQPage schema; competitor Evans/Laguna Niguel pages present FAQ-style answers for "difference between methods / cost / under slab" queries | Eligibility for FAQ rich results + AI answer extraction on non-branded "leak detection Orange County" intent |
+| 2 | Replaced 2 weak internal links pointing to `../contact.html` with **descriptive links** to the real insurance and repair-vs-reroute guides | `services/leak-detection.html` "Go deeper" cards | Cards titled "Does Insurance Cover This?" / "Repair vs Reroute vs Repipe" linked to contact instead of the actual guide pages | Better internal-link equity + intent match (Service → Guide) |
+| 3 | Added a 4th related card → `guides/leak-detection-cost.html` | `services/leak-detection.html` | Cost is a top commercial-investigation query | Cost-intent path into a guide that links back to the service |
+| 4 | Bumped `<lastmod>` to 2026-10-08 | `sitemap.xml` | Reflect the change | Accurate recrawl signal |
+
+**Verification:** all 3 JSON-LD blocks parse; FAQ schema text matches visible
+accordion text; 0 broken internal links on the page; exactly 1 H1 / 6 H2;
+`sitemap.xml` well-formed; `scripts/seo_audit.py` re-run: 0 missing meta,
+0 pages with ≠1 H1, 0 missing canonical, 0 broken links, 0 orphans.
+
+### Competitor watch (Bing SERP, "slab leak detection laguna niguel", 2026-10-08)
+
+Domains holding top organic positions: `evansleakdetection.com`,
+`lagunaniguelcaplumbingpros.com`, `leakstar.com`, `leak-detection-pro.com`,
+`proplumberlagunaniguel.com`, `draingene.com`, `plumbernearme.ai`,
+`americanleakcompany.com`, `leakdetectioncoronaca.com`. Evans remains the
+strongest (dedicated `/laguna-niguel-slab-leak-detection/` page, richest
+schema). Several are thin, geo-swapped pages — a genuine local-value page is
+the way to beat them, not more doorway pages.
+
+### Growth opportunity / weekly moat
+
+Unchanged and still the best durable asset: the **interactive slab-leak
+diagnostic decision tool** (symptom → likely cause → detection method →
+repair/reroute/repipe), extending `plumbing-health-score.html`. Build it only
+after the 403 is cleared, since nothing is crawlable until then.
+
+### Strategic insight
+
+The site's on-page SEO/AEO is at a high standard; today's work removes the last
+obvious AEO gap on the main leak-detection money page. The company's real
+bottleneck remains a **deployment/edge misconfiguration**, not content —
+fixing Cloudflare crawler access is worth more than any month of new pages.
+
+**PR:** #15 — https://github.com/straightflushplumbing03/-Up2datewebsiteseo/pull/15
+
+---
+
 ## 2026-10-07
 
 **Status:** Site-wide indexing blocker confirmed (see Blockers). Safe schema +
