@@ -5,6 +5,83 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-08
+
+**Status:** Cloudflare indexing blocker still active (re-verified). Deployed safe
+AEO/schema fixes + fixed 2 broken internal links on the flagship leak-detection
+page.
+
+### 🚨 BLOCKER — UNCHANGED, still the #1 issue
+
+- `https://straightflushplumbingoc.com/*` still returns `HTTP/2 403` with
+  `cf-mitigated: challenge` to every crawler and plain curl. GitHub Pages origin
+  itself is healthy (`185.199.108-111.153` → HTTP 200, 66119 bytes on `/`).
+- **No repo-side fix exists.** Must be done in the Cloudflare dashboard:
+  Security Level = Medium, Bot Fight Mode OFF (or the `allow-verified-crawlers`
+  WAF skip rule, expression `cf.client.bot`). See `CLOUDFLARE-SETUP.md` §2a–2b.
+- All on-page work remains inert until this is fixed. Escalated again.
+
+### Changes deployed (SAFE)
+
+| # | Change | Target | Reason | Expected outcome |
+|---|--------|--------|--------|------------------|
+| 1 | Added visible **FAQ section** + matching `FAQPage` JSON-LD (5 Q&A, text verbatim) | `services/leak-detection.html` | This was the **only** service page with no FAQ block and no FAQPage schema | FAQ/AI-answer eligibility on the top leak query; closes gap vs. city pages which already had it |
+| 2 | Added missing `Service` JSON-LD | `services/slab-leak-detection.html` | Page had FAQPage + Breadcrumb but no Service schema (flagship service, inconsistency vs. pex/water-heater) | Service-level entity clarity for SERP + AI |
+| 3 | Fixed 2 wrong related-reading links | `services/leak-detection.html` | "Does Insurance Cover This?" and "Repair vs. Reroute vs. Repipe" cards pointed at generic `../contact.html`; the real guides were orphaned from the service page | Sends service traffic to the correct guide (deeper engagement), builds Service→Guide internal linking |
+| 4 | Added 3rd related card → `../guides/leak-detection-cost.html` | `services/leak-detection.html` | Cost is a top commercial-investigation intent for detection | Captures cost-intent users |
+| 5 | Corrected `BreadcrumbList` URL | `services/slab-leak-detection.html` | Position-2 pointed at `/leak-detection.html` (a `noindex` stub) instead of the canonical `/services/leak-detection.html` | Breadcrumb points at the real indexable page |
+
+### Competitor intelligence (2026-10-08, Brave results)
+
+Money queries surfaced: `evansleakdetection.com`, `leakstar.com`,
+`efficientplumbing.com`, `allclearplumbingpros.com`, `scottenglishplumbing.net`,
+`streamlineplumbing.org`, plus `rooterhero.com`, `calischoice.com`,
+`ezplumbingusa.com`, `pacificcoastcopperrepipe.com`,
+`americanleakdetection.com`, `precisionplumbingoc.com`.
+
+- **evansleakdetection.com** `/laguna-niguel-slab-leak-detection/` — ~3,255
+  words, but **no FAQPage, no Service, no LocalBusiness, no HowTo schema** and
+  only 5 generic H2s. Strong on raw length, weak on structure → Straight Flush's
+  structured, schema-rich pages are the better AEO play. **No copying needed.**
+- `rooterhero.com`, `calischoice.com` etc. are large multi-city franchises with
+  templated city pages — exactly the doorway-page pattern SF must avoid.
+- Takeaway: competitors compete on **page length and city coverage**; SF's moat
+  is **diagnostic depth + clean structured data**, which we reinforced today.
+
+### Verification performed
+
+- All JSON-LD on both changed pages parses; `services/leak-detection.html` now
+  carries `Service` + `FAQPage` + `BreadcrumbList`; slab page adds `Service`.
+- Each changed page: exactly one `<title>`, one meta description, one canonical,
+  one `<h1>`. FAQ visible Q&A matches schema `name` verbatim.
+- Full-site relative-link sweep: **0 broken internal `.html` links**.
+- `scripts/seo_audit.py`: 0 broken links, 0 indexable orphans, 0 canonical
+  anomalies, 0 duplicate titles on indexable pages, 0 missing alt.
+
+### Not changed (correct as-is)
+
+- The `about/straight-flush-plumbing-orange-county.html` page is `noindex,follow`
+  and intentionally excluded from the sitemap — leaving alone.
+- 59 root-level `noindex` stubs with canonicals → intentional; not duplicate
+  content.
+
+### Growth opportunity / moat
+
+Highest-value durable asset once crawling is restored: the **slab-leak diagnostic
+decision tool** (symptom → likely cause → detection method → repair/reroute/
+repipe), extending `plumbing-health-score.html`. Competitors cannot fake it.
+
+### Strategic insight
+
+The site's structured-data and internal-linking posture now exceeds every
+competitor inspected; the company's actual bottleneck remains the Cloudflare
+edge block, which makes all of it invisible.
+
+**Strategy confidence:** HIGH on findings, but growth outcome is **blocked** on
+the Cloudflare fix (owner action required).
+
+---
+
 ## 2026-10-07
 
 **Status:** Site-wide indexing blocker confirmed (see Blockers). Safe schema +
