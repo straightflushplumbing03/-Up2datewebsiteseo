@@ -5,6 +5,66 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-09
+
+**Status:** Internal-linking de-orphaning + title-length hygiene deployed.
+Cloudflare crawler blocker **still active** (see carried-forward blocker).
+
+### 🚨 BLOCKER (carried forward) — Cloudflare challenge still returns 403
+
+- Re-tested `https://straightflushplumbingoc.com/` today: **403 `cf-mitigated: challenge`**
+  for Googlebot, GPTBot, and plain curl. `/robots.txt` also 403.
+- Nothing has changed since 2026-10-07. All on-page work remains inert to
+  crawlers until the Cloudflare dashboard fix (Security Level Medium, Bot Fight
+  Mode OFF, allow-verified-crawlers WAF skip rule) is applied. **Requires human action.**
+
+### Intelligence
+
+- No `briefs/latest.md` (Scout output) present; no live SERP/competitor scraping
+  available from this sandbox (Google/Bing/Mojeek/DDG blocked or unresolved).
+  Competitor claims are therefore **not** asserted this run — repo-only audit.
+
+### Changes deployed (SAFE)
+
+| # | Change | Target | Reason | Expected outcome |
+|---|--------|--------|--------|------------------|
+| 1 | Homepage link → `/case-studies/` | `index.html` | Case-study hub had **zero** homepage inbound links; real documented jobs are the strongest E-E-A-T asset | Crawl discovery + stronger proof-of-work signal |
+| 2 | "Related reading" block linking each case study → its matching service page + hub | `case-studies/laguna-niguel-{slab-leak-detection-1, slab-leak-detection-6, leak-detection-5, pex-repiping-4}.html` | Case studies had no path back to the money pages they prove | Commercial relevance + link equity toward services |
+| 3 | Slab-leak-detection → case studies link | `services/slab-leak-detection.html` | Flagship page had no proof-of-work link; ties diagnosis claim to real local jobs | Conversion aid + topical reinforcement |
+| 4 | Title shortened into SERP-friendly range | 13 indexable pages (about, plumbing-health-score, south-oc-slab-leak-specialist, 10 academy articles) | Titles ran 65–96 chars; several led with repetitive "Leak Detection Academy" boilerplate | Better CTR + less truncation; titles now 45–55 chars |
+
+**Verification performed:** all 74 indexable pages — exactly one `<title>`, one
+meta description, one canonical, one `<h1>`; zero duplicate titles/descriptions;
+0 broken internal links; 0 section/div tag imbalances; all JSON-LD parses;
+sitemap covers all 74 indexable pages; canonical↔sitemap parity.
+
+### Not actioned this run
+
+- **City title lengths (16 pages, 65–81 chars).** The title exactly mirrors the
+  `<h1>` and the pattern is uniform; trimming risks H1/title divergence for a
+  marginal gain, so left as-is pending a pattern-level decision (REVIEW).
+- **28 titles remain >70 chars** overall; the worst non-city offender is
+  `case-studies/laguna-niguel-slab-leak-detection-6.html` (89 chars) — left for
+  the next pass so this PR stays within one objective group.
+
+### Growth opportunity / weekly moat
+
+The slab-leak diagnostic decision tool (symptom → likely cause → detection method
+→ repair-vs-reroute-vs-repipe), extending `plumbing-health-score.html`, remains
+the highest-value durable asset. All case studies now route into it naturally.
+
+### Strategic insight
+
+On-page work is already strong; **crawler access is the entire bottleneck** — the
+site is invisible to Google, Bing, and every AI answer engine until Cloudflare
+stops challenging verified bots, so edge configuration outranks any content work.
+
+### Weekly priority
+
+Get verified crawlers unblocked at Cloudflare and confirm a 200 to a Googlebot UA.
+
+---
+
 ## 2026-10-07
 
 **Status:** Site-wide indexing blocker confirmed (see Blockers). Safe schema +
