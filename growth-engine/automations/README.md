@@ -14,6 +14,22 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 | D | Weekly Strategy Review | `30 7 * * 1` | L1 + L2 | _(planned)_ |
 | E | Monthly Growth Audit | `0 8 1 * *` | L1 + L2 | _(planned)_ |
 
+## Decision on B–E (deliberate, documented)
+
+The environment **already runs three daily agents** (Scout competitor intel,
+Strategist SEO plan, Sentinel retry). Creating B–E immediately would add
+overlapping runs that can conflict and burn tokens for little gain. Per the
+master spec ("create the highest-priority automations first", "prevent
+overlapping runs from making conflicting changes"), only **Automation A** was
+created autonomously. B–E are documented and proposed for owner approval in
+`proposals/2026-10-09-priority-actions.md` (P-004), to be scheduled **after**
+the existing agents are consolidated.
+
+- **B (Technical Health)** is a deterministic check — implement it as a *custom
+  no-LLM script* (`growth-engine/tests/crawler_access_check.sh` + a small
+  runner) rather than an LLM agent, so it costs no tokens.
+- **D/E** fold naturally into A + the existing Strategist weekly/monthly cadence.
+
 ## Pre-existing automations (to be reconciled — see KNOWN_ISSUES ISSUE-005)
 
 - `Scout: Daily Competitor Intel` — `30 5 * * *` — overlaps A/D
