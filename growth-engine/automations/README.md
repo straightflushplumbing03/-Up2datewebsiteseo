@@ -8,7 +8,7 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 
 | ID | Automation | Schedule (PT) | Scope | Live automation id |
 |----|-----------|---------------|-------|--------------------|
-| A | Morning AI Search Visibility & Competitor Intelligence | `0 6 * * *` | L1 + L2 (PRs) | _(set on creation)_ |
+| A | Morning AI Search Visibility & Competitor Intelligence | `0 6 * * *` | L1 + L2 (PRs) | `4c5213f7-080c-4edd-97a2-30962419bd14` (created 2026-10-09) |
 | B | Daily Technical Health Check | `20 6 * * *` | L1 + L2 | _(planned)_ |
 | C | Controlled Website Improvement | `0 7 * * 1-5` | L2 (branch/PR only) | _(planned)_ |
 | D | Weekly Strategy Review | `30 7 * * 1` | L1 + L2 | _(planned)_ |
