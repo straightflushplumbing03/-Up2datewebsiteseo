@@ -5,6 +5,30 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-09 — Morning AI Search Visibility & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-09`.
+
+- **Technical health:** ISSUE-001 **still OPEN** — live domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`. Severity **critical**; all on-page work inert.
+- **Queries:** 11 of 32 Brave conventional-proxy queries executed (Brave then
+  HTTP 429 / IP-blocked). 21 recorded `inconclusive`. AI engines: 0 testable.
+- **SF visibility:** absent from all 11 executed queries (recommended 0,
+  mentioned 0, cited 0).
+- **Competitors:** 54 newly observed domains; repeat leaders scottenglish,
+  billmetzger, calischoice, evansleakdetection, efficient, barkerandsons,
+  rotorooter. New pattern (hypothesis): non-local per-city **subdomain
+  directories** surfacing for local intent.
+- **Process gap:** `growth-engine/` is absent on `main` because baseline PR #19
+  is unmerged — a run from `main` finds no KB.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
+  baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-09.md`.
+
+---
+
 ## 2026-10-09
 
 **Status:** Master growth-engine baseline established. Read-only research +
