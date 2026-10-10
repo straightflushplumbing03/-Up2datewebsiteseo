@@ -5,6 +5,33 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-10 — Morning AI Search Visibility & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-10`.
+
+- **Technical health:** ISSUE-001 **still OPEN** — live domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`, `/services/leak-detection.html`. Severity
+  **critical**; all on-page work inert. DNS = Cloudflare proxy; TLS cert valid to
+  2026-12-06; GitHub Pages origin reachable (301 → apex).
+- **Queries:** 6 of 30 Brave conventional-proxy queries executed (Brave then
+  HTTP 429 / IP-blocked — tighter budget than 2026-10-09's 11). 24 recorded
+  `inconclusive`. AI engines: 0 testable.
+- **SF visibility:** absent from all 6 executed queries (recommended 0,
+  mentioned 0, cited 0).
+- **Competitors:** 13 newly observed domains (Tier-2 cities: Irvine, Laguna
+  Hills, Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest).
+  Repeat leaders barkerandsons (5/6), scottenglish (5/6), rotorooter (6/6),
+  billmetzger, johnstevenson. Directories Yelp/Angi recur on every general query.
+- **Process gap:** `growth-engine/` is absent on `main` because baseline PR #19
+  is unmerged — a run from `main` finds no KB.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
+  baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-10.md`.
+
+---
+
 ## 2026-10-09 — Morning AI Search Visibility & Competitor Intelligence (daily run)
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**

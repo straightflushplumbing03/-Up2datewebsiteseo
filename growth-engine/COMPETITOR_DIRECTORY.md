@@ -5,13 +5,14 @@ Rolling list built from **actual observations** (raw rows in
 real queries are listed. Correlation ≠ causation: a feature being present is
 *evidence a competitor has it*, not proof it caused a recommendation.
 
-**Baseline observation date:** 2026-10-09 · **Daily run:** 2026-10-09 (`reports/daily/2026-10-09.md`)
+**Baseline observation date:** 2026-10-09 · **Latest daily run:** 2026-10-10 (`reports/daily/2026-10-10.md`)
 **Platform:** Brave Search (conventional proxy) — **not** an AI answer engine.
 **Baseline queries:** plumber in Laguna Niguel · slab leak detection Laguna Niguel · emergency plumber Laguna Niguel · leak detection Orange County · best plumber in Laguna Niguel
-**Daily queries (11 succeeded):** plumber in {Dana Point, San Clemente, Mission Viejo, Aliso Viejo} · leak detection {Laguna Niguel, Mission Viejo, Aliso Viejo} · slab leak repair Laguna Niguel · slab leak detection {Dana Point, San Clemente} · water heater repair Laguna Niguel
-*(21 further queued queries were not executed — Brave rate-limited/blocked after 11; see daily report limitations.)*
+**2026-10-09 daily queries (11 succeeded):** plumber in {Dana Point, San Clemente, Mission Viejo, Aliso Viejo} · leak detection {Laguna Niguel, Mission Viejo, Aliso Viejo} · slab leak repair Laguna Niguel · slab leak detection {Dana Point, San Clemente} · water heater repair Laguna Niguel
+**2026-10-10 daily queries (6 succeeded):** plumber in {Irvine, Laguna Hills, Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest}
+*(24 further queued queries were not executed — Brave returned HTTP 429 after 6 queries; see daily report limitations.)*
 
-**Frequency across all records to date (baseline + daily):** yelp.com 15 · scottenglishplumbing.net 14 · billmetzgerplumbing.com 10 · rotorooter.com 8 · calischoice.com 8 · efficientplumbing.com 7 · barkerandsonsplumbing.com 7 · evansleakdetection.com 7 · rooterhero.com 6.
+**Frequency across all records to date (baseline + daily runs), by distinct query:** calischoice.com 6 · scottenglishplumbing.net 5 · rooterhero.com 5 · olsonsuperior.com 4 · allclearplumbingpros.com 4 · leakstar.com 4 · barkerandsonsplumbing.com 3 · rotorooter.com 3 · dcplumbing.net 3 · emergencyresponseplumbers.com 3 · benjaminfranklinplumbing.com 3 · lagunaniguelplumber.org 3 · reliable-rooter/rotorooter franchises recurring across all 6 general city queries on 2026-10-10.
 
 ## Tier A — appeared across multiple high-value queries
 
@@ -58,6 +59,34 @@ real queries are listed. Correlation ≠ causation: a feature being present is
 | Plumber Orange County CA | plumberorangecountyca.com | best | — |
 | Laguna Niguel Plumbing Co | lagunaniguelplumbingco.com | best | — |
 | John Stevenson Plumbing | johnstevensonplumbing.com | general | — |
+| Reliable Rooter | reliablerooter.com | general (Irvine) | Per-city `/service-areas/{city}-plumber/` pages |
+| Biard & Crockett | biardandcrockett.com | general (Laguna Hills) | Established OC brand |
+| Andrus Plumbing | andrusplumbing.com | general (Laguna Beach) | First observation 2026-10-10 |
+
+## Newly observed 2026-10-10 daily run (13 domains not previously in directory)
+
+First-time observations from six Tier-2 *general* queries (Irvine, Laguna Hills,
+Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest). Every row is a
+**hypothesis** that the entity competes in that city; the only *verified* fact is
+that its domain appeared in a Brave organic result for the query on 2026-10-10.
+Source: Brave organic results — **not** an AI-answer-engine result.
+
+- **Irvine:** reliablerooter.com, patriotrooter.com, theirvineplumbers.com.
+- **Laguna Hills:** biardandcrockett.com, equityplumbingoc.com.
+- **Laguna Beach:** andrusplumbing.com, bensonplumbinglagunabeach.com.
+- **Ladera Ranch:** hhsplumbing.com.
+- **Rancho Santa Margarita:** santamargaritaplumbing.com, partnersplumbingco.com,
+  integrityoc.com, ranchoheatingandair.com.
+- **Lake Forest:** fourseasonsheatingcooling.com.
+
+**Repeat Tiers refreshed 2026-10-10:** barkerandsonsplumbing.com (5 of 6 queries),
+scottenglishplumbing.net (5), rotorooter.com (6), billmetzgerplumbing.com (3),
+johnstevensonplumbing.com (3), moffettplumbing.com (2), olsonsuperior.com (2).
+
+**Competitive reality (verified, not an action):** SF did not appear in the top-10
+organic domains of any of the six executed queries on 2026-10-10. Note the confounder:
+the live domain returns HTTP 403 `cf-mitigated: challenge` to all crawlers
+(ISSUE-001), so conventional-search absence is expected while the block persists.
 
 ## Directories / aggregators appearing (not competitors, but visibility channels)
 
