@@ -5,6 +5,68 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-10
+
+**Status:** AEO FAQ + inbound internal link deployed (branch
+`sfge/aeo-leak-detection-faq-2026-10-10`). Site-wide indexing blocker still live.
+
+### 🚨 BLOCKER UNCHANGED — Cloudflare managed challenge (403 to all crawlers)
+
+Re-verified today: `https://straightflushplumbingoc.com/`, `/robots.txt`,
+`/sitemap.xml` all return `HTTP 403` with `cf-mitigated: challenge` for a
+Googlebot UA. **Every on-page change below is inert until Cloudflare is fixed.**
+Actions remain the same as 2026-10-07 (Security Level: Medium; Bot Fight Mode
+OFF; WAF skip rule for `cf.client.bot`). See `CLOUDFLARE-SETUP.md` §2a-2b. This
+is a dashboard action that cannot be performed from the repository.
+
+### Changes deployed (SAFE)
+
+| # | Change | Target | Reason | Expected outcome |
+|---|--------|--------|--------|------------------|
+| 1 | Added 5-question diagnostic FAQ (visible, verbatim text) | `services/leak-detection.html` | Page had no FAQ block; competitors own the "how does detection work / will you break my tile" question space | AEO extraction, People-Also-Ask coverage, AI-answer grounding |
+| 2 | Added matching `FAQPage` JSON-LD | `services/leak-detection.html` | Schema/text parity with #1 | FAQ rich-result eligibility |
+| 3 | Added contextual inbound internal link to specialist page | `services/slab-leak-detection.html` | Specialist page had only 2 inbound links and 0 from its own service hub | Link equity + topical relationship |
+| 4 | Added contextual inbound internal link to specialist page | `cities/laguna-niguel.html` (local-knowledge paragraph) | City pages are the strongest local entry points; specialist page now reachable from the flagship city | Internal discovery from priority local page |
+| 5 | `lastmod` bumped to 2026-10-10 | `sitemap.xml` (2 service URLs) | Reflect real content change | Correct recrawl signal |
+
+**Verification performed:** both edited service pages parse; all JSON-LD valid
+(Service, BreadcrumbList, FAQPage); exactly one H1 each; 5 FAQ items match 5
+schema Questions; 0 broken internal links site-wide; all links resolve; sitemap
+XML well-formed.
+
+### Competitor watch (observed today, DuckDuckGo SERP for "slab leak detection Laguna Niguel")
+
+- **Evans Leak Detection** (`evansleakdetection.com/laguna-niguel-slab-leak-detection/`):
+  1,502 words, dedicated city+service page, Plumber schema, H1 "Laguna Niguel's
+  Top Company for Slab Leak Detection & Repair" — the benchmark to beat locally.
+- **lagunaniguelcaplumbingpros.com** (exact-match domain): 1,459 words, FAQPage
+  schema, city+service page — thinner expertise signal but strong local
+  targeting, and it beats us on the exact city/service phrase.
+- **Leak Star** (`leakstar.com`): 752 words, no FAQ/no H1, Organization schema
+  only — sustainable to outrank once crawl access exists.
+- **ProPlumberLagunaNiguel.com** and **lagunaniguelcaplumbingpros.com** are
+  keyword-exact domains: a reminder that a strong branded domain plus genuine
+  local content (not a matching domain) is the differentiator.
+
+### Growth opportunity / weekly moat (unchanged)
+
+Build the **slab-leak diagnostic decision tool** (symptom → likely cause →
+detection method → repair-vs-reroute-vs-repipe), extending
+`plumbing-health-score.html`. Hard to copy; embodies the first-hand-diagnostic
+moat.
+
+### Strategic insight
+
+The site's on-page SEO/AEO is already above local competitor quality; the only
+thing keeping Straight Flush invisible to Google, Maps and AI engines is the
+Cloudflare crawler block. Fixing that single dashboard setting is worth more
+than any amount of new content this month.
+
+**Keep/modify/revert:** KEEP — no results measurable until the Cloudflare block
+is lifted.
+
+---
+
 ## 2026-10-07
 
 **Status:** Site-wide indexing blocker confirmed (see Blockers). Safe schema +
