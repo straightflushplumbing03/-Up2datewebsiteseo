@@ -5,6 +5,29 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-10 (evening re-verification) — AI Search Visibility (automation re-run)
+
+**Status:** Additive data/doc only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-10` (same branch, PR #21).
+
+- **Technical health:** ISSUE-001 **still OPEN** — crawler check re-run 22:10Z,
+  all 10 checks 403 `cf-mitigated: challenge`. Severity **critical**. 4 rows
+  appended to `data/technical_health_history.jsonl`.
+- **Search engines:** no new visibility data obtainable. Brave still **429**
+  (IP-blocked); DuckDuckGo empty body; Bing 200 but **mis-geolocated to Paxico,
+  KS** (morning run: Austin, TX); Mojeek 403; Startpage 303; Marginalia 302.
+  6 rows appended to `data/ai_visibility_history.jsonl`.
+- **SF visibility:** no new measurement. The 24 morning queries remain
+  `inconclusive` (missing data ≠ 0%).
+- **Competitors:** none newly observed (no usable SERP this evening).
+- **New finding:** Bing HTML SERP is unreliable for local intent from this
+  environment — served a different wrong locality on each request.
+- **Top next actions:** unchanged — (1) owner lifts Cloudflare block (P-001);
+  (2) merge baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-10.md` (Evening re-verification).
+
+---
+
 ## 2026-10-10 — Morning AI Search Visibility & Competitor Intelligence (daily run)
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**
