@@ -5,6 +5,37 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-10 (later trigger) — duplicate-trigger reconciliation run
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-10-run2`.
+
+- **Trigger context:** A scheduled 2026-10-10 run already **completed** earlier
+  (run `fa99f549`, PR #21). This invocation was a **second same-day trigger**;
+  runs `c31f1743` (this) and `64a5ca2b` were **concurrently active**. Used a
+  separate branch and appended to `reports/daily/2026-10-10.md` rather than
+  overwriting the morning record.
+- **Technical health:** ISSUE-001 **still OPEN** — domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`, `/services/leak-detection.html`. Severity
+  **critical**; 8 rows appended to `data/technical_health_history.jsonl`.
+- **Queries:** the **24 backlog queries** from the morning run were re-attempted
+  on **Bing** (alternate provider). Brave was HTTP **429** on every attempt
+  (egress IP shared with the parallel run); DuckDuckGo HTML HTTP **202**. All 24
+  Bing queries returned 200 but **non-localized** (identical across cities;
+  dictionaries/IMDb/streaming) → recorded **`inconclusive`**, not "absent".
+- **SF visibility:** **no valid measurement** this run (0 usable SERPs).
+- **Competitors:** no new verified competitor. Three domains
+  (crowleyplumbingandheatinginc.com, crossplumbingandgas.com,
+  stewartsplumbinginc.com) were flagged **AMBIGUOUS** (identical across 5 cities)
+  and deliberately **withheld** from the directory.
+- **Process insight (new):** duplicate same-day triggers contend for one egress
+  IP and can race the same branch/PR → recommend serializing automation A.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001/ISSUE-001);
+  (2) serialize automation A / stop duplicate triggers; (3) merge baseline PR #19.
+
+---
+
 ## 2026-10-10 — Morning AI Search Visibility & Competitor Intelligence (daily run)
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**
