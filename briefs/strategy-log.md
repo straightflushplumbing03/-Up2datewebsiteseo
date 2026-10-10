@@ -5,6 +5,114 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-10 — Morning AI Search Visibility & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-10`.
+
+- **Technical health:** ISSUE-001 **still OPEN** — live domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`, `/services/leak-detection.html`. Severity
+  **critical**; all on-page work inert. DNS = Cloudflare proxy; TLS cert valid to
+  2026-12-06; GitHub Pages origin reachable (301 → apex).
+- **Queries:** 6 of 30 Brave conventional-proxy queries executed (Brave then
+  HTTP 429 / IP-blocked — tighter budget than 2026-10-09's 11). 24 recorded
+  `inconclusive`. AI engines: 0 testable.
+- **SF visibility:** absent from all 6 executed queries (recommended 0,
+  mentioned 0, cited 0).
+- **Competitors:** 13 newly observed domains (Tier-2 cities: Irvine, Laguna
+  Hills, Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest).
+  Repeat leaders barkerandsons (5/6), scottenglish (5/6), rotorooter (6/6),
+  billmetzger, johnstevenson. Directories Yelp/Angi recur on every general query.
+- **Process gap:** `growth-engine/` is absent on `main` because baseline PR #19
+  is unmerged — a run from `main` finds no KB.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
+  baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-10.md`.
+
+---
+
+## 2026-10-09 — Morning AI Search Visibility & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-09`.
+
+- **Technical health:** ISSUE-001 **still OPEN** — live domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`. Severity **critical**; all on-page work inert.
+- **Queries:** 11 of 32 Brave conventional-proxy queries executed (Brave then
+  HTTP 429 / IP-blocked). 21 recorded `inconclusive`. AI engines: 0 testable.
+- **SF visibility:** absent from all 11 executed queries (recommended 0,
+  mentioned 0, cited 0).
+- **Competitors:** 54 newly observed domains; repeat leaders scottenglish,
+  billmetzger, calischoice, evansleakdetection, efficient, barkerandsons,
+  rotorooter. New pattern (hypothesis): non-local per-city **subdomain
+  directories** surfacing for local intent.
+- **Process gap:** `growth-engine/` is absent on `main` because baseline PR #19
+  is unmerged — a run from `main` finds no KB.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
+  baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-09.md`.
+
+---
+
+## 2026-10-09
+
+**Status:** Master growth-engine baseline established. Read-only research +
+additive documentation. **No website page/schema/copy changed.**
+
+### Created — permanent knowledge base (`growth-engine/`)
+
+Verified business profile, service catalog, service areas, approved-claims and
+brand-voice rules, keyword universe, AI-visibility methodology, integration
+status, issue register, experiment log, changelog, JSONL observation data, and
+a baseline report. See `growth-engine/README.md` for the read order.
+
+### 🚨 BLOCKER re-confirmed — Cloudflare still returns 403 to every crawler
+
+Re-verified 2026-10-09: `HTTP/2 403` with `cf-mitigated: challenge` on `/`,
+`/robots.txt`, `/sitemap.xml`, `/llms.txt`, `/index.html`,
+`/services/leak-detection.html`, `/cities/laguna-niguel.html` — for Googlebot,
+Bingbot, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Applebot and plain
+curl. Identical to the 2026-10-07 finding; still **unresolved**. Tracked as
+`growth-engine/KNOWN_ISSUES.md` ISSUE-001. Owner action in the Cloudflare
+dashboard is required (Level 3); it cannot be fixed from the repo. This remains
+the single highest-impact item — all on-page work is inert until lifted.
+
+### Baseline visibility (conventional-search proxy only)
+
+Tested 5 queries via Brave Search (the only working conventional proxy in this
+environment; **not** an AI-platform result). Straight Flush was **absent from
+all 5** (plumber/slab-leak/emergency/best in Laguna Niguel; leak detection OC).
+Repeat competitors: scottenglishplumbing.net (5/5), efficientplumbing.com,
+barkerandsonsplumbing.com, rotorooter.com. Full data in
+`growth-engine/data/ai_visibility_history.jsonl`.
+
+### AI answer engines — unverified, honestly
+
+No AI answer engine (ChatGPT/Claude/Gemini/Copilot/Grok/Perplexity/Google AIO)
+could be executed in this environment (no credentials; sites 403/JS-only to
+scripted clients). Recorded as **unverified**, never as zero visibility. See
+`growth-engine/AI_VISIBILITY_METHODOLOGY.md` and `INTEGRATION_STATUS.md`.
+
+### Evidence-backed gap
+
+Tier-A competitors pair a **city page with a specific service page** (e.g.
+Scott English `/service-area/plumber-in-laguna-niguel`; Efficient
+`/laguna-niguel-plumbers/` + water-leak page). SF has strong city and service
+pages but few city×service combinations. Candidate work once crawlers can reach
+us (real content only; no thin doorway pages).
+
+### Verification
+
+`growth-engine/tests/validate_knowledge_base.py` → OK (133 HTML files, one
+title/description/canonical/h1 each; JSONL + baseline JSON parse). Crawler
+health reproducible via `growth-engine/tests/crawler_access_check.sh`.
+
+**Branch:** `growth-engine/baseline-2026-10-09` (PR opened for owner review).
+**Proposals:** `growth-engine/proposals/2026-10-09-priority-actions.md` (P-001
+Cloudflare = urgent).
+
 ## 2026-10-07
 
 **Status:** Site-wide indexing blocker confirmed (see Blockers). Safe schema +
