@@ -84,6 +84,68 @@ Branch `growth-engine/daily-2026-10-09`.
 - **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
   baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
 - **Report:** `growth-engine/reports/daily/2026-10-09.md`.
+## 2026-10-11 (supplementary run)
+
+**Status:** Independent second sample on the same day; branch
+`growth-engine/daily-2026-10-11-run2` (an earlier run today produced PR #25).
+Read-only research + additive documentation. **No website page/schema/copy changed.**
+
+### ✅ ISSUE-001 (Cloudflare crawler block) confirmed RESOLVED
+
+`bash growth-engine/tests/crawler_access_check.sh` → **OK**. All 7 crawler UAs
+(Googlebot, Bingbot, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Applebot)
+and plain curl return **200 with no `cf-mitigated` header** on `/`, `/robots.txt`,
+`/sitemap.xml`, `/llms.txt`. The AI-readable files (`/llms-full.txt`,
+`/md/services/leak-detection.md`) are now **200** (PR #24 merged). On-page work is
+no longer inert.
+
+### Visibility sweep — 28 queries, Brave conventional proxy
+
+Expanded the sample from 5 → 28 queries covering all 7 core services and 11
+cities (Tier 1–3). **Straight Flush was absent from all 28** (0 recommended /
+0 mentioned / 0 cited). Highest-intent queries where SF does not surface:
+*slab leak detection Laguna Niguel*, *slab leak repair Laguna Niguel*,
+*PEX repipe Laguna Niguel*, *PEX repiping Orange County*, *emergency plumber
+Laguna Niguel*, *best plumber in Laguna Niguel*. Data:
+`growth-engine/data/ai_visibility_history.jsonl`.
+
+### Competitor intelligence (evidence-based, not proof)
+
+Tier A (≥10/28): scottenglishplumbing.net (22), barkerandsonsplumbing.com (19),
+rotorooter.com (15), billmetzgerplumbing.com (13), efficientplumbing.com (12),
+rooterhero.com (11), allclearplumbingpros.com (11), parzivalplumbing.com (10),
+calischoice.com (10), evansleakdetection.com (10). New repeats:
+integrityrepipe.com, dcplumbing.net, mikediamondservices.com,
+thedoneriteplumber.com, missionviejoplumbingco.com, largeplumbing.com.
+Directory dominance: yelp.com 27/28, angi.com 12/28 → the "best plumber" queries
+are an aggregator/GBP problem, not a website-only problem. Directory updated:
+`growth-engine/COMPETITOR_DIRECTORY.md`.
+
+### Evidence-backed gaps (page + city + missing element)
+
+1. **Per-city slab-leak sections** — competitors surface a dedicated slab-leak
+   page per city (Evans, Cal's Choice, Streamline, EZ); SF city pages cover leak
+   detection generically. Target: `cities/{laguna-niguel,dana-point,san-clemente,
+   mission-viejo,aliso-viejo}.html`.
+2. **Repipe content** — `PEX repipe Laguna Niguel` / `PEX repiping Orange County`
+   are dominated by repipe specialists; SF has no repipe page in those results.
+   Target: a `/services/pex-repiping.html`-linked city × repipe asset.
+3. **AI-engine visibility is unverified** — no credentials in this environment;
+   recorded `unverified`, never 0%.
+
+### AI answer engines — still unverified
+
+No AI answer engine could be executed (no credentials; sites 403/JS-only).
+Recorded as `unverified` per `AI_VISIBILITY_METHODOLOGY.md`. Cheapest unlock:
+a Perplexity/SerpAPI key (owner, Level 3).
+
+### Verification
+
+`crawler_access_check.sh` → OK; 2 technical-health rows + 28 visibility rows +
+34 competitor rows appended to `data/*.jsonl`.
+
+**Branch:** `growth-engine/daily-2026-10-11-run2` (PR opened for owner review).
+**Report:** `growth-engine/reports/daily/2026-10-11.md`.
 
 ---
 

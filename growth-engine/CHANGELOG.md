@@ -3,6 +3,23 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-11 — Daily run (visibility sweep + competitor refresh)
+
+**Added:** `reports/daily/2026-10-11.md`.
+
+**Updated:** `COMPETITOR_DIRECTORY.md` (28-query sweep: Tier A/B frequency,
+6 new repeat competitors, aggregator dominance). Appended observations to
+`data/ai_visibility_history.jsonl` (28 rows), `data/competitor_observations.jsonl`
+(34 rows), `data/technical_health_history.jsonl` (crawler check = PASS). Prepend
+to `briefs/strategy-log.md`.
+
+**Key findings:** ISSUE-001 (Cloudflare crawler block) **confirmed resolved** —
+all crawler UAs return 200. Straight Flush absent from all 28 conventional-proxy
+queries (0/28). AI answer engines still unverified (no credentials).
+
+**Not changed:** no website pages, schema, or copy modified — read-only research +
+additive documentation.
+
 ## 2026-10-09 — Initial growth-engine baseline (OpenHands master automation)
 
 **Added** (all under `growth-engine/`):
