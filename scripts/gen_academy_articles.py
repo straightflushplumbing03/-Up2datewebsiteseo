@@ -26,7 +26,7 @@ def article(fname, title, meta_desc, eyebrow, h1, sub, body_sections, faqs, rela
     html = head(title, meta_desc, f"academy/{fname}", PREFIX, schema_faq)
     html += nav(PREFIX)
     html += page_hero(PREFIX,
-        [("Home","index.html"),("Leak Detection Academy","academy/index.html"),(h1[:28]+("..." if len(h1)>28 else ""), None)],
+        [("Home","index.html"),("Leak Detection Academy","academy/index.html"),(h1, None)],
         eyebrow, h1, sub, "Schedule Diagnosis"
     )
     html += '<section><div class="wrap two-col" style="grid-template-columns:1fr;">'
