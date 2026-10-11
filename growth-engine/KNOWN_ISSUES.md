@@ -5,26 +5,29 @@ Each issue: evidence, impact, fix, status, approval level.
 
 ---
 
-## ISSUE-001 — Cloudflare managed challenge blocks ALL crawlers  [CRITICAL · OPEN]
+## ISSUE-001 — Cloudflare managed challenge blocks ALL crawlers  [CRITICAL · RESOLVED 2026-10-11]
 
-- **Evidence:** 2026-10-09, every path (`/`, `/robots.txt`, `/sitemap.xml`,
-  `/llms.txt`, `/index.html`, `/services/leak-detection.html`,
-  `/cities/laguna-niguel.html`) returns `HTTP/2 403` with header
-  `cf-mitigated: challenge`, for Googlebot, Bingbot, GPTBot, OAI-SearchBot,
-  ClaudeBot, PerplexityBot, Applebot and plain curl.
-- **Impact:** Google, Bing, and every AI answer engine cannot read the site.
-  Zero organic, Maps-adjacent, or AI-search visibility is achievable while this
-  persists. All on-page SEO/AEO work is inert.
-- **Fix (owner, Cloudflare dashboard — not a repo change):**
-  1. Security → Settings → **Security Level: Medium** (not "I'm Under Attack").
-  2. **Bot Fight Mode: OFF** (or add the WAF skip rule).
-  3. WAF → Custom rules → `allow-verified-crawlers` with expression
-     `(cf.client.bot)`, action **Skip → All remaining custom rules**.
-  4. Also: Email Address Obfuscation **OFF**, Rocket Loader **OFF** (see
-     `CLOUDFLARE-SETUP.md` §2c–2d).
-- **Verify after fix:** `curl -sI https://straightflushplumbingoc.com/ | grep -i cf-mitigated` → no output; homepage → 200.
-- **Approval:** Level 3 (hosting/security config). **Cannot** be fixed from the repo.
-- **Status:** OPEN. Logged 2026-10-07; re-verified 2026-10-09. Owner action required.
+- **Evidence (before):** 2026-10-07 → 2026-10-11, every path (`/`,
+  `/robots.txt`, `/sitemap.xml`, `/llms.txt`, `/index.html`,
+  `/services/leak-detection.html`, `/cities/laguna-niguel.html`) returned
+  `HTTP/2 403` with header `cf-mitigated: challenge`, for Googlebot, Bingbot,
+  GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Applebot and plain curl.
+- **Root cause (confirmed via Cloudflare API):** zone
+  `straightflushplumbingoc.com` (id `0e9dba51558951ac91fadb2c0e28abde`) had
+  **Under Attack mode ON** — `security_level = "under_attack"` since
+  `2026-09-20T20:04:22Z`. Bot Fight Mode was **off**.
+- **Fix applied 2026-10-11T07:27:51Z:**
+  `PATCH /zones/{id}/settings/security_level` → `{"value": "medium"}`.
+  Narrowest possible change; nothing else modified. Reversible with one call.
+- **Verification 2026-10-11T07:28:05Z:** all 8 UAs and every path above return
+  **200 with no `cf-mitigated` header**.
+- **Follow-up (medium):** the AI-readable files (`/llms-full.txt`, `/md/**`)
+  still return **404** until PR #24 is merged — that is a deploy step, not a
+  Cloudflare issue.
+- **Approval:** Level 3 (hosting/security config). Applied by agent with the
+  owner-supplied Cloudflare API token and explicit request.
+- **Status:** **RESOLVED.** See `growth-engine/CLOUDFLARE_CRAWLER_READINESS.md`.
+  Regression check: `bash growth-engine/tests/crawler_access_check.sh`.
 
 ---
 
