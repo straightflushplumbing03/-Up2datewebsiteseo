@@ -5,6 +5,61 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-11
+
+**Status:** Morning AI Search Visibility & Competitor Intelligence run. Read-only
+research + additive documentation. **No website page/schema/copy/identity change.**
+
+### ✅ Crawler access confirmed restored (ISSUE-001 stays RESOLVED)
+
+`bash growth-engine/tests/crawler_access_check.sh` → exit 0: all 7 crawler UAs
+(Googlebot, Bingbot, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot, Applebot)
+plus curl return **200** on `/`, `/robots.txt`, `/sitemap.xml`, `/llms.txt`, with
+**no `cf-mitigated` header**. `/llms-full.txt` now returns **200** (was 404 this
+morning) — PR #24 merged. The Cloudflare managed challenge that made all on-page
+work inert is gone; visibility work is now measurable.
+
+### Conventional-search sample — 34 queries (Brave, the only working proxy)
+
+34/34 queries completed. **Straight Flush organic recommendation = 0/34; cited =
+0/34.** SF surfaced only in Brave's **local/places panel** (`location_result`) for
+3 Laguna Niguel queries — *not* organic listings and *not* an AI-platform result.
+Absent from the organic top-10 for all 34. Repeat competitors: Yelp (directory,
+30/34), Scott English (23), Barker & Sons (19), Bill Metzger (17), Angi (14),
+Roto-Rooter (14), Rooter Hero (14), Evans Leak Detection (12), Efficient (11).
+Data: `growth-engine/data/ai_visibility_history.jsonl`,
+`data/competitor_observations.jsonl`.
+
+### AI answer engines — still unverified, honestly
+
+No AI answer engine (ChatGPT / Perplexity / Google AI Overviews / Claude / Gemini /
+Copilot / Grok) could be executed — no credentials; sites 403 / JS-only to
+scripted clients. Recorded as `unverified`, **never** as zero visibility.
+Google SERP is a JS/consent shell and Google scraping is prohibited; Brave is the
+only conventional source. Highest-value unlock: a **Perplexity API key**.
+
+### Competitor evidence (verified)
+
+Scott English `/service-area/plumber-in-laguna-niguel` → 200, title "Laguna Niguel
+Plumber | Plumbing Service | Drain Cleaning | Sewer Repair"; Barker & Sons
+`/city/laguna-niguel-ca-plumber/` → 200, title "Plumber in Laguna Niguel, CA | 24/7
+Emergency Plumbing". Confirms the **city×service** page pattern (verified pages;
+causal link remains a hypothesis).
+
+### Gap + priority
+
+Gap: SF lacks **city×service** pages for Tier-1 cities (31/34 organic absence).
+Priority: (1) Perplexity API key; (2) Tier-1 city×service content (real, not
+doorways); (3) connect GSC/GA4/GBP; (4) manual AI-visibility sweep; (5) ISSUE-002
+rating hygiene. Full report: `growth-engine/reports/daily/2026-10-11.md`.
+
+### Verification
+
+`crawler_access_check.sh` exit 0; JSONL + baseline JSON parse; no Level 3 change.
+
+---
+
+
 ## 2026-10-09
 
 **Status:** Master growth-engine baseline established. Read-only research +

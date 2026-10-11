@@ -8,16 +8,42 @@ real queries are listed. Correlation ≠ causation: a feature being present is
 **Baseline observation date:** 2026-10-09 · **Platform:** Brave Search (conventional proxy)
 **Queries:** plumber in Laguna Niguel · slab leak detection Laguna Niguel · emergency plumber Laguna Niguel · leak detection Orange County · best plumber in Laguna Niguel
 
+**Update 2026-10-11:** 34-query Brave sample across 8 cities / 7 service families.
+SF organic recommendation = **0/34**; SF surfaced only in Brave's local/places panel
+for 3 Laguna Niguel queries (not organic, not an AI-platform result). Verified two
+competitor city pages fetch 200 with city+service titles (see below). New repeat
+competitors (≥3/34) added to Tier B.
+
 ## Tier A — appeared across multiple high-value queries
 
 | Competitor | Domain | Appeared for | Observed feature | Hypothesis (unverified) |
 |---|---|---|---|---|
-| Scott English Plumbing | scottenglishplumbing.net | general, slab, emergency, leak-detection OC, best | Per-city `/service-area/plumber-in-{city}` pages | Strong city-page + service-page pairing ranks broadly |
+| Scott English Plumbing | scottenglishplumbing.net | general, slab, emergency, leak-detection OC, best | Per-city `/service-area/plumber-in-{city}` pages. **Verified 2026-10-11:** `/service-area/plumber-in-laguna-niguel` → 200, title "Laguna Niguel Plumber \| Plumbing Service \| Drain Cleaning \| Sewer Repair" | Strong city-page + service-page pairing ranks broadly |
 | Efficient Plumbing | efficientplumbing.com | general, slab | `/laguna-niguel-plumbers/` city landing + water-leak-detection page | Exact "Laguna Niguel Plumbers" title match |
-| Barker and Sons | barkerandsonsplumbing.com | general, leak-detection OC, best | `/city/{city}-ca-plumber/` city pages | Long-established OC brand + city pages |
+| Barker and Sons | barkerandsonsplumbing.com | general, leak-detection OC, best | `/city/{city}-ca-plumber/` city pages. **Verified 2026-10-11:** `/city/laguna-niguel-ca-plumber/` → 200, title "Plumber in Laguna Niguel, CA \| 24/7 Emergency Plumbing" | Long-established OC brand + city pages |
 | Roto-Rooter | rotorooter.com | general, emergency, best | Franchise per-city location pages | Brand authority + directory presence |
 
 ## Tier B — appeared for one or two queries
+
+> **Added 2026-10-11 (≥3/34 appearances in the 34-query Brave sample):**
+> Rooter Hero (rooterhero.com, 14) · Pristine Plumbing (pristineplumbinginc.com, 11) ·
+> Moffett Plumbing (moffettplumbing.com, 7) · MCK Plumbing (mckplumb.com, 6) ·
+> Clearwater Plumbing OC (clearwaterplumbingoc.com, 6) · Leak Detection Plumbers
+> (leakdetectionplumbers.com, 6) · D.C. Plumbing (dcplumbing.net, 5) ·
+> Benjamin Franklin Plumbing (benjaminfranklinplumbing.com, 5) · Drake Wills Plumbing
+> (drakewillsplumbing.net, 5) · The Done Rite Plumber (thedoneriteplumber.com, 5) ·
+> Murphy & Sons (murphyandsonsplumbing.com) · Splash Plumbing (splashplumbing.com) ·
+> EZ Plumbing USA (ezplumbingusa.com) · Large Plumbing (largeplumbing.com) ·
+> SOS Plumbing & Rooter (sosplumbingrooter.com) · Pro Plumber Laguna Niguel
+> (proplumberlagunaniguel.com) · Saddleback Plumbing (saddlebackplumbing.com) ·
+> Cyclone Plumbing USA (cycloneplumbingusa.com) · The Passionate Plumber
+> (thepassionateplumber.com) · Boothney & Sons Plumbing (boothneyandsonsplumbing.com) ·
+> Orange Coast Plumbing (orangecoastplumbing.net) · All Star Plumbing Service
+> (allstarplumbingservice.com) · The Leak Locators (theleaklocators.com) ·
+> Pro Star Plumbing (prostarplumbingca.com) · Level Up Plumbing (levelupplumbinginc.com) ·
+> Do It Right Plumbers (doitrightplumbers.com) · Delta Plumbing OC (deltaplumbingoc.com) ·
+> Socal Repipes (socalrepipes.com). Full per-query rows in
+> `data/competitor_observations.jsonl`.
 
 | Competitor | Domain | Appeared for | Observed feature |
 |---|---|---|---|
