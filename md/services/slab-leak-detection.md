@@ -80,7 +80,7 @@ Most slab leaks in Orange County homes trace back to aging or corroded copper pi
 
 
 
-Pressurized water escaping a pipe underground makes a distinct sound. Our acoustic equipment isolates that sound through the slab, narrowing the leak's location to a small, specific area before anyone picks up a hammer.
+Pressurized water escaping a pipe underground makes a distinct sound. Our acoustic equipment isolates that sound through the slab, narrowing the leak's location to a small, specific area before anyone picks up a hammer. It is the same diagnose-first process we bring to older homes across South Orange County — see how we approach [slab leaks in 1970s–1990s Orange County homes](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html).
 
 
 
@@ -200,6 +200,30 @@ A single, accessible leak is often a candidate for a spot repair. Repeated leaks
 
 
 
+ What is the difference between a slab leak and an underground water leak? +
+
+
+A slab leak is an underground leak, but not every underground leak sits under the slab. Supply lines can also run beneath the yard, driveway, or patio. We pressure test and isolate to confirm which line is losing water, then use acoustic listening and line tracing to determine whether the leak is under the foundation or outside it. That distinction changes both the repair and the cost.
+
+
+
+
+ Can you detect a slab leak under tile, hardwood, or laminate? +
+
+
+Yes. Acoustic listening works through finished flooring because it tracks the sound of pressurized water escaping the pipe rather than looking at the surface. Thermal imaging is most useful on hot water leaks and can be limited by thick flooring, so acoustic detection usually leads. The goal is to narrow the leak to a small area before any flooring or concrete is opened.
+
+
+
+
+ Does homeowners insurance cover slab leak detection and repair? +
+
+
+Coverage varies by policy and is never something we can promise. Many policies handle the resulting water damage and access to the pipe, while the pipe repair itself is sometimes treated as a maintenance item. A [documented diagnosis](https://straightflushplumbingoc.com/insurance/documentation-checklist.html) with the affected line, location, and findings typically makes the claim conversation much easier. See [does insurance cover slab leaks](https://straightflushplumbingoc.com/insurance/does-insurance-cover-slab-leaks.html) for more detail.
+
+
+
+
 
 
 
@@ -217,3 +241,7 @@ Get an accurate answer before anyone touches your floor.
 
 
  [Schedule Slab Leak Detection](https://straightflushplumbingoc.com/contact.html)
+
+
+
+See how this plays out on real local jobs in our [Laguna Niguel case studies](https://straightflushplumbingoc.com/case-studies/).

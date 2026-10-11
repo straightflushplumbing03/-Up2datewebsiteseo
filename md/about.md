@@ -1,4 +1,4 @@
-# About Straight Flush Plumbing & Leak Detection | Family-Owned in Laguna Niguel, CA
+# About Straight Flush Plumbing | Laguna Niguel, CA
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/about.html
 > Section: Company

@@ -1,4 +1,4 @@
-# Home Plumbing Health Score | Free Instant Risk Assessment | Straight Flush Plumbing
+# Home Plumbing Health Score | Free Risk Assessment
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/plumbing-health-score.html
 > Section: Tools
