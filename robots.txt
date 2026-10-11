@@ -49,3 +49,13 @@ User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://straightflushplumbingoc.com/sitemap.xml
+
+# --- AI-readable files (all public; do not disallow) ---
+# Brief machine summary:
+#   https://straightflushplumbingoc.com/llms.txt
+# Full Markdown mirror of key pages:
+#   https://straightflushplumbingoc.com/llms-full.txt
+# Per-page Markdown mirrors under /md/ (e.g. /md/services/leak-detection.md)
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /md/
