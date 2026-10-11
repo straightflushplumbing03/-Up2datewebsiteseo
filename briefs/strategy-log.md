@@ -5,6 +5,88 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-10 (later trigger) — duplicate-trigger reconciliation run
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-10-run2`.
+
+- **Trigger context:** A scheduled 2026-10-10 run already **completed** earlier
+  (run `fa99f549`, PR #21). This invocation was a **second same-day trigger**;
+  runs `c31f1743` (this) and `64a5ca2b` were **concurrently active**. Used a
+  separate branch and appended to `reports/daily/2026-10-10.md` rather than
+  overwriting the morning record.
+- **Technical health:** ISSUE-001 **still OPEN** — domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`, `/services/leak-detection.html`. Severity
+  **critical**; 8 rows appended to `data/technical_health_history.jsonl`.
+- **Queries:** the **24 backlog queries** from the morning run were re-attempted
+  on **Bing** (alternate provider). Brave was HTTP **429** on every attempt
+  (egress IP shared with the parallel run); DuckDuckGo HTML HTTP **202**. All 24
+  Bing queries returned 200 but **non-localized** (identical across cities;
+  dictionaries/IMDb/streaming) → recorded **`inconclusive`**, not "absent".
+- **SF visibility:** **no valid measurement** this run (0 usable SERPs).
+- **Competitors:** no new verified competitor. Three domains
+  (crowleyplumbingandheatinginc.com, crossplumbingandgas.com,
+  stewartsplumbinginc.com) were flagged **AMBIGUOUS** (identical across 5 cities)
+  and deliberately **withheld** from the directory.
+- **Process insight (new):** duplicate same-day triggers contend for one egress
+  IP and can race the same branch/PR → recommend serializing automation A.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001/ISSUE-001);
+  (2) serialize automation A / stop duplicate triggers; (3) merge baseline PR #19.
+
+---
+
+## 2026-10-10 — Morning AI Search Visibility & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-10`.
+
+- **Technical health:** ISSUE-001 **still OPEN** — live domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`, `/services/leak-detection.html`. Severity
+  **critical**; all on-page work inert. DNS = Cloudflare proxy; TLS cert valid to
+  2026-12-06; GitHub Pages origin reachable (301 → apex).
+- **Queries:** 6 of 30 Brave conventional-proxy queries executed (Brave then
+  HTTP 429 / IP-blocked — tighter budget than 2026-10-09's 11). 24 recorded
+  `inconclusive`. AI engines: 0 testable.
+- **SF visibility:** absent from all 6 executed queries (recommended 0,
+  mentioned 0, cited 0).
+- **Competitors:** 13 newly observed domains (Tier-2 cities: Irvine, Laguna
+  Hills, Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest).
+  Repeat leaders barkerandsons (5/6), scottenglish (5/6), rotorooter (6/6),
+  billmetzger, johnstevenson. Directories Yelp/Angi recur on every general query.
+- **Process gap:** `growth-engine/` is absent on `main` because baseline PR #19
+  is unmerged — a run from `main` finds no KB.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
+  baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-10.md`.
+
+---
+
+## 2026-10-09 — Morning AI Search Visibility & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-09`.
+
+- **Technical health:** ISSUE-001 **still OPEN** — live domain 403
+  (`cf-mitigated: challenge`) to all crawlers/AI bots + curl on `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt`. Severity **critical**; all on-page work inert.
+- **Queries:** 11 of 32 Brave conventional-proxy queries executed (Brave then
+  HTTP 429 / IP-blocked). 21 recorded `inconclusive`. AI engines: 0 testable.
+- **SF visibility:** absent from all 11 executed queries (recommended 0,
+  mentioned 0, cited 0).
+- **Competitors:** 54 newly observed domains; repeat leaders scottenglish,
+  billmetzger, calischoice, evansleakdetection, efficient, barkerandsons,
+  rotorooter. New pattern (hypothesis): non-local per-city **subdomain
+  directories** surfacing for local intent.
+- **Process gap:** `growth-engine/` is absent on `main` because baseline PR #19
+  is unmerged — a run from `main` finds no KB.
+- **Top next actions:** (1) owner lifts Cloudflare block (P-001); (2) merge
+  baseline PR #19; (3) connect GSC/GBP + Perplexity API key.
+- **Report:** `growth-engine/reports/daily/2026-10-09.md`.
+
+---
+
 ## 2026-10-09
 
 **Status:** Master growth-engine baseline established. Read-only research +
