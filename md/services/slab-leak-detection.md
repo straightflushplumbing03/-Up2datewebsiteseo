@@ -1,0 +1,219 @@
+# Slab Leak Detection | Acoustic Diagnosis Before Demolition | Orange County
+
+> AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/slab-leak-detection.html
+> Section: Services
+> Summary: Slab leak detection in Laguna Niguel and South OC. Acoustic and thermal imaging for 1970s–90s copper homes. Diagnose before any concrete is cut. (949) 374-6524.
+
+---
+[Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › Slab Leaks
+ Our core specialty
+
+
+# Slab leak detection, done the way it should be everywhere.
+
+
+
+Straight Flush is the South Orange County specialist for slab leaks under 1970s–1990s copper systems in expansive clay soils. Lance answers the phone. We use acoustic, electronic, and thermal detection to pinpoint the leak before any concrete is opened.
+
+ [Schedule Slab Leak Detection](https://straightflushplumbingoc.com/contact.html)
+
+
+
+
+
+
+ Warning signs
+
+
+## Signs of a slab leak
+
+
+
+
+- A warm or hot spot on the floor with no obvious cause
+
+- The sound of running water when everything is off
+
+- A noticeable rise in your water bill
+
+- Cracks in flooring or baseboards
+
+- Low water pressure throughout the home
+
+- Damp carpet or a musty smell near the slab
+
+
+
+
+ What causes it
+
+
+## Why slab leaks happen
+
+
+
+Most slab leaks in Orange County homes trace back to aging or corroded copper piping, especially in homes built before PEX became standard. Contributing factors include:
+
+
+
+
+- Corrosion from decades of mineral-rich water exposure
+
+- Pipe abrasion against concrete or rebar over time
+
+- Soil shifting common to coastal and hillside Orange County lots
+
+- Original installation quality issues
+
+
+
+
+
+
+
+
+
+ How we find it
+
+
+## Acoustic detection: listening for the leak itself
+
+
+
+Pressurized water escaping a pipe underground makes a distinct sound. Our acoustic equipment isolates that sound through the slab, narrowing the leak's location to a small, specific area before anyone picks up a hammer.
+
+
+
+
+ Step 1
+
+
+### Isolate the Line
+
+
+
+Pressure testing confirms which water line is affected, hot or cold, and which zone of the home it runs through.
+
+
+
+ Step 2
+
+
+### Acoustic Sweep
+
+
+
+Listening equipment is used across the suspected area to pinpoint the loudest, most consistent point — the leak itself.
+
+
+
+ Step 3
+
+
+### Confirm & Mark
+
+
+
+Thermal imaging cross-checks the finding when applicable, and the exact spot is marked for the smallest possible access point.
+
+
+
+
+
+
+
+
+
+ Your options after diagnosis
+
+
+## Repair, reroute, or repipe?
+
+
+
+
+
+
+### Spot Repair
+
+
+
+Best when there's a single, accessible leak in an otherwise sound plumbing system. The fastest, least invasive fix.
+
+
+
+
+
+### Reroute
+
+
+
+A new line is run around the problem section of pipe, avoiding it entirely rather than repairing it in place.
+
+
+
+
+
+### Whole-House Repipe
+
+
+
+The right call when copper throughout the home is aging or leaks have repeated. We install modern PEX and explain why, honestly.
+
+
+
+
+
+
+
+
+
+
+ Slab leak FAQ
+
+
+## Common questions
+
+
+
+ What causes a slab leak? +
+
+
+Most slab leaks come from aging or corroded copper pipes, poor original installation, shifting soil, or abrasion where a pipe rubs against concrete or rebar over time.
+
+
+
+
+ How do you find a slab leak without breaking concrete? +
+
+
+Acoustic listening equipment detects the sound of pressurized water escaping underground, and thermal imaging can reveal temperature differences from hot water leaks — together narrowing the leak to a small, specific area.
+
+
+
+
+ Should I repair, reroute, or repipe? +
+
+
+A single, accessible leak is often a candidate for a spot repair. Repeated leaks or aging copper throughout the home may make a reroute or full repipe the smarter long-term option — something we discuss after diagnosis, never before.
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Think you have a slab leak?
+
+
+
+Get an accurate answer before anyone touches your floor.
+
+
+ [Schedule Slab Leak Detection](https://straightflushplumbingoc.com/contact.html)
