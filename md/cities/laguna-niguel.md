@@ -28,7 +28,7 @@ Straight Flush Plumbing & Leak Detection is headquartered in Laguna Niguel — t
 
 
 
-Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit.
+Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit. Homes of that era, with aging copper lines and South OC's expansive clay soils, are exactly the situation our [South Orange County slab leak specialist service](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html) is built around.
 
 
 

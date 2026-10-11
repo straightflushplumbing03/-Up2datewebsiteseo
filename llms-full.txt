@@ -658,6 +658,10 @@ Insurance coverage depends on your individual policy and provider. Visit our [In
 
 
 
+Curious how a diagnosis actually plays out? Read our [documented South Orange County case studies](https://straightflushplumbingoc.com//case-studies/).
+
+
+
 
 
 
@@ -746,7 +750,7 @@ Lance picks up the phone. Shows up on time. Does the job right. Charges you fair
 
 <!-- ===== https://straightflushplumbingoc.com/about.html ===== -->
 
-# About Straight Flush Plumbing & Leak Detection | Family-Owned in Laguna Niguel, CA
+# About Straight Flush Plumbing | Laguna Niguel, CA
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/about.html
 > Section: Company
@@ -1773,7 +1777,7 @@ The specific process for diagnosing leaks beneath a concrete foundation.
 
 What to know before you call your provider.
 
- [Ask us directly →](https://straightflushplumbingoc.com/contact.html)
+ [Read the guide →](https://straightflushplumbingoc.com/insurance/does-insurance-cover-slab-leaks.html)
 
 
 
@@ -1784,7 +1788,72 @@ What to know before you call your provider.
 
 Understanding your options once the leak is found.
 
- [Ask us directly →](https://straightflushplumbingoc.com/contact.html)
+ [Use the decision guide →](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html)
+
+
+
+
+### What Does Detection Cost?
+
+
+
+The factors that affect the price of finding a hidden leak.
+
+ [See the cost guide →](https://straightflushplumbingoc.com/guides/leak-detection-cost.html)
+
+
+
+
+
+
+
+
+
+ Leak detection FAQ
+
+
+## Common questions
+
+
+
+ How do you find a leak without cutting into walls or floors? +
+
+
+We isolate the system with pressure testing, then use acoustic listening equipment to hear the sound of escaping water, thermal imaging to spot temperature changes from hot-water leaks, and electronic locating to trace the pipe's path. That narrows the leak to a small, specific area before any wall, floor, or concrete is opened, so any access needed stays as small as possible.
+
+
+
+
+ What is the difference between leak detection and slab leak detection? +
+
+
+General leak detection covers leaks anywhere in the system, including walls, ceilings, fixtures, and under floors. Slab leak detection is the same diagnostic approach focused on pressurized water lines running beneath a concrete foundation, where acoustic and thermal tools pinpoint the leak without breaking up the slab.
+
+
+
+
+ Will my insurance cover leak detection? +
+
+
+Coverage depends on your policy and the cause of the loss. Many policies address the resulting water damage rather than the plumbing repair itself. We document what we find so you have clear evidence for a claim, and our insurance resources cover what to ask your provider.
+
+
+
+
+ How much does leak detection cost? +
+
+
+Cost depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Lance will walk you through what to expect for your specific situation, and our leak detection cost guide explains the factors that affect price.
+
+
+
+
+ What happens after you find the leak? +
+
+
+Once we have located it, we explain what we found and your realistic options, including spot repair, reroute, or repipe, and why one may make more sense than another for your home. No repair is recommended before you understand the diagnosis.
+
+
 
 
 
@@ -1890,7 +1959,7 @@ Most slab leaks in Orange County homes trace back to aging or corroded copper pi
 
 
 
-Pressurized water escaping a pipe underground makes a distinct sound. Our acoustic equipment isolates that sound through the slab, narrowing the leak's location to a small, specific area before anyone picks up a hammer.
+Pressurized water escaping a pipe underground makes a distinct sound. Our acoustic equipment isolates that sound through the slab, narrowing the leak's location to a small, specific area before anyone picks up a hammer. It is the same diagnose-first process we bring to older homes across South Orange County — see how we approach [slab leaks in 1970s–1990s Orange County homes](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html).
 
 
 
@@ -2010,6 +2079,30 @@ A single, accessible leak is often a candidate for a spot repair. Repeated leaks
 
 
 
+ What is the difference between a slab leak and an underground water leak? +
+
+
+A slab leak is an underground leak, but not every underground leak sits under the slab. Supply lines can also run beneath the yard, driveway, or patio. We pressure test and isolate to confirm which line is losing water, then use acoustic listening and line tracing to determine whether the leak is under the foundation or outside it. That distinction changes both the repair and the cost.
+
+
+
+
+ Can you detect a slab leak under tile, hardwood, or laminate? +
+
+
+Yes. Acoustic listening works through finished flooring because it tracks the sound of pressurized water escaping the pipe rather than looking at the surface. Thermal imaging is most useful on hot water leaks and can be limited by thick flooring, so acoustic detection usually leads. The goal is to narrow the leak to a small area before any flooring or concrete is opened.
+
+
+
+
+ Does homeowners insurance cover slab leak detection and repair? +
+
+
+Coverage varies by policy and is never something we can promise. Many policies handle the resulting water damage and access to the pipe, while the pipe repair itself is sometimes treated as a maintenance item. A [documented diagnosis](https://straightflushplumbingoc.com/insurance/documentation-checklist.html) with the affected line, location, and findings typically makes the claim conversation much easier. See [does insurance cover slab leaks](https://straightflushplumbingoc.com/insurance/does-insurance-cover-slab-leaks.html) for more detail.
+
+
+
+
 
 
 
@@ -2027,6 +2120,10 @@ Get an accurate answer before anyone touches your floor.
 
 
  [Schedule Slab Leak Detection](https://straightflushplumbingoc.com/contact.html)
+
+
+
+See how this plays out on real local jobs in our [Laguna Niguel case studies](https://straightflushplumbingoc.com/case-studies/).
 
 
 <!-- ===== https://straightflushplumbingoc.com/services/plumbing-repair.html ===== -->
@@ -2932,7 +3029,7 @@ Don't wait. Active leaks cause damage fast. Straight Flush Plumbing is available
 
 <!-- ===== https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html ===== -->
 
-# South OC Slab Leak Specialist | 1970s–90s Copper & Clay Soils | Straight Flush
+# South OC Slab Leak Specialist | Straight Flush Plumbing
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html
 > Section: Specialty
@@ -3005,7 +3102,7 @@ Warm or hot spots on the floor, a water meter that moves with everything off, un
 
 <!-- ===== https://straightflushplumbingoc.com/plumbing-health-score.html ===== -->
 
-# Home Plumbing Health Score | Free Instant Risk Assessment | Straight Flush Plumbing
+# Home Plumbing Health Score | Free Risk Assessment
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/plumbing-health-score.html
 > Section: Tools
@@ -3571,7 +3668,7 @@ Straight Flush Plumbing & Leak Detection is headquartered in Laguna Niguel — t
 
 
 
-Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit.
+Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit. Homes of that era, with aging copper lines and South OC's expansive clay soils, are exactly the situation our [South Orange County slab leak specialist service](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html) is built around.
 
 
 

@@ -184,7 +184,7 @@ The specific process for diagnosing leaks beneath a concrete foundation.
 
 What to know before you call your provider.
 
- [Ask us directly →](https://straightflushplumbingoc.com/contact.html)
+ [Read the guide →](https://straightflushplumbingoc.com/insurance/does-insurance-cover-slab-leaks.html)
 
 
 
@@ -195,7 +195,72 @@ What to know before you call your provider.
 
 Understanding your options once the leak is found.
 
- [Ask us directly →](https://straightflushplumbingoc.com/contact.html)
+ [Use the decision guide →](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html)
+
+
+
+
+### What Does Detection Cost?
+
+
+
+The factors that affect the price of finding a hidden leak.
+
+ [See the cost guide →](https://straightflushplumbingoc.com/guides/leak-detection-cost.html)
+
+
+
+
+
+
+
+
+
+ Leak detection FAQ
+
+
+## Common questions
+
+
+
+ How do you find a leak without cutting into walls or floors? +
+
+
+We isolate the system with pressure testing, then use acoustic listening equipment to hear the sound of escaping water, thermal imaging to spot temperature changes from hot-water leaks, and electronic locating to trace the pipe's path. That narrows the leak to a small, specific area before any wall, floor, or concrete is opened, so any access needed stays as small as possible.
+
+
+
+
+ What is the difference between leak detection and slab leak detection? +
+
+
+General leak detection covers leaks anywhere in the system, including walls, ceilings, fixtures, and under floors. Slab leak detection is the same diagnostic approach focused on pressurized water lines running beneath a concrete foundation, where acoustic and thermal tools pinpoint the leak without breaking up the slab.
+
+
+
+
+ Will my insurance cover leak detection? +
+
+
+Coverage depends on your policy and the cause of the loss. Many policies address the resulting water damage rather than the plumbing repair itself. We document what we find so you have clear evidence for a claim, and our insurance resources cover what to ask your provider.
+
+
+
+
+ How much does leak detection cost? +
+
+
+Cost depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Lance will walk you through what to expect for your specific situation, and our leak detection cost guide explains the factors that affect price.
+
+
+
+
+ What happens after you find the leak? +
+
+
+Once we have located it, we explain what we found and your realistic options, including spot repair, reroute, or repipe, and why one may make more sense than another for your home. No repair is recommended before you understand the diagnosis.
+
+
 
 
 
