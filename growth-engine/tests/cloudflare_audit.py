@@ -67,12 +67,14 @@ def main():
         return 2
 
     print("=== Cloudflare crawler-block audit ===")
+    # /user/tokens/verify only works for user-owned tokens; account-owned
+    # tokens (cfat_...) fail it but work for zone operations. Warn, don't bail.
     st, d = call("/user/tokens/verify", token)
-    show("Token verify", st, d)
     if not d.get("success"):
-        print("\nToken invalid or lacks permission. Check scopes:")
-        print("  Zone:Read, Zone Settings:Edit, Zone WAF:Edit, Bot Management:Edit")
-        return 2
+        print("note: /user/tokens/verify failed (expected for account-owned tokens);"
+              " continuing with zone lookup.")
+    else:
+        show("Token verify", st, d)
 
     zone_id = args.zone
     if not zone_id:

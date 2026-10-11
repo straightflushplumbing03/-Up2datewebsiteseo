@@ -5,6 +5,30 @@
 
 ---
 
+## ✅ RESOLVED 2026-10-11 — root cause: Under Attack mode
+
+**Root cause (confirmed via Cloudflare API):** zone `straightflushplumbingoc.com`
+(id `0e9dba51558951ac91fadb2c0e28abde`) had **Under Attack mode ON** —
+`security_level = "under_attack"`, set `2026-09-20T20:04:22Z`. Under Attack mode
+issues a Managed Challenge (`cf-mitigated: challenge`, HTTP 403) to every
+request, and crawlers do not run the JavaScript challenge, so all of them were
+blocked. Bot Fight Mode was **off**; it was not a factor.
+
+**Fix applied (narrowest, reversible):**
+`PATCH /zones/{id}/settings/security_level` → `{"value": "medium"}` at
+`2026-10-11T07:27:51Z`. Nothing else was changed — Bot Fight Mode, WAF, and all
+other settings left as-is. Reverting is one API call back to `under_attack`.
+
+**Verification (2026-10-11T07:28:05Z):** Googlebot, Bingbot, GPTBot,
+OAI-SearchBot, ClaudeBot, PerplexityBot, Applebot and curl all returned
+**HTTP 200 with no `cf-mitigated` header** on `/`; `/robots.txt`, `/sitemap.xml`,
+`/llms.txt`, `/services/leak-detection.html` all **200**.
+
+**Still outstanding after the fix:** the AI-readable files (`/llms-full.txt`,
+`/md/**`) return **404** because this PR is not merged yet. Merge to publish them.
+
+---
+
 ## Phase 1 — Audit findings
 
 ### Deployment path (confirmed)
