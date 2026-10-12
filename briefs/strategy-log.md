@@ -5,6 +5,35 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-13 — Daily research run (Brave, rate-limited to 9 queries)
+
+**Status:** Knowledge-base + report only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/daily-2026-10-13`.
+
+- **Change:** Daily HQ-D run. Technical health re-verified (all crawler UAs + key
+  paths 200; ISSUE-001 still RESOLVED; AI-readable files `/llms.txt`,
+  `/llms-full.txt`, `/md/index.md` now live 200). Ran a 9-query Brave conventional
+  sweep (rate-limited — 429 after 9). Appended +9 `ai_visibility_history.jsonl`,
+  +88 `competitor_observations.jsonl`, +2 `technical_health_history.jsonl`. Added
+  two `INDUSTRY_WATCH.md` entries, 7 new + 1 re-scored `INNOVATION_IDEAS.md` ideas,
+  a `COMPETITOR_DIRECTORY.md` 2026-10-13 section, and `reports/daily/2026-10-13.md`.
+- **Reason:** Standing daily intelligence loop; evidence before conclusions.
+- **Target:** knowledge base + report only.
+- **Competitor insight:** slab intent → leak specialists with dedicated **per-city**
+  slab pages (`leakstar.com` `/slab-leak-detection-service-laguna-niguel.html`,
+  verified 200); repipe intent → repipe-specialist domains; "best" queries →
+  aggregators (Yelp 3/20 on "best plumber in Laguna Niguel"). SF absent 0/9.
+- **Key guideline finding:** Google **deprecated the FAQ rich result** (docs
+  removed; feature no longer shown; historically limited to well-known gov/health
+  sites). FAQ *content* stays for AEO, but `FAQPage` no longer yields a Google rich
+  result — idea-2026-10-12-07 re-scored.
+- **Expected outcome:** durable dated record; next run resumes the deferred queries.
+- **Result:** research committed; no code change warranted (evidence supports
+  proposals, not immediate safe edits). `validate_knowledge_base.py` run on KB edits.
+- **Keep/modify/revert:** keep.
+
+---
+
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**

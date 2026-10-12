@@ -1,8 +1,19 @@
 # Integration Status — Straight Flush Growth Engine
 
-Verified **2026-10-12** (daily run) in the active OpenHands Cloud environment; a
-check is only marked ✅ after an actual successful call. Prior verification
-2026-10-09.
+Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
+OpenHands Cloud environment; a check is only marked ✅ after an actual successful
+call. Prior verification 2026-10-09.
+
+> **Re-verified 2026-10-13 (daily run):** crawler access ✅ **PASS**
+> (`crawler_access_check.sh` exit 0 — Googlebot/Bingbot/GPTBot/OAI-SearchBot/
+> ClaudeBot/PerplexityBot/Applebot + curl all 200, no `cf-mitigated`; ISSUE-001
+> remains RESOLVED); key paths `/`, `/llms.txt`, `/llms-full.txt`, `/md/index.md`,
+> `/services/leak-detection.html`, `/cities/laguna-niguel.html` → HTTP 200 ✅
+> (ISSUE-001 AI-readable-file follow-up **deployed**). **Brave Search ⚠️ PARTIAL**
+> — 9/9 queries returned 200/parseable, then HTTP **429**; sweep stopped per the
+> Brave-only rule (10 queries deferred, not failed). Google Search Central primary
+> docs ✅ 200. Google Search Console, GA4, and GBP remain **not connected** ❌
+> (blocker unchanged — see P-002).
 
 > **Phase 2 re-verified 2026-10-12 (inspection run):** `GET /api/automation/v1`
 > 200 ✅ — HQ-D and HQ-W **enabled/ACTIVE**; `Growth Engine A`, `Scout`,

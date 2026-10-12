@@ -193,6 +193,44 @@ answer-first Academy/FAQ content. Confidence: **medium**.
 
 ---
 
+## 2026-10-13 — Google Search Central deprecates the FAQ rich result
+
+- **What changed / observed:** Google Search Central removed the FAQ rich-result
+  documentation; the feature "is no longer shown in Google Search results"
+  (announced in the Search Central changelog in May 2026). Any `FAQPage`
+  structured data now earns **no** rich-result eligibility. A separate, older
+  changelog entry also states the FAQ feature "is only shown for well-known,
+  authoritative government and health websites" — which for a residential plumbing
+  business means **no eligibility at all** either way. Fetched directly from the
+  primary source (page emitted Oct 2026; page `Last updated 2026-10-08`).
+- **Why it matters to Straight Flush:** Several site pages and ideas (e.g.
+  `idea-2026-10-12-07`, and pages carrying `FAQPage` JSON-LD) were justified, in
+  part, by FAQ rich-result eligibility. That justification is now void. The FAQ
+  *content* can still help readers and AI answer engines (AEO), but it must no
+  longer be described as producing a Google FAQ rich result. This is a
+  documentation/reporting correctness matter — not a reason to delete FAQ pages.
+- **Source(s):** https://developers.google.com/search/blog (Search Central
+  changelog, FAQ entries) · https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  · **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** Update `idea-2026-10-12-07` scoring/notes and the
+  FAQ-related framing; keep answer-first FAQ content for AEO/human value. No code
+  change warranted this run (re-scoring is a knowledge-base edit, not a website edit).
+
+## 2026-10-13 — EPA WaterSense household-leak statistics (primary source)
+
+- **What changed / observed:** EPA WaterSense states the average family can waste
+  **180 gallons per week / 9,400 gallons annually** from household leaks (≈ 300
+  loads of laundry), and that household leaks waste **~900 billion gallons
+  annually nationwide**. Fetched directly from EPA.
+- **Why it matters to Straight Flush:** These are *primary-source* figures usable in
+  leak-detection education content without inventing statistics or crossing into
+  Level-3 claims. They are the EPA's numbers, cite EPA, and are safe to attribute.
+- **Source(s):** https://www.epa.gov/watersense/statistics-and-facts · **Confidence:** high (fetched).
+- **Proposed action (if any):** cite EPA figures on an education page (candidate;
+  owner review for any local framing). See `INNOVATION_IDEAS.md` idea-2026-10-13-04.
+
+---
+
 ## 2026-10-11 (seeded from the 2026-10-11 run)
 
 - Google Search Central published/updated the Search Console AI (generative)
