@@ -5,6 +5,36 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-12 — HQ-W Weekly Strategic Review (second dispatch, 16:26 UTC, run `f0e419f6`)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2) — **amends the
+existing weekly PR #32, not a new PR.**
+
+- **Change:** Re-verified the week's findings for the same Monday job. Appended an
+  Appendix to `growth-engine/reports/weekly/2026-10-12.md`; appended this entry;
+  added one `technical_health_history.jsonl` row for the 16:26Z crawler re-check.
+- **Reason:** The HQ-W job was dispatched twice on 2026-10-12 (13:00 UTC → `ff3478a3`
+  wrote the review; 16:26 UTC → `f0e419f6` this run). Single-PR rule → update the
+  existing branch/PR rather than duplicate.
+- **Re-verified (evidence-first):** crawler access **PASS** (7 crawler UAs + curl on
+  `/`, `robots.txt`, `sitemap.xml`, `llms.txt` all **200**, no `cf-mitigated`;
+  ISSUE-001 stays **RESOLVED**); `/llms-full.txt` and `/md/services/leak-detection.md`
+  → **200**; live-vs-canonical weekly prompt → **no drift**; `validate_knowledge_base.py`
+  → **OK (133 files)**.
+- **New dated observation:** the measurement channel is now **fully degraded** —
+  Brave answered a lone request with 200 but returned **HTTP 429 on all 10 sweep
+  queries**, and DuckDuckGo **Lite and HTML both returned HTTP 202** (anti-bot).
+  No new visibility rows could be honestly collected this dispatch. Recorded as
+  `inconclusive` (provider failure) — **missing ≠ zero**.
+- **Competitor insight:** none new this dispatch (no usable result sets). §3 of the
+  review stands unchanged.
+- **Expected outcome / result:** no change to the §5 ranking or §6 top-three
+  priorities; provider-degradation item reinforced. **Keep.**
+- **Decision:** keep; no experiment or status change.
+
+---
+
 ## 2026-10-12 — HQ-W Weekly Strategic Review (first weekly; week of 2026-10-09 → 10-12)
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**
