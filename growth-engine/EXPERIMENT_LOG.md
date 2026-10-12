@@ -26,7 +26,13 @@ Templates for new entries:
 
 ---
 
-## exp-2026-10-09-cloudflare-crawler-access — (proposed, needs owner action)
+## exp-2026-10-09-cloudflare-crawler-access — (RESOLVED 2026-10-11)
+> **Outcome (recorded 2026-10-12, weekly review):** **confirmed / closed.**
+> Owner applied `PATCH /zones/{id}/settings/security_level` → `medium`
+> 2026-10-11T07:27:51Z. Verified 2026-10-11T07:28:05Z and again 2026-10-12:
+> all crawler UAs + curl → 200, no `cf-mitigated`. Hypothesis confirmed.
+> **Decision: keep** (no revert — the block was the bug). See `KNOWN_ISSUES.md`
+> ISSUE-001.
 - **Hypothesis:** ~100% of the site's organic/AI discoverability is currently
   suppressed by the Cloudflare managed challenge; lifting it restores crawl
   access and is the single highest-impact change available.
@@ -39,3 +45,25 @@ Templates for new entries:
 - **Follow-up:** re-run `/tmp` crawler check after owner confirms; expect 200
   and no `cf-mitigated` header.
 - **Confidence:** high. **Decision:** escalate to owner (see `proposals/`).
+
+---
+
+## exp-2026-10-09-measurement-providers — conventional-proxy sweep (week 2026-10-09 → 10-12)
+- **Hypothesis:** a free conventional search proxy (Brave → Bing → DuckDuckGo) can
+  measure whether Straight Flush appears in organic results for local-intent queries.
+- **Evidence / results (all recorded in `data/ai_visibility_history.jsonl`):**
+  - Brave Search — **failed**: HTTP 429 to our egress IP for most of the week.
+  - Bing — **failed**: HTTP 200 but **non-localized** results (identical across 5
+    cities; dictionaries/ImDb/streaming). Unusable for local intent.
+  - DuckDuckGo **HTML** — **failed**: HTTP 202 anti-bot (2026-10-10, 2026-10-12).
+  - DuckDuckGo **Lite** — **stalled**: worked 2026-10-12 (36 rows) then returned
+    **HTTP 202 anti-bot on all 12 probe queries** in the weekly run.
+  - **Observed result:** across 107 executed queries, Straight Flush was **absent
+    from every executed query every day** (0 recommended / 0 mentioned / 0 cited).
+    Because the channel is degraded and non-localized in part, this is a
+    conventional-proxy observation only — **not** a ranking or AI-visibility measure.
+- **Confounders:** provider rate-limiting/anti-bot; non-localized result blocks;
+  Brave vs DDG samples are not directly comparable.
+- **Confidence:** low (channel quality). **Decision:** **revise** — retain a paid
+  SerpAPI/Brave API key or a Perplexity key as the path forward (see `proposals/`
+  and weekly report §7). Brave kept as fallback only; Bing dropped.

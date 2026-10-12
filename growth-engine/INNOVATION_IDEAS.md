@@ -197,6 +197,21 @@ Status values: `candidate` · `prioritized` · `proposed` · `parked` · `reject
   Reversibility 5. **Risk gate:** ✅ L2 (read-only API compare). **Status:**
   `candidate`.
 
+### HQ-W weekly review (2026-10-12) — status transitions
+
+Appended, not rewritten (history preserved). The live HQ-W prompt was diffed
+against the canonical file this run: **no drift** (clean diff), so IDEA-14 applies
+to HQ-D only for now.
+
+| Idea | Previous | New (this week) | Reason |
+|---|---|---|---|
+| IDEA-2026-10-12-13 commit-early checkpointing | prioritized | **approved (Priority 3)** | Addresses ISSUE-006 (lost HQ-D run); prompt-text only, L2. |
+| IDEA-2026-10-12-12 Automation B (no-LLM health check) | prioritized | **approved (Priority 3)** | Platform caps timeout at 1800 s; deterministic task, zero tokens, L2. |
+| IDEA-2026-10-12-08 per-city slab-leak sections | candidate | **prioritized (Priority 2)** | Matches the demonstrated competitor gap (dedicated slab page per Tier-1 city). |
+| IDEA-2026-10-12-14 automation drift check | candidate | **prioritized** | Weekly live-vs-canonical diff is cheap and would have caught the HQ-D drift. |
+| IDEA-2026-10-12-01 leak-or-no-leak tool | prioritized | **prioritized (Priority 2)** | Additional evidence this week: recurring competitor per-city slab pages do not include an interactive tool. |
+| IDEA-2026-10-12-03 FAQPage on method pages | prioritized | **prioritized (Priority 2)** | Competitor FAQPage features re-verified this run (coastplumbing.com, leak-detection-pro.com). |
+
 ---
 
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)
