@@ -4,6 +4,13 @@ Verified **2026-10-12** (daily run) in the active OpenHands Cloud environment; a
 check is only marked ✅ after an actual successful call. Prior verification
 2026-10-09.
 
+> **Phase 2 re-verified 2026-10-12 (inspection run):** `GET /api/automation/v1`
+> 200 ✅ — HQ-D and HQ-W **enabled/ACTIVE**; `Growth Engine A`, `Scout`,
+> `Strategist`, and `Sentinel` now **disabled** (consolidation complete).
+> `PATCH {"timeout":3600}` → **HTTP 422** (platform cap 1800 s, re-confirmed).
+> Google Search Central primary sources → HTTP 200 ✅ (3/3). Google Search Console,
+> GA4, and GBP remain **not connected** ❌ (blocker unchanged — see P-002).
+
 > **Re-verified 2026-10-12** (Intelligence HQ setup run): OpenHands automation API
 > 200 ✅; GitHub repo/API ✅ (`gh`/REST, `GITHUB_TOKEN` present, repo read/write);
 > active repo clone ✅ (`straightflushplumbing03/-Up2datewebsiteseo`, `main`);

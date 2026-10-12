@@ -172,6 +172,31 @@ Status values: `candidate` · `prioritized` · `proposed` · `parked` · `reject
   Reversibility 5. **Risk gate:** ✅ L2 (EPA attribution only). **Status:**
   `candidate`.
 
+### Phase 2 (infrastructure / ops) — 3 ideas, from the 2026-10-12 inspection
+
+- **IDEA-2026-10-12-12 — Ship Automation B as a deterministic no-LLM health check.**
+  *Observation:* the platform **hard-caps automation `timeout` at 1800 s** and
+  `crawler_access_check.sh` is a pure HTTP check that needs no reasoning (API/HTTP
+  verified 2026-10-12). Running it as an LLM agent spends tokens on a fixed task.
+  Impact 4 · Evidence 5 (platform-documented + repo script) · Effort-to-value 5 ·
+  Reversibility 5. **Risk gate:** ✅ L2 (custom no-LLM script; see
+  `automations/README.md` B). **Status:** `prioritized`.
+- **IDEA-2026-10-12-13 — Commit-early checkpointing in the HQ-D prompt.**
+  *Observation:* HQ-D run `2026-10-12T05:33:52Z` **timed out before committing**
+  any report, so the run produced zero durable output (OpenHands API, fetched
+  2026-10-12). *Idea:* instruct the agent to commit a minimal skeleton report +
+  `.jsonl` rows within the first ~10 minutes, then amend as evidence lands — a
+  partial commit is recoverable, a lost run is not. Impact 5 · Evidence 4 ·
+  Effort-to-value 5 · Reversibility 5. **Risk gate:** ✅ L2 (prompt text only).
+  **Status:** `prioritized` — top-scoring of the Phase-2 set.
+- **IDEA-2026-10-12-14 — Automation drift check (live vs. canonical prompt).**
+  *Observation:* this run found the **live HQ-D prompt had drifted** from the
+  committed `intelligence-hq-daily.prompt.md` (a bounded revision was live while
+  the canonical file was unchanged); a weekly deterministic diff would have caught
+  it immediately (verified 2026-10-12). Impact 3 · Evidence 5 · Effort-to-value 4 ·
+  Reversibility 5. **Risk gate:** ✅ L2 (read-only API compare). **Status:**
+  `candidate`.
+
 ---
 
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)

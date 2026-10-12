@@ -66,7 +66,7 @@ Each issue: evidence, impact, fix, status, approval level.
 
 ---
 
-## ISSUE-005 — Duplicate automation coverage  [LOW · CONSOLIDATING 2026-10-12]
+## ISSUE-005 — Duplicate automation coverage  [LOW · CONSOLIDATED 2026-10-12]
 
 - **Evidence:** "Strategist: Daily SEO Action Plan" (06:30 PT), "Scout: Daily
   Competitor Intel" (05:30 PT) and "Sentinel" retry overlap in scope; Automation A
@@ -76,8 +76,13 @@ Each issue: evidence, impact, fix, status, approval level.
 - **Fix (in progress):** the owner's Intelligence HQ replaces Automation A.
   `SFPL Intelligence HQ Daily 6 AM` (`0 6 * * *`) + `SFPL Intelligence HQ Weekly
   Review` (`0 6 * * 1`) were created 2026-10-12; **Automation A was disabled** to
-  avoid two overlapping 06:00 PT runs. Scout/Strategist/Sentinel remain pending an
-  owner decision (they may still be deleted once HQ-D runs cleanly for a few days).
+  avoid two overlapping 06:00 PT runs.
+- **Consolidation completed 2026-10-12 (Phase 2):** the three legacy agents were
+  **disabled** — `Scout: Daily Competitor Intel` (`30 5 * * *`),
+  `Strategist: Daily SEO Action Plan` (`30 6 * * *`), and
+  `Sentinel: Scout Auto-Retry` (`30 7,11 * * *`). HQ-D (daily) + HQ-W (weekly) are
+  now the only active intelligence loops. Only one automation occupies the 06:00 PT
+  slot.
 - **Approval:** Level 2 (automation config).
 
 ---
