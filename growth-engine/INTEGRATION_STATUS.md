@@ -46,6 +46,7 @@ check is only marked ✅ after an actual successful call. Prior verification
 | Site crawler access | `crawler_access_check.sh` exit 0; all UAs 200 (2026-10-12) | ISSUE-001 **resolved** — no `cf-mitigated` |
 | Brave Search (conventional proxy) | **28/28 queries HTTP 200 with parseable organic results (2026-10-12 HQ-D run #2)** | Recovered this run; used for the run-#2 sweep (no 429) |
 | DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12 run #1) | Used for the 2026-10-12 run-#1 visibility sweep |
+| DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12) | Used for the 2026-10-12 visibility sweep |
 | Bun/curl/dns/TLS checks | see `data/technical_health_history.jsonl` | |
 
 ## Partially working / intermittent ⚠️
