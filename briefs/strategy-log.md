@@ -5,6 +5,33 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
+
+**Status:** Additive docs + corrections only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/setup-2026-10-12`.
+
+- **Change:** Phase-2 inspection of OpenHands Cloud / Intelligence HQ. (1) Disabled
+  the three legacy overlapping automations — Scout (`30 5 * * *`), Strategist
+  (`30 6 * * *`), Sentinel (`30 7,11 * * *`) — leaving HQ-D (daily) + HQ-W (weekly)
+  as the only active intelligence loops. (2) Re-synced the **live HQ-D prompt** to
+  the committed canonical `automations/intelligence-hq-daily.prompt.md`
+  (`prompt_chars` 10443) after confirming it had drifted; verified HQ-W was already
+  identical. (3) De-duplicated a merge-artifact preamble block in `INDUSTRY_WATCH.md`
+  (no dated entry removed). (4) Added Phase-2 entries to `INDUSTRY_WATCH.md`,
+  `INNOVATION_IDEAS.md` (IDEA-12/13/14) and the 2026-10-12 daily report.
+- **Reason:** owner-requested inspection/reporting; reconcile live vs. repo state
+  and close the automation-redundancy gap without touching production.
+- **Target:** automation config + knowledge base only.
+- **Competitor insight:** none new this phase (no new SERP sweep); re-verified the
+  three Google Search Central primary sources cited in the daily run (all HTTP 200).
+- **Expected outcome:** one daily loop, no drift between live prompt and repo, clean
+  knowledge-base structure.
+- **Result:** `validate_knowledge_base.py` → OK (133 HTML files, exit 0); Google
+  Search Central sources 200; timeout cap re-confirmed HTTP 422 at 1800 s.
+- **Keep/modify/revert:** **keep.** No production change to revert.
+
+---
+
 ## 2026-10-12 — Intelligence HQ setup + first-run verification
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**
