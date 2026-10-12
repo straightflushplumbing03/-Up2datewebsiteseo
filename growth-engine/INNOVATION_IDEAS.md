@@ -91,6 +91,41 @@ Status values: `candidate` · `prioritized` · `proposed` · `parked` · `reject
 - **Effort:** high. **Reversibility:** high. **Risk gate:** ⛔ owner produces media.
 - **Status:** `parked` (needs owner media + measurement).
 
+### Supplementary ideas (concurrent 2026-10-12 run — additive)
+
+- **IDEA-2026-10-12-07 — Quote EPA WaterSense leak figures (with attribution) on
+  high-water-bill pages.** *Evidence:* EPA statistics fetched 2026-10-12 (URLs in
+  `INDUSTRY_WATCH.md`). Gives `why-is-my-water-bill-so-high` /
+  `water-meter-still-moving` a citable figure instead of generic language — no
+  invented stats. Impact 3 · Evidence 4 · Effort-to-value 4 · Reversibility 5.
+  **Risk gate:** ✅ L2. **Status:** `candidate`.
+- **IDEA-2026-10-12-08 — Per-city "slab leak symptoms" self-check sections (Tier-1
+  cities).** *Evidence:* 2026-10-12 sweep — slab queries are dominated by
+  competitors with a **dedicated slab/leak page per city**
+  (evansleakdetection.com, calischoice.com, leakstar.com,
+  scottenglishplumbing.net); SF absent from all slab queries tested. Real
+  diagnostic content (symptoms → cause → detection), **not** a doorway page.
+  Impact 4 · Evidence 4 · Effort-to-value 3 · Reversibility 5. **Risk gate:** ✅ L2.
+  **Status:** `candidate` — top-scoring of the supplementary set.
+- **IDEA-2026-10-12-09 — Interactive "slab leak vs foundation crack" decision
+  helper.** *Evidence:* `briefs/strategy-log.md` (2026-10-07) names an interactive
+  slab-leak tool as the durable moat; `/plumbing-health-score.html` proves
+  feasibility; no competitor in the 2026-10-12 sweep surfaced an interactive tool.
+  Impact 5 · Evidence 3 · Effort-to-value 2 · Reversibility 5. **Risk gate:** ✅ L2.
+  **Status:** `candidate`.
+- **IDEA-2026-10-12-10 — Exact-match, non-spammy HQ-city landing pattern.**
+  *Evidence:* exact-match domains recur (proplumberlagunaniguel.com 6/20,
+  laguaniguelcaplumbingpros.com 4/20) — an observed presence pattern, not
+  causation. Impact 3 · Evidence 3 · Effort-to-value 4 · Reversibility 5.
+  **Risk gate:** ✅ L2 (must stay genuinely useful, not a doorway page).
+  **Status:** `candidate`.
+- **IDEA-2026-10-12-11 — Annual "Orange County leak-cost" data note from EPA +
+  published site facts.** *Evidence:* EPA WaterSense citable national figures
+  (fetched 2026-10-12). Aggregates *cited* public figures without publishing SF
+  prices (APPROVED_CLAIMS). Impact 3 · Evidence 3 · Effort-to-value 3 ·
+  Reversibility 5. **Risk gate:** ✅ L2 (EPA attribution only). **Status:**
+  `candidate`.
+
 ---
 
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)

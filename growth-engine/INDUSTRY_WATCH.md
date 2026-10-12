@@ -15,6 +15,28 @@ answering — a proxy for recurring homeowner intent, not a survey.
 
 ---
 
+
+### Supplementary entries (concurrent 2026-10-12 run — additive, not merged)
+
+- **Google: "AI Features and Your Website"** — primary source
+  https://developers.google.com/search/docs/appearance/ai-features (page **last
+  updated 2025-12-10 UTC**). States SEO best practices remain relevant for AI
+  Overviews / AI Mode; **"You don't need to create new machine readable files, AI
+  text files, or markup to appear in these features"**; a supporting link must be
+  indexed and snippet-eligible. *Relevance:* SF's `llms.txt` / `llms-full.txt` /
+  `/md/**` are harmless but **not a Google lever** — crawlability + helpful content
+  is. Confidence: **high**.
+- **EPA WaterSense household-leak statistics** — primary sources
+  https://www.epa.gov/watersense/statistics-and-facts and
+  https://www.epa.gov/watersense/fix-leak-week. Fetched: average family can waste
+  **180 gal/week / 9,400 gal/year** from leaks; a 1-drip/second faucet wastes
+  **>3,000 gal/year**; **a family of four exceeding 12,000 gal/month may have
+  serious leaks**; fixing leaks can save **~10% on water bills**. *Relevance:*
+  citable figures (with EPA attribution) for high-water-bill / hidden-leak pages —
+  no invented stats. Confidence: **high**.
+- **Note:** Brave Search was rate-limited (**HTTP 429**) this run; competitor
+  observations used DuckDuckGo HTML as the single permitted alternate.
+
 ## 2026-10-12
 
 ### Search guidance — Google Search Central (primary sources)
