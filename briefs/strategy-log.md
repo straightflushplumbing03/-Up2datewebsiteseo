@@ -5,6 +5,28 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-12 — Intelligence HQ setup + first-run verification
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/setup-2026-10-12`.
+
+- **Change:** Created the persistent **Straight Flush Plumbing Intelligence HQ** —
+  new `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, `reports/weekly/TEMPLATE.md`, and
+  canonical automation prompts; two OpenHands Cloud automations created
+  (`SFPL Intelligence HQ Daily 6 AM`, `0 6 * * *`, America/Los_Angeles;
+  `SFPL Intelligence HQ Weekly Review`, `0 6 * * 1`, America/Los_Angeles).
+  Automation A (duplicate 06:00 slot) disabled to avoid overlapping runs.
+- **Reason:** Owner request for a named, persistent, continuously improving SEO +
+  competitor intelligence system with durable GitHub-backed memory.
+- **Target:** knowledge base + automation config (no production pages).
+- **Competitor insight:** 7-query Brave sweep — SF absent 0/7; scottenglishplumbing.net
+  6/7, efficientplumbing.com 5/7; new repipe-domain observations
+  (allamericanrepipe.com, repipe1.com, pexrepipe-repiping.com) on the PEX query.
+- **Expected outcome:** each 06:00 PT run loads latest committed knowledge, researches,
+  records dated evidence, generates ≥5 scored ideas, and persists via PR.
+- **Result:** pending (first scheduled run will confirm). Manual first run produced
+  `reports/daily/2026-10-12.md` and committed knowledge.
+- **Keep/modify/revert:** keep.
 ## 2026-10-12 — HQ-D Morning AI Search & Competitor Intelligence (daily run)
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**

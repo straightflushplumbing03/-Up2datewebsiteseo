@@ -4,6 +4,30 @@ Verified **2026-10-12** (daily run) in the active OpenHands Cloud environment; a
 check is only marked ✅ after an actual successful call. Prior verification
 2026-10-09.
 
+> **Re-verified 2026-10-12** (Intelligence HQ setup run): OpenHands automation API
+> 200 ✅; GitHub repo/API ✅ (`gh`/REST, `GITHUB_TOKEN` present, repo read/write);
+> active repo clone ✅ (`straightflushplumbing03/-Up2datewebsiteseo`, `main`);
+> GitHub Pages ✅ (`status: built`, CNAME `straightflushplumbingoc.com`, source
+> `main` `/`); Brave Search ✅ (7/7 queries parsed, 8th HTTP 429 rate-limited);
+> Google Search Central primary docs ✅ (HTTP 200). Google Search Console, GA4,
+> and GBP remain **not connected** ❌ (blocker unchanged — see P-002).
+
+## Automations registered (verified 2026-10-12)
+
+| Name | id | Cron (America/Los_Angeles) | State | Repo connected |
+|---|---|---|---|---|
+| `SFPL Intelligence HQ Daily 6 AM` | `5dc89b41-6880-40e6-950c-14a635f7bd62` | `0 6 * * *` (daily incl. weekends) | **ACTIVE** | `straightflushplumbing03/-Up2datewebsiteseo` |
+| `SFPL Intelligence HQ Weekly Review` | `0582d219-de15-42c2-83b5-4bc92995edce` | `0 6 * * 1` (Mondays) | **ACTIVE** | same |
+
+- Both use the prompt preset with `repos` = the production repo, `timeout` = 1800 s.
+- Verified via `GET /api/automation/v1/{id}`: `enabled: True`, `state: ACTIVE`,
+  `trigger.timezone: America/Los_Angeles`, `preset_metadata.repos` set.
+- `next_run_at` is **not exposed** by this API version; scheduling is evidenced by
+  `enabled` + cron + `last_triggered_at` (daily: `2026-10-12T06:09:19Z` from the
+  verification dispatch).
+- Superseded duplicate at the same 06:00 slot (`Growth Engine A: Morning AI Search
+  Visibility`) is `INACTIVE`.
+
 ## Working ✅
 
 | Integration | Evidence | Notes |
