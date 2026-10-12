@@ -17,11 +17,26 @@
 
 ## OpenHands automation API gotchas (learned)
 - Host: `https://app.all-hands.dev`, auth `Authorization: Bearer $OPENHANDS_API_KEY`.
-- `GET /api/automation/v1?limit=N` returns `{"automations":[...], "total":N}` — the list key is `automations`, **not** `items`/`automations` fallback.
+- `GET /api/automation/v1?limit=N` returns `{"automations":[...], "total":N}`.
 - `GET /api/automation/v1/{id}/runs` returns `{"runs":[...]}`.
 - Create via `POST /api/automation/v1/preset/prompt` with `{name, prompt, trigger:{type:cron,schedule,timezone}, repos:[...], timeout}` → HTTP 201.
-- PATCH `{enabled:false}` disables (returns `state: INACTIVE`, `disabled_reason: manual`).
+- PATCH `{enabled:false}` disables (returns `state: INACTIVE`).
 - Timezone is honored and echoed back in `trigger.timezone`.
+- **`timeout` is hard-capped at 1800 s** (30 min) — 3600 → HTTP 422. Do not try to raise it; control run length via the prompt instead.
+- **`next_run_at` is NOT returned** by this API version. Prove scheduling with `enabled` + `trigger` + `last_triggered_at`.
+- The repo connection lives in `preset_metadata.repos` (a list of `{url:...}`).
+
+## Run-budget rule for these automations (ISSUE-006)
+An agent-driven research run will happily consume the whole 1800 s exploring
+search engines and never persist. Prompts MUST carry an explicit time budget
+(~40% research / 60% write+commit), a single allowed search provider, and a
+"stop researching and commit when near budget" instruction. A committed short
+report beats a rich lost one.
+
+## GitHub API note
+`github_update_pull_request` (MCP) can return **403 "Resource not accessible by
+personal access token"** on this repo, while `curl -X PATCH ... -H "Authorization:
+Bearer $GITHUB_TOKEN"` works (200). Use curl for PR title/body edits.
 
 ## Environment quirks
 - **Brave Search** (`search.brave.com/search?q=`) works with a normal browser UA for conventional-proxy research, but rate-limits with **HTTP 429** after ~7-8 rapid queries. Pace queries. Bing/DDG HTML are unreliable here.
