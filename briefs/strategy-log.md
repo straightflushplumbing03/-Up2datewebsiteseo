@@ -5,6 +5,38 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-12 — HQ-D Morning AI Search & Competitor Intelligence (daily run)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `growth-engine/daily-2026-10-12` (Level 2). Executed 2026-10-11 Sun 22:35 PDT.
+
+- **Trigger context:** canonical HQ-D prompt (`0 6 * * *`, America/Los_Angeles).
+  `repos` = this repository, `main`. Approval scope L1 + L2 only; no L3 actions.
+- **Technical health:** ISSUE-001 **still RESOLVED** — homepage + `/`, `/robots.txt`,
+  `/sitemap.xml`, `/llms.txt` return **200** to all 10 crawler UAs; no
+  `cf-mitigated`. `crawler_access_check.sh` exit 0; `validate_knowledge_base.py`
+  exit 0 (133 HTML files). 3 rows appended to `data/technical_health_history.jsonl`.
+- **Queries:** **36/36 succeeded** on **DuckDuckGo Lite** (conventional proxy) —
+  Brave returned HTTP **429** to our egress IP, Bing 200 but unreliable. 7 services
+  × 12 cities/counties + 2 "near me".
+- **SF visibility:** **absent on all 36** (0 recommended / 0 mentioned / 0 cited).
+  AI answer engines remain **unverified** (no credentials) — not zero.
+- **Competitors:** 35 domain rows appended to `data/competitor_observations.jsonl`
+  (≥3 appearances), counts **recomputed from raw results** (correcting an earlier
+  inflated estimate). New repeat competitors: primewestplumbing.com,
+  coastplumbing.com, lagunaniguelcaplumbingpros.com, leak-detection-pro.com,
+  dialonesonshine.com, americanleakcompany.com + 8 more. Aggregators dominate
+  (yelp.com 32/36). `COMPETITOR_DIRECTORY.md` updated.
+- **Knowledge files created:** `INDUSTRY_WATCH.md` (dated Google Search Central +
+  trade-press entries, all cited), `INNOVATION_IDEAS.md` (6 new ideas, prioritized).
+- **Change made:** none — no safe reversible edit was warranted.
+- **Top next actions:** (1) owner unlocks GSC/GA4/GBP (P-002); (2) ship IDEA-01
+  leak-or-no-leak tool (L2 PR); (3) ship IDEA-03 FAQPage schema on the 3 method pages.
+- **Process insight:** the Brave egress IP is now rate-limited (429); rotate to
+  DuckDuckGo Lite as the primary conventional proxy, keeping Brave as a fallback.
+
+---
+
 ## 2026-10-10 (later trigger) — duplicate-trigger reconciliation run
 
 **Status:** Additive documentation/data only. **No website page/schema/copy changed.**

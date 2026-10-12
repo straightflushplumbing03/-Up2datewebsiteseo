@@ -3,6 +3,28 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-12 — Daily run (HQ-D: 36-query sweep + industry/innovation files)
+
+**Added:** `reports/daily/2026-10-12.md`, `INDUSTRY_WATCH.md` (dated, cited
+industry + Google Search Central entries), `INNOVATION_IDEAS.md` (6 new
+prioritized ideas).
+
+**Updated:** `COMPETITOR_DIRECTORY.md` (36-query sweep: Tier A/B frequency,
+14 new repeat competitors, aggregator dominance; counts recomputed from raw
+results), `INTEGRATION_STATUS.md` (2026-10-12 verification). Appended observations
+to `data/ai_visibility_history.jsonl` (36 rows), `data/competitor_observations.jsonl`
+(35 rows), `data/technical_health_history.jsonl` (3 rows). Prepend to
+`briefs/strategy-log.md`.
+
+**Key findings:** ISSUE-001 remains **resolved** — all crawler UAs return 200.
+Straight Flush absent from all 36 conventional-proxy (DuckDuckGo Lite) queries
+(0/36). Provider rotated Brave → DuckDuckGo Lite (Brave now HTTP 429). AI answer
+engines still unverified (no credentials). Repipe queries are specialist-dominated;
+aggregators (yelp 32/36) dominate local discovery.
+
+**Not changed:** no website pages, schema, or copy modified — read-only research +
+additive documentation.
+
 ## 2026-10-11 — Daily run (visibility sweep + competitor refresh)
 
 **Added:** `reports/daily/2026-10-11.md`.
