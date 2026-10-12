@@ -1,25 +1,28 @@
 # Integration Status — Straight Flush Growth Engine
 
-Verified 2026-10-09 in the active OpenHands Cloud environment. A check is only
-marked ✅ after an actual successful call.
+Verified **2026-10-12** (daily run) in the active OpenHands Cloud environment; a
+check is only marked ✅ after an actual successful call. Prior verification
+2026-10-09.
 
 ## Working ✅
 
 | Integration | Evidence | Notes |
 |---|---|---|
-| OpenHands automation API | `GET /api/automation/v1` → 200 | `OPENHANDS_API_KEY` present |
-| GitHub (repo + API) | `gh api user` → `straightflushplumbing03` | `GITHUB_TOKEN`; scopes enough for repo read/write + PRs |
-| Active repo clone | `git fetch origin main` | `straightflushplumbing03/-Up2datewebsiteseo`, branch `main` |
+| OpenHands automation API | `GET /api/automation/v1?limit=1` → 200 (2026-10-12) | `OPENHANDS_API_KEY` present |
+| GitHub (repo + API) | `GET /api/github.com/user` → `straightflushplumbing03` (2026-10-12) | token available as `github_token` / `GITHUB_PERSONAL_ACCESS_TOKEN`; repo read/write + PRs |
+| Active repo clone | `git fetch origin main` → clean | `straightflushplumbing03/-Up2datewebsiteseo`, branch `main` |
 | GitHub Pages deployment | Pages API: `status: built`, CNAME set | legacy build from `main` `/` |
-| Brave Search (conventional proxy) | HTTP 200 with parseable results | Used for competitor baseline |
+| Site crawler access | `crawler_access_check.sh` exit 0; all UAs 200 (2026-10-12) | ISSUE-001 **resolved** — no `cf-mitigated` |
+| DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12) | Used for the 2026-10-12 visibility sweep |
 | Bun/curl/dns/TLS checks | see `data/technical_health_history.jsonl` | |
 
 ## Partially working / intermittent ⚠️
 
 | Integration | Issue |
 |---|---|
+| Brave Search scraping | HTTP **429** to our egress IP on 2026-10-12 (used DuckDuckGo Lite instead) |
 | Bing search scraping | HTTP 200 returned but organic anchors not reliably parseable here |
-| DuckDuckGo HTML | 202 (anti-bot/rate-limit) on this run |
+| DuckDuckGo HTML | 202 (anti-bot/rate-limit) on prior runs; Lite endpoint worked 2026-10-12 |
 
 ## Not available ❌
 

@@ -5,8 +5,8 @@ Rolling list built from **actual observations** (raw rows in
 real queries are listed. Correlation ≠ causation: a feature being present is
 *evidence a competitor has it*, not proof it caused a recommendation.
 
-**Baseline observation date:** 2026-10-09 · **Latest daily run:** 2026-10-10 (`reports/daily/2026-10-10.md`)
-**Platform:** Brave Search (conventional proxy) — **not** an AI answer engine.
+**Baseline observation date:** 2026-10-09 · **Latest daily run:** 2026-10-12 (`reports/daily/2026-10-12.md`)
+**Platform:** Brave Search (2026-10-09/10/11) and DuckDuckGo Lite (2026-10-12) — conventional proxies, **not** AI answer engines.
 **Baseline queries:** plumber in Laguna Niguel · slab leak detection Laguna Niguel · emergency plumber Laguna Niguel · leak detection Orange County · best plumber in Laguna Niguel
 **2026-10-09 daily queries (11 succeeded):** plumber in {Dana Point, San Clemente, Mission Viejo, Aliso Viejo} · leak detection {Laguna Niguel, Mission Viejo, Aliso Viejo} · slab leak repair Laguna Niguel · slab leak detection {Dana Point, San Clemente} · water heater repair Laguna Niguel
 **2026-10-10 daily queries (6 succeeded):** plumber in {Irvine, Laguna Hills, Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest}
@@ -15,6 +15,62 @@ real queries are listed. Correlation ≠ causation: a feature being present is
 **Frequency across all records to date (baseline + daily runs), by distinct query:** calischoice.com 6 · scottenglishplumbing.net 5 · rooterhero.com 5 · olsonsuperior.com 4 · allclearplumbingpros.com 4 · leakstar.com 4 · barkerandsonsplumbing.com 3 · rotorooter.com 3 · dcplumbing.net 3 · emergencyresponseplumbers.com 3 · benjaminfranklinplumbing.com 3 · lagunaniguelplumber.org 3 · reliable-rooter/rotorooter franchises recurring across all 6 general city queries on 2026-10-10.
 
 ---
+
+## 2026-10-12 update — 36-query sweep (DuckDuckGo Lite conventional proxy)
+
+36 queries across 7 core services and 12 cities/counties (Tier 1–3), weighted to
+commercially valuable, historically weak, and not-recently-tested queries. Raw
+rows in `data/competitor_observations.jsonl`; per-query result sets in
+`data/ai_visibility_history.jsonl`. **Straight Flush was absent from all 36**
+(0 recommended / 0 mentioned / 0 cited). Frequency = number of the 36 queries in
+which the domain appeared in the top-10 organic results (counted from
+`ai_visibility_history.jsonl`, not estimated). All findings are
+*observations of presence* — an observed feature is evidence a competitor has it,
+**not** proof it caused any ranking or recommendation.
+
+### Tier A — appeared for 5+ of 36 queries
+
+| Competitor | Domain | # queries | Observed feature | Claim status |
+|---|---|---|---|---|
+| ProPlumber Laguna Niguel | proplumberlagunaniguel.com | 8 | Exact-match city domain; dedicated leak-detection / slab-leak / water-heater pages | feature **verified**; cause = hypothesis |
+| Evans Leak Detection | evansleakdetection.com | 8 | Dedicated slab-leak detection pages | feature **verified** (repeat) |
+| Roto-Rooter | rotorooter.com | 7 | National franchise, per-city location pages | feature **verified** |
+| Scott English Plumbing | scottenglishplumbing.net | 6 | Per-city `/service-area/plumber-in-{city}` pages | feature **verified** (repeat) |
+| American Leak Detection | americanleakdetection.com | 6 | National leak-detection franchise (ALDI); county + per-city pages | feature **verified** |
+| Olson Superior | olsonsuperior.com | 5 | Per-city emergency-plumber pages | feature **verified** (repeat) |
+| Coast Plumbing | coastplumbing.com | 5 | Per-city `/areas-we-serve/{city}/` pages + FAQPage schema | feature **verified**; **new repeat competitor** |
+| Laguna Niguel CA Plumbing Pros | lagunaniguelcaplumbingpros.com | 5 | Exact-match city domain; slab-leak + leak-detection pages | feature **verified**; **new** |
+| Primewest Plumbing | primewestplumbing.com | 5 | Per-city service URLs (`/plumbing/{city}/slab-leak-repair`, `…/leak-detection`) | feature **verified**; **new repeat competitor** |
+| Pristine Plumbing | pristineplumbinginc.com | 5 | Leak-detection pages | feature **verified** (repeat) |
+| Mr. Rooter | mrrooter.com | 5 | National franchise, per-city pages | feature **verified** |
+| Barker and Sons | barkerandsonsplumbing.com | 5 | `/city/{city}-ca-plumber/` city pages; long-established OC brand | feature **verified** (repeat) |
+
+### Tier B — appeared for 3–4 of 36 queries
+
+leakstar.com (4), leak-detection-pro.com (4, verified `/location/{city}-ca.html` + FAQPage),
+calischoice.com (4), plumbingsolutionspecialist.com (4), dialonesonshine.com (4),
+repipesoc.com (3), ocrepipes.com (3, repipe specialist; site 403 to our fetch),
+drains4less.com (3), aslplumbing.com (3), splashplumbing.com (3),
+hummelplumbing.com (3), doitrightplumbers.com (3), delatorresplumbing.com (3),
+integrityrepipeinc.com (3), ocproplumbers.com (3), americanleakcompany.com (3).
+
+### New repeat competitors (≥3, not in the 2026-10-11 directory)
+
+primewestplumbing.com (5) · coastplumbing.com (5) · lagunaniguelcaplumbingpros.com (5) ·
+leak-detection-pro.com (4) · dialonesonshine.com (4) · drains4less.com (3) ·
+aslplumbing.com (3) · splashplumbing.com (3) · hummelplumbing.com (3) ·
+doitrightplumbers.com (3) · delatorresplumbing.com (3) · integrityrepipeinc.com (3) ·
+ocproplumbers.com (3) · americanleakcompany.com (3).
+
+### Directory/aggregator dominance (visibility channels, not competitors)
+
+yelp.com 32/36 queries · angi.com 12 · yellowpages.com 11 · thumbtack.com 10 ·
+todayshomeowner.com 3 · superpages.com 3 · expertise.com 3 · homeguide.com 2.
+Yelp again appears in nearly every local query — the "best plumber" queries
+remain an aggregator/GBP-reviews problem, not a website-content problem.
+
+---
+
 
 ## 2026-10-11 update — 28-query sweep (Brave conventional proxy)
 
