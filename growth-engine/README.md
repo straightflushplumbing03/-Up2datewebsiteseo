@@ -13,8 +13,9 @@ existing repository (an established static HTML site) rather than duplicating it
 4. `KNOWN_ISSUES.md` — open problems (read ISSUE-001 first)
 5. `AI_VISIBILITY_METHODOLOGY.md` + `KEYWORD_UNIVERSE.md` — how to test
 6. `INTEGRATION_STATUS.md` — what is connected and what is not
-7. `EXPERIMENT_LOG.md` + `data/*.jsonl` — history and prior experiments
-8. `reports/` — prior outputs
+7. `INDUSTRY_WATCH.md` + `INNOVATION_IDEAS.md` — industry findings and idea register
+8. `EXPERIMENT_LOG.md` + `data/*.jsonl` — history and prior experiments
+9. `reports/` — prior outputs
 
 ## Files
 
@@ -30,6 +31,8 @@ existing repository (an established static HTML site) rather than duplicating it
 | `AI_VISIBILITY_METHODOLOGY.md` | Reproducible measurement rules + platform access |
 | `INTEGRATION_STATUS.md` | Connected / missing integrations |
 | `KNOWN_ISSUES.md` | Issue register (severity, evidence, fix, approval) |
+| `INDUSTRY_WATCH.md` | Dated industry + official-guidance + diagnostic-tech findings |
+| `INNOVATION_IDEAS.md` | Internal idea register (≥5 new/day, evidence-scored) |
 | `EXPERIMENT_LOG.md` | Experiment records and outcomes |
 | `CHANGELOG.md` | Changes to this knowledge base |
 | `data/*.jsonl` | Raw observations (append-only) |

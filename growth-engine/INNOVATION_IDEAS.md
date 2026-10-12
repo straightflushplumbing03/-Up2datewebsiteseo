@@ -1,5 +1,51 @@
 # Innovation Ideas — Straight Flush Plumbing & Leak Detection
 
+Internal idea register. **Every daily run adds at least five new candidate ideas**
+(website or business), then *prioritizes* them — the ranking must be evidence-backed,
+not "easiest content to generate". An idea is only promoted to a proposal/PR when it
+clears the evidence bar below.
+
+**Scoring (each 1–5, higher is better):** Impact · Evidence · Effort-to-value ·
+Reversibility (5 = trivially reversible). Risk is a separate gate (see below).
+
+**Evidence bar:** an idea needs at least one *fetched, cited* observation
+(a competitor feature actually seen, an official guideline actually read, a
+homeowner question actually encountered). Ideas with no evidence stay in
+`candidate` and are never actioned.
+
+**Risk gate:** anything touching identity, phone, prices, legal claims, warranty,
+service-area commitments, DNS/hosting, or business profiles is Level 3 — propose to
+the owner, never execute.
+
+**Status values:** `candidate` · `scored` · `proposed` · `approved` · `in-progress`
+· `shipped` · `rejected` · `parked`. Rejected/parked ideas are kept with the reason.
+
+---
+
+## Register
+
+| ID | Date | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-12-01 | 2026-10-12 | Add per-city × slab-leak-detection landing pages for Tier-1 cities | Website | 5 | 4 | 3 | 5 | L2 | scored | Tier A competitors (evansleakdetection.com, streamlineplumbing.org, calischoice.com) surface a dedicated slab-leak page per city — feature verified 2026-10-11, `COMPETITOR_DIRECTORY.md` | Gap #2 in `COMPETITOR_DIRECTORY.md`. Reuse existing city + service templates; no new claims. |
+| idea-2026-10-12-02 | 2026-10-12 | Resolve `aggregateRating` structured-data hygiene (ISSUE-002) | Website | 3 | 3 | 2 | 5 | L2 | scored | Google structured-data policies (self-serving ratings) — `INDUSTRY_WATCH.md`; `KNOWN_ISSUES.md` ISSUE-002 | Corroborate rating against live Google/Yelp profiles before changing; else remove. |
+| idea-2026-10-12-03 | 2026-10-12 | Ship the `llms-full.txt` / `/md/**` AI-readable files (still 404 in prod) | Website | 3 | 4 | 2 | 5 | L2 | scored | `KNOWN_ISSUES.md` ISSUE-001 follow-up; live 404 observed | Deploy step; files exist in repo. |
+| idea-2026-10-12-04 | 2026-10-12 | Add a "How we find your leak" annotated process/photo sequence | Website | 4 | 3 | 3 | 5 | L2 | candidate | Brand-voice reference pages; no first-hand asset confirmed yet | Needs owner-supplied field photos (owner input). |
+| idea-2026-10-12-05 | 2026-10-12 | Strengthen Google Business Profile + review flow (not a website change) | Business | 5 | 4 | 3 | 4 | L3 | proposed | Directory/aggregator dominance on "best plumber" queries — Yelp 27/28 in `COMPETITOR_DIRECTORY.md` | GBP is the channel; requires owner access. Propose only. |
+| idea-2026-10-12-06 | 2026-10-12 | Publish an insurance-claim documentation checklist tool (interactive) | Website | 4 | 3 | 3 | 5 | L2 | candidate | `/insurance/` hub exists; `documentation-checklist.html` present | Extend existing asset; no coverage promises (APPROVED_CLAIMS). |
+| idea-2026-10-12-07 | 2026-10-12 | Add FAQ schema + plain-language answers to top slab-leak pages | Website | 3 | 3 | 2 | 5 | L2 | candidate | FAQPage schema already used on some pages | Align answers with `BRAND_VOICE.md`; avoid duplicate FAQ across pages. |
+
+> The first daily run by the new automation appends its own ≥5 dated ideas and
+> re-scores this table. This seed set documents the format and the evidence bar.
+
+---
+
+## Rejected / parked (kept deliberately)
+
+| ID | Idea | Decision | Reason |
+|---|---|---|---|
+| idea-rej-01 | Buy backlinks / guest-post networks | **rejected** | Forbidden — manipulative links. See `APPROVED_CLAIMS.md`. |
+| idea-rej-02 | Generate hundreds of thin city × service pages at once | **rejected** | Forbidden — thin/doorway pages; also violates Google spam policies. |
+| idea-rej-03 | Fabricate review counts or testimonials | **rejected** | Forbidden — fabrication. |
 Candidate website and business ideas, each tied to a **fetched, cited observation**.
 An idea with no cited observation stays `candidate` and is **not actioned**.
 Prioritized by impact / evidence / effort-to-value / reversibility, then passed
