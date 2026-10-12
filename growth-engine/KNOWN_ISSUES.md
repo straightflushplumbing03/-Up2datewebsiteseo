@@ -66,11 +66,42 @@ Each issue: evidence, impact, fix, status, approval level.
 
 ---
 
-## ISSUE-005 — Duplicate automation coverage  [LOW · OPEN]
+## ISSUE-005 — Duplicate automation coverage  [LOW · CONSOLIDATING 2026-10-12]
 
-- **Evidence:** "Strategist: Daily SEO Action Plan" (06:30 PT) and "Scout: Daily
-  Competitor Intel" (05:30 PT) plus "Sentinel" retry overlap in scope; the
-  Master spec describes separate morning/technical/improvement/weekly/monthly jobs.
+- **Evidence:** "Strategist: Daily SEO Action Plan" (06:30 PT), "Scout: Daily
+  Competitor Intel" (05:30 PT) and "Sentinel" retry overlap in scope; Automation A
+  ("Morning AI Search Visibility", 06:00 PT) overlapped the new Intelligence HQ
+  daily job at the same slot.
 - **Impact:** redundancy/token cost; possible conflicting changes.
-- **Fix:** consolidate into the Master spec's A–E schedule (see `proposals/`).
+- **Fix (in progress):** the owner's Intelligence HQ replaces Automation A.
+  `SFPL Intelligence HQ Daily 6 AM` (`0 6 * * *`) + `SFPL Intelligence HQ Weekly
+  Review` (`0 6 * * 1`) were created 2026-10-12; **Automation A was disabled** to
+  avoid two overlapping 06:00 PT runs. Scout/Strategist/Sentinel remain pending an
+  owner decision (they may still be deleted once HQ-D runs cleanly for a few days).
 - **Approval:** Level 2 (automation config).
+
+---
+
+## ISSUE-006 — Automation run budget: open-ended research times out before commit  [MEDIUM · MITIGATED 2026-10-12]
+
+- **Evidence:** the first manual dispatch of `SFPL Intelligence HQ Daily 6 AM`
+  (run `897c5d5a-6143-4133-a0e4-8501d62f0206`, 2026-10-12 05:33–06:06 UTC) returned
+  `status: FAILED`, `error_detail: "Timed out: command timed out or was killed"`.
+  The run spent its whole budget exploring many search engines (Yahoo, Bing RSS,
+  Marginalia, headless Chromium, Google SERP pacing, blog crawls) and never reached
+  the write/commit step, so **no report was persisted** — exactly the failure mode
+  the spec warns about.
+- **Impact:** a run that researches forever produces nothing durable; the daily loop
+  can silently produce no output.
+- **Constraint discovered:** the automation API caps `timeout` at **1800 s**
+  (30 min); a longer timeout is rejected with HTTP 422
+  (`timeout must not exceed 1800 seconds`).
+- **Fix applied 2026-10-12:** the daily prompt now carries a **mandatory time
+  budget** (≈40% research / 60% write+commit), limits search to **Brave** (+ at most
+  one alternate), forbids headless browsers and multi-engine probing, and instructs
+  the agent to **stop researching and commit** when near budget. The weekly prompt
+  got the same budget note.
+- **Follow-up:** confirm the hardened prompt completes within budget (second
+  dispatch). If it still overruns, reduce the query sample further (10–15) and move
+  industry research to a separate weekly job.
+- **Approval:** Level 2 (automation prompt config).

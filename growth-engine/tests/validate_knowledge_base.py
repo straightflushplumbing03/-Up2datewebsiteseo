@@ -22,6 +22,7 @@ REQUIRED = [
     "APPROVED_CLAIMS.md", "BRAND_VOICE.md", "COMPETITOR_DIRECTORY.md",
     "KEYWORD_UNIVERSE.md", "AI_VISIBILITY_METHODOLOGY.md", "INTEGRATION_STATUS.md",
     "KNOWN_ISSUES.md", "EXPERIMENT_LOG.md", "CHANGELOG.md", "README.md",
+    "INDUSTRY_WATCH.md", "INNOVATION_IDEAS.md",
 ]
 for f in REQUIRED:
     if not os.path.exists(os.path.join(GE, f)):

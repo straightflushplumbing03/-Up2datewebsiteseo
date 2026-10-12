@@ -3,6 +3,39 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-12 — Intelligence HQ setup (infrastructure + first run)
+
+**Added:**
+- `INDUSTRY_WATCH.md` — dated industry / official-guidance / diagnostic-technology watch.
+- `INNOVATION_IDEAS.md` — idea register (≥5 new/day, evidence-scored, rejected ideas kept).
+- `reports/weekly/TEMPLATE.md` — weekly strategic review template (Mondays).
+- `reports/weekly/` and `reports/monthly/` directories.
+- `automations/intelligence-hq-daily.prompt.md` and
+  `automations/intelligence-hq-weekly.prompt.md` — canonical prompts for the
+  **SFPL Intelligence HQ** automations.
+- `reports/daily/2026-10-12.md` — first daily report from the Intelligence HQ run.
+
+**Updated:** `README.md` (read order + file table), `automations/README.md`
+(HQ-D/HQ-W registered), `KNOWN_ISSUES.md` (ISSUE-005 consolidation, ISSUE-006
+run-budget), `INTEGRATION_STATUS.md` (this run's verification), `data/*.jsonl`
+(append-only).
+
+**Automations:** created `SFPL Intelligence HQ Daily 6 AM` (`0 6 * * *`,
+America/Los_Angeles, id `5dc89b41-6880-40e6-950c-14a635f7bd62`) and
+`SFPL Intelligence HQ Weekly Review` (`0 6 * * 1`, America/Los_Angeles, id
+`0582d219-de15-42c2-83b5-4bc92995edce`) via the OpenHands Cloud automation API.
+Automation A (superseded by HQ-D) disabled to prevent overlapping 06:00 runs.
+
+**Run-budget fix (ISSUE-006):** the first manual dispatch
+(`897c5d5a-6143-4133-a0e4-8501d62f0206`) **FAILED** with
+`Timed out: command timed out or was killed` at the 1800 s (30 min) platform
+ceiling — the agent spent the whole budget on open-ended research (testing Yahoo,
+Bing RSS, Marginalia, headless Chromium, Google SERP pacing, blog crawls) and
+never reached the write/commit step. Fix: the daily prompt now has a **mandatory
+time budget** (40% research / 60% write+commit), restricts search to Brave (+ at
+most one alternate), forbids headless browsers and multi-engine probing, and
+instructs the agent to stop researching and commit when near budget. Note the
+platform caps `timeout` at **1800 s** — a longer timeout is not available.
 ## 2026-10-12 — Daily run (HQ-D: 36-query sweep + industry/innovation files)
 
 **Added:** `reports/daily/2026-10-12.md`, `INDUSTRY_WATCH.md` (dated, cited

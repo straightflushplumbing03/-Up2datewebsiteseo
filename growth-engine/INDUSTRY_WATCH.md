@@ -1,5 +1,60 @@
 # Industry Watch — Straight Flush Plumbing & Leak Detection
 
+Rolling, dated record of **plumbing-industry developments**, **official search-engine
+guidance**, **homeowner questions**, and **diagnostic technology**. Every entry cites
+its source URL and carries a confidence level. Nothing here is invented: if a claim
+cannot be traced to a fetched source, it is not written down.
+
+**Rules**
+- Official guidance comes only from primary sources (Google Search Central, Bing
+  Webmaster Guidelines, schema.org, CSLB, EPA/WaterSense, etc.) — never from a
+  content-marketing blog paraphrasing them.
+- Confidence: `high` (primary source, fetched) · `medium` (reputable secondary,
+  fetched) · `low` (single weak source / inference) · `unverified` (not fetched).
+- Industry claims about *our* business go through `APPROVED_CLAIMS.md`.
+
+---
+
+## Standing official references (stable primary sources)
+
+| Topic | Source | URL | Verified | Confidence |
+|---|---|---|---|---|
+| Google Search Essentials | Google Search Central | https://developers.google.com/search/docs/essentials | 2026-10-11 | high |
+| Structured data policies | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/sd-policies | 2026-10-11 | high |
+| Local business structured data | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/local-business | 2026-10-11 | high |
+| Helpful content / people-first | Google Search Central | https://developers.google.com/search/docs/fundamentals/creating-helpful-content | 2026-10-11 | high |
+| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-11 | high |
+| Search Console performance report | Google Search Central | https://support.google.com/webmasters/answer/7576553 | 2026-10-11 | high |
+| Schema.org LocalBusiness | schema.org | https://schema.org/LocalBusiness | 2026-10-11 | high |
+| CSLB license lookup (CA) | CA Contractors State License Board | https://www.cslb.ca.gov/onlineServices/CheckLicenseII/CheckLicense.aspx | 2026-10-11 | high |
+
+> These are seeded, stable references used by every run. Daily/weekly runs append
+> dated entries below and refresh `Verified` when a page changes materially.
+
+---
+
+## Dated entries
+
+### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
+- **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
+  structure, and the Intelligence HQ automation. No external claims added.
+- **Sources:** repository files only. **Confidence:** high (repo-verified).
+- **Follow-up:** daily runs populate dated findings below.
+
+### 2026-10-12 — Official Google guidance re-verified (primary sources, fetched)
+- **What:** Fetched and confirmed live (HTTP 200) two primary Google Search Central
+  references used by every run:
+  - *AI features and your website* — https://developers.google.com/search/docs/appearance/ai-features
+  - *Local business (LocalBusiness) structured data* — https://developers.google.com/search/docs/appearance/structured-data/local-business
+- **Why it matters to Straight Flush:** AI-feature guidance confirms that appearing
+  in AI features depends on standard Search fundamentals (crawlability, helpful
+  content, structured data) — consistent with this repo's diagnose-first strategy.
+  The LocalBusiness page is the authority for the ISSUE-002 `aggregateRating`
+  hygiene question.
+- **Source(s):** the two URLs above (fetched 2026-10-12, HTTP 200).
+  **Confidence:** high (primary source).
+- **Proposed action:** none new; supports idea-2026-10-12-02 (rating hygiene).
+
 Reverse-chronological dated entries covering: plumbing-industry developments,
 official Google Search Central documentation (primary sources only), recurring
 homeowner questions, diagnostic technology, and legitimate local-search
@@ -14,7 +69,6 @@ the *result titles* of the 2026-10-12 DuckDuckGo Lite sweep
 answering — a proxy for recurring homeowner intent, not a survey.
 
 ---
-
 
 ### Supplementary entries (concurrent 2026-10-12 run — additive, not merged)
 
@@ -138,3 +192,13 @@ answer-first Academy/FAQ content. Confidence: **medium**.
   for URLs). Confidence: **high**.
 - Trade press (phcppros, contractormag.com) continued coverage of AI adoption and
   workforce/industry events in plumbing. Confidence: **medium**.
+
+<!--
+New entries are prepended directly under this line, newest first, using:
+
+### YYYY-MM-DD — <short title>
+- **What changed / observed:**
+- **Why it matters to Straight Flush:**
+- **Source(s):** <exact URL(s)>  · **Confidence:** high|medium|low|unverified
+- **Proposed action (if any):** <idea id / PR / none>
+-->
