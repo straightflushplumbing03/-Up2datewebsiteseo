@@ -55,20 +55,29 @@ cannot be traced to a fetched source, it is not written down.
   **Confidence:** high (primary source).
 - **Proposed action:** none new; supports idea-2026-10-12-02 (rating hygiene).
 
-Reverse-chronological dated entries covering: plumbing-industry developments,
-official Google Search Central documentation (primary sources only), recurring
-homeowner questions, diagnostic technology, and legitimate local-search
-opportunities. Every external claim cites the exact URL fetched and a confidence
-level. "Feature observed" ≠ "caused a ranking" unless stated.
+## 2026-10-12
 
-**Method note:** entries below were fetched with a normal browser User-Agent on
-the date shown. Search Guidance entries use only Google's own primary
-documentation (developers.google.com/search). Homeowner questions are drawn from
-the *result titles* of the 2026-10-12 DuckDuckGo Lite sweep
-(`data/ai_visibility_history.jsonl`), which reflect what public pages are
-answering — a proxy for recurring homeowner intent, not a survey.
-
----
+### 2026-10-12 — Phase 2 inspection: HQ-D run budget + automation consolidation (infrastructure)
+- **What changed / observed:** Phase-2 inspection of OpenHands Cloud / Intelligence
+  HQ. Root-caused the HQ-D failure (run `2026-10-12T05:33:52Z`, "Timed out: command
+  timed out"): the platform **hard-caps automation `timeout` at 1800 s (30 min)** —
+  a 3600 request returns HTTP 422 `value_error: timeout must not exceed 1800
+  seconds`. The successful run (`2026-10-12T06:09:19Z`) needed longer than 30 min,
+  so open-ended research can exceed the wall clock before the report is committed.
+- **Why it matters to Straight Flush:** a research run that never persists is a
+  silent intelligence gap — the durable knowledge base stops growing even though the
+  automation reports "enabled".
+- **Remediation:** the canonical HQ-D prompt now carries a mandatory time budget
+  (~40% research / 60% write+commit) and a reduced query count (15–25). The live
+  automation prompt was re-synced to the committed canonical file (prompt_chars
+  10443) so the live definition and the repo no longer drift.
+- **Consolidation:** legacy `Scout: Daily Competitor Intel`,
+  `Strategist: Daily SEO Action Plan`, and `Sentinel: Scout Auto-Retry` are disabled
+  (redundant with HQ-D/HQ-W); `Automation A` was already disabled when HQ-D was
+  enabled.
+- **Source(s):** repository files + OpenHands automation API (fetched 2026-10-12).
+  **Confidence:** high (repo/API-verified).
+- **Proposed action:** none new; tracked as `KNOWN_ISSUES.md` ISSUE-005/ISSUE-006.
 
 ### Supplementary entries (concurrent 2026-10-12 run — additive, not merged)
 
@@ -91,7 +100,6 @@ answering — a proxy for recurring homeowner intent, not a survey.
 - **Note:** Brave Search was rate-limited (**HTTP 429**) this run; competitor
   observations used DuckDuckGo HTML as the single permitted alternate.
 
-## 2026-10-12
 
 ### Search guidance — Google Search Central (primary sources)
 
