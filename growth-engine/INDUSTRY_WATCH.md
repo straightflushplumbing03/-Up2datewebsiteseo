@@ -35,6 +35,38 @@ cannot be traced to a fetched source, it is not written down.
 
 ## Dated entries
 
+### 2026-10-12 — Search Console now measures social/video content (primary source, fetched)
+- **What changed / observed:** Google published **platform properties**, a new
+  Search Console property type. Site owners and creators can now see how their
+  **Instagram, TikTok, X, and YouTube** content performs on Google Search and
+  Discover, including the search terms that led people to it. Quote (fetched):
+  *"you can track which search terms lead people to your Instagram, TikTok, X, and
+  YouTube content on Search."*
+- **Why it matters to Straight Flush:** confirms that **off-site content
+  (video/social) is now a first-class, measurable Search surface in Google's own
+  reporting** — consistent with the standing Industry Watch on multimodal Search
+  reporting. It reinforces that owner-authored short diagnostic clips are a real
+  Search surface, not just marketing. **Measurement still requires GSC access**
+  (blocked — see `INTEGRATION_STATUS.md` P-002).
+- **Source(s):** https://developers.google.com/search/blog/2026/07/search-console-social-video-platforms
+  (fetched 2026-10-12, HTTP 200). **Confidence:** high (primary source).
+- **Proposed action:** none new; supports existing idea space on multimodal media
+  (parked pending owner-produced footage).
+
+### 2026-10-12 — Checked for a newer AI-features guidance revision (primary source, fetched)
+- **What changed / observed:** Fetched Google's *AI Features and Your Website*
+  (https://developers.google.com/search/docs/appearance/ai-features) — still
+  **Last updated 2025-12-10 UTC**, unchanged from the 2026-10-11 read. No new
+  AI-search guidance was found on the Google Search Central blog between the
+  2026-10-12 and this run (latest post remains 2026-10 `seo-learning-paths`).
+- **Why it matters to Straight Flush:** no new official guidance changes the
+  current approach; the standing conclusion holds — crawlability + helpful content,
+  not special files/markup, drive AI-feature eligibility.
+- **Source(s):** the URL above + the blog index
+  https://developers.google.com/search/blog (both fetched 2026-10-12, HTTP 200).
+  **Confidence:** high (primary source).
+- **Proposed action:** none.
+
 ### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
 - **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
   structure, and the Intelligence HQ automation. No external claims added.

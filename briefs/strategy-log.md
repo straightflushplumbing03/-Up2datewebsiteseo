@@ -5,6 +5,36 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-12 (HQ-D run #2) — Brave sweep: 28 queries, SF absent, competitor map refreshed
+
+**Status:** additive docs + research only. **No website page/schema/copy changed.**
+
+- **Date:** 2026-10-12 (06:00 PDT slot; executed ≈13:00–13:40 UTC).
+- **Change:** ran a 28-query **Brave Search** conventional-organic sweep across
+  10 South-OC cities and 8 service families; appended 28 rows to
+  `data/ai_visibility_history.jsonl` and new competitor rows to
+  `data/competitor_observations.jsonl`; added 2 dated entries to `INDUSTRY_WATCH.md`;
+  added 6 ideas (IDEA-15…20) to `INNOVATION_IDEAS.md`; appended a run-#2 section to
+  the daily report.
+- **Reason:** execute the daily Intelligence HQ protocol; refresh the competitive
+  picture now that Brave is reachable again (it was HTTP 429 on run #1, which fell
+  back to DuckDuckGo Lite).
+- **Target:** local-search visibility for commercially valuable South-OC plumbing
+  queries.
+- **Competitor insight:** **scottenglishplumbing.net (12/28)**, billmetzgerplumbing
+  (9), barkerandsonsplumbing (8), rotorooter (7) lead repeat presence; dedicated
+  repipe specialists own the repipe family; **aggregators (yelp 14/28) own
+  "best/nearest" intent** — website content alone cannot win those.
+- **Expected outcome:** the competitor map and idea backlog reflect current reality;
+  the three prioritized ideas target the clearest observed gaps.
+- **Result:** **SF absent from all 28** Brave organic top-10 sets (consistent with
+  every prior run). No 429 this run. No site change made (no evidence justified one).
+- **Keep/modify/revert:** **keep** the rotating query set; **modify** the sweep to
+  keep a longer inter-query delay (9 of 28 returned empty on first pass before
+  recovering).
+- **Next three priorities:** (1) repipe decision page (IDEA-17); (2) detection-method
+  comparison hub (IDEA-15); (3) FAQPage schema on Tier-1 city pages (IDEA-18).
+
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**
