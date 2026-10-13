@@ -6,7 +6,7 @@ real queries are listed. Correlation ≠ causation: a feature being present is
 *evidence a competitor has it*, not proof it caused a recommendation.
 
 **Baseline observation date:** 2026-10-09 · **Latest daily run:** 2026-10-13 (`reports/daily/2026-10-13.md`)
-**Platform:** Brave Search (2026-10-09/11, 2026-10-13) and DuckDuckGo Lite (2026-10-12) — conventional proxies, **not** AI answer engines.
+**Platform:** Brave Search (2026-10-09/10/11/13) and DuckDuckGo Lite (2026-10-12) — conventional proxies, **not** AI answer engines.
 **Baseline queries:** plumber in Laguna Niguel · slab leak detection Laguna Niguel · emergency plumber Laguna Niguel · leak detection Orange County · best plumber in Laguna Niguel
 **2026-10-09 daily queries (11 succeeded):** plumber in {Dana Point, San Clemente, Mission Viejo, Aliso Viejo} · leak detection {Laguna Niguel, Mission Viejo, Aliso Viejo} · slab leak repair Laguna Niguel · slab leak detection {Dana Point, San Clemente} · water heater repair Laguna Niguel
 **2026-10-10 daily queries (6 succeeded):** plumber in {Irvine, Laguna Hills, Laguna Beach, Ladera Ranch, Rancho Santa Margarita, Lake Forest}
@@ -59,6 +59,51 @@ Repipe intent ("PEX repipe Dana Point") returns **repipe-specialist** domains
 `integrityrepipe.com`/`socalrepipes.com`; general plumbers are largely absent. Slab
 intent returns **leak specialists** with a *dedicated per-city slab page*
 (leakstar, evans). Both patterns support idea-2026-10-13-01/-02.
+
+---
+
+## 2026-10-13 update — 22-query sweep (Brave conventional proxy; Bing fallback unparseable)
+
+22 queries across core services and Tier-1/2 cities, weighted to commercially
+valuable, historically weak, and not-recently-tested queries. **14 returned
+parseable organic results (Brave); 8 fell through to Bing after Brave HTTP 429
+and returned unparseable markup → recorded `inconclusive` (not zero).**
+**Straight Flush was absent from all 14 successful result sets**
+(0 recommended / 0 mentioned / 0 cited). Frequency = number of the 14 successful
+queries in which the domain appeared in the observed organic results (counted
+from `data/ai_visibility_history.jsonl`, not estimated). All findings are
+*observations of presence* — an observed feature is evidence a competitor has it,
+**not** proof it caused any ranking or recommendation.
+
+### Appeared for 4+ of 14 successful queries
+
+| Competitor | Domain | # queries | Observed feature | Claim status |
+|---|---|---|---|---|
+| Yelp (aggregator) | yelp.com | 13 | Category/city listing pages dominate local "plumber/best plumber" queries | Aggregator — directory presence, not a claim about SF |
+| Scott English Plumbing | scottenglishplumbing.net | 10 | City × service pages, review widgets | Conventional result; no SF claim |
+| Roto-Rooter (franchise) | rotorooter.com | 9 | National brand + local landing pages | Franchise — not a single-operator peer |
+| Bill Metzger Plumbing | billmetzgerplumbing.com | 9 | Service pages, local trust signals | Conventional result; no SF claim |
+| Barker & Sons Plumbing | barkerandsonsplumbing.com | 7 | Service pages, emergency positioning | Conventional result; no SF claim |
+| Cal's Choice Plumbing | calischoice.com | 7 | City × leak-detection pages | Conventional result; no SF claim |
+| Efficient Plumbing | efficientplumbing.com | 7 | Service pages | Conventional result; no SF claim |
+| Rooter Hero | rooterhero.com | 5 | National brand + local pages | Franchise — not a single-operator peer |
+| Evans Leak Detection | evansleakdetection.com | 5 | **Specialist leak-detection positioning** — direct niche peer | Conventional result; no SF claim |
+| Mr. Rooter (franchise) | mrrooter.com | 4 | National brand + local pages | Franchise — not a single-operator peer |
+| Emergency Response Plumbers | emergencyresponseplumbers.com | 4 | Emergency positioning | Conventional result; no SF claim |
+| Clearwater Plumbing OC | clearwaterplumbingoc.com | 4 | OC-local service pages | Conventional result; no SF claim |
+
+### Notable recurring new domains (2026-10-13)
+
+`twinplumbing.com`, `repipepro.net`, `ocplumber.com`, `repipesoc.com` appeared on
+the pinhole/copper-pipe leak query; `socalrepipes.com`, `allstarplumbingservice.com`
+on slab/leak queries; `splashplumbing.com` (2). Full raw rows in
+`data/competitor_observations.jsonl` (ts `2026-10-13T17:05:00Z`).
+
+**Interpretation (hypothesis, medium confidence):** the recurring pattern is
+**city × service page coverage** plus a specialist-leak-detection positioning
+(Evans). SF's own `/leak-detection/` cluster is the closest match; the gap is
+city-level coverage for Aliso Viejo / San Clemente / Mission Viejo
+(idea-2026-10-13-01).
 
 ---
 

@@ -35,6 +35,69 @@ cannot be traced to a fetched source, it is not written down.
 
 ## Dated entries
 
+### 2026-10-13 — Official Google guidance: AI features, crawl bytes, SEO learning paths
+- **What changed / observed (fetched primary sources, HTTP 200):**
+  - *AI Features and Your Website* — Google restates that inclusion in AI features
+    (AI Overviews / AI Mode) is governed by standard Search fundamentals:
+    crawlability, helpful people-first content, and structured data. There is no
+    separate "AI submission" mechanism.
+    URL: https://developers.google.com/search/docs/appearance/ai-features
+  - *Inside Googlebot: demystifying crawling, fetching, and the bytes we process*
+    (Google Search Central Blog, **2026-03-31**) — Googlebot fetches up to **2 MB
+    per URL** (64 MB for PDFs); crawlers that do not specify a limit default to
+    **15 MB**; the cap includes the HTTP header. Truncation happens at the byte
+    limit, so content past 2 MB is never processed.
+    URL: https://developers.google.com/search/blog/2026/03/crawler-blog-post
+  - *SEO learning paths* — Google published structured learning-path documentation
+    on Search Central (new in the 2026 blog index, dated 2026-10).
+    URL: https://developers.google.com/search/blog/2026/10/seo-learning-paths
+- **Why it matters to Straight Flush:** (1) AI-feature guidance confirms the
+  repo's "fix fundamentals first" strategy — no shortcut exists. (2) The 2 MB
+  byte cap is a concrete, checkable constraint: any SF page whose HTML exceeds
+  2 MB would be truncated by Googlebot. Our pages are static and small, so this
+  is a low-risk check, not a current defect. (3) SEO learning paths are useful
+  for keeping the Academy/AEO content aligned with Google's own vocabulary.
+- **Source(s):** the three URLs above (fetched 2026-10-13, HTTP 200).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action:** none requiring a code change. Add a byte-size sanity
+  check to the standing health checks (see report "next priorities").
+
+### 2026-10-13 — Trade press: AI now framed as a *credibility* / discovery problem
+- **What changed / observed (fetched, HTTP 200):**
+  - *Why Credibility Now Shapes How PHCP Brands Are Found* (PHCPPros) — argues
+    that buyer discovery has shifted: credibility signals and how a trade brand is
+    *represented* across the web now drive whether it is found, not keyword
+    density alone. URL: https://www.phcppros.com/articles/24167-why-credibility-now-shapes-how-phcp-brands-are-found
+  - *ServiceTitan announces new and expanded capabilities at Pantheon 2026*
+    (PHCPPros) — field-service software vendors are shipping AI features for
+    residential in-home trades (lead → booked-job automation).
+    URL: https://www.phcppros.com/articles/24246-servicetitan-announces-new-and-expanded-capabilities-at-pantheon-2026
+- **Why it matters to Straight Flush:** corroborates the AEO thesis — consistent,
+  verifiable representation (NAP, licenses, reviews, service pages) is the moat,
+  not more pages. The field-service AI trend is a *business* signal (owner-side
+  tooling), not a website change; log it, do not action it.
+- **Source(s):** the two URLs above (fetched 2026-10-13, HTTP 200).
+  **Confidence:** medium (reputable trade press, fetched).
+- **Proposed action:** none. Supports existing idea-2026-10-12-05 (GBP/review flow,
+  owner-only) — no new action.
+
+### 2026-10-13 — Homeowner diagnostic questions (from today's result set)
+- **What changed / observed:** today's 22-query sweep surfaced question- and
+  cost-shaped intent that SF does not currently answer on-page:
+  "how much does slab leak repair cost in Laguna Niguel" (cost intent),
+  "pinhole leak in copper pipe Orange County" (material/diagnosis intent),
+  "hidden water leak detection Irvine" (detection intent). Competitors ranking
+  for the pinhole query included `twinplumbing.com`, `repipepro.net`,
+  `ocplumber.com`, `clearwaterplumbingoc.com`, `repipesoc.com`.
+- **Why it matters to Straight Flush:** cost and diagnosis questions are exactly
+  the AEO entry points where a verifiable, non-promotional answer earns citation.
+  A cost page must not state prices (Level 3) — it can explain *what drives cost*
+  without quoting numbers.
+- **Source(s):** `data/ai_visibility_history.jsonl` 2026-10-13 rows (Brave
+  conventional proxy). **Confidence:** medium.
+- **Proposed action:** idea-2026-10-13-03 (cost-driver explainer, proposal-only).
+
+
 ### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
 - **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
   structure, and the Intelligence HQ automation. No external claims added.

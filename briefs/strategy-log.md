@@ -34,6 +34,34 @@ Branch `intelligence-hq/daily-2026-10-13`.
 
 ---
 
+## 2026-10-13 (run 2) — Daily run: 22-query Brave sweep, 3 industry entries, 7 ideas, no code change
+
+- **Change:** research + reporting only. Appended 22 rows to
+  `data/ai_visibility_history.jsonl` (14 successful / 8 inconclusive), 37 rows to
+  `data/competitor_observations.jsonl`, one row to
+  `data/technical_health_history.jsonl`; added 3 dated entries to
+  `INDUSTRY_WATCH.md`; added 7 ideas (`idea-2026-10-13-01..07`) to
+  `INNOVATION_IDEAS.md`; updated `COMPETITOR_DIRECTORY.md`; wrote
+  `reports/daily/2026-10-13.md`. **No website code change** (no evidence
+  justified one).
+- **Reason:** daily Intelligence HQ cadence — load knowledge, measure, research,
+  prioritize, persist.
+- **Target:** AI visibility / AEO / competitor intelligence.
+- **Competitor insight:** city × service page coverage plus specialist
+  leak-detection positioning recur (evansleakdetection.com 5/14;
+  scottenglishplumbing.net 10/14; yelp.com 13/14 aggregator dominance). SF absent
+  from all 14 parseable result sets.
+- **Expected outcome:** durable evidence for the Tier-1 city coverage gap.
+- **Result:** 14/22 queries parseable; SF 0 recommended / 0 mentioned / 0 cited;
+  site health OK (all crawler UAs 200, no `cf-mitigated`); KB validation OK
+  (133 HTML files).
+- **Keep/modify/revert:** **keep**. Next: idea-2026-10-13-01 (city × slab/leak
+  pages), idea-2026-10-13-02 (byte-size check), idea-2026-10-13-03 (cost-driver
+  explainer, proposal).
+- **Branch:** `intelligence-hq/daily-2026-10-13`.
+
+---
+
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**
