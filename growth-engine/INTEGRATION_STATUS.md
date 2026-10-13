@@ -4,6 +4,15 @@ Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
 OpenHands Cloud environment; a check is only marked ✅ after an actual successful
 call. Prior verification 2026-10-09.
 
+> **Re-verified 2026-10-13 (second pass):** search-provider resilience tested
+> with a **different query set**. Brave returned **8 parseable pages, then an
+> anti-bot challenge page** for every later query (a *more specific* mode than the
+> earlier 429 — the block can now trigger after as few as ~8 queries). Fallback
+> chain all failed this pass: DuckDuckGo **Lite** → 202, DuckDuckGo **HTML** → 202,
+> **Bing** → 200 with no parseable organic anchors, **Mojeek** → 403,
+> **Ecosia** → 403. Blocked queries recorded **`inconclusive`, never "absent"**.
+> Site crawler access remains ✅ (no regression).
+
 > **Re-verified 2026-10-13 (daily run):** crawler access ✅ **PASS**
 > (`crawler_access_check.sh` exit 0 — Googlebot/Bingbot/GPTBot/OAI-SearchBot/
 > ClaudeBot/PerplexityBot/Applebot + curl all 200, no `cf-mitigated`; ISSUE-001

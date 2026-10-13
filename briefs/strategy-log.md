@@ -5,6 +5,36 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-13 (second pass) — provider lock-out confirmed challenge-based; additive records
+
+**Status:** Additive records only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/daily-2026-10-13` (same day/PR; nothing removed).
+
+- **Change:** A second, independent observation pass (different query set) to test
+  provider resilience. Brave parsed **8** result pages then served an **anti-bot
+  challenge page** for every later query — a **more specific failure mode** than
+  the earlier `HTTP 429`. Fallback chain all failed (DDG Lite/HTML **202**, Bing
+  HTTP 200 with **no organic anchors**, Mojeek/Ecosia **403**). Result: 8 parsed,
+  12 `inconclusive` (never "absent"). Appended the addendum to
+  `reports/daily/2026-10-13.md`; added **6 short-form ideas**
+  (idea-2026-10-13-15…20) + a second-pass prioritization table.
+- **Reason:** confirm whether provider behaviour is stable across query sets and
+  record the challenge-page mode so future runs treat it as inconclusive, not absence.
+- **Target:** `growth-engine/**` records + daily report only.
+- **Competitor insight:** `evansleakdetection.com` and `scottenglishplumbing.net`
+  independently **re-confirmed on 6/8** parsed queries; emergency queries again
+  franchise-dominated (`rotorooter.com`, `mrrooter.com`). Newly observed:
+  `slableakfix.com`, `orange-county.repipe.com`, `proplumberalisoviejo.com`,
+  `proplumberirvine.com`, `thedoneriteplumber.com`, `drakewillsplumbing.net`.
+- **Expected outcome:** a recorded, reproducible statement of provider behaviour;
+  no false "SF absent" from a blocked query.
+- **Result:** SF 0/8 recommended/mentioned/cited — same conclusion as the first
+  pass. Two new ideas **scored**: GSC measurement runbook (idea-18) and sweep
+  provider-fallback/challenge detection (idea-17).
+- **Keep/modify/revert:** keep (additive records only).
+
+---
+
 ## 2026-10-13 — Daily research run (Brave, rate-limited to 9 queries)
 
 **Status:** Knowledge-base + report only. **No website page/schema/copy changed.**

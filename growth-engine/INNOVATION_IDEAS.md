@@ -47,9 +47,34 @@ the owner, never execute.
 | idea-2026-10-13-12 | 2026-10-13 | Ship `llms-full.txt` / `/md/**` AI-readable files (still 404 in prod) | Website | 3 | 4 | 2 | 5 | L2 | scored | `KNOWN_ISSUES.md` ISSUE-001 follow-up; still 404 in prod | Restates idea-2026-10-12-03 with a deploy-plan angle; still unshipped. |
 | idea-2026-10-13-13 | 2026-10-13 | Add a **"review our work" QR/print card** driving Google reviews after a job | Business | 4 | 3 | 3 | 4 | L3 | proposed | Yelp/aggregator dominance on "best plumber" queries (13/19 in 2026-10-13 sweep) — `COMPETITOR_DIRECTORY.md` | Review acquisition is owner-side; propose only. No incentive/fake reviews. |
 | idea-2026-10-13-14 | 2026-10-13 | Add an internal-linking pass from Academy articles to the matching city/service pages | Website | 3 | 3 | 2 | 5 | L2 | candidate | Academy cluster exists; competitors pair city+service pages (`scottenglishplumbing.net`, `efficientplumbing.com`) | On-page only; no new pages; reversible. |
+| idea-2026-10-13-15 | 2026-10-13 | Publish a **South-Orange-County slab-leak city-guide hub** binding the existing city pages with descriptive anchors | Website | 4 | 4 | 3 | 5 | L2 | candidate | **Second pass:** `evansleakdetection.com` recurred on **6/8** parsed leak queries *across four cities + county* — breadth of one domain recurs; SF city pages have no hub binding them. Feature verified; causation = hypothesis. | Genuinely useful hub, not a doorway index; reuse existing city pages; no new claims. |
+| idea-2026-10-13-16 | 2026-10-13 | Add a **per-city symptom-first "hidden leak" section** to the existing leak-detection city pages (not new thin pages) | Website | 4 | 3 | 3 | 5 | L2 | candidate | **Second pass:** question-intent phrasings recur (`hidden water leak detection Orange County`, `water leak detection Aliso Viejo`); leak specialists cluster on these. | Symptom-first (meter still moving · warm floor spot · running-water sound); reuse approved claims; no new service promise. |
+| idea-2026-10-13-17 | 2026-10-13 | Add a **provider-fallback + challenge-page detection** line to `run_sweep.py` and record HTTP status per attempt | Website/ops | 3 | 5 | 4 | 5 | L2 | scored | **Second pass:** Brave block is now a **challenge page** (not just 429) and can trigger after ~8 queries; DDG Lite/HTML 202, Bing no anchors, Mojeek/Ecosia 403. | Deterministic tooling; prevents recording a blocked query as "absent". Aligns with the runbook lesson. |
+| idea-2026-10-13-18 | 2026-10-13 | Write the **GSC measurement runbook** to execute on the day P-002 clears | Website/ops (docs) | 4 | 4 | 5 | 5 | L1/L2 | scored | GSC now surfaces generative-AI (2026-06), web-multimodal (2026-09), and social/video platform properties (2026-07) — primary sources; GSC still not connected (P-002). | Documentation only; makes the first connected run productive instead of exploratory. |
+| idea-2026-10-13-19 | 2026-10-13 | Publish a **"calling an emergency plumber: what to have ready"** prep checklist | Website | 3 | 3 | 3 | 5 | L2 | candidate | Both emergency queries today franchise-dominated (`rotorooter.com`, `mrrooter.com`, `emergencyresponseplumbers.com`); homeowner intent = "what do I do now". | **No** response-time or service-area commitment (Level 3). Reduces call friction only. |
+| idea-2026-10-13-20 | 2026-10-13 | Point a lightweight **`llms.txt` path-200 self-check** at every URL referenced in `llms.txt`/`llms-full.txt` | Website/ops | 3 | 4 | 5 | 5 | L2 | candidate | `/llms-full.txt` + `/md/**` are now live (200), but `/md/` root 404s — a referenced-but-broken path would silently starve an AI crawler. | Read-only check; fail loudly on drift. |
 
 > The first daily run by the new automation appends its own ≥5 dated ideas and
 > re-scores this table. This seed set documents the format and the evidence bar.
+
+### Second-pass prioritization (2026-10-13)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-13-18 GSC measurement runbook | 4 | 4 | Low→High | Yes | ✅ L1/L2 | scored |
+| 2 | idea-2026-10-13-17 sweep provider-fallback/challenge detection | 3 | 5 | Low→High | Yes | ✅ L2 | scored |
+| 3 | idea-2026-10-13-15 OC slab-leak city-guide hub | 4 | 4 | Med→High | Yes | ✅ L2 | candidate |
+| 4 | idea-2026-10-13-20 `llms.txt` path-200 self-check | 3 | 4 | Low→High | Yes | ✅ L2 | candidate |
+| 5 | idea-2026-10-13-16 per-city symptom-first hidden-leak sections | 4 | 3 | Med→Med | Yes | ✅ L2 | candidate |
+| 6 | idea-2026-10-13-19 emergency-call prep checklist | 3 | 3 | Med→Med | Yes | ✅ L2 | candidate |
+
+**Selection rule applied (second pass):** evidence-backed and cheap-to-verify
+actions are preferred over the easiest content to generate. The two **scored**
+items (GSC runbook, sweep hardening) convert a *blocked* channel and a *noisy*
+channel into reliable signal at near-zero risk; the OC hub (15) is the strongest
+response to a **demonstrated** cross-city breadth advantage. No item is actioned
+until it clears the risk gate and (for any HTML change) `validate_knowledge_base.py`
++ `scripts/seo_audit.py`.
 
 ---
 
