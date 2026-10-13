@@ -3,6 +3,24 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-13 — Blocker verification & fix pass
+
+**Added:** scheduled-run verification evidence in `INTEGRATION_STATUS.md` (daily
+cron run `1afcbefd` = 06:00:54 PDT and weekly cron run `ff3478a3` = 06:00:43 PDT,
+both COMPLETED, daily opened PR #33); exact intended secret names for P-002/P-005;
+a live schedule + deployment + access-blocker section in `README.md`.
+
+**Updated:** `automations/intelligence-hq-daily.prompt.md` — explicit
+**search-provider policy** (Brave → DuckDuckGo Lite → Bing, fall through once on
+429/202) so the daily sweep no longer stalls on a blocked provider; measurement
+step names the credential secrets and forbids reporting an unavailable metric as
+zero; alert step cites P-005. `INTEGRATION_STATUS.md` deployment row corrected to
+**GitHub Pages origin fronted by Cloudflare** (Cloudflare Workers build integration
+runs on PRs; no `wrangler` config in repo). `proposals/…priority-actions.md`
+P-002/P-005 statuses + secret names.
+
+**Not changed:** no website page, schema, copy, or automation schedule.
+
 ## 2026-10-12 — Intelligence HQ setup (infrastructure + first run)
 
 **Added:**

@@ -31,7 +31,32 @@ An agent-driven research run will happily consume the whole 1800 s exploring
 search engines and never persist. Prompts MUST carry an explicit time budget
 (~40% research / 60% write+commit), a single allowed search provider, and a
 "stop researching and commit when near budget" instruction. A committed short
-report beats a rich lost one.
+report beats a rich lost one. **Verified 2026-10-13:** the scheduled daily run
+finished in ~10 min and persisted (opened PR #33).
+
+## Search-provider reality on this egress IP (ISSUE-007)
+Brave → HTTP **429**; DuckDuckGo HTML → **202**; **DuckDuckGo Lite is the only
+reliably parseable endpoint** (`https://lite.duckduckgo.com/lite/?q=...`). Prompt
+provider order: Brave → DDG Lite → Bing, fall through once, record `platform` per
+row. Don't retry a blocked provider.
+
+## Scheduled-run verification (how to prove the loop is autonomous)
+`next_run_at` is not exposed. Prove scheduling by an actual on-time **cron** run:
+`GET /api/automation/v1/{id}/runs` and look for `trigger_source: cron` with a
+`started_at` matching the cron in the automation's timezone. Verified 2026-10-12:
+daily `1afcbefd` 13:00:54Z = 06:00:54 PDT; weekly `ff3478a3` 13:00:43Z = 06:00 PDT.
+
+## Concurrent sessions mutate this repo (ISSUE-008)
+Multiple OpenHands sessions (daily automation + manual) push branches and open PRs
+here, and **the owner merges them within minutes**. Always `git fetch` and check
+for a newer `main` and open PRs BEFORE doing repo work; expect your branch to be
+superseded. Rebase-before-push; union-merge append-only `.jsonl`; one PR per day.
+
+## Deployment (corrected 2026-10-13)
+Origin = **GitHub Pages** (legacy build from `main` `/`), **fronted by Cloudflare**
+(DNS+proxy+Transform Rules applying `_headers`; Pages ignores `_headers`). A
+Cloudflare **Workers Builds** check runs on PRs, but there is NO `wrangler`/Workers
+config in the repo — do not describe the site as Workers-deployed.
 
 ## GitHub API note
 `github_update_pull_request` (MCP) can return **403 "Resource not accessible by

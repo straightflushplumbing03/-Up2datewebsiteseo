@@ -5,6 +5,33 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-13 — Blocker verification & fix pass
+
+**Status:** Additive docs + prompt config only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/blockers-verification-2026-10-13`.
+
+- **Change:** (1) Verified the **scheduled** (not manual) runs fired and completed —
+  daily cron `1afcbefd` at 06:00:54 PDT, weekly cron `ff3478a3` at 06:00:43 PDT,
+  both COMPLETED; the daily run persisted its report and opened PR #33. (2) Made the
+  daily prompt's search policy explicit — **Brave → DuckDuckGo Lite → Bing**, fall
+  through once on 429/202 — so a blocked provider no longer stalls the sweep. (3)
+  Named the exact credential secrets for P-002 and forbade reporting an unavailable
+  metric as zero. (4) Corrected the deployment record to **GitHub Pages origin
+  fronted by Cloudflare** (with a Cloudflare Workers build check on PRs, no
+  `wrangler` config in the repo). (5) Refreshed `README.md` with live schedule,
+  deployment, and blocker sections.
+- **Reason:** owner asked to fix the PR/access-blocker reporting and confirm the loop
+  is genuinely autonomous.
+- **Target:** knowledge base + automation prompt config only.
+- **Competitor insight:** none (no new sweep this pass).
+- **Expected outcome:** accurate reporting; a daily sweep that returns evidence even
+  when the primary provider is blocked; blockers tracked with exact owner actions.
+- **Result:** scheduled runs verified; prompts in parity with repo after edit;
+  `validate_knowledge_base.py` → OK (133 HTML files, exit 0).
+- **Keep/modify/revert:** **keep.** No production change to revert.
+
+---
+
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**

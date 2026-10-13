@@ -106,7 +106,40 @@ Each issue: evidence, impact, fix, status, approval level.
   one alternate), forbids headless browsers and multi-engine probing, and instructs
   the agent to **stop researching and commit** when near budget. The weekly prompt
   got the same budget note.
-- **Follow-up:** confirm the hardened prompt completes within budget (second
-  dispatch). If it still overruns, reduce the query sample further (10–15) and move
-  industry research to a separate weekly job.
+- **Verified 2026-10-13:** the budget fix works. The daily run stayed inside budget
+  (the scheduled cron run `1afcbefd` finished in ~10 min) and persisted its output.
 - **Approval:** Level 2 (automation prompt config).
+
+---
+
+## ISSUE-007 — Search providers block the sweep egress IP  [MEDIUM · MITIGATED 2026-10-13]
+
+- **Evidence:** Brave Search returns **HTTP 429** to this egress IP; DuckDuckGo HTML
+  returns **202**; multiple daily runs recorded the sweep returning no comparable
+  results because the primary provider was blocked. Only **DuckDuckGo Lite**
+  (`https://lite.duckduckgo.com/lite/`) has returned parseable results (36/36 on
+  2026-10-12).
+- **Impact:** a run can burn budget retrying a blocked provider and return thin
+  evidence; the "visibility" time series is then inconsistent across providers.
+- **Fix applied 2026-10-13:** the daily prompt now defines an explicit provider
+  order (**Brave → DuckDuckGo Lite → Bing**), falls through **once** on 429/202, and
+  records the provider used (`platform`) per row so cross-run comparisons stay honest.
+- **Residual:** this is an external rate-limit, not fixable from the repo. A paid
+  SERP API or a Perplexity key (P-002) would give a stable, attributable signal.
+- **Approval:** Level 1/2 (prompt config).
+
+---
+
+## ISSUE-008 — Other automation sessions mutate the same repo/branch concurrently  [LOW · OPEN]
+
+- **Evidence:** during the 2026-10-12 setup, a concurrent automated run pushed the
+  same daily branch and opened PR #30; a separate "Phase 2" session opened PR #31;
+  the owner merged #30/#29/#31 within minutes of each other. My setup branch was
+  superseded while still open.
+- **Impact:** duplicate/overlapping PRs and branch conflicts; wasted effort; risk of
+  confusing the audit trail.
+- **Mitigation (in use):** conflict-safe rebase-before-push; union-merge append-only
+  data; one PR per day's work; the daily prompt opens PRs to `main` and never
+  self-merges. **Before doing repo work, always `git fetch` and check for a newer
+  `main` and for open PRs on the target branch.**
+- **Approval:** informational.
