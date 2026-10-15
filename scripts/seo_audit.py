@@ -328,6 +328,10 @@ def main():
     for u_path in sorted(sm_paths):
         if u_path in pages and pages[u_path].canonical:
             c = norm_href(pages[u_path].canonical, u_path)
+            # A section index listed as /dir/ canonicalizes to the trailing-slash
+            # form; that is the same URL, not a cross-canonical.
+            if c and u_path.endswith("index.html") and c == u_path[: -len("index.html")]:
+                continue
             if c and c != u_path:
                 non_self_canon_in_sm.append((u_path, c))
     print(f"  sitemap URLs whose canonical points elsewhere: {len(non_self_canon_in_sm)} {non_self_canon_in_sm[:5]}")

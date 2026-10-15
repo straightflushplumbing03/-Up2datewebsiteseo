@@ -7,8 +7,9 @@ Sitemap maintainer for straightflushplumbingoc.com (static tree).
   noindex-duplicate and NOT 404.html) has a <url> entry.
 - Preserves each entry's existing <changefreq>/<priority> when present,
   deriving sensible defaults for additions.
-- Bumps <lastmod> to today for every URL whose target file changed today
-  (or whose lastmod is missing/stale-beyond-file-mtime); idempotent within a day.
+- Bumps <lastmod> to the file's last git commit date (a real, verifiable
+  signal) — falling back to the file mtime when the file is untracked or git is
+  unavailable. Idempotent within a day.
 - Root stub pages (aliso-viejo.html, etc.) are intentionally EXCLUDED: they are
   noindex duplicates that canonically point at cities/*.html.
 
@@ -16,6 +17,7 @@ Run from project root:  python3 scripts/refresh_sitemap.py
 """
 import os
 import re
+import subprocess
 from datetime import date
 from html.parser import HTMLParser
 
@@ -42,9 +44,48 @@ def page_indexable(path):
         pass
     return not p.noindex
 
+
+_git_dates = {}
+
+def _git_lastcommit():
+    """rel path -> YYYY-MM-DD of its last commit on HEAD. Empty if git absent."""
+    if _git_dates:
+        return _git_dates
+    try:
+        out = subprocess.run(
+            ["git", "-C", ROOT, "log", "--format=%cI", "--name-only", "HEAD", "--", "."],
+            capture_output=True, text=True, timeout=120,
+        ).stdout
+    except Exception:
+        return _git_dates
+    # Walk commits newest-first, recording the first (newest) date each path appears.
+    result = {}
+    cur_date = None
+    for line in out.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        if re.match(r"^\d{4}-\d{2}-\d{2}T", line):
+            cur_date = line[:10]
+        elif cur_date:
+            result.setdefault(line, cur_date)
+    _git_dates.update(result)
+    return _git_dates
+
+
+def file_lastmod_date(rel, full):
+    git = _git_lastcommit().get(rel)
+    if git:
+        return git
+    return date.fromtimestamp(os.path.getmtime(full)).isoformat()
+
 def url_of(rel):
+    # A section index is served at its canonical trailing-slash URL
+    # (e.g. services/index.html canonicalizes to /services/), so emit that form.
     if rel == "index.html":
         return f"{DOMAIN}/"
+    if rel.endswith("/index.html"):
+        return f"{DOMAIN}/{rel[:-len('index.html')]}"
     return f"{DOMAIN}/{rel}"
 
 DEFAULT_FREQ = {
@@ -91,7 +132,12 @@ def main():
         block = m.group(0)
         loc = re.search(r"<loc>(.*?)</loc>", block).group(1)
         path = loc.replace(DOMAIN, "").lstrip("/")
-        rel = "index.html" if path == "" else path
+        if path == "":
+            rel = "index.html"
+        elif path.endswith("/"):
+            rel = path + "index.html"
+        else:
+            rel = path
         entries[rel] = block
 
     existing = set(entries)
@@ -114,15 +160,15 @@ def main():
             f"    <priority>{pri}</priority>\n  </url>\n"
         )
 
-    # refresh lastmod: bump if file mtime date is newer than recorded lastmod
+    # refresh lastmod: set to the file's real last-commit date (or mtime fallback)
     bumped = 0
     for rel, block in entries.items():
         fpath = os.path.join(ROOT, rel)
-        mtime_date = date.fromtimestamp(os.path.getmtime(fpath)).isoformat()
+        target = file_lastmod_date(rel, fpath)
         lm = re.search(r"<lastmod>(.*?)</lastmod>", block)
         current = lm.group(1) if lm else ""
-        if not lm or current < mtime_date:
-            block = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{TODAY}</lastmod>", block)
+        if not lm or current != target:
+            block = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{target}</lastmod>", block)
             entries[rel] = block
             bumped += 1
     print(f"lastmod refreshed: {bumped}")
@@ -147,7 +193,12 @@ def main():
     final_rels = set()
     for m in re.finditer(r"<loc>(.*?)</loc>", final):
         path = m.group(1).replace(DOMAIN, "").lstrip("/")
-        final_rels.add("index.html" if path == "" else path)
+        if path == "":
+            final_rels.add("index.html")
+        elif path.endswith("/"):
+            final_rels.add(path + "index.html")
+        else:
+            final_rels.add(path)
     missing = sorted(indexable - final_rels)
     extra = sorted(final_rels - indexable)
     print(f"VERIFY -> sitemap URLs: {len(final_rels)}  missing: {missing}  extra: {extra}")

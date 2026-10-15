@@ -31,17 +31,23 @@ Each issue: evidence, impact, fix, status, approval level.
 
 ---
 
-## ISSUE-002 — Self-reported `aggregateRating` in LocalBusiness JSON-LD  [MEDIUM · OPEN]
+## ISSUE-002 — Self-reported `aggregateRating` in LocalBusiness JSON-LD  [MEDIUM · RESOLVED 2026-10-15]
 
-- **Evidence:** `index.html` JSON-LD contains `aggregateRating` (4.8/74) and
-  `review` on a `Plumber` type.
+- **Evidence:** `index.html` JSON-LD contained `aggregateRating` (4.8/74) and
+  three `review` objects on a `Plumber` type.
 - **Impact:** Google's structured-data policy: review/rating markup must be
   genuinely independent and about the entity; self-serving ratings on a business
   may be ignored or flagged. Low risk but a hygiene item.
-- **Fix (proposed, evidence-gated):** confirm the rating matches the live Yelp/
-  Google profiles; consider moving ratings to a verified third-party reference or
-  removing if not corroborated. See `proposals/`.
-- **Approval:** Level 2 (metadata/content using verified facts) once corroborated.
+- **Fix applied 2026-10-15:** the `aggregateRating` and `review` nodes were
+  **removed** from `index.html`'s `Plumber` JSON-LD (Level 2, metadata hygiene).
+  The on-page footer star badges ("4.8/5 on Yelp", "5.0/5 on Google") were left
+  as human-visible trust content, which is outside structured-data policy.
+  `llms.txt` now attributes the ratings to the business and flags them as
+  needing confirmation on the live profiles.
+- **Re-introduction gate:** re-add rating markup only if the owner confirms the
+  values against the live Google/Yelp profiles (Google prefers review markup that
+  references a genuine third-party platform). See `proposals/`.
+- **Approval:** Level 2 (metadata/content using verified facts). Applied.
 
 ---
 
@@ -110,3 +116,84 @@ Each issue: evidence, impact, fix, status, approval level.
   dispatch). If it still overruns, reduce the query sample further (10–15) and move
   industry research to a separate weekly job.
 - **Approval:** Level 2 (automation prompt config).
+
+---
+
+## ISSUE-007 — No security response headers (GitHub Pages ignores `_headers`)  [MEDIUM · BLOCKED ON CLOUDFLARE TOKEN]
+
+- **Evidence (live, 2026-10-15):** `curl -sI https://straightflushplumbingoc.com/`
+  returns no `Strict-Transport-Security`, `Content-Security-Policy`,
+  `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`,
+  `Permissions-Policy`, or `Cross-Origin-*` headers. The repo ships a `_headers`
+  file, but GitHub Pages does not honor it.
+- **Impact:** HSTS is an HTTPS-hardening/ranking-adjacent signal; the CSP,
+  clickjacking and MIME-sniffing protections are absent site-wide.
+- **Prepared fix:** `scripts/cloudflare_add_security_headers.py` (read-only by
+  default; `--apply` writes a Cloudflare Transform Rule → Modify Response Header
+  with the exact `_headers` values). Not applied — requires owner approval and a
+  `CLOUDFLARE_API_TOKEN` with `Zone:Transform Rules:Edit`.
+- **Approval:** Level 3 (hosting/security). Awaiting owner action.
+
+---
+
+## ISSUE-008 — Seven city-chip links pointed at non-existent anchors  [LOW · RESOLVED 2026-10-15]
+
+- **Evidence:** seven `"Also serving communities near {City}"` chips in
+  `cities/*.html` linked to `../service-areas.html#<slug>`, but `service-areas.html`
+  contains no matching `id` anchors, so every link landed at the top of the hub page
+  (dead fragment) and bypassed the city page that does exist.
+- **Impact:** weak internal-link graph on the city cluster (a local-search relevance
+  signal) plus dead-fragment links.
+- **Fix applied 2026-10-15:** chips now link the sibling city pages directly
+  (`scripts/patch_city_internal_links.py`, idempotent). `validate_knowledge_base.py`
+  gained a dead-fragment guard so this cannot regress.
+
+---
+
+## ISSUE-009 — Sitemap: stale/uniform `lastmod` + `case-studies/` section root missing  [LOW · RESOLVED 2026-10-15]
+
+- **Evidence:** all 74 `lastmod` values were `2026-09-24`; the `case-studies/`
+  section root had 0 sitemap entries while `academy/`, `services/`, `insurance/`
+  section roots were listed.
+- **Fix applied 2026-10-15:** `scripts/refresh_sitemap.py` now (a) sets `lastmod`
+  from each file's real last git commit date (verifiable) instead of the checkout
+  mtime, and (b) emits section roots in their canonical trailing-slash URL form
+  (`/case-studies/`), so every listed URL matches its page canonical. `lastmod` now
+  shows four real dates (2026-09-25/10-05/10-07/10-11). Sitemap remains 74 URLs,
+  fully in sync with the indexable set.
+
+---
+
+## ISSUE-010 — Templated, near-duplicate meta titles/descriptions across 21 city pages  [LOW · RESOLVED 2026-10-15]
+
+- **Evidence:** the 21 `cities/*.html` pages used formulaic titles/descriptions
+  ("Plumber in {City}, CA | …"), a cannibalization/quality risk for the local
+  cluster.
+- **Fix applied 2026-10-15:** each city page now has a unique title (≤60c) and a
+  unique description (120–160c) derived from that page's own verified content
+  (e.g. housing-era/pipe-material differences), not city-name substitution
+  (`scripts/patch_city_meta.py`, idempotent). Duplicate-description clusters fell
+  from 52 → 31 (the remainder are the intentional noindex root stubs).
+  `validate_knowledge_base.py` now fails on any duplicate title/description among
+  indexable pages.
+- **Caveat:** the city pages are the noindex-canonicalized targets of the root
+  stubs (ISSUE-004); differentiation improves quality but does not by itself make
+  them rank — that still needs content depth and authority work.
+
+---
+
+## ISSUE-011 — Automation API returns zero automations for this session's credential  [MEDIUM · OPEN / INVESTIGATE]
+
+- **Evidence (2026-10-15):** `GET https://app.all-hands.dev/api/automation/v1`
+  with the session's `OPENHANDS_API_KEY` returns `{"automations":[],"total":0}`
+  (HTTP 200), while `growth-engine/KNOWN_ISSUES.md` (ISSUE-005) documents two
+  active loops (`SFPL Intelligence HQ Daily 6 AM`, `HQ-W`) plus a Sentinel job.
+- **Impact / not verified:** it is **not** confirmed that the automations were
+  deleted. The most likely explanation is that this session authenticates as a
+  different user/org than the account that owns the automations, so the list is
+  scoped to an empty org. Cannot be resolved without the owning account's
+  credential.
+- **Owner action:** confirm which account/org owns the daily automations and, if
+  needed, mint a scoped API key; then re-run
+  `curl -H "Authorization: Bearer $KEY" https://app.all-hands.dev/api/automation/v1?limit=30`.
+- **Approval:** informational.

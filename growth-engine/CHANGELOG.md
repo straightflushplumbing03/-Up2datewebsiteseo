@@ -58,6 +58,41 @@ aggregators (yelp 32/36) dominate local discovery.
 **Not changed:** no website pages, schema, or copy modified — read-only research +
 additive documentation.
 
+## 2026-10-15 — Technical SEO / AEO audit + fixes (OpenHands master task)
+
+**Added:**
+- `growth-engine/reports/baseline/2026-10-15-technical-seo-baseline.md` — pre-change
+  baseline (live status codes, headers, robots/sitemap, schema, metadata inventory).
+- `scripts/patch_city_meta.py`, `scripts/patch_city_internal_links.py`,
+  `scripts/patch_case_study_integrity.py` (idempotent, evidence-gated fixers).
+- `scripts/cloudflare_add_security_headers.py` (read-only by default; `--apply`
+  gated on owner approval + Cloudflare token).
+
+**Changed (all Level 2, verified):**
+- `cities/*.html` — unique per-city title (≤60c) + description (120–160c) derived
+  from each page's own content; 7 dead-anchor city chips now link the sibling city
+  pages. New ISSUE-008, ISSUE-010.
+- `index.html` — removed self-reported `aggregateRating` + `review` from the
+  `Plumber` JSON-LD (resolves ISSUE-002).
+- `sitemap.xml` — `lastmod` from real git commit dates; `case-studies/` section root
+  now listed in canonical form. New ISSUE-009.
+- `llms.txt` — ratings line now attributed to the business and flagged for
+  confirmation on the live profiles.
+- `growth-engine/tests/validate_knowledge_base.py` — added unique title/description,
+  dead-fragment, and sitemap-sync invariants (the docstring previously promised a
+  broken-link check that was not implemented).
+- `growth-engine/KNOWN_ISSUES.md` — ISSUE-002 RESOLVED; added ISSUE-007 (security
+  headers, blocked on CF token), ISSUE-008/009/010 (resolved), ISSUE-011
+  (automation API returns 0 for this credential — investigate).
+
+**Verification:** `seo_audit.py` (0 broken links, 0 invalid JSON-LD, 0 duplicate
+indexable titles), `validate_knowledge_base.py` (133 files OK), crawler check PASS,
+sitemap valid XML, 338 JSON-LD blocks parse. Core Web Vitals **unverified** —
+PageSpeed Insights API returned HTTP 429 (quota, no key).
+
+**Not changed:** `AGENTS.md`, approved-claims/business facts, the existing
+automations, and no production deploy (no merge).
+
 ## 2026-10-11 — Daily run (visibility sweep + competitor refresh)
 
 **Added:** `reports/daily/2026-10-11.md`.
