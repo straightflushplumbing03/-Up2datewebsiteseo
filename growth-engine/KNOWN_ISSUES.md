@@ -394,3 +394,34 @@ duplicate, so the duplicates are not disavowed from the real side either.
   and the command; full suite 141 tests pass. A pre-stage run with the secret named
   recorded `visibility_sweep | ok=True` and 62 real rows.
 - **Approval:** Level 2 (tooling).
+
+---
+
+## ISSUE-020 — Sitemap cross-check compared filesystem paths against URL paths, inventing 5 missing pages  [MEDIUM · FIXED 2026-10-15]
+
+- **Evidence:** `seo_audit.py` §4 built one set from filesystem relative paths
+  (`services/index.html`) and the other from sitemap URL paths (`/services/`), so the
+  two never matched for any directory hub. It reported **5 indexable pages missing
+  from `sitemap.xml`** and **59 absent pages**, and separately flagged the same
+  directory hubs as non-self-canonical. The live cross-check in URL space reports
+  `sitemap URLs: 74, in sitemap but NO file: 0, indexable file NOT in sitemap: 0,
+  sitemap URLs whose canonical points elsewhere: 0`.
+- **Distinct from a real gap:** the 59 "absent" pages are `noindex` legacy mirrors,
+  which are *correctly* absent from the sitemap. Treating them as indexable inverted
+  the meaning of the control — a clean sitemap looked like a broken one.
+- **Impact:** the 2026-10-15 second run's priority #4 asked the owner to "decide the 5
+  indexable pages missing from `sitemap.xml`". No such pages exist, so an owner action
+  item was raised against a defect in our own tool. The same defect would have buried
+  a genuine missing page in false positives.
+- **Fix applied 2026-10-15:** `url_path(rel)` and `rel_path(url)` map between
+  filesystem and canonical URL space (`index.html` ⇄ directory URL); `PageParse` now
+  sets `is_stub` when `meta_robots` contains `noindex`; `sitemap_coverage(pages,
+  sm_urls)` normalizes both sides to URL space and excludes stubs. `main()` §4 calls
+  the helper.
+- **Verification:** `growth-engine/tests/test_seo_audit_sitemap.py` — 14 tests
+  including `test_every_indexable_page_is_in_the_sitemap`,
+  `test_every_sitemap_url_has_a_file`, `test_every_sitemap_url_is_self_canonical`,
+  `test_directory_index_maps_to_directory_url`, asserted against the shipped site.
+  Full suite 155 tests pass; `seo_audit.py` exits 0.
+- **Approval:** Level 2 (tooling).
+

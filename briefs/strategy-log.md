@@ -5,6 +5,46 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-15 (daily, third run) - The sitemap "gap" was our own audit bug, not the site
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-15c`.
+
+**Change - `scripts/seo_audit.py` + `growth-engine/tests/test_seo_audit_sitemap.py`
+(ISSUE-020, medium, fixed).** The sitemap cross-check built one set from filesystem
+paths (`services/index.html`) and the other from sitemap URL paths (`/services/`), so
+no directory hub ever matched. It reported 5 indexable pages missing from
+`sitemap.xml` and 59 absent pages, and flagged the same hubs as non-self-canonical.
+Both sides are now normalized to URL space and `noindex` stubs are excluded. Live
+cross-check: 74 sitemap URLs, 0 in-sitemap-without-a-file, 0 indexable-not-in-sitemap,
+0 non-self-canonical. 14 regression tests; suite 155 pass.
+
+**Reason:** the second run's priority #4 asked the owner to decide on 5 missing pages
+that do not exist - an owner action item raised against a defect in our own tool. The
+59 "absent" pages are `noindex` legacy mirrors and are correctly absent.
+
+**Target:** the audit control itself, not the site. A false positive here both wastes
+owner attention and would hide a genuine missing page.
+
+**Competitor insight:** `efficientplumbing.com` appeared in 54 of today's 72 sweep
+rows - the most persistent single competitor recorded to date. One day is not a trend;
+no page change is justified on it.
+
+**Entity insight:** re-probed both duplicates by hand. `straightflushplumb8.wixsite.com`
+404s at its root but serves `/straightflushplumb-1` at HTTP 200, indexable, title
+`Home | Straight Flush Plumbing & Leak Detection`. The second run's ISSUE-018 fix
+holds. Owner action, not ours.
+
+**Expected outcome:** the next run's audit reports zero sitemap gaps, so any future
+gap is real.
+
+**Result:** `VERIFIED` - `seo_audit.py` exits 0 and reports 0/0/0; full suite 155 pass;
+`entity_consistency_check.py --run --append` exit 1 with two named live duplicates.
+
+**Keep / modify / revert:** keep.
+
+
+
 ## 2026-10-15 (daily, second run - continuation) - False BLOCKED on the visibility sweep: secret injection depends on the command text
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
