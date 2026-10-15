@@ -18,10 +18,22 @@ Record the id here after creation so future runs can self-inspect.
 
 | Automation | id | Cron (America/Los_Angeles) | State |
 |---|---|---|---|
-| SFPL AI Headquarters Daily | _(fill in)_ | `0 6 * * *` | _(fill in)_ |
+| SFPL AI Headquarters Daily | `e6684830-a9a5-43d8-9d5a-34fed5257bbf` | `0 6 * * *` | created 2026-10-15, enabled |
 | SFPL AI Headquarters Weekly | _(fill in)_ | `0 6 * * 1` | _(fill in)_ |
+| "New Automation" (legacy, kept running side by side) | `df4bcd68-75f3-46f4-ab6f-a4027e5bf8a9` | `0 6 * * 1-5` | enabled, **never succeeded** — see below |
 
-### The existing 6 AM automation is broken — verified 2026-10-15
+### Deployed 2026-10-15
+
+`SFPL AI Headquarters Daily` created via `POST /api/automation/v1/preset/prompt`
+(HTTP 201). Payload built by `build_payload.py` from
+`01-MASTER-AGENT-PROMPT.md` — 26,540 prompt chars, `timeout: 1800`, and both
+repositories attached (`AI-Headquarters` + `-Up2datewebsiteseo`, ref `main`).
+
+Verification run dispatched: `010cf8d9-3ea5-4a95-914a-6baeecc49785`.
+
+**Rollback / pause:** `PATCH /api/automation/v1/<id>` with `{"enabled": false}`.
+
+### The legacy 6 AM automation is broken — verified 2026-10-15
 
 `GET /api/automation/v1` returned one enabled job named **"New Automation"**:
 
