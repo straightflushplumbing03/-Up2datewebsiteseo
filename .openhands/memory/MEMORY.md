@@ -9,11 +9,12 @@
 
 ## Intelligence system
 - Pre-existing `growth-engine/` knowledge base (created 2026-10-09). Read order is in `growth-engine/README.md`.
-- Intelligence HQ = two OpenHands Cloud automations (prompt preset, `repos` = the repo):
-  - `SFPL Intelligence HQ Daily 6 AM` — id `5dc89b41-6880-40e6-950c-14a635f7bd62`, `0 6 * * *`, America/Los_Angeles.
-  - `SFPL Intelligence HQ Weekly Review` — id `0582d219-de15-42c2-83b5-4bc92995edce`, `0 6 * * 1`, America/Los_Angeles.
-  - Canonical prompts: `growth-engine/automations/intelligence-hq-{daily,weekly}.prompt.md` (keep in sync with live definitions).
-- Superseded Automation A (`4c5213f7-080c-4edd-97a2-30962419bd14`, same 06:00 slot) was **disabled** 2026-10-12.
+- Intelligence HQ live automations (verified 2026-10-15). The ids below are current; the earlier generation (`5dc89b41`, `0582d219`, `4c5213f7`) now returns **404** - do not trust ids from older notes.
+  - **`SFPL AI Headquarters Daily`** - id `1485d659-8663-4776-a507-db0fefed8483`, `0 6 * * *`, America/Los_Angeles, timeout 1800. The one content job. Prompt source: `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md`.
+  - **`SFPL AI Headquarters Daily Retry Watchdog`** - id `b946624c-79c2-40a6-be1b-258388a15fb4`, `30 6,9,12,15,18 * * *`, America/Los_Angeles, timeout 600. Re-dispatches the daily job once on a sandbox-unavailable failure; does no SEO work itself.
+  - Disabled / rollback points: `e6684830-a9a5-43d8-9d5a-34fed5257bbf` (superseded daily), `df4bcd68-75f3-46f4-ab6f-a4027e5bf8a9` (empty prompt, never succeeded).
+  - Invariant: exactly **one** enabled content automation. Two jobs on `0 6 * * *` race on the same branch names.
+  - Canonical prompts: `growth-engine/automations/intelligence-hq-{daily,weekly}.prompt.md` and `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md` (keep in sync with live definitions).
 
 ## OpenHands automation API gotchas (learned)
 - Host: `https://app.all-hands.dev`, auth `Authorization: Bearer $OPENHANDS_API_KEY`.
@@ -23,15 +24,39 @@
 - PATCH `{enabled:false}` disables (returns `state: INACTIVE`).
 - Timezone is honored and echoed back in `trigger.timezone`.
 - **`timeout` is hard-capped at 1800 s** (30 min) — 3600 → HTTP 422. Do not try to raise it; control run length via the prompt instead.
+- **The ENFORCED ceiling is start + ~1920 s (32 min), not the configured 1800 s.** Measured as `timeout_at - started_at` on three runs: 1923 s, 1954 s, 1922 s. A run configured at `timeout: 1800` gets ~32 minutes of wall clock. Budget against ~30 minutes of usable time.
+- **`PATCH /api/automation/v1/{id}` DOES accept `prompt`** (verified 2026-10-15: `{name,prompt,trigger,timeout}` → HTTP 200, new prompt length returned, `preset_metadata.preset_type` still `"prompt"`). The endpoint table lists only `name, trigger, enabled, timeout`, which is misleading. Update a live preset in place; no need to create a replacement job.
+- `GET /api/automation/v1/{id}/runs` returns `{"runs":[...]}`; the automation *list* uses key `automations` (not `items`).
 - **`next_run_at` is NOT returned** by this API version. Prove scheduling with `enabled` + `trigger` + `last_triggered_at`.
 - The repo connection lives in `preset_metadata.repos` (a list of `{url:...}`).
+- **Secrets are injected only into a command whose TEXT names the key.** A bare `python3 scripts/daily_measure.py` sees no `Tavily_api_key` even when one is registered, and reports a false BLOCKED. Name the secret in the command — e.g. `export Tavily_api_key="${Tavily_api_key}" && python3 ...` — to trigger injection. Same trap for `Perplexity_api_key`. This is a platform property, not a client bug.
+- Secrets are **case-sensitive to how the user typed them**: `Tavily_api_key`, `Perplexity_api_key`, not the uppercase convention.
 
 ## Run-budget rule for these automations (ISSUE-006)
-An agent-driven research run will happily consume the whole 1800 s exploring
-search engines and never persist. Prompts MUST carry an explicit time budget
-(~40% research / 60% write+commit), a single allowed search provider, and a
-"stop researching and commit when near budget" instruction. A committed short
-report beats a rich lost one.
+An agent-driven research run will happily consume the whole budget exploring and
+never persist. **The expensive part is not measuring, it is deciding how to
+measure.** Two runs were killed at ~1950 s; the second produced nothing because
+every minute went to discovery:
+
+```
+run 2 phases: "Installing dependencies" -> "List data dir and tail jsonl
+histories" -> "List PRs via GitHub API" -> "Inspect record schema and wrapper
+style"   [killed at 1953 s, no commit, no PR]
+```
+
+The fix that worked: `scripts/daily_measure.py`, a deterministic pre-stage that
+runs every check (knowledge base, crawler access, entity consistency, sitemap
+idempotency, seo_audit) plus the Tavily sweep and writes
+`growth-engine/data/daily_context.json`. **Measured 5.3 s** for the non-network
+part. The prompt now makes it the first action and tells the agent to read the
+context instead of re-deriving facts.
+
+Results after the change: runs completed in **947 s (53%)** and **720 s (40%)**
+of the 1800 s cap, both pushing work and opening/updating PRs — versus two
+consecutive timeouts before.
+
+Keep the rule: an explicit phase budget, a 22-minute checkpoint that stops
+analysis and writes the report, and "report > commit > measurement > new work".
 
 ## GitHub API note
 `github_update_pull_request` (MCP) can return **403 "Resource not accessible by
