@@ -144,6 +144,60 @@ Each issue: evidence, impact, fix, status, approval level.
   self-merges. **Before doing repo work, always `git fetch` and check for a newer
   `main` and for open PRs on the target branch.**
 - **Approval:** informational.
+## ISSUE-009 — Daily runs die at the wall-clock ceiling; the platform mislabels it "Sandbox not available"  [HIGH · MITIGATED 2026-10-15]
+
+- **Evidence (2026-10-13):** the scheduled HQ-D run
+  `67e154d9-e381-4be1-aa62-3f87c98ce1f6` (cron, `started_at 2026-10-13T13:00:01Z` =
+  06:00:01 PT) ended `status: FAILED`,
+  `error_detail: "Timed out: Sandbox not available"`,
+  `status_detail.kind: "environment_unavailable"`, `phase: "verification"`,
+  `conversation_id: null`, `current_phase: "Installing dependencies"`,
+  `timeout_at 13:32:07Z`. Elapsed `started_at → timeout_at` = **1926 s**.
+- **Re-confirmed (2026-10-15):** the replacement production automation
+  `SFPL AI Headquarters Daily` (`1485d659-8663-4776-a507-db0fefed8483`) failed its
+  first dispatch `1cda9bca-9cd7-4d43-8eac-dce36998bc7c` with the **identical**
+  signature: `environment_unavailable`, `conversation_id: null`,
+  `started_at 2026-10-15T17:31:21Z`, `completed_at 2026-10-15T18:03:55Z` =
+  **1954 s**. The old automation `e6684830` failed twice the same day (`010cf8d9`
+  1941 s, `4f9c7df0` 2004 s) with `kind: "timeout"`.
+- **Root cause (corrected 2026-10-15):** the run **runs out of its wall-clock
+  budget**. The enforced ceiling is **start + ~1920 s** (~32 min), not the 1800 s in
+  the config — measured as `timeout_at - started_at` across four runs (1926, 1947,
+  1923, 1922 s). When the platform kills the run it tears down the sandbox, and its
+  post-run **verification** step then finds no sandbox and records
+  `environment_unavailable` / "Timed out: Sandbox not available". **That string is a
+  symptom of the timeout, not proof the sandbox was never provisioned.** The failing
+  runs each carried a `sandbox_id` (except `67e154d9`, which still ran 1926 s), and
+  the one run that fit its budget (`0883b889`, 947 s) completed normally.
+- **Why the first diagnosis was wrong:** the original reading treated the
+  `environment_unavailable` string as a provisioning failure and proposed a retry.
+  A retry cannot fix a budget overrun — it burns another ~30 min and can race the
+  first run's branch. Elapsed time, not the error string, is the discriminator.
+- **Impact:** a run that does not fit its ceiling produces nothing durable and is
+  easy to misread as infra flakiness. This is the same family as **ISSUE-006**
+  (agent overruns its budget); ISSUE-009 is the platform-level restatement.
+- **Fix applied 2026-10-15 (commit `897e7be`):** a deterministic pre-stage
+  `scripts/daily_measure.py` (~5 s) runs every check and writes
+  `growth-engine/data/daily_context.json`, and the master prompt was restructured
+  around the real ~1920 s ceiling. Proven: a dispatched run completed in **947 s**.
+- **Mitigation kept (retry watchdog):** `SFPL AI Headquarters Daily Retry Watchdog`
+  (prompt `automations/ai-headquarters-daily-watchdog.prompt.md`). It re-dispatches
+  **once** only on a *fast* failure that never reached the ceiling — a genuine
+  provisioning blip. It explicitly does **not** re-dispatch a run that consumed its
+  clock.
+- **Diagnostic rule — tell the classes apart (the key is `elapsed`, not the error):**
+  - `FAILED` with `elapsed ≥ ~1500 s` (≈ the ceiling) → **budget overrun** → fix the
+    prompt budget; **do NOT retry**, even if the error says "Sandbox not available".
+  - `FAILED` with `elapsed` far below the ceiling, no conversation, sandbox marker →
+    **provisioning failure** → retry once.
+  - `execution_error` with `KeyError: 'AUTOMATION_AGENT_PROFILE_ID'` → the
+    automation has no `agent_profile_id` → **fix the automation config**; retrying
+    cannot help.
+  Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`.
+- **Approval:** Level 2 (create a watchdog automation + prompt config).
+
+---
+
 ## ISSUE-010 — Sitemap refresh tool would break directory-hub URLs  [LOW · FIXED 2026-10-15]
 
 - **Evidence:** running `scripts/refresh_sitemap.py` on a copy printed
