@@ -279,9 +279,9 @@ duplicate, so the duplicates are not disavowed from the real side either.
   $ git log --format=%cI --name-only HEAD | head -2
   2026-10-15T11:51:22Z
   ```
-  Measured on PR #38's head (`493a9bf`), whose `sitemap.xml` carries
-  `<lastmod>2026-10-15</lastmod>` on **54** of 74 URLs; `main` carries **32**.
-  Base distribution on `main`: `2026-09-25 ×7`, `2026-10-11 ×13`, `2026-10-15 ×32`.
+  Measured on PR #38's head (`493a9bf`): `<lastmod>2026-10-15</lastmod>` on **54** of
+  74 URLs. `main` carries **none** dated `2026-10-15`; its distribution is
+  `2026-09-25 ×38`, `2026-10-05 ×1`, `2026-10-07 ×3`, `2026-10-11 ×32`.
 - **Impact:** a daily job stamps *every* URL with the run date. That is the exact
   defect ISSUE-011 was meant to fix, so the freshness signal in `sitemap.xml`
   becomes noise and the diff is non-reproducible day to day. It also makes the

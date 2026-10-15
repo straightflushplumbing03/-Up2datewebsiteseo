@@ -14,7 +14,7 @@ Branch `intelligence-hq/daily-2026-10-15` (PR #41).
 The `lastmod` fix landed earlier the same day was measured to be non-idempotent.
 The sandbox checks the repo out with `--depth 1`, where `git log --name-only HEAD`
 returns a single grafted commit, so every path resolves to the same date. Evidence:
-PR #38's head has `<lastmod>2026-10-15</lastmod>` on 54 of 74 URLs; `main` has 32.
+PR #38's head has `<lastmod>2026-10-15</lastmod>` on 54 of 74 URLs; `main` has none dated `2026-10-15`.
 The tool now detects a shallow repo, derives each URL's date from its own commit,
 falls back to mtime **only** for files the working tree actually changed, and
 otherwise preserves the existing value. Rerun in a real depth-1 clone → 0 refreshed,
