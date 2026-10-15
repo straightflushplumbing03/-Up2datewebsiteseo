@@ -39,6 +39,10 @@ ERROR_TYPES = (
     "unknown_error",
 )
 
+# OpenHands Cloud stores secrets case-sensitively and injects this one as
+# `Perplexity_api_key`; accept the documented all-caps name too.
+API_KEY_ENV_VARS = ("PERPLEXITY_API_KEY", "Perplexity_api_key")
+
 DEFAULT_PRESET = "low"
 DEFAULT_MODEL = "openai/gpt-5.6-sol"
 DEFAULT_TIMEOUT_S = 120
@@ -86,9 +90,18 @@ class AgentError(RuntimeError):
         }
 
 
+def _env_api_key():
+    """The first accepted env var that is set and non-empty. Never the value."""
+    for name in API_KEY_ENV_VARS:
+        value = (os.environ.get(name) or "").strip()
+        if value:
+            return value
+    return ""
+
+
 def api_key_present():
-    """True when PERPLEXITY_API_KEY is set and non-empty. Never returns the key."""
-    return bool(os.environ.get("PERPLEXITY_API_KEY", "").strip())
+    """True when an accepted env var holds a non-empty key. Never returns it."""
+    return bool(_env_api_key())
 
 
 def _require_key():
@@ -285,7 +298,7 @@ class AgentClient:
 
     def __init__(self, api_key=None, timeout=DEFAULT_TIMEOUT_S, max_retries=MAX_RETRIES,
                  preset=None, model=None, tools=None, sleep=time.sleep):
-        self._api_key = api_key or os.environ.get("PERPLEXITY_API_KEY", "").strip()
+        self._api_key = (api_key or _env_api_key()).strip()
         self.timeout = timeout
         self.max_retries = max_retries
         self.preset = preset if preset is not None else os.environ.get(

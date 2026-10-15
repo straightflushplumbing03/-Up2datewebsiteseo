@@ -97,6 +97,29 @@ class TestApiKeyHandling(unittest.TestCase):
         os.environ["TAVILY_API_KEY"] = "tvly-dev-fake"
         self.assertTrue(TS.api_key_present())
 
+    def test_present_true_for_platform_cased_secret(self):
+        # OpenHands Cloud injects the secret as `Tavily_api_key`.
+        os.environ["Tavily_api_key"] = "tvly-dev-fake"
+        try:
+            self.assertTrue(TS.api_key_present())
+        finally:
+            os.environ.pop("Tavily_api_key", None)
+
+    def test_canonical_name_wins_when_both_set(self):
+        os.environ["TAVILY_API_KEY"] = "tvly-canonical"
+        os.environ["Tavily_api_key"] = "tvly-platform"
+        try:
+            self.assertEqual(TS._env_api_key(), "tvly-canonical")
+        finally:
+            os.environ.pop("Tavily_api_key", None)
+
+    def test_client_uses_platform_cased_secret(self):
+        os.environ["Tavily_api_key"] = "tvly-dev-fake"
+        try:
+            self.assertEqual(TS.TavilyClient()._api_key, "tvly-dev-fake")
+        finally:
+            os.environ.pop("Tavily_api_key", None)
+
     def test_missing_key_raises_authentication_failed(self):
         client = TS.TavilyClient(api_key="")
         with self.assertRaises(TS.TavilyError) as ctx:

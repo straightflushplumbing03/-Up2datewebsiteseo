@@ -136,6 +136,9 @@ Each issue: evidence, impact, fix, status, approval level.
 - **Fix applied 2026-10-15:** `refresh_sitemap.py` now derives `<lastmod>` from the
   file's last git commit date (falls back to mtime). `sitemap.xml` refreshed; no
   URLs added/removed. XML still valid; all 74 URLs 200 live.
+- **Regression found the same day:** the git-commit-date signal is meaningless in
+  a shallow clone, which is how the automation sandbox checks out the repo. See
+  ISSUE-016 — the fix above silently rewrote all 74 URLs to the run date.
 - **Approval:** Level 2 (tooling).
 
 ---
@@ -262,3 +265,60 @@ duplicate, so the duplicates are not disavowed from the real side either.
   (rows with `platform: tavily_search`, `test_type: conventional_proxy`).
 - **Approval:** Level 2 for site content changes.
 - **Status:** **OPEN** — baseline recorded, work not started.
+
+---
+
+## ISSUE-016 — `refresh_sitemap.py` `<lastmod>` is not idempotent in a shallow clone  [MEDIUM · FIXED 2026-10-15]
+
+- **Evidence:** the automation sandbox checks the repo out with `git clone --depth 1`.
+  In a depth-1 clone `git log --name-only HEAD` yields exactly **one** commit — the
+  grafted fetch commit — so every path maps to the same date:
+
+  ```
+  $ git rev-parse --is-shallow-repository      # true
+  $ git log --format=%cI --name-only HEAD | head -2
+  2026-10-15T11:51:22Z
+  ```
+  Measured on PR #38's head (`493a9bf`): `<lastmod>2026-10-15</lastmod>` on **54** of
+  74 URLs. `main` carries **none** dated `2026-10-15`; its distribution is
+  `2026-09-25 ×38`, `2026-10-05 ×1`, `2026-10-07 ×3`, `2026-10-11 ×32`.
+- **Impact:** a daily job stamps *every* URL with the run date. That is the exact
+  defect ISSUE-011 was meant to fix, so the freshness signal in `sitemap.xml`
+  becomes noise and the diff is non-reproducible day to day. It also makes the
+  daily report's "sitemap changed" claim meaningless.
+- **Fix applied 2026-10-15** (`scripts/refresh_sitemap.py`):
+  1. Detect a shallow repo (`git rev-parse --is-shallow-repository`).
+  2. Resolve each URL's date from its **own** last commit; when the repo is
+     shallow that is untrustworthy, so use mtime **only** for files the working
+     tree actually modified (`git status --porcelain`) and otherwise preserve the
+     existing `<lastmod>` verbatim.
+  3. Print a `lastmod refreshed: N` count so a regression is visible in the run log.
+- **Verification:** in a real depth-1 clone the tool leaves `lastmod` untouched
+  (refresh count 0, no diff on rerun) and still bumps a page whose content changed
+  (`2026-09-25 → 2026-10-15`). Regression test
+  `growth-engine/tests/test_refresh_sitemap.py` builds a shallow clone in a temp
+  dir and asserts all three behaviours. Full suite: 125 tests pass.
+- **Open item:** PR #38 ships a *different* lastmod implementation with the same
+  shallow-clone defect, and its own `sitemap.xml` already shows 54/74 URLs stamped
+  `2026-10-15`. The two changes conflict. Recommend landing the guarded version and
+  regenerating `sitemap.xml` from it; do not merge both.
+- **Approval:** Level 2 (tooling).
+
+---
+
+## ISSUE-017 — Client API keys are read from the wrong env var name  [HIGH · FIXED 2026-10-15]
+
+- **Evidence:** `growth-engine/tavily_search.py` and `growth-engine/ai_agent_client.py`
+  read only the vendor-documented all-caps names (`TAVILY_API_KEY`,
+  `PERPLEXITY_API_KEY`). The platform injects its secrets **case-sensitively** as
+  `Tavily_api_key` and `Perplexity_api_key`, so a scheduled run saw "no key" and
+  skipped the entire AI-visibility sweep while reporting success.
+- **Impact:** silent loss of the daily visibility sweep — the primary evidence
+  stream for ISSUE-015. A missing key was indistinguishable from "no data".
+- **Fix applied 2026-10-15:** both clients resolve a list of accepted env names
+  (`API_KEY_ENV_VARS`), with the canonical all-caps name still winning when both
+  are set. The `Perplexity_api_key` / `Tavily_api_key` casing is accepted.
+- **Verification:** platform-cased cases added to `tests/test_perplexity_agent.py`
+  and `tests/test_tavily_search.py`; the 2026-10-15 run recorded a real Tavily row
+  (`platform: tavily_search`, `test_type: conventional_proxy`).
+- **Approval:** Level 2 (tooling).

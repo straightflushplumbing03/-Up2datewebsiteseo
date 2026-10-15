@@ -5,6 +5,54 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-15 (daily) — Automation-integrity run: lastmod idempotency + key resolution
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-15` (PR #41).
+
+**Change 1 — `scripts/refresh_sitemap.py` (ISSUE-016, medium, fixed).**
+The `lastmod` fix landed earlier the same day was measured to be non-idempotent.
+The sandbox checks the repo out with `--depth 1`, where `git log --name-only HEAD`
+returns a single grafted commit, so every path resolves to the same date. Evidence:
+PR #38's head has `<lastmod>2026-10-15</lastmod>` on 54 of 74 URLs; `main` has none dated `2026-10-15`.
+The tool now detects a shallow repo, derives each URL's date from its own commit,
+falls back to mtime **only** for files the working tree actually changed, and
+otherwise preserves the existing value. Rerun in a real depth-1 clone → 0 refreshed,
+no diff. A genuinely edited page still bumps (`2026-09-25 → 2026-10-15`).
+
+**Change 2 — `growth-engine/tavily_search.py`, `growth-engine/ai_agent_client.py` (ISSUE-017, high, fixed).**
+Both clients read only the vendor-documented all-caps env names, but the platform
+injects secrets case-sensitively (`Tavily_api_key`, `Perplexity_api_key`). A
+scheduled run therefore reported "no key" and skipped the sweep while appearing to
+succeed — a silent loss of the primary evidence stream. Both now accept a list of
+names, with the canonical all-caps form still winning when both are set.
+
+**Target:** the automation's own reliability, not the site. **Reason:** a daily
+engine whose evidence stream silently disappears and whose sitemap churns is worse
+than no engine, because the reports look healthy.
+
+**Competitor insight:** across 40 conventional-proxy queries, the two aggregators
+(`yelp.com` 61, `facebook.com` 33) appear in more result sets than any single
+plumbing company. **Aggregator/profile presence, not page quality, is the dominant
+visibility lever in this market.** `barkerandsonsplumbing.com` (16) is newly
+tracked. `straightflushplumbingoc.com` was absent from all 40 — the ISSUE-015
+baseline re-confirmed.
+
+**Expected outcome:** the sitemap stops churning (reproducible diffs), and the
+visibility sweep resumes as soon as a key is provisioned. **Result:** sitemap
+idempotent (`VERIFIED`); sweep still `BLOCKED` — the code fix corrects name
+resolution, it does not provision a key.
+
+**Keep/modify/revert:** **KEEP.** Both fixes verified by test and by live rerun.
+
+**Open blockers:** (1) live duplicate host `straight-flush-plumbing-7fb7cf71.base44.app`
+returns 200 — entity check exit 1, owner action required, no external change made;
+(2) no AI-surface credential present; (3) **PR #38 and PR #41 conflict** on
+`scripts/refresh_sitemap.py` and `sitemap.xml` — do not merge both; land the
+guarded version and regenerate `sitemap.xml` from it.
+
+---
+
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**

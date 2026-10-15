@@ -117,6 +117,29 @@ class TestApiKeyHandling(unittest.TestCase):
         os.environ["PERPLEXITY_API_KEY"] = "pplx-not-a-real-key"
         self.assertTrue(AC.api_key_present())
 
+    def test_present_true_for_platform_cased_secret(self):
+        # OpenHands Cloud injects the secret as `Perplexity_api_key`.
+        os.environ["Perplexity_api_key"] = "pplx-not-a-real-key"
+        try:
+            self.assertTrue(AC.api_key_present())
+        finally:
+            os.environ.pop("Perplexity_api_key", None)
+
+    def test_canonical_name_wins_when_both_set(self):
+        os.environ["PERPLEXITY_API_KEY"] = "pplx-canonical"
+        os.environ["Perplexity_api_key"] = "pplx-platform"
+        try:
+            self.assertEqual(AC._env_api_key(), "pplx-canonical")
+        finally:
+            os.environ.pop("Perplexity_api_key", None)
+
+    def test_client_uses_platform_cased_secret(self):
+        os.environ["Perplexity_api_key"] = "pplx-not-a-real-key"
+        try:
+            self.assertEqual(AC.AgentClient()._api_key, "pplx-not-a-real-key")
+        finally:
+            os.environ.pop("Perplexity_api_key", None)
+
     def test_missing_key_raises_authentication_failed(self):
         client = AC.AgentClient(api_key="")
         with self.assertRaises(AC.AgentError) as ctx:
