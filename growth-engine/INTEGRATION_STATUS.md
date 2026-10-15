@@ -1,5 +1,17 @@
 # Integration Status — Straight Flush Growth Engine
 
+> **Re-verified 2026-10-15 (owner-requested local SEO audit run):**
+> `crawler_access_check.sh` **exit 0** ✅ (all UAs 200, no `cf-mitigated`);
+> all **74 sitemap URLs HTTP 200** ✅ (live curl sweep); robots.txt/llms.txt/
+> llms-full.txt/md mirrors ✅ 200; JSON-LD ✅ 338 blocks parse; `_headers` is
+> **not honored by GitHub Pages** (no HTTP security headers — ISSUE-012);
+> Google PageSpeed Insights API ✅ reachable but returned **HTTP 429 quota**
+> (no CWV score produced). **Automation API from this session:** `GET
+> /api/automation/v1` → `total: 0` and the two known IDs → 404 — an
+> **auth/scope difference for this session**, not proof of deletion; the
+> authoritative record is the 2026-10-12 verification below (both ACTIVE).
+> Google Search Console, GA4 (no tag on site), and GBP remain **not connected**.
+
 Verified **2026-10-12** (daily run) in the active OpenHands Cloud environment; a
 check is only marked ✅ after an actual successful call. Prior verification
 2026-10-09.

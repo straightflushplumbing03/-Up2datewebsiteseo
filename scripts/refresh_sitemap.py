@@ -16,6 +16,7 @@ Run from project root:  python3 scripts/refresh_sitemap.py
 """
 import os
 import re
+import subprocess
 from datetime import date
 from html.parser import HTMLParser
 
@@ -43,9 +44,20 @@ def page_indexable(path):
     return not p.noindex
 
 def url_of(rel):
+    # Directory-index pages (X/index.html) are published at the directory URL
+    # (X/) and their canonical points there, so the sitemap must match.
     if rel == "index.html":
         return f"{DOMAIN}/"
+    if rel.endswith("/index.html"):
+        return f"{DOMAIN}/{rel[: -len('index.html')]}"
     return f"{DOMAIN}/{rel}"
+
+
+def rel_of(loc):
+    path = loc.replace(DOMAIN, "").lstrip("/")
+    if path == "" or path.endswith("/"):
+        return path + "index.html"
+    return path
 
 DEFAULT_FREQ = {
     "index.html": ("weekly", "1.0"),
@@ -90,9 +102,7 @@ def main():
     for m in re.finditer(r"  <url>\n(.*?)  </url>\n", sm, re.S):
         block = m.group(0)
         loc = re.search(r"<loc>(.*?)</loc>", block).group(1)
-        path = loc.replace(DOMAIN, "").lstrip("/")
-        rel = "index.html" if path == "" else path
-        entries[rel] = block
+        entries[rel_of(loc)] = block
 
     existing = set(entries)
     to_add = sorted(indexable - existing)
@@ -114,15 +124,28 @@ def main():
             f"    <priority>{pri}</priority>\n  </url>\n"
         )
 
-    # refresh lastmod: bump if file mtime date is newer than recorded lastmod
+    # refresh lastmod: prefer the file's last git commit date (authoritative,
+    # and stable in a fresh clone); fall back to filesystem mtime.
+    def last_commit_date(rel):
+        try:
+            out = subprocess.run(
+                ["git", "log", "-1", "--format=%cs", "--", rel],
+                cwd=ROOT, capture_output=True, text=True, timeout=10,
+            )
+            d = out.stdout.strip()
+            if d:
+                return d
+        except Exception:
+            pass
+        return date.fromtimestamp(os.path.getmtime(os.path.join(ROOT, rel))).isoformat()
+
     bumped = 0
     for rel, block in entries.items():
-        fpath = os.path.join(ROOT, rel)
-        mtime_date = date.fromtimestamp(os.path.getmtime(fpath)).isoformat()
+        stamp = last_commit_date(rel)
         lm = re.search(r"<lastmod>(.*?)</lastmod>", block)
         current = lm.group(1) if lm else ""
-        if not lm or current < mtime_date:
-            block = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{TODAY}</lastmod>", block)
+        if not lm or current < stamp:
+            block = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{stamp}</lastmod>", block)
             entries[rel] = block
             bumped += 1
     print(f"lastmod refreshed: {bumped}")
@@ -146,8 +169,7 @@ def main():
         final = fh.read()
     final_rels = set()
     for m in re.finditer(r"<loc>(.*?)</loc>", final):
-        path = m.group(1).replace(DOMAIN, "").lstrip("/")
-        final_rels.add("index.html" if path == "" else path)
+        final_rels.add(rel_of(m.group(1)))
     missing = sorted(indexable - final_rels)
     extra = sorted(final_rels - indexable)
     print(f"VERIFY -> sitemap URLs: {len(final_rels)}  missing: {missing}  extra: {extra}")

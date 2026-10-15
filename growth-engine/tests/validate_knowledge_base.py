@@ -76,6 +76,36 @@ for p in indexable_pages():
         errors.append(f"{rel}: expected 1 <h1>")
 
 print(f"Checked {len(indexable_pages())} HTML files.")
+
+# --- Sitemap consistency ---
+sm_path = os.path.join(ROOT, "sitemap.xml")
+DOMAIN = "https://straightflushplumbingoc.com"
+if os.path.exists(sm_path):
+    with open(sm_path, encoding="utf-8") as fh:
+        sm = fh.read()
+
+    def rel_of(loc):
+        path = loc.replace(DOMAIN, "").lstrip("/")
+        if path == "" or path.endswith("/"):
+            return path + "index.html"
+        return path
+
+    sm_rels = {rel_of(m) for m in re.findall(r"<loc>(.*?)</loc>", sm)}
+    indexable = set()
+    for p in indexable_pages():
+        rel = os.path.relpath(p, ROOT).replace(os.sep, "/")
+        with open(p, encoding="utf-8") as fh:
+            if re.search(r'name=["\']robots["\'][^>]*noindex', fh.read(4096), re.I):
+                continue
+        if rel == "404.html":
+            continue
+        indexable.add(rel)
+
+    for rel in sorted(indexable - sm_rels):
+        errors.append(f"sitemap missing indexable page: {rel}")
+    for rel in sorted(sm_rels - indexable):
+        errors.append(f"sitemap lists non-indexable page: {rel}")
+
 if errors:
     print("FAIL:")
     for e in errors[:50]:
