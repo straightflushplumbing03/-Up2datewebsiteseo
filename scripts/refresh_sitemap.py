@@ -9,6 +9,8 @@ Sitemap maintainer for straightflushplumbingoc.com (static tree).
   deriving sensible defaults for additions.
 - Bumps <lastmod> to today for every URL whose target file changed today
   (or whose lastmod is missing/stale-beyond-file-mtime); idempotent within a day.
+- In a shallow clone git history and mtime both collapse to the clone date, so
+  lastmod is refreshed ONLY for files the working tree actually modifies.
 - Root stub pages (aliso-viejo.html, etc.) are intentionally EXCLUDED: they are
   noindex duplicates that canonically point at cities/*.html.
 
@@ -125,7 +127,7 @@ def main():
         )
 
     # refresh lastmod: prefer the file's last git commit date (authoritative,
-    # and stable in a fresh clone); fall back to filesystem mtime.
+    # and stable in a fresh clone).
     def last_commit_date(rel):
         try:
             out = subprocess.run(
@@ -137,18 +139,45 @@ def main():
                 return d
         except Exception:
             pass
-        return date.fromtimestamp(os.path.getmtime(os.path.join(ROOT, rel))).isoformat()
+        return None
+
+    # In a shallow clone git history is grafted at the fetch boundary, so `git
+    # log` reports the same date for every path and says nothing about when a
+    # given file actually changed. Stamping that value would mark the whole
+    # sitemap as freshly edited on every run. Fall back to the filesystem mtime
+    # only for files the working tree genuinely modified.
+    shallow = subprocess.run(
+        ["git", "rev-parse", "--is-shallow-repository"],
+        cwd=ROOT, capture_output=True, text=True, timeout=10,
+    ).stdout.strip() == "true"
+
+    def working_tree_changed(rel):
+        out = subprocess.run(
+            ["git", "status", "--porcelain", "--", rel],
+            cwd=ROOT, capture_output=True, text=True, timeout=10,
+        )
+        return bool(out.stdout.strip())
 
     bumped = 0
+    skipped_unknown = 0
     for rel, block in entries.items():
         stamp = last_commit_date(rel)
+        if shallow:
+            if not working_tree_changed(rel):
+                skipped_unknown += 1
+                continue
+            stamp = None
+        if stamp is None:
+            stamp = date.fromtimestamp(
+                os.path.getmtime(os.path.join(ROOT, rel))).isoformat()
         lm = re.search(r"<lastmod>(.*?)</lastmod>", block)
         current = lm.group(1) if lm else ""
         if not lm or current < stamp:
             block = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{stamp}</lastmod>", block)
             entries[rel] = block
             bumped += 1
-    print(f"lastmod refreshed: {bumped}")
+    print(f"lastmod refreshed: {bumped}"
+          + (f"  (unchanged, history unavailable: {skipped_unknown})" if shallow else ""))
 
     # rebuild sitemap: homepage first, then top-level, then sections alphabetically
     def sort_key(rel):

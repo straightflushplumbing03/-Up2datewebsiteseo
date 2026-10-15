@@ -45,6 +45,12 @@ DEFAULT_MAX_RESULTS = 10
 SF_DOMAIN = "straightflushplumbingoc.com"
 SF_NAMES = ("straight flush plumbing", "straightflushplumbing")
 
+# The platform stores secrets case-sensitively; OpenHands Cloud injects the
+# Tavily secret into automation runs as `Tavily_api_key` (not the all-caps name
+# the docs use). Accept either so a scheduled run does not silently record a
+# false "key missing" and skip the sweep.
+API_KEY_ENV_VARS = ("TAVILY_API_KEY", "Tavily_api_key")
+
 
 class TavilyError(RuntimeError):
     """A failed Tavily call, carrying the repo's shared error taxonomy."""
@@ -66,9 +72,18 @@ class TavilyError(RuntimeError):
         }
 
 
+def _env_api_key():
+    """The first accepted env var that is set and non-empty. Never the value."""
+    for name in API_KEY_ENV_VARS:
+        value = (os.environ.get(name) or "").strip()
+        if value:
+            return value
+    return ""
+
+
 def api_key_present():
-    """True when TAVILY_API_KEY is set and non-empty. Never returns the key."""
-    return bool(os.environ.get("TAVILY_API_KEY", "").strip())
+    """True when an accepted env var holds a non-empty key. Never returns it."""
+    return bool(_env_api_key())
 
 
 def _require_key():
@@ -139,7 +154,7 @@ class TavilyClient:
 
     def __init__(self, api_key=None, timeout=DEFAULT_TIMEOUT_S, max_retries=MAX_RETRIES,
                  opener=None, sleep=time.sleep):
-        self._api_key = api_key or os.environ.get("TAVILY_API_KEY", "").strip()
+        self._api_key = (api_key or _env_api_key()).strip()
         self.timeout = timeout
         self.max_retries = max_retries
         self._opener = opener or urllib.request.urlopen
