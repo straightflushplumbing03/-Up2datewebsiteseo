@@ -15,45 +15,43 @@ cannot be traced to a fetched source, it is not written down.
 
 ---
 
-## Standing official references (stable primary sources)
+## 2026-10-13 — Google Search Central deprecates the FAQ rich result
 
-| Topic | Source | URL | Verified | Confidence |
-|---|---|---|---|---|
-| Google Search Essentials | Google Search Central | https://developers.google.com/search/docs/essentials | 2026-10-11 | high |
-| Structured data policies | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/sd-policies | 2026-10-11 | high |
-| Local business structured data | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/local-business | 2026-10-11 | high |
-| Helpful content / people-first | Google Search Central | https://developers.google.com/search/docs/fundamentals/creating-helpful-content | 2026-10-11 | high |
-| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-11 | high |
-| Search Console performance report | Google Search Central | https://support.google.com/webmasters/answer/7576553 | 2026-10-11 | high |
-| Schema.org LocalBusiness | schema.org | https://schema.org/LocalBusiness | 2026-10-11 | high |
-| CSLB license lookup (CA) | CA Contractors State License Board | https://www.cslb.ca.gov/onlineServices/CheckLicenseII/CheckLicense.aspx | 2026-10-11 | high |
+- **What changed / observed:** Google Search Central removed the FAQ rich-result
+  documentation; the feature "is no longer shown in Google Search results"
+  (announced in the Search Central changelog in May 2026). Any `FAQPage`
+  structured data now earns **no** rich-result eligibility. A separate, older
+  changelog entry also states the FAQ feature "is only shown for well-known,
+  authoritative government and health websites" — which for a residential plumbing
+  business means **no eligibility at all** either way. Fetched directly from the
+  primary source (page emitted Oct 2026; page `Last updated 2026-10-08`).
+- **Why it matters to Straight Flush:** Several site pages and ideas (e.g.
+  `idea-2026-10-12-07`, and pages carrying `FAQPage` JSON-LD) were justified, in
+  part, by FAQ rich-result eligibility. That justification is now void. The FAQ
+  *content* can still help readers and AI answer engines (AEO), but it must no
+  longer be described as producing a Google FAQ rich result. This is a
+  documentation/reporting correctness matter — not a reason to delete FAQ pages.
+- **Source(s):** https://developers.google.com/search/blog (Search Central
+  changelog, FAQ entries) · https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  · **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** Update `idea-2026-10-12-07` scoring/notes and the
+  FAQ-related framing; keep answer-first FAQ content for AEO/human value. No code
+  change warranted this run (re-scoring is a knowledge-base edit, not a website edit).
 
-> These are seeded, stable references used by every run. Daily/weekly runs append
-> dated entries below and refresh `Verified` when a page changes materially.
+## 2026-10-13 — EPA WaterSense household-leak statistics (primary source)
+
+- **What changed / observed:** EPA WaterSense states the average family can waste
+  **180 gallons per week / 9,400 gallons annually** from household leaks (≈ 300
+  loads of laundry), and that household leaks waste **~900 billion gallons
+  annually nationwide**. Fetched directly from EPA.
+- **Why it matters to Straight Flush:** These are *primary-source* figures usable in
+  leak-detection education content without inventing statistics or crossing into
+  Level-3 claims. They are the EPA's numbers, cite EPA, and are safe to attribute.
+- **Source(s):** https://www.epa.gov/watersense/statistics-and-facts · **Confidence:** high (fetched).
+- **Proposed action (if any):** cite EPA figures on an education page (candidate;
+  owner review for any local framing). See `INNOVATION_IDEAS.md` idea-2026-10-13-04.
 
 ---
-
-## Dated entries
-
-### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
-- **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
-  structure, and the Intelligence HQ automation. No external claims added.
-- **Sources:** repository files only. **Confidence:** high (repo-verified).
-- **Follow-up:** daily runs populate dated findings below.
-
-### 2026-10-12 — Official Google guidance re-verified (primary sources, fetched)
-- **What:** Fetched and confirmed live (HTTP 200) two primary Google Search Central
-  references used by every run:
-  - *AI features and your website* — https://developers.google.com/search/docs/appearance/ai-features
-  - *Local business (LocalBusiness) structured data* — https://developers.google.com/search/docs/appearance/structured-data/local-business
-- **Why it matters to Straight Flush:** AI-feature guidance confirms that appearing
-  in AI features depends on standard Search fundamentals (crawlability, helpful
-  content, structured data) — consistent with this repo's diagnose-first strategy.
-  The LocalBusiness page is the authority for the ISSUE-002 `aggregateRating`
-  hygiene question.
-- **Source(s):** the two URLs above (fetched 2026-10-12, HTTP 200).
-  **Confidence:** high (primary source).
-- **Proposed action:** none new; supports idea-2026-10-12-02 (rating hygiene).
 
 ## 2026-10-12
 
@@ -210,3 +208,140 @@ New entries are prepended directly under this line, newest first, using:
 - **Source(s):** <exact URL(s)>  · **Confidence:** high|medium|low|unverified
 - **Proposed action (if any):** <idea id / PR / none>
 -->
+## Dated entries
+
+<<<<<<< HEAD
+### 2026-10-12 — Search Console now measures social/video content (primary source, fetched)
+- **What changed / observed:** Google published **platform properties**, a new
+  Search Console property type. Site owners and creators can now see how their
+  **Instagram, TikTok, X, and YouTube** content performs on Google Search and
+  Discover, including the search terms that led people to it. Quote (fetched):
+  *"you can track which search terms lead people to your Instagram, TikTok, X, and
+  YouTube content on Search."*
+- **Why it matters to Straight Flush:** confirms that **off-site content
+  (video/social) is now a first-class, measurable Search surface in Google's own
+  reporting** — consistent with the standing Industry Watch on multimodal Search
+  reporting. It reinforces that owner-authored short diagnostic clips are a real
+  Search surface, not just marketing. **Measurement still requires GSC access**
+  (blocked — see `INTEGRATION_STATUS.md` P-002).
+- **Source(s):** https://developers.google.com/search/blog/2026/07/search-console-social-video-platforms
+  (fetched 2026-10-12, HTTP 200). **Confidence:** high (primary source).
+- **Proposed action:** none new; supports existing idea space on multimodal media
+  (parked pending owner-produced footage).
+
+### 2026-10-12 — Checked for a newer AI-features guidance revision (primary source, fetched)
+- **What changed / observed:** Fetched Google's *AI Features and Your Website*
+  (https://developers.google.com/search/docs/appearance/ai-features) — still
+  **Last updated 2025-12-10 UTC**, unchanged from the 2026-10-11 read. No new
+  AI-search guidance was found on the Google Search Central blog between the
+  2026-10-12 and this run (latest post remains 2026-10 `seo-learning-paths`).
+- **Why it matters to Straight Flush:** no new official guidance changes the
+  current approach; the standing conclusion holds — crawlability + helpful content,
+  not special files/markup, drive AI-feature eligibility.
+- **Source(s):** the URL above + the blog index
+  https://developers.google.com/search/blog (both fetched 2026-10-12, HTTP 200).
+  **Confidence:** high (primary source).
+- **Proposed action:** none.
+=======
+### 2026-10-13 — Official Google guidance: AI features, crawl bytes, SEO learning paths
+- **What changed / observed (fetched primary sources, HTTP 200):**
+  - *AI Features and Your Website* — Google restates that inclusion in AI features
+    (AI Overviews / AI Mode) is governed by standard Search fundamentals:
+    crawlability, helpful people-first content, and structured data. There is no
+    separate "AI submission" mechanism.
+    URL: https://developers.google.com/search/docs/appearance/ai-features
+  - *Inside Googlebot: demystifying crawling, fetching, and the bytes we process*
+    (Google Search Central Blog, **2026-03-31**) — Googlebot fetches up to **2 MB
+    per URL** (64 MB for PDFs); crawlers that do not specify a limit default to
+    **15 MB**; the cap includes the HTTP header. Truncation happens at the byte
+    limit, so content past 2 MB is never processed.
+    URL: https://developers.google.com/search/blog/2026/03/crawler-blog-post
+  - *SEO learning paths* — Google published structured learning-path documentation
+    on Search Central (new in the 2026 blog index, dated 2026-10).
+    URL: https://developers.google.com/search/blog/2026/10/seo-learning-paths
+- **Why it matters to Straight Flush:** (1) AI-feature guidance confirms the
+  repo's "fix fundamentals first" strategy — no shortcut exists. (2) The 2 MB
+  byte cap is a concrete, checkable constraint: any SF page whose HTML exceeds
+  2 MB would be truncated by Googlebot. Our pages are static and small, so this
+  is a low-risk check, not a current defect. (3) SEO learning paths are useful
+  for keeping the Academy/AEO content aligned with Google's own vocabulary.
+- **Source(s):** the three URLs above (fetched 2026-10-13, HTTP 200).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action:** none requiring a code change. Add a byte-size sanity
+  check to the standing health checks (see report "next priorities").
+
+### 2026-10-13 — Trade press: AI now framed as a *credibility* / discovery problem
+- **What changed / observed (fetched, HTTP 200):**
+  - *Why Credibility Now Shapes How PHCP Brands Are Found* (PHCPPros) — argues
+    that buyer discovery has shifted: credibility signals and how a trade brand is
+    *represented* across the web now drive whether it is found, not keyword
+    density alone. URL: https://www.phcppros.com/articles/24167-why-credibility-now-shapes-how-phcp-brands-are-found
+  - *ServiceTitan announces new and expanded capabilities at Pantheon 2026*
+    (PHCPPros) — field-service software vendors are shipping AI features for
+    residential in-home trades (lead → booked-job automation).
+    URL: https://www.phcppros.com/articles/24246-servicetitan-announces-new-and-expanded-capabilities-at-pantheon-2026
+- **Why it matters to Straight Flush:** corroborates the AEO thesis — consistent,
+  verifiable representation (NAP, licenses, reviews, service pages) is the moat,
+  not more pages. The field-service AI trend is a *business* signal (owner-side
+  tooling), not a website change; log it, do not action it.
+- **Source(s):** the two URLs above (fetched 2026-10-13, HTTP 200).
+  **Confidence:** medium (reputable trade press, fetched).
+- **Proposed action:** none. Supports existing idea-2026-10-12-05 (GBP/review flow,
+  owner-only) — no new action.
+
+### 2026-10-13 — Homeowner diagnostic questions (from today's result set)
+- **What changed / observed:** today's 22-query sweep surfaced question- and
+  cost-shaped intent that SF does not currently answer on-page:
+  "how much does slab leak repair cost in Laguna Niguel" (cost intent),
+  "pinhole leak in copper pipe Orange County" (material/diagnosis intent),
+  "hidden water leak detection Irvine" (detection intent). Competitors ranking
+  for the pinhole query included `twinplumbing.com`, `repipepro.net`,
+  `ocplumber.com`, `clearwaterplumbingoc.com`, `repipesoc.com`.
+- **Why it matters to Straight Flush:** cost and diagnosis questions are exactly
+  the AEO entry points where a verifiable, non-promotional answer earns citation.
+  A cost page must not state prices (Level 3) — it can explain *what drives cost*
+  without quoting numbers.
+- **Source(s):** `data/ai_visibility_history.jsonl` 2026-10-13 rows (Brave
+  conventional proxy). **Confidence:** medium.
+- **Proposed action:** idea-2026-10-13-03 (cost-driver explainer, proposal-only).
+
+>>>>>>> origin/intelligence-hq/daily-2026-10-13
+
+### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
+- **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
+  structure, and the Intelligence HQ automation. No external claims added.
+- **Sources:** repository files only. **Confidence:** high (repo-verified).
+- **Follow-up:** daily runs populate dated findings below.
+
+### 2026-10-12 — Official Google guidance re-verified (primary sources, fetched)
+- **What:** Fetched and confirmed live (HTTP 200) two primary Google Search Central
+  references used by every run:
+  - *AI features and your website* — https://developers.google.com/search/docs/appearance/ai-features
+  - *Local business (LocalBusiness) structured data* — https://developers.google.com/search/docs/appearance/structured-data/local-business
+- **Why it matters to Straight Flush:** AI-feature guidance confirms that appearing
+  in AI features depends on standard Search fundamentals (crawlability, helpful
+  content, structured data) — consistent with this repo's diagnose-first strategy.
+  The LocalBusiness page is the authority for the ISSUE-002 `aggregateRating`
+  hygiene question.
+- **Source(s):** the two URLs above (fetched 2026-10-12, HTTP 200).
+  **Confidence:** high (primary source).
+- **Proposed action:** none new; supports idea-2026-10-12-02 (rating hygiene).
+
+## Standing official references (stable primary sources)
+
+| Topic | Source | URL | Verified | Confidence |
+|---|---|---|---|---|
+| Google Search Essentials | Google Search Central | https://developers.google.com/search/docs/essentials | 2026-10-11 | high |
+| Structured data policies | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/sd-policies | 2026-10-11 | high |
+| Local business structured data | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/local-business | 2026-10-11 | high |
+| Helpful content / people-first | Google Search Central | https://developers.google.com/search/docs/fundamentals/creating-helpful-content | 2026-10-11 | high |
+| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-11 | high |
+| Search Console performance report | Google Search Central | https://support.google.com/webmasters/answer/7576553 | 2026-10-11 | high |
+| Schema.org LocalBusiness | schema.org | https://schema.org/LocalBusiness | 2026-10-11 | high |
+| CSLB license lookup (CA) | CA Contractors State License Board | https://www.cslb.ca.gov/onlineServices/CheckLicenseII/CheckLicense.aspx | 2026-10-11 | high |
+
+> These are seeded, stable references used by every run. Daily/weekly runs append
+> dated entries below and refresh `Verified` when a page changes materially.
+
+---
+

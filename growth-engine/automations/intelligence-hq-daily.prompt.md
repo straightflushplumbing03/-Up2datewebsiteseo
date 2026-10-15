@@ -80,6 +80,16 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
 > alternate (Bing *or* DuckDuckGo HTML). Do **not** use headless browsers, do not
 > test Yahoo/Marginalia/RSS/other engines, and do not crawl long blog loops — if
 > Brave rate-limits (HTTP 429), stop searching and proceed.
+>
+> **Search-provider policy (verified 2026-10-12/13):** Brave returns **HTTP 429**
+> to this egress IP (rate-limited/blocked) and DuckDuckGo HTML returns **202**;
+> **DuckDuckGo Lite** (`https://lite.duckduckgo.com/lite/?q=<urlencoded>`) is the
+> one endpoint confirmed to return parseable results (36/36). Provider order:
+> **Brave → DuckDuckGo Lite → Bing**. If the primary returns 429/202, fall through
+> to the next **once**; do not spend the run retrying a blocked provider. Record
+> which provider was used in `data/ai_visibility_history.jsonl` (`platform`) and in
+> the report's "platforms tested / not tested" line. A sweep that returns results
+> from any one provider is a success; the goal is *evidence*, not a specific engine.
 
 1. **Technical health.** Run `bash growth-engine/tests/crawler_access_check.sh`.
    Append one JSON object to `growth-engine/data/technical_health_history.jsonl`
@@ -91,8 +101,11 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
    from `KEYWORD_UNIVERSE.md`, weighted to commercially valuable, historically weak,
    and not-recently-tested queries; rotate so every core service and every Tier-1
    city appears regularly. Do not permute everything daily. For each query:
-   - Fetch Brave (`https://search.brave.com/search?q=<urlencoded>`) with a normal
-     browser User-Agent. If it returns 429, stop and proceed with what you have.
+   - Fetch the primary provider with a normal browser User-Agent, per the
+     **search-provider policy** above: try **Brave** first
+     (`https://search.brave.com/search?q=<urlencoded>`); on 429/202 fall through
+     **once** to **DuckDuckGo Lite** (`https://lite.duckduckgo.com/lite/?q=<urlencoded>`),
+     then **Bing**. Do not retry a blocked provider more than once.
    - Study publicly accessible **service pages, local search presence, content,
      customer-review themes, technical quality, useful tools, and new developments**.
    - Record dated source links + confidence. Extract every named plumbing company.
@@ -119,12 +132,16 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
    Never repeat a rejected/parked idea without new evidence. An idea with no fetched,
    cited observation stays `candidate` and is not actioned.
 
-5. **Measure our own performance.** If authorized **Google Search Console** and/or
-   **Google Analytics** access is connected (check `INTEGRATION_STATUS.md` and
-   available secrets), pull the relevant metrics (impressions, clicks, queries,
+5. **Measure our own performance.** Before searching for metrics, check whether
+   credentials exist: look for `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`,
+   and `GOOGLE_BUSINESS_PROFILE_*` secrets in the environment, and read
+   `INTEGRATION_STATUS.md`. If **Google Search Console** and/or **Google Analytics**
+   access is connected, pull the relevant metrics (impressions, clicks, queries,
    coverage, top pages) and record them with the source and date. If access is
-   **unavailable**, record the exact blocker in the report and in
-   `INTEGRATION_STATUS.md` and continue with the research that is available.
+   **unavailable** (the expected state until P-002 is approved), record the exact
+   blocker in the report and in `INTEGRATION_STATUS.md` and continue with the
+   research that is available. **Never present an unavailable metric as `0` or as a
+   decline** — mark it `unverified` and cite P-002.
 
 6. **Low-risk, reversible improvements only.** Before any code change: inspect the
    current code, confirm the evidence justifies it, keep it minimal and reversible,
@@ -159,8 +176,9 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
 
 9. **Alert vs. batch.** If a *critical* issue is found (downtime, site-wide noindex,
    crawler block, business-info error, security), state it at the very top of the
-   report with an URGENT marker. No notification channel is configured; the report
-   and PR are the channel.
+   report with an URGENT marker. **No notification channel is configured** (P-005);
+   the report and PR are the channel. Record any critical issue as a `proposals/`
+   item if it needs owner action.
 
 ## Output
 

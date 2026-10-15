@@ -30,6 +30,14 @@ homepage and `/robots.txt` → 200.
 
 ## P-002 — Connect measurement integrations  [LEVEL 3 · HIGH]
 
+**Status (2026-10-13):** open — no measurement credentials present. Intended
+OpenHands Cloud secret names (add via Settings → Secrets, then re-run the daily job):
+- `GOOGLE_SEARCH_CONSOLE_CREDENTIALS` (service-account JSON) + property
+  `sc-domain:straightflushplumbingoc.com`
+- `GA4_PROPERTY_ID` + `GOOGLE_ANALYTICS_CREDENTIALS`
+- `GOOGLE_BUSINESS_PROFILE_CREDENTIALS`
+- `PERPLEXITY_API_KEY` (optional but the cheapest real AI-answer signal)
+
 **Ask:** Provide access (or exports) for:
 - **Google Search Console** (property verified for the domain).
 - **Google Analytics 4** (if present).
@@ -37,7 +45,8 @@ homepage and `/robots.txt` → 200.
 - Optionally a **Perplexity API key** for real AI-answer visibility in-automation.
 
 **Why:** Without these, organic/indexing/local-pack performance cannot be
-measured, and the growth loop cannot verify its own changes.
+measured, and the growth loop cannot verify its own changes. Every daily run
+currently records these as `unverified` (never as zero).
 
 ---
 
@@ -75,9 +84,12 @@ engine) inside A/D.
 
 ## P-005 — Notification channel  [LEVEL 3 · MEDIUM]
 
+**Status (2026-10-13):** open — no channel configured; Slack MCP not enabled.
+
 **Ask:** Provide an owner-approved notification target (email address or Slack
 channel/webhook) for urgent alerts (downtime, site-wide noindex, business-info
 errors).
 
 **Why:** `INTEGRATION_STATUS.md` shows no channel configured; urgent issues
-currently cannot be pushed to the owner.
+currently cannot be pushed to the owner. Until then the daily report and PR are
+the only channel, and a critical issue found at 06:00 PT may not be seen for hours.

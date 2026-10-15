@@ -50,8 +50,33 @@ existing repository (an established static HTML site) rather than duplicating it
 - Production changes go through branches/PRs; identity/pricing/contact/claims
   changes require explicit owner approval (Level 3).
 
-## Automation schedule (target — see `proposals/2026-10-09-priority-actions.md`)
+## Automation schedule (live — verified 2026-10-12/13)
 
-A Morning Intel 06:00 PT · B Technical Health 06:20 PT ·
-C Controlled Improvement 07:00 PT weekdays · D Weekly Review 07:30 PT Mon ·
-E Monthly Audit 08:00 PT 1st. All America/Los_Angeles.
+`SFPL Intelligence HQ Daily 6 AM` — `0 6 * * *` (daily incl. weekends) ·
+`SFPL Intelligence HQ Weekly Review` — `0 6 * * 1` (Mondays). Both
+**America/Los_Angeles**, both ACTIVE, both connected to this repo. The legacy
+overlapping agents (Growth Engine A, Scout, Strategist, Sentinel) are **disabled**;
+the earlier A–E schedule in `proposals/2026-10-09-priority-actions.md` is
+superseded by HQ-D/HQ-W. Prompts live in `automations/`.
+
+## Deployment (verified 2026-10-13)
+
+Static HTML/CSS/JS, **no build step**. Origin is **GitHub Pages** (legacy build
+from `main` `/`; `CNAME` = `straightflushplumbingoc.com`), **fronted by Cloudflare**
+(DNS + proxy + Transform Rules applying `_headers`, since Pages ignores `_headers`).
+A Cloudflare Git build integration also runs on PRs ("Workers Builds"), but there is
+no `wrangler`/Workers config in the repo. Production changes go through
+branches → PRs; nothing is deployed from this knowledge base.
+
+## Access blockers (owner action — see `proposals/`)
+
+The loop runs fully today but two classes of signal are missing; both are Level 3
+and cannot be fixed from the repo:
+1. **Measurement** (P-002): Google Search Console, GA4, GBP — so organic/local
+   performance is measurable. Until connected, every run records these `unverified`.
+2. **Notification** (P-005): no alert channel, so a critical finding is only visible
+   in the report/PR.
+
+Also degraded (not owner-fixable): Brave Search returns HTTP 429 and DuckDuckGo HTML
+202 to our egress IP; the runs fall through to **DuckDuckGo Lite**, the one
+confirmed-working endpoint.
