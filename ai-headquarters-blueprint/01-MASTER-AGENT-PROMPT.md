@@ -45,13 +45,26 @@ Tavily sweep, and it replaces the exploration that consumed an entire previous r
 
 ```bash
 cd "$SITE" && git fetch origin main && git checkout main && git pull --ff-only
+export Tavily_api_key="${Tavily_api_key}"   # REQUIRED — see below
 python3 scripts/daily_measure.py          # --skip-tavily for the fast path
 ```
+
+**The `export` line is not optional.** The platform injects a registered secret only into a
+shell command whose *text* names the key. A bare `python3 scripts/daily_measure.py` names no
+secret, so the child process starts with `Tavily_api_key` unset, `daily_measure.py` reports the
+visibility sweep `BLOCKED` (`no Tavily key in this environment`), and the run records a
+false blocker while the key is present. Naming it in the command — even just to re-export it —
+makes the platform inject the real value. The 2026-10-15 run lost the whole sweep to this, and
+the same trap applies to `Perplexity_api_key` for `scripts/perplexity_agent.py`. This is a
+property of the platform's injection, not a defect in the client code, so the fix is the
+command, not the script.
 
 It runs the knowledge-base check, crawler access, entity consistency, sitemap idempotency, and
 the SEO audit; appends to the history files; and writes
 `$SITE/growth-engine/data/daily_context.json`. **Read that context file** — do not re-run the
-individual scripts by hand or re-derive their results.
+individual scripts by hand or re-derive their results. If `visibility_sweep` reports
+`blocked` while you believe a key is configured, re-run it with the secret named in the
+command before recording `BLOCKED`.
 
 Also check whether the previous run was killed mid-flight: list branches matching
 `intelligence-hq/daily-<today>` and open PRs containing today's date. If one exists, continue

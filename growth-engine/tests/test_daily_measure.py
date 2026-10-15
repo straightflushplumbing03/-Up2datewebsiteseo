@@ -61,6 +61,20 @@ class TestVisibilityBlocked(unittest.TestCase):
         self.assertTrue(result["ok"])
         self.assertEqual(m.call_count, 1)
 
+    def test_blocked_note_names_the_injection_workaround(self):
+        """A BLOCKED sweep must say how to fix it, not just that it failed.
+
+        The platform injects a secret only into a command whose text names the
+        key, so a bare `python3 scripts/daily_measure.py` reads no key even when
+        one is registered. The note has to carry that remedy or the next run
+        repeats the false blocker.
+        """
+        with mock.patch.dict(os.environ, {}, clear=True):
+            result = daily_measure.check_visibility(5)
+        self.assertTrue(result["blocked"])
+        self.assertIn("Tavily_api_key", result["note"])
+        self.assertIn("daily_measure.py", result["note"])
+
 
 class TestEntityConsistencyExitMeaning(unittest.TestCase):
     def test_exit_1_is_a_failure_and_keeps_its_note(self):

@@ -144,7 +144,12 @@ def check_visibility(queries: int):
             "ok": False,
             "blocked": True,
             "detail": "no Tavily key in this environment",
-            "note": "record the platform BLOCKED, never zero",
+            "note": (
+                "record the platform BLOCKED, never zero. If the key is registered, the "
+                "platform did not inject it because this command did not name the secret; "
+                "re-run with it named:  export Tavily_api_key=\"${Tavily_api_key}\" && "
+                "python3 scripts/daily_measure.py"
+            ),
         }
     ok, code, out = _run(
         [sys.executable, "scripts/tavily_search.py", "--run", "--append",

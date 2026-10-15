@@ -184,8 +184,15 @@ Each issue: evidence, impact, fix, status, approval level.
 |---|---|---|---|
 | `straightflushplumbingoc.com` | 200 | indexable, self-canonical | **canonical** (keep) |
 | `straight-flush-plumbing-7fb7cf71.base44.app` | 200 | `index, follow` | **live duplicate — 48 URLs** |
-| `straightflushplumb8.wixsite.com` | 404 | noindex | gone (cleanup only) |
+| `straightflushplumb8.wixsite.com` | root 404; `/straightflushplumb-1` **200** | root noindex; page has **no robots meta**, self-canonical | **live duplicate — corrected 2026-10-15, see ISSUE-018** |
 | `flush-pro-flow.base44.app` | 404 | — | gone, but still declared as the business `@id` |
+
+> **Correction (2026-10-15, second run):** the Wix row previously read "gone (cleanup
+> only)". That was wrong. `https://straightflushplumb8.wixsite.com/` returns 404, but
+> the published page `https://straightflushplumb8.wixsite.com/straightflushplumb-1`
+> returns **200**, carries no `robots` meta, is self-canonical, shows `tel:9493746524`,
+> and ranked **#1** for the brand query `Straight Flush Plumbing & Leak Detection`.
+> Two live indexable duplicates exist, not one.
 
 ### The live duplicate in detail
 
@@ -321,4 +328,69 @@ duplicate, so the duplicates are not disavowed from the real side either.
 - **Verification:** platform-cased cases added to `tests/test_perplexity_agent.py`
   and `tests/test_tavily_search.py`; the 2026-10-15 run recorded a real Tavily row
   (`platform: tavily_search`, `test_type: conventional_proxy`).
+- **Approval:** Level 2 (tooling).
+
+---
+
+## ISSUE-018 — Entity check missed a live duplicate because it probed only the host root  [HIGH · FIXED 2026-10-15]
+
+- **Evidence:** `scripts/entity_consistency_check.py` checked `https://<host>/` and
+  nothing else. `straightflushplumb8.wixsite.com` answers **404** at its root but
+  serves `https://straightflushplumb8.wixsite.com/straightflushplumb-1` with
+  **HTTP 200**, no `robots` meta, a self-referencing canonical, `<title>Home |
+  Straight Flush Plumbing & Leak Detection</title>`, and `tel:9493746524`.
+  The check classified the host `gone`, so `summarize()` reported `ok` for that
+  host and the duplicate went unreported in **8** consecutive records on 2026-10-15
+  (`10:31:18Z`, `11:52:02Z`, `11:58:06Z`, `12:04:47Z`, `12:04:52Z`, `19:22:45Z`,
+  `19:22:50Z`, `19:26:07Z` — all `verdict: gone`, `http_status: 404`).
+- **Impact:** the primary automated control for ISSUE-014 was giving a false
+  negative on one of the two owned duplicate hosts. A Wix site-builder host
+  routinely 404s its root while still serving published pages, so the defect is
+  structural, not a one-off.
+- **External corroboration:** in the 2026-10-15 Tavily sweep the Wix page ranked
+  **#1** for the brand query `Straight Flush Plumbing & Leak Detection`, ahead of
+  `straightflushplumbingoc.com/terms-of-service.html` (#5). A live duplicate is
+  actively outranking the canonical site for the business name.
+- **Fix applied 2026-10-15:** added `DUPLICATE_HOST_PATHS` (known published page
+  paths per duplicate host) and changed `check_host()` to probe the root plus those
+  paths, keeping the **most severe** verdict via `_VERDICT_RANK` and returning that
+  URL's evidence. A 404 root can no longer mask an indexable page.
+- **Verification:** `python3 scripts/entity_consistency_check.py --run --append`
+  now reports `live_duplicates: ['straight-flush-plumbing-7fb7cf71.base44.app',
+  'straightflushplumb8.wixsite.com']` at `2026-10-15T19:30:24Z`, with the Wix entry
+  carrying `url: .../straightflushplumb-1`, `http_status: 200`. Five regression
+  tests added in `growth-engine/tests/test_entity_consistency_check.py`
+  (`TestDuplicateHostPaths`); full suite 130 tests pass.
+- **Owner action (Level 3, not automated):** unpublish the Wix page
+  `straightflushplumb8.wixsite.com/straightflushplumb-1` (or the whole Wix site).
+  Per `ENTITY_CONSOLIDATION_PLAN.md`, consolidation here means **removal** — never
+  add a `sameAs` link to this host, and never copy its content onto the real site.
+- **Approval:** Level 2 (tooling) for the check fix; Level 3 (owner) for the removal.
+
+---
+
+## ISSUE-019 — Secret injection depends on the command text, so a bare pre-stage command records a false BLOCKED  [HIGH · FIXED 2026-10-15]
+
+- **Evidence:** the platform injects a registered secret only into a shell command
+  whose *text* names the key. The documented pre-stage is a bare
+  `python3 scripts/daily_measure.py`, which names no secret, so the child process
+  started with `Tavily_api_key` unset and `check_visibility()` returned
+  `blocked: true, detail: "no Tavily key in this environment"` — while the key was
+  registered and working. The 2026-10-15 second run lost its entire sweep to this
+  and had to re-run the sweep manually with the secret named.
+- **Distinct from ISSUE-017:** ISSUE-017 fixed the *client* to accept the
+  platform-cased env name. That fix is necessary but not sufficient — the value is
+  only present at all if the invoking command names the key. Correct client code
+  still sees an empty environment.
+- **Impact:** silent loss of the daily visibility sweep, reported as a credential
+  blocker that does not exist. Same failure mode as ISSUE-017 by a different cause.
+- **Fix applied 2026-10-15:** the pre-stage command in
+  `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md` now names the secret
+  (`export Tavily_api_key="${Tavily_api_key}"`) with an explanation, and
+  `check_visibility()` carries the remedy in its `blocked` note so the next run
+  self-corrects rather than repeating the false blocker.
+- **Verification:** regression test
+  `test_blocked_note_names_the_injection_workaround` asserts the note names the key
+  and the command; full suite 141 tests pass. A pre-stage run with the secret named
+  recorded `visibility_sweep | ok=True` and 62 real rows.
 - **Approval:** Level 2 (tooling).

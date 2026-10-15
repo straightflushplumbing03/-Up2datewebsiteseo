@@ -5,6 +5,85 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-15 (daily, second run - continuation) - False BLOCKED on the visibility sweep: secret injection depends on the command text
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-15b` (PR #42). Continues the entry below.
+
+**Change - pre-stage command + `scripts/daily_measure.py` (ISSUE-019, high, fixed).**
+The platform injects a registered secret only into a shell command whose text names
+the key. The documented pre-stage is a bare `python3 scripts/daily_measure.py`,
+which names no secret, so the child started with `Tavily_api_key` unset and the
+sweep was recorded `blocked` - a false blocker, because the key was registered and
+working. The master agent prompt now names the secret
+(`export Tavily_api_key="${Tavily_api_key}"`) and explains why; `check_visibility()`
+now carries that remedy in its `blocked` note so the next run self-corrects. One
+regression test; suite 141 pass.
+
+**Reason:** two consecutive runs reported a credential gap that did not exist, and
+the sweep is the only evidence stream for ISSUE-015. ISSUE-017 fixed the client's
+env-name casing but could not help when the value was never injected.
+
+**Result:** pre-stage with the secret named recorded `visibility_sweep | ok=True`
+and 62 real rows - **60 absent, 2 cited**. The two `cited` rows are the brand
+controls and are the sharpest entity evidence yet: for
+`Straight Flush Plumbing & Leak Detection` the **Wix duplicate ranked #1** and the
+**base44 duplicate #2**, pushing the canonical site to **#5**. All 10 target
+service+city queries remain `absent` (ISSUE-015 baseline unchanged).
+
+**Keep/modify/revert:** keep. Also merged `origin/main` into PR #42 (commit
+`21ecad4`) so it is mergeable again; the only conflict was the append-only
+`entity_consistency_history.jsonl`.
+
+---
+
+## 2026-10-15 (daily, second run) — Entity control false negative: a duplicate was hiding behind a 404 root
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-15b` (PR #42). Supplementary to the 06:00 run
+(PR #41, merged 17:23Z).
+
+**Change — `scripts/entity_consistency_check.py` (ISSUE-018, high, fixed).**
+`check_host()` probed only `https://<host>/`. `straightflushplumb8.wixsite.com`
+returns **404** at its root, so the check classified it `gone` and `summarize()`
+reported it clean — in **8** consecutive records today (`10:31:18Z` … `19:26:07Z`).
+But `https://straightflushplumb8.wixsite.com/straightflushplumb-1` returns **200**
+with no `robots` meta and a self-referencing canonical, and it ranked **#1** for the
+brand query `Straight Flush Plumbing & Leak Detection` in today's Tavily sweep —
+ahead of the real site's own pages. A 404 root was masking a live indexable duplicate.
+`DUPLICATE_HOST_PATHS` now registers known published paths per duplicate host, and
+`check_host()` probes the root plus those paths and keeps the most severe verdict
+(`_VERDICT_RANK`), returning that URL's evidence. Five regression tests
+(`TestDuplicateHostPaths`); full suite 130 tests pass.
+
+**Reason:** the automated control guarding ISSUE-014 was giving a false negative on
+one of the two owned duplicate hosts. Site-builder hosts routinely 404 their root
+while serving published pages, so this is structural, not a one-off.
+
+**Target:** the entity-consistency control and the daily report's technical-findings
+table.
+
+**Competitor insight:** the highest-ranking result for the business *name* is an asset
+the business owns but does not want indexed. That loss is self-inflicted and cheaper
+to remove than any ranking campaign against Efficient Plumbing. Separately,
+`yelp.com` (81) and `facebook.com` (43) again exceed every single plumbing company in
+raw frequency across 52 result rows — directory presence remains the dominant lever.
+
+**Expected outcome:** the entity check reports `live_duplicates` for every owned host
+serving indexable content, so an owner-facing alert is never suppressed by a 404 root.
+
+**Result:** verified live — `--run --append` at `2026-10-15T19:30:24Z` reports
+`live_duplicates: ['straight-flush-plumbing-7fb7cf71.base44.app',
+'straightflushplumb8.wixsite.com']`, the Wix entry carrying
+`url: .../straightflushplumb-1`, `http_status: 200`. Prior records for the same host
+all read `gone` / `404`.
+
+**Keep/modify/revert:** **Keep.** Revert path is `git revert` on PR #42.
+
+**Open item:** PR #38 must not be merged as-is (its `sitemap.xml` regresses the
+shallow-clone `lastmod` fix, 54/74 URLs stamped with the run date). PRs #32–#36 are
+stale and superseded by merged #41.
+
 ## 2026-10-15 (daily) — Automation-integrity run: lastmod idempotency + key resolution
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
