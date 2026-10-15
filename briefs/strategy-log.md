@@ -7,6 +7,7 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## 2026-10-15 (daily, third run) - The sitemap "gap" was our own audit bug, not the site
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
@@ -293,6 +294,75 @@ Branch `intelligence-hq/daily-2026-10-13`.
   comparison hub (IDEA-15); (3) FAQPage schema on Tier-1 city pages (IDEA-18).
 >>>>>>> origin/intelligence-hq/daily-2026-10-12
 =======
+=======
+## 2026-10-12 — HQ-W Weekly Strategic Review (second dispatch, 16:26 UTC, run `f0e419f6`)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2) — **amends the
+existing weekly PR #32, not a new PR.**
+
+- **Change:** Re-verified the week's findings for the same Monday job. Appended an
+  Appendix to `growth-engine/reports/weekly/2026-10-12.md`; appended this entry;
+  added one `technical_health_history.jsonl` row for the 16:26Z crawler re-check.
+- **Reason:** The HQ-W job was dispatched twice on 2026-10-12 (13:00 UTC → `ff3478a3`
+  wrote the review; 16:26 UTC → `f0e419f6` this run). Single-PR rule → update the
+  existing branch/PR rather than duplicate.
+- **Re-verified (evidence-first):** crawler access **PASS** (7 crawler UAs + curl on
+  `/`, `robots.txt`, `sitemap.xml`, `llms.txt` all **200**, no `cf-mitigated`;
+  ISSUE-001 stays **RESOLVED**); `/llms-full.txt` and `/md/services/leak-detection.md`
+  → **200**; live-vs-canonical weekly prompt → **no drift**; `validate_knowledge_base.py`
+  → **OK (133 files)**.
+- **New dated observation:** the measurement channel is now **fully degraded** —
+  Brave answered a lone request with 200 but returned **HTTP 429 on all 10 sweep
+  queries**, and DuckDuckGo **Lite and HTML both returned HTTP 202** (anti-bot).
+  No new visibility rows could be honestly collected this dispatch. Recorded as
+  `inconclusive` (provider failure) — **missing ≠ zero**.
+- **Competitor insight:** none new this dispatch (no usable result sets). §3 of the
+  review stands unchanged.
+- **Expected outcome / result:** no change to the §5 ranking or §6 top-three
+  priorities; provider-degradation item reinforced. **Keep.**
+- **Decision:** keep; no experiment or status change.
+
+---
+
+## 2026-10-12 — HQ-W Weekly Strategic Review (first weekly; week of 2026-10-09 → 10-12)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2).
+
+- **Change:** First weekly strategic review. Wrote
+  `growth-engine/reports/weekly/2026-10-12.md`; prepended this entry; updated
+  `EXPERIMENT_LOG.md` outcomes and `INNOVATION_IDEAS.md` statuses.
+- **Reason:** Monday cadence — evaluate the week's progress, measure, rank
+  opportunities, and set the week's top three priorities.
+- **Target:** knowledge base + review report only.
+- **Shipped this week (verified):** ISSUE-001 (Cloudflare block) **fixed and
+  verified** (security_level → medium 2026-10-11; all crawler UAs 200, re-verified
+  this run); PR #19 (KB), #24 (AI-readable files — `/llms-full.txt` + `/md/**` now
+  live 200), #27/#28 (consolidation), #29/#30/#31 (Intelligence HQ setup, daily,
+  Phase 2). PRs #20–#26 closed unmerged as superseded; only **#11** remains open.
+- **Measured:** crawler-accessible pages **0/7 → 10/10 (200)**; HTTP 403 rate
+  **100% → 0%**. Conventional-proxy visibility: SF **absent from every executed
+  query every day** (0 recommended / 0 mentioned / 0 cited). GSC/GA4/GBP and all AI
+  answer engines remain **`unverified`** (not connected / not testable) — missing
+  data is not zero.
+- **Competitor insight:** Tier A stable (proplumberlagunaniguel.com 8/36,
+  evansleakdetection.com 8/36 on 2026-10-12); new repeat competitors
+  primewestplumbing.com, coastplumbing.com, lagunaniguelcaplumbingpros.com,
+  leak-detection-pro.com, dialonesonshine.com, americanleakcompany.com; verified
+  features = per-city pages + FAQPage schema (leak-detection-pro.com,
+  coastplumbing.com). Aggregators dominate (yelp.com 32/36).
+- **Process finding:** the conventional-proxy channel is degrading — Brave 429 for
+  most of the week and **DuckDuckGo Lite returned HTTP 202 on all 12 probe queries
+  this run**. Live-vs-canonical HQ-W prompt check: **no drift** (diff clean).
+- **Expected outcome:** one reviewed week with ranked opportunities and three
+  evidence-backed priorities.
+- **Result:** `crawler_access_check.sh` exit 0; `/llms-full.txt` + `/md/**` 200.
+- **Keep/modify/revert:** **keep.** No production change to revert.
+
+---
+
+>>>>>>> origin/intelligence-hq/weekly-2026-10-12
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**
