@@ -62,15 +62,21 @@ test. The table lists only `name, trigger, enabled, timeout` for PATCH.)
 A second automation, **`SFPL AI Headquarters Daily Retry Watchdog`**
 (`b946624c-79c2-40a6-be1b-258388a15fb4`, cron `30 6,9,12,15,18 * * *`
 America/Los_Angeles, timeout 600), watches the daily job and re-dispatches it
-**once** if the run died with the platform's sandbox-unavailable signature. It
+**once** — but only on a *fast* failure that never reached the run's ceiling. It
 never does the SEO work itself, so it does not violate the one-daily-content-job
 rule. It dispatches only; it never edits, enables, or disables anything.
 
-This is a legitimate reliability need: `environment_unavailable` killed runs on
-2026-10-13 (`67e154d9`) and 2026-10-15 (`1cda9bca`). Note that run 2's failure was
-`Timed out: Sandbox not available` at 1953 s — a *budget* failure wearing the
-sandbox signature, which a retry cannot fix. The watchdog's prompt accounts for
-this by only firing on the sandbox signature before a conversation starts.
+**Do not confuse the two failure classes.** A failed run can carry
+`environment_unavailable` / "Timed out: Sandbox not available" and still be a
+**budget overrun**: when a run exceeds its wall clock the platform kills it, tears
+down the sandbox, and its post-run verification then reports no sandbox. Every run
+we have observed failed at the **enforced ceiling** (`started_at → timeout_at` ≈
+1920 s, ~32 min, not the 1800 s in the config): `67e154d9` (2026-10-13, 1926 s) and
+`1cda9bca` (2026-10-15, 1954 s), plus two `kind: timeout` runs at 1941/2004 s. The
+one run that fit its budget (`0883b889`, 947 s) completed. So the watchdog fires on
+**elapsed time**, not on the error string, and a budget overrun is fixed by making
+the run fit — the deterministic `scripts/daily_measure.py` pre-stage (commit
+`897e7be`) — never by a retry.
 
 ### The legacy 6 AM automation
 

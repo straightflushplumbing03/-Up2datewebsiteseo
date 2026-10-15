@@ -8,13 +8,56 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 
 | ID | Automation | Schedule (PT) | Scope | Live automation id |
 |----|-----------|---------------|-------|--------------------|
-| **HQ-D** | **SFPL Intelligence HQ Daily 6 AM** | `0 6 * * *` | L1 + L2 (PRs) | `5dc89b41-6880-40e6-950c-14a635f7bd62` (created 2026-10-12, ACTIVE) |
-| **HQ-W** | **SFPL Intelligence HQ Weekly Review** | `0 6 * * 1` | L1 + L2 (PRs) | `0582d219-de15-42c2-83b5-4bc92995edce` (created 2026-10-12, ACTIVE) |
+| **D** | **SFPL AI Headquarters Daily** | `0 6 * * *` | L1 + L2 (PRs) | `1485d659-8663-4776-a507-db0fefed8483` (created 2026-10-15, ACTIVE) |
+| **R** | **SFPL AI Headquarters Daily Retry Watchdog** | `30 6,9,12,15,18 * * *` | L1 + re-dispatch | `b946624c-79c2-40a6-be1b-258388a15fb4` (created 2026-10-13; recreated 2026-10-15, ACTIVE) |
+| ~~HQ-D~~ | ~~SFPL Intelligence HQ Daily 6 AM~~ | `0 6 * * *` | L1 + L2 (PRs) | `5dc89b41-6880-40e6-950c-14a635f7bd62` (**retired 2026-10-15 — 404**) |
+| ~~HQ-W~~ | ~~SFPL Intelligence HQ Weekly Review~~ | `0 6 * * 1` | L1 + L2 (PRs) | `0582d219-de15-42c2-83b5-4bc92995edce` (**retired 2026-10-15 — 404**) |
 | A | Morning AI Search Visibility & Competitor Intelligence | `0 6 * * *` | L1 + L2 (PRs) | `4c5213f7-080c-4edd-97a2-30962419bd14` (created 2026-10-09; **disabled 2026-10-12**, superseded by HQ-D) |
 | B | Daily Technical Health Check | `20 6 * * *` | L1 + L2 | _(planned)_ |
 | C | Controlled Website Improvement | `0 7 * * 1-5` | L2 (branch/PR only) | _(planned)_ |
 | D | Weekly Strategy Review | `30 7 * * 1` | L1 + L2 | _(planned — superseded by HQ-W)_ |
 | E | Monthly Growth Audit | `0 8 1 * *` | L1 + L2 | _(planned)_ |
+
+> **One daily content job.** The system was redeployed on 2026-10-15 as
+> `SFPL AI Headquarters Daily` (see `ai-headquarters-blueprint/README.md`); the
+> generation-1 HQ-D/HQ-W ids now return `404`. The retry watchdog (`HQ-R`) is a
+> **reliability** job, not a second content job — it never does the daily work.
+> Exactly one *content* automation should be enabled at a time.
+
+## Reliability — runs that overrun the wall-clock ceiling (ISSUE-009)
+
+A scheduled run can fail with `environment_unavailable` /
+`error_detail: "Timed out: Sandbox not available"`
+(`status_detail.phase: verification`). **Do not read that string as a provisioning
+failure.** Every run we have observed failed at the **enforced ceiling**
+(`started_at → timeout_at` ≈ 1920 s, ~32 min, not the 1800 s in the config): the
+platform kills the run for running out of clock, tears down the sandbox, and its
+post-run verification then finds no sandbox and records `environment_unavailable`.
+The string is a *symptom of the timeout*, not proof the sandbox was never
+provisioned. Seen 2026-10-13 (`67e154d9`, 1926 s) and 2026-10-15 (`1cda9bca`,
+1954 s, and two `kind: timeout` runs at 1941/2004 s). The one run that fit its
+budget (`0883b889`, 947 s) COMPLETED.
+
+The real fix is to make the run fit: `scripts/daily_measure.py` is a deterministic
+pre-stage (~5 s) that runs every check and writes
+`growth-engine/data/daily_context.json`, and the master prompt is budgeted around the
+real ~1920 s ceiling (commit `897e7be`).
+
+**`HQ-R` watchdog** (`ai-headquarters-daily-watchdog.prompt.md`, `30 6,9,12,15,18 * * *` PT)
+is a narrow safety net: it re-dispatches the daily run **once**, and only on a *fast*
+failure that never reached the ceiling (a genuine provisioning blip). It explicitly
+does **not** re-dispatch a run that consumed its clock. It never edits an
+automation, never merges, and never touches the site.
+
+**Tell the failure classes apart** — the key is **elapsed time**, not the error:
+
+| `status` / `elapsed` | `conversation_id` | Meaning | Action |
+|---|---|---|---|
+| `FAILED`, `elapsed ≥ ~1500 s` | any | budget overrun | **fix the prompt**; do NOT retry |
+| `FAILED`, `elapsed` ≪ ceiling, sandbox marker | `null` | provisioning failure | **retry once** (HQ-R) |
+| `execution_error` + `KeyError: 'AUTOMATION_AGENT_PROFILE_ID'` | any | automation mis-configured | **fix the config**; retry cannot help |
+
+Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`.
 
 ## Intelligence HQ (2026-10-12)
 
