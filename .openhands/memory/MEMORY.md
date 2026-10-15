@@ -161,6 +161,60 @@ Bearer $GITHUB_TOKEN"` works (200). Use curl for PR title/body edits.
   interpolation, never a literal. Keys live only in the user's own environment / OpenHands secrets.
 - If a user pastes a key into chat, tell them to **rotate it** — the transcript is logged.
 
+## Conflict-marker and append-only-merge hazards (learned 2026-10-15)
+
+**A merge check that reports "clean" when it should fail is worse than no check.**
+Two separate bugs of this class shipped conflict markers into `main`:
+
+1. `scripts/merge_append_only.py` was handed the *same path* for `--ours` and
+   `--theirs` on an already-conflicted file, so it re-merged the file and passed
+   the markers through. It must operate on **conflict blocks only** and leave
+   cleanly-merged text alone.
+2. Marker regexes anchored with `^` and **no `re.MULTILINE`** match only the first
+   line of a multi-line string. A `findall`-based count therefore reported 0 on six
+   corrupted files. Always pass `re.M` when scanning line-oriented text.
+
+`merge_append_only.py` now refuses to emit output containing markers, so a bad
+resolution fails loudly. `scripts/strip_conflict_markers.py` is the repair tool.
+
+**Rebuild corrupted logs from clean git sources, never salvage the corrupted text.**
+A linear marker parse cannot unwind nested markers. Union the clean pre-merge
+`main` with the source branches, then verify no heading present in any source is
+absent from the result.
+
+**Append-only union is wrong for curated files.** `MEMORY.md` is edited in place,
+not appended. Union by heading there duplicates the file. Keep the local version
+and add only sections that exist solely on the other side.
+
+**Numbered registers collide across parallel branches.** Two branches both added
+`ISSUE-007`..`ISSUE-013` meaning different things. Union produced 27 headings with
+7 duplicate IDs. Renumber the newer side and merge true duplicates; verify with a
+`Counter` over the IDs.
+
+## Generator scripts silently revert production SEO (learned 2026-10-15)
+
+`scripts/gen_*.py` (19 of them) predate the per-page JSON-LD, business-hours and
+unique-city-meta passes applied directly to the committed HTML. `write_page()` in
+`scripts/build.py` had no protection.
+
+Measured: `python3 scripts/gen_cities.py` on a clean checkout drops **4 -> 1
+JSON-LD blocks per city page** and restores the old templated titles, deleting
+585 lines in one run. It would have undone the unique city meta merged the same
+day.
+
+`write_page()` now refuses to overwrite when JSON-LD block count would drop, unless
+`SF_ALLOW_REGEN=1`. **Edit the `.html` directly; never run a generator site-wide.**
+To test such a guard, run it on a throwaway `cp -r` copy, never in the repo.
+
+## Root-level .html files are noindex stubs (learned 2026-10-15)
+
+Every root `.html` (e.g. `laguna-niguel.html`) is a `noindex` stub that exists so
+extensionless URLs resolve. Indexable pages live in subdirectories (`cities/`,
+`services/`, `academy/`, `guides/`, `insurance/`, `case-studies/`). Length and
+uniqueness checks that ignore the `noindex` filter will report false failures on
+the stubs. There is **no CI** on this repo; run `validate_knowledge_base.py` and
+`unittest discover` by hand.
+
 ## Conventions that matter
 - Never commit to `main`; branch + PR only. Never merge own PR.
 - Research/report branches: `intelligence-hq/daily-<date>`; site-change branches: `intelligence-hq/site-<date>-<slug>`.
