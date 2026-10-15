@@ -33,6 +33,27 @@ search engines and never persist. Prompts MUST carry an explicit time budget
 "stop researching and commit when near budget" instruction. A committed short
 report beats a rich lost one.
 
+## "Sandbox not available" is usually a budget overrun, not a provisioning failure (ISSUE-009, root cause corrected 2026-10-15)
+- The enforced ceiling is **start + ~1920 s** (~32 min), NOT the 1800 s in the
+  config. Measured as `timeout_at - started_at` (1926/1947/1923/1922 s).
+- When a run exceeds its wall clock the platform kills it, tears down the sandbox,
+  and its **post-run verification** then records `environment_unavailable` /
+  `error_detail: "Timed out: Sandbox not available"`, `conversation_id: null`.
+  That error string is a **symptom of the timeout**, not proof the sandbox was
+  never provisioned. A retry cannot fix a budget overrun.
+- **Discriminator = elapsed time, not the error string.** `FAILED` + `elapsed ≥
+  ~1500 s` → budget overrun → fix the prompt; do NOT retry. `FAILED` + `elapsed`
+  far below the ceiling + no conversation → provisioning blip → retry once.
+- Real fix (on `main`, commit `897e7be`): `scripts/daily_measure.py` deterministic
+  pre-stage (~5 s, writes `growth-engine/data/daily_context.json`) + master prompt
+  budgeted to the real ceiling. Verified: two dispatched runs COMPLETED at 947 s
+  and 721 s.
+- Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`
+  (classes: ok / budget_overrun / sandbox / config_error / other).
+- Retry watchdog `b946624c-79c2-40a6-be1b-258388a15fb4` (`30 6,9,12,15,18 * * *` PT)
+  is a narrow safety net: it re-dispatches only on a *fast* failure that never
+  reached the ceiling. Live prompt PATCHed 2026-10-15 to match the repo file.
+
 ## GitHub API note
 `github_update_pull_request` (MCP) can return **403 "Resource not accessible by
 personal access token"** on this repo, while `curl -X PATCH ... -H "Authorization:
