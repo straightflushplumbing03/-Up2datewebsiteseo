@@ -19,13 +19,16 @@ Record the id here after creation so future runs can self-inspect.
 | Automation | id | Cron (America/Los_Angeles) | State |
 |---|---|---|---|
 | SFPL AI Headquarters Daily | `1485d659-8663-4776-a507-db0fefed8483` | `0 6 * * *` | **ACTIVE** — trimmed prompt, 29,846 chars |
-| SFPL AI Headquarters Daily (superseded) | `e6684830-a9a5-43d8-9d5a-34fed5257bbf` | `0 6 * * *` | disabled — original 26,540-char prompt |
+| SFPL AI Headquarters Daily (superseded) | `e6684830-a9a5-43d8-9d5a-34fed5257bbf` | `0 6 * * *` | disabled — rollback point only |
+| Daily Retry Watchdog | `b946624c-79c2-40a6-be1b-258388a15fb4` | `30 6,9,12,15,18 * * *` | **ACTIVE** — re-dispatches the daily job once on a sandbox failure |
 | "New Automation" (legacy) | `df4bcd68-75f3-46f4-ab6f-a4027e5bf8a9` | `0 6 * * 1-5` | disabled — empty prompt, never succeeded |
 | GitHub delivery watchdog | `718ce55b-5824-430d-82b0-5cef65349763` | `*/5 * * * *` | disabled |
 | GitHub code review | `6bc3be1b-187b-49a9-93d9-9ee4f24f0d5e` | `*/5 * * * *` (UTC) | disabled |
 
-**Exactly one automation should be enabled.** Two jobs on `0 6 * * *` in the same
-timezone means two full runs racing on the same branch names.
+**Exactly one *content* automation should be enabled.** Two jobs on `0 6 * * *` in the
+same timezone means two full runs racing on the same branch names. The retry
+watchdog is the one permitted second job: it runs off-peak, dispatches only, and
+does none of the SEO work.
 
 ### Deployed 2026-10-15 (revision 2)
 
@@ -41,9 +44,33 @@ prompt was restructured for the cap (see the commit "Trim master prompt for the
 1800 s cap"): a per-phase time budget, a 20-minute checkpoint rule, and a
 steady-state daily loop replacing the completed first-run scaffolding.
 
-The API has no endpoint to update a preset's prompt, so a replacement was created
-and the superseded id was disabled. `PATCH {"enabled": false}` is the pause/rollback
-control; re-enable with `{"enabled": true}`.
+The API **does** accept `prompt` on `PATCH /api/automation/v1/<id>`, so the live job
+was updated in place rather than replaced. Verified 2026-10-15: patching a
+prompt-preset automation with `{"name","prompt","trigger","timeout"}` returned
+HTTP 200 and the new prompt length, with `preset_metadata.preset_type` still
+`"prompt"`.
+
+(An earlier revision of this file claimed there was no endpoint to update a
+preset's prompt. That was wrong — it came from the endpoint table rather than a
+test. The table lists only `name, trigger, enabled, timeout` for PATCH.)
+
+`PATCH {"enabled": false}` is the pause/rollback control; re-enable with
+`{"enabled": true}`.
+
+### The retry watchdog
+
+A second automation, **`SFPL AI Headquarters Daily Retry Watchdog`**
+(`b946624c-79c2-40a6-be1b-258388a15fb4`, cron `30 6,9,12,15,18 * * *`
+America/Los_Angeles, timeout 600), watches the daily job and re-dispatches it
+**once** if the run died with the platform's sandbox-unavailable signature. It
+never does the SEO work itself, so it does not violate the one-daily-content-job
+rule. It dispatches only; it never edits, enables, or disables anything.
+
+This is a legitimate reliability need: `environment_unavailable` killed runs on
+2026-10-13 (`67e154d9`) and 2026-10-15 (`1cda9bca`). Note that run 2's failure was
+`Timed out: Sandbox not available` at 1953 s — a *budget* failure wearing the
+sandbox signature, which a retry cannot fix. The watchdog's prompt accounts for
+this by only firing on the sandbox signature before a conversation starts.
 
 ### The legacy 6 AM automation
 

@@ -40,11 +40,29 @@ SITE=/workspace/project/-Up2datewebsiteseo
 
 Never print, echo, or commit any token, key, or credential. Reference secrets by name only.
 
+**Then run the deterministic pre-stage before anything else.** It takes ~5 seconds plus the
+Tavily sweep, and it replaces the exploration that consumed an entire previous run:
+
+```bash
+cd "$SITE" && git fetch origin main && git checkout main && git pull --ff-only
+python3 scripts/daily_measure.py          # --skip-tavily for the fast path
+```
+
+It runs the knowledge-base check, crawler access, entity consistency, sitemap idempotency, and
+the SEO audit; appends to the history files; and writes
+`$SITE/growth-engine/data/daily_context.json`. **Read that context file** — do not re-run the
+individual scripts by hand or re-derive their results.
+
+Also check whether the previous run was killed mid-flight: list branches matching
+`intelligence-hq/daily-<today>` and open PRs containing today's date. If one exists, continue
+from it instead of starting over.
+
 Load, in this order, before making any judgement. **Tier 1 is mandatory; Tier 2 is on demand** —
 reading all of Tier 2 every day costs minutes you need for the report.
 
 **Tier 1 — always read (these are small and they change daily):**
 
+0. `$SITE/growth-engine/data/daily_context.json` — today's measurements, already collected.
 1. `$SITE/growth-engine/INTEGRATION_STATUS.md` — what is actually connected.
 2. `$SITE/growth-engine/KNOWN_ISSUES.md` — open defects and their status.
 3. The **most recent** file in `$SITE/growth-engine/reports/daily/` — its priority queue is
@@ -115,40 +133,64 @@ A configuration file is not proof that automation runs. Each run must record: ru
 time, completion status, duration, and whether the previous run succeeded. If credentials are
 missing, continue with the tasks that do not need them and name the blocker explicitly.
 
-### Hard time budget — the run is killed at 1800 seconds
+### Hard time budget — the run is killed at ~32 minutes
 
-**This is measured, not theoretical.** The first full run took **1941 s** and the platform
-killed it at the 1800 s ceiling, after it had already pushed its branch and opened its PR.
-`FAILED / Timed out` meant "ran out of clock", not "did nothing".
+**This is measured, not theoretical.** Two consecutive runs were killed by the platform:
 
-The cap is 1800 s and cannot be raised. Budget accordingly:
+| Run | Elapsed | Killed at | What it produced |
+|---|---|---|---|
+| 1 | 1941 s | 1800 s configured, ~1920 s enforced | branch pushed, PR opened |
+| 2 | 1953 s | ~1922 s enforced | **nothing** — no commit, no PR |
+
+The enforced ceiling is **start + ~1920 s (32 minutes)**, not the 1800 s in the config.
+Measure it as `timeout_at - started_at` on any run record. Assume 30 minutes of usable time.
+
+**The expensive part is not measuring, it is deciding how to measure.** Run 2 spent its
+entire 32 minutes discovering which commands to run and never executed a measurement:
+
+```
+"Installing dependencies" -> "List data dir and tail jsonl histories"
+-> "List PRs via GitHub API" -> "Inspect record schema and wrapper style"  [killed]
+```
+
+The measurements themselves are nearly free — the whole deterministic pre-stage runs in
+**5 seconds**:
+
+```bash
+python3 scripts/daily_measure.py            # ~5 s + the Tavily sweep
+```
+
+It runs the knowledge-base check, crawler access, entity consistency, sitemap idempotency,
+and the SEO audit, appends to the history files, and writes
+`growth-engine/data/daily_context.json`. **Start every run with it** and read the context
+file instead of re-deriving the facts.
 
 | Phase | Target | Hard stop |
 |---|---|---|
-| Load repos + knowledge base | 2 min | 4 min |
-| Site + entity audit | 5 min | 8 min |
-| Visibility sweep (40 queries) | 4 min | 7 min |
-| Competitor analysis | 4 min | 7 min |
-| **Write the report** | 5 min | 10 min |
+| `daily_measure.py` (deterministic) | 1 min | 5 min |
+| Read `daily_context.json` + last report | 2 min | 4 min |
+| Analysis and prioritisation | 8 min | 12 min |
+| Implement + test one change | 6 min | 10 min |
+| **Write the report** | 6 min | 10 min |
 | Commit, push, PR | 3 min | 5 min |
-| **Total** | **~23 min** | **30 min** |
+| **Total** | **~26 min** | **32 min** |
 
 **Commit early and often. Never hold uncommitted work while exploring.** A run that pushed a
 partial branch is worth more than one killed holding a perfect uncommitted tree.
 
-**Checkpoint rule.** At 20 minutes elapsed, stop all analysis. Write the report with whatever
+**Checkpoint rule.** At 22 minutes elapsed, stop all analysis. Write the report with whatever
 is verified, commit, push, and open the PR. Everything after the report is optional; the
-report is not. If you are running short, cut in this order: (1) extra queries beyond the
-core 12, (2) additional competitor depth, (3) anything in §10 content work. Never cut the
-report, the entity check, or the commit.
+report is not. If short, cut in this order: (1) extra queries beyond the core set, (2)
+competitor depth, (3) anything in §10 content work. Never cut the report, the entity check,
+or the commit.
 
-If you finish the loop early, do **not** start new speculative work — spend the remaining time
-deepening the priority queue for tomorrow and update `EXPERIMENT_LOG.md`.
+If you finish early, do **not** start speculative work — deepen tomorrow's priority queue and
+update `EXPERIMENT_LOG.md`.
 
 ### The previous run may have been killed mid-flight
 
-A timed-out run leaves a pushed branch and possibly an open PR. **Start every run by checking
-for that**, and continue from it rather than redoing the work. Look for branches matching
+A timed-out run may have left a pushed branch and an open PR. **Check for that first** and
+continue from it rather than redoing the work. Look for branches matching
 `intelligence-hq/daily-<today>` and open PRs whose title contains today's date.
 
 ## 4. SERVICE-AREA DISCOVERY
@@ -438,7 +480,7 @@ redesign it.**
 Required content, in this priority order (if the clock is short, later items may be trimmed
 to one line, but never omitted entirely):
 
-1. **Run record** — date, start, status, elapsed seconds, and whether elapsed approached 1800.
+1. **Run record** — date, start, status, elapsed seconds, and whether elapsed approached the ~1920 s ceiling.
 2. **What changed since the last run** — this is the most valuable section. A metric that did
    not move is one line, not a table.
 3. **Health** — site, sitemap, crawler access, entity check, suites.
@@ -464,7 +506,7 @@ baseline, integration inventory, competitor/AI baseline, persistent records, aut
 were completed 2026-10-15. Their outputs live in `INTEGRATION_STATUS.md`,
 `reports/daily/`, `data/*.jsonl`, `COMPETITOR_DIRECTORY.md`, and `EXPERIMENT_LOG.md`.
 
-Re-running a completed baseline is the single easiest way to burn the 1800 s budget. **Read the
+Re-running a completed baseline is the single easiest way to burn the ~32-minute budget. **Read the
 existing records; do not regenerate them.** Only re-run a full inventory when something
 structural changed (new integration, new repo, failed migration) or the owner asks.
 
@@ -506,7 +548,7 @@ A run is **COMPLETED** only when all of the following are true:
 5. The branch is pushed and a PR is open or updated.
 6. The suites pass (`validate_knowledge_base.py`, `seo_audit.py`, `crawler_access_check.sh`,
    `unittest discover`).
-7. The report states the run's actual elapsed time and whether it approached the 1800 s cap.
+7. The report states the run's actual elapsed time and whether it approached the ~1920 s ceiling.
 
 A run that did all seven and implemented no change is **still COMPLETED** — an honest
 no-change day is a valid outcome, and forcing a change to look productive is worse than
@@ -536,12 +578,14 @@ the system is done on the strength of a single successful run.
 
 ## FINAL OPERATING INSTRUCTION
 
-You have 1800 seconds and you will not get a warning before the clock runs out. The bootstrap
-is done. Read the existing records, run today's measurements, pick at most one change, test it,
-and get the report committed and pushed.
+You have about 32 minutes — measured, not assumed — and you will not get a warning before the
+clock runs out. The bootstrap is done. Start with `python3 scripts/daily_measure.py`, read the
+context it writes, pick at most one change, test it, and get the report committed and pushed.
 
 Order of priority when time is short: **report > commit > measurement > new work.** A pushed
-report with an honest `BLOCKED` beats an unpushed branch holding a perfect audit.
+report with an honest `BLOCKED` beats an unpushed branch holding a perfect audit. Two runs
+have already been killed at the ceiling; the second produced nothing because it spent the
+whole window deciding how to measure instead of measuring.
 
 Do not rebuild working systems. Do not invent data, bypass permissions, spend money without
 approval, or deploy risky changes without authorization. Do not touch a property the business
