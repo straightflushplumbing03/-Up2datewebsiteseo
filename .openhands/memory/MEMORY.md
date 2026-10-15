@@ -1,68 +1,11 @@
 # Project Memory — Straight Flush Plumbing Intelligence HQ
 
-## Concurrent sessions mutate this repo (ISSUE-008)
-Multiple OpenHands sessions (daily automation + manual) push branches and open PRs
-here, and **the owner merges them within minutes**. Always `git fetch` and check
-for a newer `main` and open PRs BEFORE doing repo work; expect your branch to be
-superseded. Rebase-before-push; union-merge append-only `.jsonl`; one PR per day.
-
-## Confirmed business facts
-- Legal/display name is exactly **"Straight Flush Plumbing & Leak Detection"** (owner-confirmed).
-  `SF_NAMES` matches `straight flush plumbing` / `straightflushplumbing`. The bare phrase
-  "straight flush" is deliberately NOT matched (poker hand; "Straight Flush Rooter of Ohio").
-- NAP: `(949) 374-6524` / `+19493746524`; `78 Cameray Heights, Laguna Niguel, CA 92677`.
-- **Stale/competing properties** (found via Tavily brand query, not previously in the repo):
-  `straightflushplumb8.wixsite.com` (Wix) and `straight-flush-plumbing-7fb7cf71.base44.app`.
-  **Owner-confirmed as owned** 2026-10-15 — see the entity consolidation section below.
-
-## Conventions that matter
-- Never commit to `main`; branch + PR only. Never merge own PR.
-- Research/report branches: `intelligence-hq/daily-<date>`; site-change branches: `intelligence-hq/site-<date>-<slug>`.
-- Knowledge persistence: append to `data/*.jsonl`, add dated report files, never delete history.
-- Tests: `python3 growth-engine/tests/validate_knowledge_base.py` (must pass), `bash growth-engine/tests/crawler_access_check.sh`, `python3 scripts/seo_audit.py`.
-- ISSUE-001 (Cloudflare under-attack mode blocking crawlers) was resolved 2026-10-11; `crawler_access_check.sh` is the regression test.
-- The workspace sandbox starts with an EMPTY git repo for this project. Restore it with
-  `git remote add origin ... && git fetch origin main && git checkout -B main origin/main`.
-  If `.openhands/` (your memory dir) collides with the repo's committed `.openhands/`, move it
-  aside first (`mv .openhands /tmp/notes`) or the checkout aborts.
-## Deployment (corrected 2026-10-13)
-Origin = **GitHub Pages** (legacy build from `main` `/`), **fronted by Cloudflare**
-(DNS+proxy+Transform Rules applying `_headers`; Pages ignores `_headers`). A
-Cloudflare **Workers Builds** check runs on PRs, but there is NO `wrangler`/Workers
-config in the repo — do not describe the site as Workers-deployed.
->>>>>>> origin/intelligence-hq/blockers-verification-2026-10-13
-
-## Entity consolidation — owned duplicate properties (2026-10-15)
-- **Owner-confirmed owned hosts** (registry lives in `scripts/entity_consistency_check.py`
-  as `DUPLICATE_HOSTS`): `straight-flush-plumbing-7fb7cf71.base44.app`,
-  `straightflushplumb8.wixsite.com`, `flush-pro-flow.base44.app`.
-- `straight-flush-plumbing-7fb7cf71.base44.app` is a **live indexable duplicate** —
-  48 URLs in its sitemap, `index, follow`, self-canonical, `Allow: /`, zero links
-  to the real site. Its JSON-LD declares the business `@id` as
-  `https://flush-pro-flow.base44.app/#business` (that host 404s) — a dangling
-  entity reference. Full detail: `growth-engine/ENTITY_CONSOLIDATION_PLAN.md`.
-- `straightflushplumb8.wixsite.com` is already 404 + noindex on all paths tried.
-- Regression check: `python3 scripts/entity_consistency_check.py --run` → **exit 1
-  while any duplicate is indexable**, exit 0 when clean. History:
-  `growth-engine/data/entity_consistency_history.jsonl`.
-- **NEVER add `sameAs` links from the real site to the duplicates.** `sameAs`
-  asserts "this is also me" and would *strengthen* the stale association.
-  Consolidation here = removal, not linkage.
-- Unverified claims on the duplicate, must not be republished without evidence:
-  "24/7 emergency service", "premier", "same-day slab leak detection".
-- Changing those external properties is **Level 3 / owner-only**. Agents report,
-  never touch.
-
-## Environment quirks
-- **Brave Search** (`search.brave.com/search?q=`) works with a normal browser UA for conventional-proxy research, but rate-limits with **HTTP 429** after ~7-8 rapid queries. Pace queries. Bing/DDG HTML are unreliable here.
-- Google Search Central docs (`developers.google.com/search/...`) fetch fine (200) — usable as primary sources.
-- No GSC/GA4/GBP credentials in this environment. Record as a blocker, never as zero.
-- Current date in this environment is 2026-10; use `date -u` to confirm before dating reports.
-
-## GitHub API note
-`github_update_pull_request` (MCP) can return **403 "Resource not accessible by
-personal access token"** on this repo, while `curl -X PATCH ... -H "Authorization:
-Bearer $GITHUB_TOKEN"` works (200). Use curl for PR title/body edits.
+## Repository identity (verified 2026-10-12)
+- **Production repo:** `straightflushplumbing03/-Up2datewebsiteseo` (public, default branch `main`).
+  - NOT a TypeScript project despite `.agents/skills/-Up2datewebsiteseo/SKILL.md` claiming so — that skill was auto-generated and is wrong. The site is **static HTML/CSS/JS, no build step**.
+  - Deploy: **GitHub Pages** legacy build from `main` `/`, custom domain via `CNAME` = `straightflushplumbingoc.com`, fronted by Cloudflare. Repo also has `has_pages: true`.
+  - The workspace clone lives at `/workspace/project/-Up2datewebsiteseo` (same name as repo).
+- Other same-owner repos (`Uptodatestraightflushwebsite`, `WebsiteMasterFile`, `Up2dateseowebsite`, etc.) are **not** production; do not deploy there.
 
 ## Intelligence system
 - Pre-existing `growth-engine/` knowledge base (created 2026-10-09). Read order is in `growth-engine/README.md`.
@@ -89,32 +32,7 @@ Bearer $GITHUB_TOKEN"` works (200). Use curl for PR title/body edits.
 - **Secrets are injected only into a command whose TEXT names the key.** A bare `python3 scripts/daily_measure.py` sees no `Tavily_api_key` even when one is registered, and reports a false BLOCKED. Name the secret in the command — e.g. `export Tavily_api_key="${Tavily_api_key}" && python3 ...` — to trigger injection. Same trap for `Perplexity_api_key`. This is a platform property, not a client bug.
 - Secrets are **case-sensitive to how the user typed them**: `Tavily_api_key`, `Perplexity_api_key`, not the uppercase convention.
 
-## Perplexity Agent API integration (2026-10-15)
-- `growth-engine/ai_agent_client.py` = the client. `scripts/perplexity_agent.py` = the CLI
-  (`--smoke` / `--run` / `--append` / `--dry-run`). `growth-engine/tests/test_perplexity_agent.py`
-  = 50 stdlib unittest tests, no network + no key needed.
-- Endpoint: `POST https://api.perplexity.ai/v1/agent` via the **official SDK**
-  (`pip install perplexityai`, `from perplexity import Perplexity`, `client.responses.create(...)`).
-  Do NOT use the OpenAI SDK for the Agent API (that is for the Router API).
-- `responses.create` is keyword-only: `input` (required), `model` XOR `preset`, `tools`,
-  `instructions`, `response_format`, `max_output_tokens`, `max_steps`, `previous_response_id`.
-- Read the answer with `response.output_text`. Sources live in `search_results` output items
-  (`item.results[].url/title/snippet/date`); URL citations live in text-content `annotations`.
-- Error bodies come back as `{"error": {"type": ..., "code": ..., "message": ...}}` — e.g. a
-  missing/invalid key gives `type: "invalid_api_key", code: 401`. Provider error strings are
-  normalised into the repo taxonomy via `_PROVIDER_ERROR_MAP`.
-- `requirements.txt` now exists (`perplexityai>=0.43.8`); this was the repo's first dependency file.
-- Key is read from `PERPLEXITY_API_KEY` only. Never pass it on a CLI arg (shell history / ps).
-
-## Repository identity (verified 2026-10-12)
-- **Production repo:** `straightflushplumbing03/-Up2datewebsiteseo` (public, default branch `main`).
-  - NOT a TypeScript project despite `.agents/skills/-Up2datewebsiteseo/SKILL.md` claiming so — that skill was auto-generated and is wrong. The site is **static HTML/CSS/JS, no build step**.
-  - Deploy: **GitHub Pages** legacy build from `main` `/`, custom domain via `CNAME` = `straightflushplumbingoc.com`, fronted by Cloudflare. Repo also has `has_pages: true`.
-  - The workspace clone lives at `/workspace/project/-Up2datewebsiteseo` (same name as repo).
-- Other same-owner repos (`Uptodatestraightflushwebsite`, `WebsiteMasterFile`, `Up2dateseowebsite`, etc.) are **not** production; do not deploy there.
-
 ## Run-budget rule for these automations (ISSUE-006)
-<<<<<<< HEAD
 An agent-driven research run will happily consume the whole budget exploring and
 never persist. **The expensive part is not measuring, it is deciding how to
 measure.** Two runs were killed at ~1950 s; the second produced nothing because
@@ -139,30 +57,34 @@ consecutive timeouts before.
 
 Keep the rule: an explicit phase budget, a 22-minute checkpoint that stops
 analysis and writes the report, and "report > commit > measurement > new work".
-=======
-An agent-driven research run will happily consume the whole 1800 s exploring
-search engines and never persist. Prompts MUST carry an explicit time budget
-(~40% research / 60% write+commit), a single allowed search provider, and a
-"stop researching and commit when near budget" instruction. A committed short
-report beats a rich lost one. **Verified 2026-10-13:** the scheduled daily run
-finished in ~10 min and persisted (opened PR #33).
 
-## Scheduled-run verification (how to prove the loop is autonomous)
-`next_run_at` is not exposed. Prove scheduling by an actual on-time **cron** run:
-`GET /api/automation/v1/{id}/runs` and look for `trigger_source: cron` with a
-`started_at` matching the cron in the automation's timezone. Verified 2026-10-12:
-daily `1afcbefd` 13:00:54Z = 06:00:54 PDT; weekly `ff3478a3` 13:00:43Z = 06:00 PDT.
+## GitHub API note
+`github_update_pull_request` (MCP) can return **403 "Resource not accessible by
+personal access token"** on this repo, while `curl -X PATCH ... -H "Authorization:
+Bearer $GITHUB_TOKEN"` works (200). Use curl for PR title/body edits.
 
-## Search-provider reality on this egress IP (ISSUE-007)
-Brave → HTTP **429**; DuckDuckGo HTML → **202**; **DuckDuckGo Lite is the only
-reliably parseable endpoint** (`https://lite.duckduckgo.com/lite/?q=...`). Prompt
-provider order: Brave → DDG Lite → Bing, fall through once, record `platform` per
-row. Don't retry a blocked provider.
+## Environment quirks
+- **Brave Search** (`search.brave.com/search?q=`) works with a normal browser UA for conventional-proxy research, but rate-limits with **HTTP 429** after ~7-8 rapid queries. Pace queries. Bing/DDG HTML are unreliable here.
+- Google Search Central docs (`developers.google.com/search/...`) fetch fine (200) — usable as primary sources.
+- No GSC/GA4/GBP credentials in this environment. Record as a blocker, never as zero.
+- Current date in this environment is 2026-10; use `date -u` to confirm before dating reports.
 
-## Secrets handling
-- Never write a key into a repo file, report, or commit. `.mcp.json` uses `${TAVILY_API_KEY}`
-  interpolation, never a literal. Keys live only in the user's own environment / OpenHands secrets.
-- If a user pastes a key into chat, tell them to **rotate it** — the transcript is logged.
+## Perplexity Agent API integration (2026-10-15)
+- `growth-engine/ai_agent_client.py` = the client. `scripts/perplexity_agent.py` = the CLI
+  (`--smoke` / `--run` / `--append` / `--dry-run`). `growth-engine/tests/test_perplexity_agent.py`
+  = 50 stdlib unittest tests, no network + no key needed.
+- Endpoint: `POST https://api.perplexity.ai/v1/agent` via the **official SDK**
+  (`pip install perplexityai`, `from perplexity import Perplexity`, `client.responses.create(...)`).
+  Do NOT use the OpenAI SDK for the Agent API (that is for the Router API).
+- `responses.create` is keyword-only: `input` (required), `model` XOR `preset`, `tools`,
+  `instructions`, `response_format`, `max_output_tokens`, `max_steps`, `previous_response_id`.
+- Read the answer with `response.output_text`. Sources live in `search_results` output items
+  (`item.results[].url/title/snippet/date`); URL citations live in text-content `annotations`.
+- Error bodies come back as `{"error": {"type": ..., "code": ..., "message": ...}}` — e.g. a
+  missing/invalid key gives `type: "invalid_api_key", code: 401`. Provider error strings are
+  normalised into the repo taxonomy via `_PROVIDER_ERROR_MAP`.
+- `requirements.txt` now exists (`perplexityai>=0.43.8`); this was the repo's first dependency file.
+- Key is read from `PERPLEXITY_API_KEY` only. Never pass it on a CLI arg (shell history / ps).
 
 ## Tavily Search integration (2026-10-15)
 - `growth-engine/tavily_search.py` = client (**stdlib `urllib` only — Tavily needs no package**).
@@ -183,3 +105,72 @@ row. Don't retry a blocked provider.
 - **Baseline 2026-10-15:** 10/10 target queries → `absent`; brand-name control query → `cited`
   at rank 1 (proves the matcher works). See KNOWN_ISSUES ISSUE-014/015.
 
+## Confirmed business facts
+- Legal/display name is exactly **"Straight Flush Plumbing & Leak Detection"** (owner-confirmed).
+  `SF_NAMES` matches `straight flush plumbing` / `straightflushplumbing`. The bare phrase
+  "straight flush" is deliberately NOT matched (poker hand; "Straight Flush Rooter of Ohio").
+- NAP: `(949) 374-6524` / `+19493746524`; `78 Cameray Heights, Laguna Niguel, CA 92677`.
+- **Stale/competing properties** (found via Tavily brand query, not previously in the repo):
+  `straightflushplumb8.wixsite.com` (Wix) and `straight-flush-plumbing-7fb7cf71.base44.app`.
+  **Owner-confirmed as owned** 2026-10-15 — see the entity consolidation section below.
+
+## Entity consolidation — owned duplicate properties (2026-10-15)
+- **Owner-confirmed owned hosts** (registry lives in `scripts/entity_consistency_check.py`
+  as `DUPLICATE_HOSTS`): `straight-flush-plumbing-7fb7cf71.base44.app`,
+  `straightflushplumb8.wixsite.com`, `flush-pro-flow.base44.app`.
+- `straight-flush-plumbing-7fb7cf71.base44.app` is a **live indexable duplicate** —
+  48 URLs in its sitemap, `index, follow`, self-canonical, `Allow: /`, zero links
+  to the real site. Its JSON-LD declares the business `@id` as
+  `https://flush-pro-flow.base44.app/#business` (that host 404s) — a dangling
+  entity reference. Full detail: `growth-engine/ENTITY_CONSOLIDATION_PLAN.md`.
+- `straightflushplumb8.wixsite.com` is already 404 + noindex on all paths tried.
+- Regression check: `python3 scripts/entity_consistency_check.py --run` → **exit 1
+  while any duplicate is indexable**, exit 0 when clean. History:
+  `growth-engine/data/entity_consistency_history.jsonl`.
+- **NEVER add `sameAs` links from the real site to the duplicates.** `sameAs`
+  asserts "this is also me" and would *strengthen* the stale association.
+  Consolidation here = removal, not linkage.
+- Unverified claims on the duplicate, must not be republished without evidence:
+  "24/7 emergency service", "premier", "same-day slab leak detection".
+- Changing those external properties is **Level 3 / owner-only**. Agents report,
+  never touch.
+
+## Secrets handling
+- Never write a key into a repo file, report, or commit. `.mcp.json` uses `${TAVILY_API_KEY}`
+  interpolation, never a literal. Keys live only in the user's own environment / OpenHands secrets.
+- If a user pastes a key into chat, tell them to **rotate it** — the transcript is logged.
+
+## Conventions that matter
+- Never commit to `main`; branch + PR only. Never merge own PR.
+- Research/report branches: `intelligence-hq/daily-<date>`; site-change branches: `intelligence-hq/site-<date>-<slug>`.
+- Knowledge persistence: append to `data/*.jsonl`, add dated report files, never delete history.
+- Tests: `python3 growth-engine/tests/validate_knowledge_base.py` (must pass), `bash growth-engine/tests/crawler_access_check.sh`, `python3 scripts/seo_audit.py`.
+- ISSUE-001 (Cloudflare under-attack mode blocking crawlers) was resolved 2026-10-11; `crawler_access_check.sh` is the regression test.
+- The workspace sandbox starts with an EMPTY git repo for this project. Restore it with
+  `git remote add origin ... && git fetch origin main && git checkout -B main origin/main`.
+  If `.openhands/` (your memory dir) collides with the repo's committed `.openhands/`, move it
+  aside first (`mv .openhands /tmp/notes`) or the checkout aborts.
+
+## Search-provider reality on this egress IP (ISSUE-007)
+Brave → HTTP **429**; DuckDuckGo HTML → **202**; **DuckDuckGo Lite is the only
+reliably parseable endpoint** (`https://lite.duckduckgo.com/lite/?q=...`). Prompt
+provider order: Brave → DDG Lite → Bing, fall through once, record `platform` per
+row. Don't retry a blocked provider.
+
+## Scheduled-run verification (how to prove the loop is autonomous)
+`next_run_at` is not exposed. Prove scheduling by an actual on-time **cron** run:
+`GET /api/automation/v1/{id}/runs` and look for `trigger_source: cron` with a
+`started_at` matching the cron in the automation's timezone. Verified 2026-10-12:
+daily `1afcbefd` 13:00:54Z = 06:00:54 PDT; weekly `ff3478a3` 13:00:43Z = 06:00 PDT.
+
+## Concurrent sessions mutate this repo (ISSUE-008)
+Multiple OpenHands sessions (daily automation + manual) push branches and open PRs
+here, and **the owner merges them within minutes**. Always `git fetch` and check
+for a newer `main` and open PRs BEFORE doing repo work; expect your branch to be
+superseded. Rebase-before-push; union-merge append-only `.jsonl`; one PR per day.
+
+## Deployment (corrected 2026-10-13)
+Origin = **GitHub Pages** (legacy build from `main` `/`), **fronted by Cloudflare**
+(DNS+proxy+Transform Rules applying `_headers`; Pages ignores `_headers`). A
+Cloudflare **Workers Builds** check runs on PRs, but there is NO `wrangler`/Workers
+config in the repo — do not describe the site as Workers-deployed.

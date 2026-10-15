@@ -106,13 +106,13 @@ Each issue: evidence, impact, fix, status, approval level.
   one alternate), forbids headless browsers and multi-engine probing, and instructs
   the agent to **stop researching and commit** when near budget. The weekly prompt
   got the same budget note.
-- **Verified 2026-10-13:** the budget fix works. The daily run stayed inside budget
-  (the scheduled cron run `1afcbefd` finished in ~10 min) and persisted its output.
+- **Follow-up:** confirm the hardened prompt completes within budget (second
+  dispatch). If it still overruns, reduce the query sample further (10–15) and move
+  industry research to a separate weekly job.
 - **Approval:** Level 2 (automation prompt config).
 
 ---
 
-<<<<<<< HEAD
 ## ISSUE-007 — Search providers block the sweep egress IP  [MEDIUM · MITIGATED 2026-10-13]
 
 - **Evidence:** Brave Search returns **HTTP 429** to this egress IP; DuckDuckGo HTML
@@ -144,7 +144,6 @@ Each issue: evidence, impact, fix, status, approval level.
   self-merges. **Before doing repo work, always `git fetch` and check for a newer
   `main` and for open PRs on the target branch.**
 - **Approval:** informational.
->>>>>>> origin/intelligence-hq/blockers-verification-2026-10-13
 ## ISSUE-010 — Sitemap refresh tool would break directory-hub URLs  [LOW · FIXED 2026-10-15]
 
 - **Evidence:** running `scripts/refresh_sitemap.py` on a copy printed
@@ -457,4 +456,3 @@ duplicate, so the duplicates are not disavowed from the real side either.
   Full suite 155 tests pass; `seo_audit.py` exits 0.
 - **Approval:** Level 2 (tooling).
 
-=======

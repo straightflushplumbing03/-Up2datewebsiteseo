@@ -5,10 +5,6 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## 2026-10-15 (daily, third run) - The sitemap "gap" was our own audit bug, not the site
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
@@ -175,7 +171,34 @@ returns 200 — entity check exit 1, owner action required, no external change m
 guarded version and regenerate `sitemap.xml` from it.
 
 ---
-=======
+
+## 2026-10-13 — Blocker verification & fix pass
+
+**Status:** Additive docs + prompt config only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/blockers-verification-2026-10-13`.
+
+- **Change:** (1) Verified the **scheduled** (not manual) runs fired and completed —
+  daily cron `1afcbefd` at 06:00:54 PDT, weekly cron `ff3478a3` at 06:00:43 PDT,
+  both COMPLETED; the daily run persisted its report and opened PR #33. (2) Made the
+  daily prompt's search policy explicit — **Brave → DuckDuckGo Lite → Bing**, fall
+  through once on 429/202 — so a blocked provider no longer stalls the sweep. (3)
+  Named the exact credential secrets for P-002 and forbade reporting an unavailable
+  metric as zero. (4) Corrected the deployment record to **GitHub Pages origin
+  fronted by Cloudflare** (with a Cloudflare Workers build check on PRs, no
+  `wrangler` config in the repo). (5) Refreshed `README.md` with live schedule,
+  deployment, and blocker sections.
+- **Reason:** owner asked to fix the PR/access-blocker reporting and confirm the loop
+  is genuinely autonomous.
+- **Target:** knowledge base + automation prompt config only.
+- **Competitor insight:** none (no new sweep this pass).
+- **Expected outcome:** accurate reporting; a daily sweep that returns evidence even
+  when the primary provider is blocked; blockers tracked with exact owner actions.
+- **Result:** scheduled runs verified; prompts in parity with repo after edit;
+  `validate_knowledge_base.py` → OK (133 HTML files, exit 0).
+- **Keep/modify/revert:** **keep.** No production change to revert.
+
+---
+
 ## 2026-10-13 (second pass) — provider lock-out confirmed challenge-based; additive records
 
 **Status:** Additive records only. **No website page/schema/copy changed.**
@@ -262,136 +285,7 @@ Branch `intelligence-hq/daily-2026-10-13`.
 - **Branch:** `intelligence-hq/daily-2026-10-13`.
 
 ---
->>>>>>> origin/intelligence-hq/daily-2026-10-13
 
-## 2026-10-13 — Blocker verification & fix pass
-
-**Status:** Additive docs + prompt config only. **No website page/schema/copy changed.**
-Branch `intelligence-hq/blockers-verification-2026-10-13`.
-
-- **Change:** (1) Verified the **scheduled** (not manual) runs fired and completed —
-  daily cron `1afcbefd` at 06:00:54 PDT, weekly cron `ff3478a3` at 06:00:43 PDT,
-  both COMPLETED; the daily run persisted its report and opened PR #33. (2) Made the
-  daily prompt's search policy explicit — **Brave → DuckDuckGo Lite → Bing**, fall
-  through once on 429/202 — so a blocked provider no longer stalls the sweep. (3)
-  Named the exact credential secrets for P-002 and forbade reporting an unavailable
-  metric as zero. (4) Corrected the deployment record to **GitHub Pages origin
-  fronted by Cloudflare** (with a Cloudflare Workers build check on PRs, no
-  `wrangler` config in the repo). (5) Refreshed `README.md` with live schedule,
-  deployment, and blocker sections.
-- **Reason:** owner asked to fix the PR/access-blocker reporting and confirm the loop
-  is genuinely autonomous.
-- **Target:** knowledge base + automation prompt config only.
-- **Competitor insight:** none (no new sweep this pass).
-- **Expected outcome:** accurate reporting; a daily sweep that returns evidence even
-  when the primary provider is blocked; blockers tracked with exact owner actions.
-- **Result:** scheduled runs verified; prompts in parity with repo after edit;
-  `validate_knowledge_base.py` → OK (133 HTML files, exit 0).
->>>>>>> origin/intelligence-hq/blockers-verification-2026-10-13
-- **Keep/modify/revert:** **keep.** No production change to revert.
-
----
-
-<<<<<<< HEAD
->>>>>>> origin/intelligence-hq/weekly-2026-10-12
-=======
->>>>>>> origin/intelligence-hq/blockers-verification-2026-10-13
-## 2026-10-12 (HQ-D run #2) — Brave sweep: 28 queries, SF absent, competitor map refreshed
-
-**Status:** additive docs + research only. **No website page/schema/copy changed.**
-
-- **Date:** 2026-10-12 (06:00 PDT slot; executed ≈13:00–13:40 UTC).
-- **Change:** ran a 28-query **Brave Search** conventional-organic sweep across
-  10 South-OC cities and 8 service families; appended 28 rows to
-  `data/ai_visibility_history.jsonl` and new competitor rows to
-  `data/competitor_observations.jsonl`; added 2 dated entries to `INDUSTRY_WATCH.md`;
-  added 6 ideas (IDEA-15…20) to `INNOVATION_IDEAS.md`; appended a run-#2 section to
-  the daily report.
-- **Reason:** execute the daily Intelligence HQ protocol; refresh the competitive
-  picture now that Brave is reachable again (it was HTTP 429 on run #1, which fell
-  back to DuckDuckGo Lite).
-- **Target:** local-search visibility for commercially valuable South-OC plumbing
-  queries.
-- **Competitor insight:** **scottenglishplumbing.net (12/28)**, billmetzgerplumbing
-  (9), barkerandsonsplumbing (8), rotorooter (7) lead repeat presence; dedicated
-  repipe specialists own the repipe family; **aggregators (yelp 14/28) own
-  "best/nearest" intent** — website content alone cannot win those.
-- **Expected outcome:** the competitor map and idea backlog reflect current reality;
-  the three prioritized ideas target the clearest observed gaps.
-- **Result:** **SF absent from all 28** Brave organic top-10 sets (consistent with
-  every prior run). No 429 this run. No site change made (no evidence justified one).
-- **Keep/modify/revert:** **keep** the rotating query set; **modify** the sweep to
-  keep a longer inter-query delay (9 of 28 returned empty on first pass before
-  recovering).
-- **Next three priorities:** (1) repipe decision page (IDEA-17); (2) detection-method
-  comparison hub (IDEA-15); (3) FAQPage schema on Tier-1 city pages (IDEA-18).
->>>>>>> origin/intelligence-hq/daily-2026-10-12
-=======
-=======
-## 2026-10-12 — HQ-W Weekly Strategic Review (second dispatch, 16:26 UTC, run `f0e419f6`)
-
-**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
-Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2) — **amends the
-existing weekly PR #32, not a new PR.**
-
-- **Change:** Re-verified the week's findings for the same Monday job. Appended an
-  Appendix to `growth-engine/reports/weekly/2026-10-12.md`; appended this entry;
-  added one `technical_health_history.jsonl` row for the 16:26Z crawler re-check.
-- **Reason:** The HQ-W job was dispatched twice on 2026-10-12 (13:00 UTC → `ff3478a3`
-  wrote the review; 16:26 UTC → `f0e419f6` this run). Single-PR rule → update the
-  existing branch/PR rather than duplicate.
-- **Re-verified (evidence-first):** crawler access **PASS** (7 crawler UAs + curl on
-  `/`, `robots.txt`, `sitemap.xml`, `llms.txt` all **200**, no `cf-mitigated`;
-  ISSUE-001 stays **RESOLVED**); `/llms-full.txt` and `/md/services/leak-detection.md`
-  → **200**; live-vs-canonical weekly prompt → **no drift**; `validate_knowledge_base.py`
-  → **OK (133 files)**.
-- **New dated observation:** the measurement channel is now **fully degraded** —
-  Brave answered a lone request with 200 but returned **HTTP 429 on all 10 sweep
-  queries**, and DuckDuckGo **Lite and HTML both returned HTTP 202** (anti-bot).
-  No new visibility rows could be honestly collected this dispatch. Recorded as
-  `inconclusive` (provider failure) — **missing ≠ zero**.
-- **Competitor insight:** none new this dispatch (no usable result sets). §3 of the
-  review stands unchanged.
-- **Expected outcome / result:** no change to the §5 ranking or §6 top-three
-  priorities; provider-degradation item reinforced. **Keep.**
-- **Decision:** keep; no experiment or status change.
-
----
-
-## 2026-10-12 — HQ-W Weekly Strategic Review (first weekly; week of 2026-10-09 → 10-12)
-
-**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
-Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2).
-
-- **Change:** First weekly strategic review. Wrote
-  `growth-engine/reports/weekly/2026-10-12.md`; prepended this entry; updated
-  `EXPERIMENT_LOG.md` outcomes and `INNOVATION_IDEAS.md` statuses.
-- **Reason:** Monday cadence — evaluate the week's progress, measure, rank
-  opportunities, and set the week's top three priorities.
-- **Target:** knowledge base + review report only.
-- **Shipped this week (verified):** ISSUE-001 (Cloudflare block) **fixed and
-  verified** (security_level → medium 2026-10-11; all crawler UAs 200, re-verified
-  this run); PR #19 (KB), #24 (AI-readable files — `/llms-full.txt` + `/md/**` now
-  live 200), #27/#28 (consolidation), #29/#30/#31 (Intelligence HQ setup, daily,
-  Phase 2). PRs #20–#26 closed unmerged as superseded; only **#11** remains open.
-- **Measured:** crawler-accessible pages **0/7 → 10/10 (200)**; HTTP 403 rate
-  **100% → 0%**. Conventional-proxy visibility: SF **absent from every executed
-  query every day** (0 recommended / 0 mentioned / 0 cited). GSC/GA4/GBP and all AI
-  answer engines remain **`unverified`** (not connected / not testable) — missing
-  data is not zero.
-- **Competitor insight:** Tier A stable (proplumberlagunaniguel.com 8/36,
-  evansleakdetection.com 8/36 on 2026-10-12); new repeat competitors
-  primewestplumbing.com, coastplumbing.com, lagunaniguelcaplumbingpros.com,
-  leak-detection-pro.com, dialonesonshine.com, americanleakcompany.com; verified
-  features = per-city pages + FAQPage schema (leak-detection-pro.com,
-  coastplumbing.com). Aggregators dominate (yelp.com 32/36).
-- **Process finding:** the conventional-proxy channel is degrading — Brave 429 for
-  most of the week and **DuckDuckGo Lite returned HTTP 202 on all 12 probe queries
-  this run**. Live-vs-canonical HQ-W prompt check: **no drift** (diff clean).
-- **Expected outcome:** one reviewed week with ranked opportunities and three
-  evidence-backed priorities.
-- **Result:** `crawler_access_check.sh` exit 0; `/llms-full.txt` + `/md/**` 200.
-=======
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**
@@ -472,6 +366,103 @@ Branch `growth-engine/daily-2026-10-12` (Level 2). Executed 2026-10-11 Sun 22:35
   DuckDuckGo Lite as the primary conventional proxy, keeping Brave as a fallback.
 
 ---
+
+## 2026-10-12 — HQ-W Weekly Strategic Review (second dispatch, 16:26 UTC, run `f0e419f6`)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2) — **amends the
+existing weekly PR #32, not a new PR.**
+
+- **Change:** Re-verified the week's findings for the same Monday job. Appended an
+  Appendix to `growth-engine/reports/weekly/2026-10-12.md`; appended this entry;
+  added one `technical_health_history.jsonl` row for the 16:26Z crawler re-check.
+- **Reason:** The HQ-W job was dispatched twice on 2026-10-12 (13:00 UTC → `ff3478a3`
+  wrote the review; 16:26 UTC → `f0e419f6` this run). Single-PR rule → update the
+  existing branch/PR rather than duplicate.
+- **Re-verified (evidence-first):** crawler access **PASS** (7 crawler UAs + curl on
+  `/`, `robots.txt`, `sitemap.xml`, `llms.txt` all **200**, no `cf-mitigated`;
+  ISSUE-001 stays **RESOLVED**); `/llms-full.txt` and `/md/services/leak-detection.md`
+  → **200**; live-vs-canonical weekly prompt → **no drift**; `validate_knowledge_base.py`
+  → **OK (133 files)**.
+- **New dated observation:** the measurement channel is now **fully degraded** —
+  Brave answered a lone request with 200 but returned **HTTP 429 on all 10 sweep
+  queries**, and DuckDuckGo **Lite and HTML both returned HTTP 202** (anti-bot).
+  No new visibility rows could be honestly collected this dispatch. Recorded as
+  `inconclusive` (provider failure) — **missing ≠ zero**.
+- **Competitor insight:** none new this dispatch (no usable result sets). §3 of the
+  review stands unchanged.
+- **Expected outcome / result:** no change to the §5 ranking or §6 top-three
+  priorities; provider-degradation item reinforced. **Keep.**
+- **Decision:** keep; no experiment or status change.
+
+---
+
+## 2026-10-12 — HQ-W Weekly Strategic Review (first weekly; week of 2026-10-09 → 10-12)
+
+**Status:** Additive documentation/data only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/weekly-2026-10-12` (Level 1 + Level 2).
+
+- **Change:** First weekly strategic review. Wrote
+  `growth-engine/reports/weekly/2026-10-12.md`; prepended this entry; updated
+  `EXPERIMENT_LOG.md` outcomes and `INNOVATION_IDEAS.md` statuses.
+- **Reason:** Monday cadence — evaluate the week's progress, measure, rank
+  opportunities, and set the week's top three priorities.
+- **Target:** knowledge base + review report only.
+- **Shipped this week (verified):** ISSUE-001 (Cloudflare block) **fixed and
+  verified** (security_level → medium 2026-10-11; all crawler UAs 200, re-verified
+  this run); PR #19 (KB), #24 (AI-readable files — `/llms-full.txt` + `/md/**` now
+  live 200), #27/#28 (consolidation), #29/#30/#31 (Intelligence HQ setup, daily,
+  Phase 2). PRs #20–#26 closed unmerged as superseded; only **#11** remains open.
+- **Measured:** crawler-accessible pages **0/7 → 10/10 (200)**; HTTP 403 rate
+  **100% → 0%**. Conventional-proxy visibility: SF **absent from every executed
+  query every day** (0 recommended / 0 mentioned / 0 cited). GSC/GA4/GBP and all AI
+  answer engines remain **`unverified`** (not connected / not testable) — missing
+  data is not zero.
+- **Competitor insight:** Tier A stable (proplumberlagunaniguel.com 8/36,
+  evansleakdetection.com 8/36 on 2026-10-12); new repeat competitors
+  primewestplumbing.com, coastplumbing.com, lagunaniguelcaplumbingpros.com,
+  leak-detection-pro.com, dialonesonshine.com, americanleakcompany.com; verified
+  features = per-city pages + FAQPage schema (leak-detection-pro.com,
+  coastplumbing.com). Aggregators dominate (yelp.com 32/36).
+- **Process finding:** the conventional-proxy channel is degrading — Brave 429 for
+  most of the week and **DuckDuckGo Lite returned HTTP 202 on all 12 probe queries
+  this run**. Live-vs-canonical HQ-W prompt check: **no drift** (diff clean).
+- **Expected outcome:** one reviewed week with ranked opportunities and three
+  evidence-backed priorities.
+- **Result:** `crawler_access_check.sh` exit 0; `/llms-full.txt` + `/md/**` 200.
+- **Keep/modify/revert:** **keep.** No production change to revert.
+
+---
+
+## 2026-10-12 (HQ-D run #2) — Brave sweep: 28 queries, SF absent, competitor map refreshed
+
+**Status:** additive docs + research only. **No website page/schema/copy changed.**
+
+- **Date:** 2026-10-12 (06:00 PDT slot; executed ≈13:00–13:40 UTC).
+- **Change:** ran a 28-query **Brave Search** conventional-organic sweep across
+  10 South-OC cities and 8 service families; appended 28 rows to
+  `data/ai_visibility_history.jsonl` and new competitor rows to
+  `data/competitor_observations.jsonl`; added 2 dated entries to `INDUSTRY_WATCH.md`;
+  added 6 ideas (IDEA-15…20) to `INNOVATION_IDEAS.md`; appended a run-#2 section to
+  the daily report.
+- **Reason:** execute the daily Intelligence HQ protocol; refresh the competitive
+  picture now that Brave is reachable again (it was HTTP 429 on run #1, which fell
+  back to DuckDuckGo Lite).
+- **Target:** local-search visibility for commercially valuable South-OC plumbing
+  queries.
+- **Competitor insight:** **scottenglishplumbing.net (12/28)**, billmetzgerplumbing
+  (9), barkerandsonsplumbing (8), rotorooter (7) lead repeat presence; dedicated
+  repipe specialists own the repipe family; **aggregators (yelp 14/28) own
+  "best/nearest" intent** — website content alone cannot win those.
+- **Expected outcome:** the competitor map and idea backlog reflect current reality;
+  the three prioritized ideas target the clearest observed gaps.
+- **Result:** **SF absent from all 28** Brave organic top-10 sets (consistent with
+  every prior run). No 429 this run. No site change made (no evidence justified one).
+- **Keep/modify/revert:** **keep** the rotating query set; **modify** the sweep to
+  keep a longer inter-query delay (9 of 28 returned empty on first pass before
+  recovering).
+- **Next three priorities:** (1) repipe decision page (IDEA-17); (2) detection-method
+  comparison hub (IDEA-15); (3) FAQPage schema on Tier-1 city pages (IDEA-18).
 
 ## 2026-10-11 (supplementary run)
 

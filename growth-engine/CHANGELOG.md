@@ -3,7 +3,6 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
-<<<<<<< HEAD
 ## 2026-10-15 — Entity consolidation: owned duplicates found and scoped
 
 **Owner confirmation:** the Wix account and the base44 URL(s) are **owned** by
@@ -138,7 +137,7 @@ conventional proxy; Brave marked superseded), `INTEGRATION_STATUS.md`,
   `data/technical_health_history.jsonl`.
 
 **Not changed:** no website page, schema, title, description, or copy.
-=======
+
 ## 2026-10-13 — Blocker verification & fix pass
 
 **Added:** scheduled-run verification evidence in `INTEGRATION_STATUS.md` (daily
@@ -156,7 +155,6 @@ runs on PRs; no `wrangler` config in repo). `proposals/…priority-actions.md`
 P-002/P-005 statuses + secret names.
 
 **Not changed:** no website page, schema, copy, or automation schedule.
->>>>>>> origin/intelligence-hq/blockers-verification-2026-10-13
 
 ## 2026-10-12 — Intelligence HQ setup (infrastructure + first run)
 
