@@ -366,3 +366,31 @@ duplicate, so the duplicates are not disavowed from the real side either.
   Per `ENTITY_CONSOLIDATION_PLAN.md`, consolidation here means **removal** — never
   add a `sameAs` link to this host, and never copy its content onto the real site.
 - **Approval:** Level 2 (tooling) for the check fix; Level 3 (owner) for the removal.
+
+---
+
+## ISSUE-019 — Secret injection depends on the command text, so a bare pre-stage command records a false BLOCKED  [HIGH · FIXED 2026-10-15]
+
+- **Evidence:** the platform injects a registered secret only into a shell command
+  whose *text* names the key. The documented pre-stage is a bare
+  `python3 scripts/daily_measure.py`, which names no secret, so the child process
+  started with `Tavily_api_key` unset and `check_visibility()` returned
+  `blocked: true, detail: "no Tavily key in this environment"` — while the key was
+  registered and working. The 2026-10-15 second run lost its entire sweep to this
+  and had to re-run the sweep manually with the secret named.
+- **Distinct from ISSUE-017:** ISSUE-017 fixed the *client* to accept the
+  platform-cased env name. That fix is necessary but not sufficient — the value is
+  only present at all if the invoking command names the key. Correct client code
+  still sees an empty environment.
+- **Impact:** silent loss of the daily visibility sweep, reported as a credential
+  blocker that does not exist. Same failure mode as ISSUE-017 by a different cause.
+- **Fix applied 2026-10-15:** the pre-stage command in
+  `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md` now names the secret
+  (`export Tavily_api_key="${Tavily_api_key}"`) with an explanation, and
+  `check_visibility()` carries the remedy in its `blocked` note so the next run
+  self-corrects rather than repeating the false blocker.
+- **Verification:** regression test
+  `test_blocked_note_names_the_injection_workaround` asserts the note names the key
+  and the command; full suite 141 tests pass. A pre-stage run with the secret named
+  recorded `visibility_sweep | ok=True` and 62 real rows.
+- **Approval:** Level 2 (tooling).

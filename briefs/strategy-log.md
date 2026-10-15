@@ -5,6 +5,38 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-15 (daily, second run - continuation) - False BLOCKED on the visibility sweep: secret injection depends on the command text
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-15b` (PR #42). Continues the entry below.
+
+**Change - pre-stage command + `scripts/daily_measure.py` (ISSUE-019, high, fixed).**
+The platform injects a registered secret only into a shell command whose text names
+the key. The documented pre-stage is a bare `python3 scripts/daily_measure.py`,
+which names no secret, so the child started with `Tavily_api_key` unset and the
+sweep was recorded `blocked` - a false blocker, because the key was registered and
+working. The master agent prompt now names the secret
+(`export Tavily_api_key="${Tavily_api_key}"`) and explains why; `check_visibility()`
+now carries that remedy in its `blocked` note so the next run self-corrects. One
+regression test; suite 141 pass.
+
+**Reason:** two consecutive runs reported a credential gap that did not exist, and
+the sweep is the only evidence stream for ISSUE-015. ISSUE-017 fixed the client's
+env-name casing but could not help when the value was never injected.
+
+**Result:** pre-stage with the secret named recorded `visibility_sweep | ok=True`
+and 62 real rows - **60 absent, 2 cited**. The two `cited` rows are the brand
+controls and are the sharpest entity evidence yet: for
+`Straight Flush Plumbing & Leak Detection` the **Wix duplicate ranked #1** and the
+**base44 duplicate #2**, pushing the canonical site to **#5**. All 10 target
+service+city queries remain `absent` (ISSUE-015 baseline unchanged).
+
+**Keep/modify/revert:** keep. Also merged `origin/main` into PR #42 (commit
+`21ecad4`) so it is mergeable again; the only conflict was the append-only
+`entity_consistency_history.jsonl`.
+
+---
+
 ## 2026-10-15 (daily, second run) — Entity control false negative: a duplicate was hiding behind a 404 root
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**

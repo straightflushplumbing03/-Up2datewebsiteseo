@@ -165,3 +165,76 @@ No notification channel is configured, so this report and its PR are the channel
 
 No secrets are reproduced in this report. No spend was incurred (all sources free or
 already available).
+
+---
+
+## Continuation (same run, after PR #42 was opened)
+
+Timezone: America/Los_Angeles - Run: Intelligence HQ daily (2nd of 2026-10-15),
+continuation - Branch intelligence-hq/daily-2026-10-15b
+
+### Run record
+
+| Field | Value |
+|---|---|
+| Date | 2026-10-15 |
+| Start (UTC) | 19:43:56 |
+| Status | COMPLETED |
+| Elapsed at report | ~13 min (~780 s) |
+| Approached ~1920 s ceiling? | No - comfortable margin |
+| Previous run succeeded? | Yes (PR #41 merged 17:23Z) |
+
+### What changed since the first half of this run
+
+1. **PR #42 was mergeable: false (dirty) and is now clean.** main advanced by two
+   commits (897e7be pre-stage, 412f485 PATCH claim) after PR #42 branched. The only
+   real conflict was the append-only
+   growth-engine/data/entity_consistency_history.jsonl; resolved by union plus
+   timestamp dedupe (10 rows). Merge commit 21ecad4. No authored content was
+   dropped. Root cause of the earlier stall: git identity was unset in the fresh
+   sandbox (unable to auto-detect email address).
+2. **The blocked visibility sweep has a durable fix** (commit 78caaaa). The sweep
+   was not broken by a missing credential - the key is registered. The platform
+   injects a secret only into a shell command whose text names the key, so a bare
+   python3 scripts/daily_measure.py started its child with Tavily_api_key unset and
+   the run recorded a FALSE BLOCKED. Fixes: name the secret in the pre-stage
+   command and explain why in the master agent prompt; carry the remedy in the
+   blocked note so the next run self-corrects; one regression test. Suite now
+   141 tests, OK (was 140).
+3. **The entity check ran live and exit-1 confirmed** (not inherited from a prior
+   record): canonical straightflushplumbingoc.com HTTP 200;
+   straight-flush-plumbing-7fb7cf71.base44.app live_duplicate HTTP 200,
+   index, follow, self-canonical; straightflushplumb8.wixsite.com live_duplicate
+   HTTP 200, self-canonical; flush-pro-flow.base44.app gone 404. Recorded
+   --run --append at 19:50:48Z.
+
+### Corrected visibility figures
+
+The first half reported "50 rows, straight_flush absent in all 50". The corrected
+sweep records **62 rows**, of which **60 absent and 2 cited**. The two cited rows
+are the brand controls, and they matter:
+
+| Query | Where SF appeared | Rank of the canonical site |
+|---|---|---|
+| Straight Flush Plumbing Laguna Niguel | straightflushplumbingoc.com present | 1st |
+| Straight Flush Plumbing & Leak Detection | Wix duplicate **1st**, base44 duplicate **2nd**, canonical **5th** | 5th |
+
+This is the strongest evidence yet for the entity problem: on a pure brand query
+the two owned duplicates occupy positions 1-2 and the canonical site is pushed to
+position 5. All 10 target service+city queries remain absent - the ISSUE-015
+baseline is unchanged.
+
+### Integration & data limitations
+
+Unchanged from the first half: Perplexity, OpenAI, Gemini and xAI are BLOCKED
+(no key), not zero. Tavily is a conventional search proxy, not an AI surface.
+
+### Alerts
+
+- **Entity split (HIGH) - owner action.** Two owned hosts serve indexable content
+  under the business name; the Wix page outranks the real site. Requested change:
+  unpublish straightflushplumb8.wixsite.com/straightflushplumb-1 and the
+  straight-flush-plumbing-7fb7cf71.base44.app site, or set them noindex.
+  Evidence: live HTTP 200, index, follow, self-canonical, rank #1/#2 on the brand
+  query (19:24Z). The engine will not modify an external property.
+- **Do not merge PR #38 as-is** (regresses the shallow-clone lastmod fix).
