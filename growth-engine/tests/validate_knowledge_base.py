@@ -75,6 +75,87 @@ for p in indexable_pages():
     if len(re.findall(r"<h1[ >]", h, re.I)) != 1:
         errors.append(f"{rel}: expected 1 <h1>")
 
+# --- Unique titles/descriptions on indexable pages (cannibalisation guard) ---
+seen_titles, seen_descs = {}, {}
+for p in indexable_pages():
+    with open(p, encoding="utf-8") as fh:
+        h = fh.read()
+    if re.search(r'name=["\']robots["\'][^>]*noindex', h, re.I):
+        continue
+    rel = os.path.relpath(p, ROOT)
+    mt = re.search(r"<title>(.*?)</title>", h, re.S | re.I)
+    md = re.search(r'<meta name=["\']description["\'] content="([^"]*)"', h, re.I)
+    if mt:
+        key = mt.group(1).strip()
+        if key in seen_titles:
+            errors.append(f"{rel}: duplicate <title> with {seen_titles[key]}")
+        seen_titles[key] = rel
+        if len(key) > 60:
+            errors.append(f"{rel}: title is {len(key)}c (>60, SERP truncation)")
+    if md:
+        key = md.group(1).strip()
+        if key in seen_descs:
+            errors.append(f"{rel}: duplicate meta description with {seen_descs[key]}")
+        seen_descs[key] = rel
+        if len(key) > 165:
+            errors.append(f"{rel}: meta description is {len(key)}c (>165)")
+
+# --- Internal links resolve, including cross-file fragments (dead-anchor guard) ---
+# Indexable pages only: the noindex root stubs use "../" paths that a browser
+# clamps at the URL root (so they resolve live); they are not indexed anyway.
+LINK_RE = re.compile(r'href=["\']([^"\']+\.html)(?:#([\w.-]+))?["\']', re.I)
+for p in indexable_pages():
+    with open(p, encoding="utf-8") as fh:
+        h = fh.read()
+    if re.search(r'name=["\']robots["\'][^>]*noindex', h, re.I):
+        continue
+    rel = os.path.relpath(p, ROOT)
+    base = os.path.dirname(p)
+    for m in LINK_RE.finditer(h):
+        target, frag = m.group(1), m.group(2)
+        if target.startswith(("http://", "https://", "//")):
+            continue
+        tp = os.path.normpath(os.path.join(base, target.split("?")[0]))
+        if not os.path.exists(tp):
+            errors.append(f"{rel}: broken internal link -> {target}")
+            continue
+        if frag:
+            with open(tp, encoding="utf-8", errors="replace") as tf:
+                th = tf.read()
+            if not re.search(rf'id=["\']{re.escape(frag)}["\']|name=["\']{re.escape(frag)}["\']', th):
+                errors.append(f"{rel}: dead fragment #{frag} -> {target}")
+
+# --- Sitemap lists exactly the indexable page set (no orphans / no exclusions) ---
+CLEAN = "https://straightflushplumbingoc.com"
+sm_path = os.path.join(ROOT, "sitemap.xml")
+if os.path.exists(sm_path):
+    with open(sm_path, encoding="utf-8") as fh:
+        sm = fh.read()
+    sm_rels = set()
+    for m in re.finditer(r"<loc>(.*?)</loc>", sm):
+        path = m.group(1).replace(CLEAN, "").lstrip("/")
+        if path == "":
+            sm_rels.add("index.html")
+        elif path.endswith("/"):
+            sm_rels.add(path + "index.html")
+        else:
+            sm_rels.add(path)
+    expected = set()
+    for p in indexable_pages():
+        with open(p, encoding="utf-8") as fh:
+            h = fh.read()
+        if re.search(r'name=["\']robots["\'][^>]*noindex', h, re.I):
+            continue
+        rel = os.path.relpath(p, ROOT).replace(os.sep, "/")
+        if rel == "404.html":
+            continue
+        expected.add(rel)
+    for miss in sorted(expected - sm_rels):
+        errors.append(f"sitemap.xml missing indexable page: {miss}")
+    for extra in sorted(sm_rels - expected):
+        errors.append(f"sitemap.xml lists a non-indexable/absent page: {extra}")
+
+
 print(f"Checked {len(indexable_pages())} HTML files.")
 
 # --- Sitemap consistency ---
