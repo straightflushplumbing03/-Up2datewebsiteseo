@@ -172,6 +172,107 @@ Status values: `candidate` · `prioritized` · `proposed` · `parked` · `reject
   Reversibility 5. **Risk gate:** ✅ L2 (EPA attribution only). **Status:**
   `candidate`.
 
+### 2026-10-12 (HQ-D daily run #2) — 6 new ideas
+
+Evidence base: the 28-query Brave sweep this run (rows in
+`data/ai_visibility_history.jsonl`; competitor frequencies in
+`data/competitor_observations.jsonl`). SF was absent from all 28 — the highest-value
+gaps are below.
+
+#### IDEA-2026-10-12-15 — "Which detection method?" explainer hub (acoustic vs electronic vs thermal)
+- **Observation:** the *acoustic leak detection Orange County* query surfaced only
+  generalists and national franchises (`americanleakdetection.com`,
+  `thedoneriteplumber.com`, `precisionplumbingoc.com`) — none showed a dedicated
+  method-comparison page. SF already has three separate Academy explainers
+  (`acoustic-…`, `electronic-pipe-locating-…`, `thermal-imaging-…`) but no single
+  page that compares them and answers *"which method will you use on my house?"*.
+- **Idea:** one comparison/decision page that links the three existing explainers and
+  routes to the phone CTA. Consolidates existing content; no new claims.
+- **Impact:** medium-high (matches high-intent diagnostic queries). **Evidence:**
+  medium-high (competitor gap observed + US-facing search terms). **Effort:**
+  low-medium. **Reversibility:** high. **Risk gate:** ✅ L2. **Status:** `prioritized`.
+
+#### IDEA-2026-10-12-16 — Sewer-camera-inspection content (education only) for the drain cluster
+- **Observation:** the *sewer camera inspection Orange County* query was dominated by
+  dedicated drain/camera pages (`socal1plumbing.com`, `vipdrainservices.com`,
+  `myorangecountyplumber.com`, `jettersndrains.com`) while SF appeared for none.
+  SF has a verified `/services/drain-services.html` but no camera-inspection
+  explainer.
+- **Idea:** an educational "what a sewer camera inspection shows (and when you need
+  one)" page that links the existing drain-services page. **Do not** introduce new
+  service claims; `SERVICE_CATALOG.md` lists sewer-line work as *claimed, verify* —
+  so the page must stay diagnostic-education unless the owner confirms the service.
+- **Impact:** medium. **Evidence:** medium (competitor gap observed). **Effort:**
+  low-medium. **Reversibility:** high. **Risk gate:** ⛔ *if* it implies an
+  unconfirmed service; ✅ L2 if scoped to education. **Status:** `candidate`
+  (owner confirmation of the sewer service recommended first).
+
+#### IDEA-2026-10-12-17 — Repipe cost/eligibility explainer ("will my leak need a repipe?")
+- **Observation:** repipe-family queries are specialist-dominated this run too —
+  `repipe1.com`, `ocrepipes.com`, `repipe.pro`, `copperrepipeorangecounty.com`,
+  `orange-county.repipe.com` (2), `allprocopper.com`, `repipeplus.com`,
+  `repipesoc.com`. SF has `/services/pex-repiping.html` but no decision content.
+- **Idea:** one page: how to tell repair vs reroute vs repipe, with EPA-style
+  citable framing and no published SF prices (cost drivers only). Links existing
+  `/guides/repair-vs-reroute-vs-repipe.html` and the PEX page. One page, not 21 —
+  doorway risk avoided.
+- **Impact:** medium-high. **Evidence:** medium-high (repeated specialist pattern
+  across three runs). **Effort:** medium. **Reversibility:** high.
+  **Risk gate:** ✅ L2. **Status:** `prioritized`.
+
+#### IDEA-2026-10-12-18 — FAQPage schema on the higher-value city pages
+- **Observation:** ranking competitors repeatedly show FAQPage/schema-rich layouts
+  (`leak-detection-pro.com` location pages; `coastplumbing.com` areas-we-serve).
+  SF city pages are ~5.2k-byte stubs (see `SERVICE_AREAS.md`).
+- **Idea:** add FAQPage JSON-LD that mirrors *visible* on-page Q&A on the Tier-1
+  city pages, and only where real Q&A already exists. No invented answers.
+- **Impact:** medium. **Evidence:** medium-high (schema observed on ranking
+  competitors; Google primary guidance on Q&A structure). **Effort:** low.
+  **Reversibility:** high. **Risk gate:** ✅ L2. **Status:** `prioritized`.
+
+#### IDEA-2026-10-12-19 — "Best plumber" query reality → owner GBP/review playbook (not a website change)
+- **Observation:** every "best plumber" query this run was aggregator-dominated
+  (`yelp.com` 14/28, `angi.com` 5, `thumbtack.com` 3, `homeadvisor.com`,
+  `buildzoom.com`). *best plumber in Dana Point* top set: yelp, angi,
+  billmetzgerplumbing, mckplumb, bestplumberindanapoint, homeadvisor — no SF.
+- **Idea:** a one-page internal owner playbook (in `proposals/`) listing the
+  concrete GBP actions that move "best/nearest" visibility: complete profile,
+  consistent NAP, review-request flow, photo cadence, service list. Website content
+  cannot win these queries alone.
+- **Impact:** high (this is the dominant local channel). **Evidence:** high
+  (aggregator share measured across runs). **Effort:** low (documentation).
+  **Reversibility:** n/a. **Risk gate:** ⛔ L3 for the profile itself (owner access);
+  the *proposal document* is ✅ L1. **Status:** `proposed`.
+
+#### IDEA-2026-10-12-20 — Localized "water pressure & pipe health" content for the pressure-regulator query family
+- **Observation:** *water pressure regulator replacement Orange County* returned a
+  distinct competitor set (`ackplumbers.com`, `speedeedrains.com`,
+  `ezplumbingrestoration.com`, `parzivalplumbing.com`) with no SF. SF has
+  `/academy/water-pressure-and-pipe-health.html` — relevant content that did not
+  surface.
+- **Idea:** strengthen the existing water-pressure Academy page with an answer-first
+  "signs your pressure regulator failed" section and FAQ schema; link from
+  city/service pages. Uses existing verified content, no new service claims.
+- **Impact:** medium. **Evidence:** medium (competitor gap + existing on-site asset).
+  **Effort:** low. **Reversibility:** high. **Risk gate:** ✅ L2 (education only).
+  **Status:** `candidate`.
+
+#### Prioritization (2026-10-12 HQ-D #2)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | IDEA-17 repipe decision page | Med-High | Med-High | Med→High | Yes | ✅ L2 | prioritized |
+| 2 | IDEA-15 "which detection method" hub | Med-High | Med-High | Low-Med→High | Yes | ✅ L2 | prioritized |
+| 3 | IDEA-18 FAQPage on city pages | Medium | Med-High | Low→High | Yes | ✅ L2 | prioritized |
+| 4 | IDEA-20 water-pressure page strengthening | Medium | Medium | Low→Med | Yes | ✅ L2 | candidate |
+| 5 | IDEA-16 sewer-camera education | Medium | Medium | Low-Med→Med | Yes | ⛔/L2 | candidate |
+| 6 | IDEA-19 GBP/review playbook | High | High | Low→High | n/a | ⛔ L3 (proposal) | proposed |
+
+**Selection rule applied:** evidence-backed, lowest-risk first. IDEA-17 and IDEA-15
+have the best evidence-to-effort ratio and reuse existing verified content. No idea
+is actioned until it survives the risk gate and `validate_knowledge_base.py` +
+`scripts/seo_audit.py` pass on any HTML change.
+
 ### Phase 2 (infrastructure / ops) — 3 ideas, from the 2026-10-12 inspection
 
 - **IDEA-2026-10-12-12 — Ship Automation B as a deterministic no-LLM health check.**
