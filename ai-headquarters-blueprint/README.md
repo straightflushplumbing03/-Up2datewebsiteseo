@@ -18,22 +18,41 @@ Record the id here after creation so future runs can self-inspect.
 
 | Automation | id | Cron (America/Los_Angeles) | State |
 |---|---|---|---|
-| SFPL AI Headquarters Daily | `e6684830-a9a5-43d8-9d5a-34fed5257bbf` | `0 6 * * *` | created 2026-10-15, enabled |
-| SFPL AI Headquarters Weekly | _(fill in)_ | `0 6 * * 1` | _(fill in)_ |
-| "New Automation" (legacy, kept running side by side) | `df4bcd68-75f3-46f4-ab6f-a4027e5bf8a9` | `0 6 * * 1-5` | enabled, **never succeeded** — see below |
+| SFPL AI Headquarters Daily | `1485d659-8663-4776-a507-db0fefed8483` | `0 6 * * *` | **ACTIVE** — trimmed prompt, 29,846 chars |
+| SFPL AI Headquarters Daily (superseded) | `e6684830-a9a5-43d8-9d5a-34fed5257bbf` | `0 6 * * *` | disabled — original 26,540-char prompt |
+| "New Automation" (legacy) | `df4bcd68-75f3-46f4-ab6f-a4027e5bf8a9` | `0 6 * * 1-5` | disabled — empty prompt, never succeeded |
+| GitHub delivery watchdog | `718ce55b-5824-430d-82b0-5cef65349763` | `*/5 * * * *` | disabled |
+| GitHub code review | `6bc3be1b-187b-49a9-93d9-9ee4f24f0d5e` | `*/5 * * * *` (UTC) | disabled |
 
-### Deployed 2026-10-15
+**Exactly one automation should be enabled.** Two jobs on `0 6 * * *` in the same
+timezone means two full runs racing on the same branch names.
 
-`SFPL AI Headquarters Daily` created via `POST /api/automation/v1/preset/prompt`
-(HTTP 201). Payload built by `build_payload.py` from
-`01-MASTER-AGENT-PROMPT.md` — 26,540 prompt chars, `timeout: 1800`, and both
-repositories attached (`AI-Headquarters` + `-Up2datewebsiteseo`, ref `main`).
+### Deployed 2026-10-15 (revision 2)
 
-Verification run dispatched: `010cf8d9-3ea5-4a95-914a-6baeecc49785`.
+`SFPL AI Headquarters Daily` re-created via `POST /api/automation/v1/preset/prompt`
+(HTTP 201, id `1485d659-8663-4776-a507-db0fefed8483`). Payload built by
+`build_payload.py` from `01-MASTER-AGENT-PROMPT.md` — 29,846 prompt chars,
+`timeout: 1800`, both repositories attached (`AI-Headquarters` +
+`-Up2datewebsiteseo`, ref `main`).
 
-**Rollback / pause:** `PATCH /api/automation/v1/<id>` with `{"enabled": false}`.
+**Why revision 2 exists.** The revision-1 run took **1941 s** and was killed at the
+1800 s platform ceiling, *after* it had pushed its branch and opened PR #41. The
+prompt was restructured for the cap (see the commit "Trim master prompt for the
+1800 s cap"): a per-phase time budget, a 20-minute checkpoint rule, and a
+steady-state daily loop replacing the completed first-run scaffolding.
 
-### The legacy 6 AM automation is broken — verified 2026-10-15
+The API has no endpoint to update a preset's prompt, so a replacement was created
+and the superseded id was disabled. `PATCH {"enabled": false}` is the pause/rollback
+control; re-enable with `{"enabled": true}`.
+
+### The legacy 6 AM automation
+
+`df4bcd68-...` ("New Automation") was `enabled=true` with an **empty `prompt`
+field** — a custom-tarball automation whose script never carried instructions. It
+failed every run at `current_phase: "Starting automation"`. It is now disabled.
+A prompt preset cannot fail this way, because the instructions live in `prompt`.
+
+### The legacy 6 AM automation (diagnosis, kept for reference)
 
 `GET /api/automation/v1` returned one enabled job named **"New Automation"**:
 
