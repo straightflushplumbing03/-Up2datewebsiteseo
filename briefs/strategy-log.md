@@ -5,6 +5,53 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-15 (daily, second run) — Entity control false negative: a duplicate was hiding behind a 404 root
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-15b` (PR #42). Supplementary to the 06:00 run
+(PR #41, merged 17:23Z).
+
+**Change — `scripts/entity_consistency_check.py` (ISSUE-018, high, fixed).**
+`check_host()` probed only `https://<host>/`. `straightflushplumb8.wixsite.com`
+returns **404** at its root, so the check classified it `gone` and `summarize()`
+reported it clean — in **8** consecutive records today (`10:31:18Z` … `19:26:07Z`).
+But `https://straightflushplumb8.wixsite.com/straightflushplumb-1` returns **200**
+with no `robots` meta and a self-referencing canonical, and it ranked **#1** for the
+brand query `Straight Flush Plumbing & Leak Detection` in today's Tavily sweep —
+ahead of the real site's own pages. A 404 root was masking a live indexable duplicate.
+`DUPLICATE_HOST_PATHS` now registers known published paths per duplicate host, and
+`check_host()` probes the root plus those paths and keeps the most severe verdict
+(`_VERDICT_RANK`), returning that URL's evidence. Five regression tests
+(`TestDuplicateHostPaths`); full suite 130 tests pass.
+
+**Reason:** the automated control guarding ISSUE-014 was giving a false negative on
+one of the two owned duplicate hosts. Site-builder hosts routinely 404 their root
+while serving published pages, so this is structural, not a one-off.
+
+**Target:** the entity-consistency control and the daily report's technical-findings
+table.
+
+**Competitor insight:** the highest-ranking result for the business *name* is an asset
+the business owns but does not want indexed. That loss is self-inflicted and cheaper
+to remove than any ranking campaign against Efficient Plumbing. Separately,
+`yelp.com` (81) and `facebook.com` (43) again exceed every single plumbing company in
+raw frequency across 52 result rows — directory presence remains the dominant lever.
+
+**Expected outcome:** the entity check reports `live_duplicates` for every owned host
+serving indexable content, so an owner-facing alert is never suppressed by a 404 root.
+
+**Result:** verified live — `--run --append` at `2026-10-15T19:30:24Z` reports
+`live_duplicates: ['straight-flush-plumbing-7fb7cf71.base44.app',
+'straightflushplumb8.wixsite.com']`, the Wix entry carrying
+`url: .../straightflushplumb-1`, `http_status: 200`. Prior records for the same host
+all read `gone` / `404`.
+
+**Keep/modify/revert:** **Keep.** Revert path is `git revert` on PR #42.
+
+**Open item:** PR #38 must not be merged as-is (its `sitemap.xml` regresses the
+shallow-clone `lastmod` fix, 54/74 URLs stamped with the run date). PRs #32–#36 are
+stale and superseded by merged #41.
+
 ## 2026-10-15 (daily) — Automation-integrity run: lastmod idempotency + key resolution
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
