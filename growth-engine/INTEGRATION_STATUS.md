@@ -1,5 +1,6 @@
 # Integration Status — Straight Flush Growth Engine
 
+<<<<<<< HEAD
 > **Re-verified 2026-10-15 (owner-requested local SEO audit run):**
 > `crawler_access_check.sh` **exit 0** ✅ (all UAs 200, no `cf-mitigated`);
 > all **74 sitemap URLs HTTP 200** ✅ (live curl sweep); robots.txt/llms.txt/
@@ -15,6 +16,31 @@
 Verified **2026-10-12** (daily run) in the active OpenHands Cloud environment; a
 check is only marked ✅ after an actual successful call. Prior verification
 2026-10-09.
+=======
+Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
+OpenHands Cloud environment; a check is only marked ✅ after an actual successful
+call. Prior verification 2026-10-09.
+
+> **Re-verified 2026-10-13 (second pass):** search-provider resilience tested
+> with a **different query set**. Brave returned **8 parseable pages, then an
+> anti-bot challenge page** for every later query (a *more specific* mode than the
+> earlier 429 — the block can now trigger after as few as ~8 queries). Fallback
+> chain all failed this pass: DuckDuckGo **Lite** → 202, DuckDuckGo **HTML** → 202,
+> **Bing** → 200 with no parseable organic anchors, **Mojeek** → 403,
+> **Ecosia** → 403. Blocked queries recorded **`inconclusive`, never "absent"**.
+> Site crawler access remains ✅ (no regression).
+
+> **Re-verified 2026-10-13 (daily run):** crawler access ✅ **PASS**
+> (`crawler_access_check.sh` exit 0 — Googlebot/Bingbot/GPTBot/OAI-SearchBot/
+> ClaudeBot/PerplexityBot/Applebot + curl all 200, no `cf-mitigated`; ISSUE-001
+> remains RESOLVED); key paths `/`, `/llms.txt`, `/llms-full.txt`, `/md/index.md`,
+> `/services/leak-detection.html`, `/cities/laguna-niguel.html` → HTTP 200 ✅
+> (ISSUE-001 AI-readable-file follow-up **deployed**). **Brave Search ⚠️ PARTIAL**
+> — 9/9 queries returned 200/parseable, then HTTP **429**; sweep stopped per the
+> Brave-only rule (10 queries deferred, not failed). Google Search Central primary
+> docs ✅ 200. Google Search Console, GA4, and GBP remain **not connected** ❌
+> (blocker unchanged — see P-002).
+>>>>>>> origin/intelligence-hq/daily-2026-10-13
 
 > **Phase 2 re-verified 2026-10-12 (inspection run):** `GET /api/automation/v1`
 > 200 ✅ — HQ-D and HQ-W **enabled/ACTIVE**; `Growth Engine A`, `Scout`,
@@ -47,28 +73,14 @@ check is only marked ✅ after an actual successful call. Prior verification
 - Superseded duplicate at the same 06:00 slot (`Growth Engine A: Morning AI Search
   Visibility`) is `INACTIVE`.
 
-## Working ✅
+## Highest-value integrations to unlock
 
-| Integration | Evidence | Notes |
-|---|---|---|
-| OpenHands automation API | `GET /api/automation/v1?limit=1` → 200 (2026-10-12) | `OPENHANDS_API_KEY` present |
-| GitHub (repo + API) | `GET /api/github.com/user` → `straightflushplumbing03` (2026-10-12) | token available as `github_token` / `GITHUB_PERSONAL_ACCESS_TOKEN`; repo read/write + PRs |
-| Active repo clone | `git fetch origin main` → clean | `straightflushplumbing03/-Up2datewebsiteseo`, branch `main` |
-| GitHub Pages deployment | Pages API: `status: built`, CNAME set | legacy build from `main` `/` |
-| Site crawler access | `crawler_access_check.sh` exit 0; all UAs 200 (2026-10-12) | ISSUE-001 **resolved** — no `cf-mitigated` |
-| Brave Search (conventional proxy) | **28/28 queries HTTP 200 with parseable organic results (2026-10-12 HQ-D run #2)** | Recovered this run; used for the run-#2 sweep (no 429) |
-| DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12 run #1) | Used for the 2026-10-12 run-#1 visibility sweep |
-| DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12) | Used for the 2026-10-12 visibility sweep |
-| Bun/curl/dns/TLS checks | see `data/technical_health_history.jsonl` | |
-
-## Partially working / intermittent ⚠️
-
-| Integration | Issue |
-|---|---|
-| Tavily Search API (conventional proxy) | **connected & verified** | `TAVILY_API_KEY` set. Live 10-query sweep 2026-10-15 returned 10/10 HTTP 200, 0 errors. Replaces Brave/DDG scraping. Client: `growth-engine/tavily_search.py` |
-| Brave Search scraping | **superseded** | HTTP **429** to our egress IP after ~7-8 queries. Tavily replaces it. |
-| Bing search scraping | HTTP 200 returned but organic anchors not reliably parseable here |
-| DuckDuckGo HTML | 202 (anti-bot/rate-limit) on prior runs; Lite endpoint worked 2026-10-12 |
+1. **Perplexity API key** — the cheapest way to get a *real* AI-answer-engine
+   visibility signal in-automation.
+2. **Google Search Console** — the only reliable source for organic impressions,
+   clicks, query, and indexing/coverage data.
+3. **Google Business Profile** — local pack visibility is a primary channel for
+   "plumber near me" queries.
 
 ## Not available ❌
 
@@ -87,17 +99,31 @@ check is only marked ✅ after an actual successful call. Prior verification
 | Notification channel (email/Slack/etc.) | **not configured / not verified** | Owner-approved notification target; Slack MCP not enabled |
 | Call tracking / lead data | **not connected** | Provider + creds |
 
-## Highest-value integrations to unlock
+## Partially working / intermittent ⚠️
 
-1. **Perplexity API key** — the cheapest way to get a *real* AI-answer-engine
-   visibility signal in-automation.
-2. **Google Search Console** — the only reliable source for organic impressions,
-   clicks, query, and indexing/coverage data.
-3. **Google Business Profile** — local pack visibility is a primary channel for
-   "plumber near me" queries.
+| Integration | Issue |
+|---|---|
+| Tavily Search API (conventional proxy) | **connected & verified** | `TAVILY_API_KEY` set. Live 10-query sweep 2026-10-15 returned 10/10 HTTP 200, 0 errors. Replaces Brave/DDG scraping. Client: `growth-engine/tavily_search.py` |
+| Brave Search scraping | **superseded** | HTTP **429** to our egress IP after ~7-8 queries. Tavily replaces it. |
+| Bing search scraping | HTTP 200 returned but organic anchors not reliably parseable here |
+| DuckDuckGo HTML | 202 (anti-bot/rate-limit) on prior runs; Lite endpoint worked 2026-10-12 |
 
 ## Secrets handling
 
 Never print secret values into reports or logs. The automations reference
 `OPENHANDS_API_KEY` / `GITHUB_TOKEN` by name only; outputs shown in this repo
 are redacted.
+## Working ✅
+
+| Integration | Evidence | Notes |
+|---|---|---|
+| OpenHands automation API | `GET /api/automation/v1?limit=1` → 200 (2026-10-12) | `OPENHANDS_API_KEY` present |
+| GitHub (repo + API) | `GET /api/github.com/user` → `straightflushplumbing03` (2026-10-12) | token available as `github_token` / `GITHUB_PERSONAL_ACCESS_TOKEN`; repo read/write + PRs |
+| Active repo clone | `git fetch origin main` → clean | `straightflushplumbing03/-Up2datewebsiteseo`, branch `main` |
+| GitHub Pages deployment | Pages API: `status: built`, CNAME set | legacy build from `main` `/` |
+| Site crawler access | `crawler_access_check.sh` exit 0; all UAs 200 (2026-10-12) | ISSUE-001 **resolved** — no `cf-mitigated` |
+| Brave Search (conventional proxy) | **28/28 queries HTTP 200 with parseable organic results (2026-10-12 HQ-D run #2)** | Recovered this run; used for the run-#2 sweep (no 429) |
+| DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12 run #1) | Used for the 2026-10-12 run-#1 visibility sweep |
+| DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12) | Used for the 2026-10-12 visibility sweep |
+| Bun/curl/dns/TLS checks | see `data/technical_health_history.jsonl` | |
+

@@ -6,6 +6,7 @@ competitor insight, expected outcome, result, keep/modify/revert.
 ---
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## 2026-10-15 (daily, third run) - The sitemap "gap" was our own audit bug, not the site
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
@@ -173,6 +174,94 @@ guarded version and regenerate `sitemap.xml` from it.
 
 ---
 =======
+## 2026-10-13 (second pass) — provider lock-out confirmed challenge-based; additive records
+
+**Status:** Additive records only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/daily-2026-10-13` (same day/PR; nothing removed).
+
+- **Change:** A second, independent observation pass (different query set) to test
+  provider resilience. Brave parsed **8** result pages then served an **anti-bot
+  challenge page** for every later query — a **more specific failure mode** than
+  the earlier `HTTP 429`. Fallback chain all failed (DDG Lite/HTML **202**, Bing
+  HTTP 200 with **no organic anchors**, Mojeek/Ecosia **403**). Result: 8 parsed,
+  12 `inconclusive` (never "absent"). Appended the addendum to
+  `reports/daily/2026-10-13.md`; added **6 short-form ideas**
+  (idea-2026-10-13-15…20) + a second-pass prioritization table.
+- **Reason:** confirm whether provider behaviour is stable across query sets and
+  record the challenge-page mode so future runs treat it as inconclusive, not absence.
+- **Target:** `growth-engine/**` records + daily report only.
+- **Competitor insight:** `evansleakdetection.com` and `scottenglishplumbing.net`
+  independently **re-confirmed on 6/8** parsed queries; emergency queries again
+  franchise-dominated (`rotorooter.com`, `mrrooter.com`). Newly observed:
+  `slableakfix.com`, `orange-county.repipe.com`, `proplumberalisoviejo.com`,
+  `proplumberirvine.com`, `thedoneriteplumber.com`, `drakewillsplumbing.net`.
+- **Expected outcome:** a recorded, reproducible statement of provider behaviour;
+  no false "SF absent" from a blocked query.
+- **Result:** SF 0/8 recommended/mentioned/cited — same conclusion as the first
+  pass. Two new ideas **scored**: GSC measurement runbook (idea-18) and sweep
+  provider-fallback/challenge detection (idea-17).
+- **Keep/modify/revert:** keep (additive records only).
+
+---
+
+## 2026-10-13 — Daily research run (Brave, rate-limited to 9 queries)
+
+**Status:** Knowledge-base + report only. **No website page/schema/copy changed.**
+Branch `intelligence-hq/daily-2026-10-13`.
+
+- **Change:** Daily HQ-D run. Technical health re-verified (all crawler UAs + key
+  paths 200; ISSUE-001 still RESOLVED; AI-readable files `/llms.txt`,
+  `/llms-full.txt`, `/md/index.md` now live 200). Ran a 9-query Brave conventional
+  sweep (rate-limited — 429 after 9). Appended +9 `ai_visibility_history.jsonl`,
+  +88 `competitor_observations.jsonl`, +2 `technical_health_history.jsonl`. Added
+  two `INDUSTRY_WATCH.md` entries, 7 new + 1 re-scored `INNOVATION_IDEAS.md` ideas,
+  a `COMPETITOR_DIRECTORY.md` 2026-10-13 section, and `reports/daily/2026-10-13.md`.
+- **Reason:** Standing daily intelligence loop; evidence before conclusions.
+- **Target:** knowledge base + report only.
+- **Competitor insight:** slab intent → leak specialists with dedicated **per-city**
+  slab pages (`leakstar.com` `/slab-leak-detection-service-laguna-niguel.html`,
+  verified 200); repipe intent → repipe-specialist domains; "best" queries →
+  aggregators (Yelp 3/20 on "best plumber in Laguna Niguel"). SF absent 0/9.
+- **Key guideline finding:** Google **deprecated the FAQ rich result** (docs
+  removed; feature no longer shown; historically limited to well-known gov/health
+  sites). FAQ *content* stays for AEO, but `FAQPage` no longer yields a Google rich
+  result — idea-2026-10-12-07 re-scored.
+- **Expected outcome:** durable dated record; next run resumes the deferred queries.
+- **Result:** research committed; no code change warranted (evidence supports
+  proposals, not immediate safe edits). `validate_knowledge_base.py` run on KB edits.
+- **Keep/modify/revert:** keep.
+
+---
+
+## 2026-10-13 (run 2) — Daily run: 22-query Brave sweep, 3 industry entries, 7 ideas, no code change
+
+- **Change:** research + reporting only. Appended 22 rows to
+  `data/ai_visibility_history.jsonl` (14 successful / 8 inconclusive), 37 rows to
+  `data/competitor_observations.jsonl`, one row to
+  `data/technical_health_history.jsonl`; added 3 dated entries to
+  `INDUSTRY_WATCH.md`; added 7 ideas (`idea-2026-10-13-01..07`) to
+  `INNOVATION_IDEAS.md`; updated `COMPETITOR_DIRECTORY.md`; wrote
+  `reports/daily/2026-10-13.md`. **No website code change** (no evidence
+  justified one).
+- **Reason:** daily Intelligence HQ cadence — load knowledge, measure, research,
+  prioritize, persist.
+- **Target:** AI visibility / AEO / competitor intelligence.
+- **Competitor insight:** city × service page coverage plus specialist
+  leak-detection positioning recur (evansleakdetection.com 5/14;
+  scottenglishplumbing.net 10/14; yelp.com 13/14 aggregator dominance). SF absent
+  from all 14 parseable result sets.
+- **Expected outcome:** durable evidence for the Tier-1 city coverage gap.
+- **Result:** 14/22 queries parseable; SF 0 recommended / 0 mentioned / 0 cited;
+  site health OK (all crawler UAs 200, no `cf-mitigated`); KB validation OK
+  (133 HTML files).
+- **Keep/modify/revert:** **keep**. Next: idea-2026-10-13-01 (city × slab/leak
+  pages), idea-2026-10-13-02 (byte-size check), idea-2026-10-13-03 (cost-driver
+  explainer, proposal).
+- **Branch:** `intelligence-hq/daily-2026-10-13`.
+
+---
+>>>>>>> origin/intelligence-hq/daily-2026-10-13
+
 ## 2026-10-12 (HQ-D run #2) — Brave sweep: 28 queries, SF absent, competitor map refreshed
 
 **Status:** additive docs + research only. **No website page/schema/copy changed.**
@@ -203,7 +292,7 @@ guarded version and regenerate `sitemap.xml` from it.
 - **Next three priorities:** (1) repipe decision page (IDEA-17); (2) detection-method
   comparison hub (IDEA-15); (3) FAQPage schema on Tier-1 city pages (IDEA-18).
 >>>>>>> origin/intelligence-hq/daily-2026-10-12
-
+=======
 ## 2026-10-12 (Phase 2) — Intelligence HQ inspection, consolidation & drift fix
 
 **Status:** Additive docs + corrections only. **No website page/schema/copy changed.**
