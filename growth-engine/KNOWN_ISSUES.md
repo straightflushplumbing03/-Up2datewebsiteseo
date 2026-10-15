@@ -110,3 +110,57 @@ Each issue: evidence, impact, fix, status, approval level.
   dispatch). If it still overruns, reduce the query sample further (10–15) and move
   industry research to a separate weekly job.
 - **Approval:** Level 2 (automation prompt config).
+
+---
+
+## ISSUE-010 — Sitemap refresh tool would break directory-hub URLs  [LOW · FIXED 2026-10-15]
+
+- **Evidence:** running `scripts/refresh_sitemap.py` on a copy printed
+  `to add: ['academy/index.html', 'case-studies/index.html', 'insurance/index.html',
+  'services/index.html']` and `to remove: ['academy/', 'case-studies/',
+  'insurance/', 'services/']`. Those hub pages canonical to the directory URL
+  (`…/academy/`), so the sitemap would have listed non-canonical URLs.
+- **Impact:** a future automated sitemap refresh would degrade canonical alignment.
+- **Fix applied 2026-10-15:** `url_of()` now maps `X/index.html` → `X/`; parsing
+  and verification use a matching `rel_of()`. Re-run confirms `to add: 0`,
+  `to remove: 0`.
+- **Approval:** Level 2 (tooling). Branch `intelligence-hq/site-audit-2026-10-15`.
+
+---
+
+## ISSUE-011 — Sitemap `<lastmod>` stale (all 2026-09-24)  [LOW · FIXED 2026-10-15]
+
+- **Evidence:** every `<lastmod>` in `sitemap.xml` read `2026-09-24` while files
+  changed through `2026-10-11` (git last-commit dates).
+- **Impact:** weaker crawl-scheduling signal; inaccurate freshness.
+- **Fix applied 2026-10-15:** `refresh_sitemap.py` now derives `<lastmod>` from the
+  file's last git commit date (falls back to mtime). `sitemap.xml` refreshed; no
+  URLs added/removed. XML still valid; all 74 URLs 200 live.
+- **Approval:** Level 2 (tooling).
+
+---
+
+## ISSUE-012 — `_headers` is inert on GitHub Pages; no HTTP security headers  [LOW · OPEN]
+
+- **Evidence:** `curl -sI https://straightflushplumbingoc.com/` returns no
+  `Content-Security-Policy`, `Strict-Transport-Security`, or `X-Frame-Options`.
+  The repo's `_headers` file (Netlify/Cloudflare-Pages format) is not honored by
+  GitHub Pages legacy hosting.
+- **Impact:** security headers absent at the HTTP layer; mitigated by an in-page
+  `<meta http-equiv="Content-Security-Policy">` on all 133 pages. Not a ranking
+  blocker.
+- **Fix (proposed):** add as Cloudflare response-header rules — Level 3 (hosting).
+- **Approval:** Level 3.
+
+---
+
+## ISSUE-013 — Link to a `noindex` page + placeholder input phone  [INFO · OPEN]
+
+- **Evidence:** `about.html` links to
+  `about/straight-flush-plumbing-orange-county.html` (`noindex,follow`);
+  `index.html:549` and `contact.html:120` use
+  `title="Phone number, e.g. (949) 555-0123"`.
+- **Impact:** cosmetic/cleanliness only. Displayed/tel: NAP is consistent
+  (`(949) 374-6524` / `+19493746524`; `78 Cameray Heights`, `Laguna Niguel, CA 92677`).
+- **Fix (proposed):** repoint the link; change the example placeholder.
+- **Approval:** Level 1 (link) / Level 2 (markup).

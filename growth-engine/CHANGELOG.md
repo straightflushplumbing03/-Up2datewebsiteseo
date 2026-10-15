@@ -3,6 +3,25 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-15 — Owner-requested local SEO audit + tooling fixes
+
+**Added:**
+- `reports/audit/2026-10-15-local-seo-audit.md` — full technical + local-SEO
+  audit (10 required sections; confirmed issues vs. unverified concerns).
+
+**Updated:**
+- `scripts/refresh_sitemap.py` — fixed directory-hub URL handling (keeps `academy/`,
+  `services/`, `case-studies/`, `insurance/` instead of `…/index.html`), made
+  `<lastmod>` derive from the file's last git commit date, added `rel_of()`.
+- `sitemap.xml` — refreshed `<lastmod>` to real last-change dates (git); no URLs
+  added or removed.
+- `growth-engine/tests/validate_knowledge_base.py` — added a
+  sitemap-consistency check.
+- `KNOWN_ISSUES.md` (ISSUE-010..013), `INTEGRATION_STATUS.md`,
+  `data/technical_health_history.jsonl`.
+
+**Not changed:** no website page, schema, title, description, or copy.
+
 ## 2026-10-12 — Intelligence HQ setup (infrastructure + first run)
 
 **Added:**
