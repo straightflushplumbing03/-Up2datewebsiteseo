@@ -8,7 +8,7 @@ competitor insight, expected outcome, result, keep/modify/revert.
 ## 2026-10-15 (daily) — Automation-integrity run: lastmod idempotency + key resolution
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
-Branch `intelligence-hq/daily-2026-10-15` (PR #39).
+Branch `intelligence-hq/daily-2026-10-15` (PR #41).
 
 **Change 1 — `scripts/refresh_sitemap.py` (ISSUE-016, medium, fixed).**
 The `lastmod` fix landed earlier the same day was measured to be non-idempotent.
@@ -47,7 +47,7 @@ resolution, it does not provision a key.
 
 **Open blockers:** (1) live duplicate host `straight-flush-plumbing-7fb7cf71.base44.app`
 returns 200 — entity check exit 1, owner action required, no external change made;
-(2) no AI-surface credential present; (3) **PR #38 and PR #39 conflict** on
+(2) no AI-surface credential present; (3) **PR #38 and PR #41 conflict** on
 `scripts/refresh_sitemap.py` and `sitemap.xml` — do not merge both; land the
 guarded version and regenerate `sitemap.xml` from it.
 
