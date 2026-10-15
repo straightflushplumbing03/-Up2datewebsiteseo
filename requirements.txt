@@ -1,0 +1,12 @@
+# Python dependencies for the growth-engine tooling.
+#
+# The website itself is static HTML and has no runtime dependencies; this file
+# covers only the Python scripts in scripts/ and growth-engine/.
+#
+# Install:  python3 -m pip install -r requirements.txt
+#
+# Note: growth-engine/tests/*.py are stdlib `unittest`, so pytest is optional.
+
+# Official Perplexity SDK - required by growth-engine/ai_agent_client.py and
+# scripts/perplexity_agent.py (Agent API, web-grounded answers + sources).
+perplexityai>=0.43.8

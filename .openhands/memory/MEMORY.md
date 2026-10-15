@@ -44,9 +44,84 @@ Bearer $GITHUB_TOKEN"` works (200). Use curl for PR title/body edits.
 - No GSC/GA4/GBP credentials in this environment. Record as a blocker, never as zero.
 - Current date in this environment is 2026-10; use `date -u` to confirm before dating reports.
 
+## Perplexity Agent API integration (2026-10-15)
+- `growth-engine/ai_agent_client.py` = the client. `scripts/perplexity_agent.py` = the CLI
+  (`--smoke` / `--run` / `--append` / `--dry-run`). `growth-engine/tests/test_perplexity_agent.py`
+  = 50 stdlib unittest tests, no network + no key needed.
+- Endpoint: `POST https://api.perplexity.ai/v1/agent` via the **official SDK**
+  (`pip install perplexityai`, `from perplexity import Perplexity`, `client.responses.create(...)`).
+  Do NOT use the OpenAI SDK for the Agent API (that is for the Router API).
+- `responses.create` is keyword-only: `input` (required), `model` XOR `preset`, `tools`,
+  `instructions`, `response_format`, `max_output_tokens`, `max_steps`, `previous_response_id`.
+- Read the answer with `response.output_text`. Sources live in `search_results` output items
+  (`item.results[].url/title/snippet/date`); URL citations live in text-content `annotations`.
+- Error bodies come back as `{"error": {"type": ..., "code": ..., "message": ...}}` — e.g. a
+  missing/invalid key gives `type: "invalid_api_key", code: 401`. Provider error strings are
+  normalised into the repo taxonomy via `_PROVIDER_ERROR_MAP`.
+- `requirements.txt` now exists (`perplexityai>=0.43.8`); this was the repo's first dependency file.
+- Key is read from `PERPLEXITY_API_KEY` only. Never pass it on a CLI arg (shell history / ps).
+
+## Tavily Search integration (2026-10-15)
+- `growth-engine/tavily_search.py` = client (**stdlib `urllib` only — Tavily needs no package**).
+  `scripts/tavily_search.py` = CLI. `growth-engine/tests/test_tavily_search.py` = 41 tests.
+- Endpoint: `POST https://api.tavily.com/search`, auth header `Authorization: Bearer tvly-...`.
+  Body: `query`, `max_results`, `search_depth`, `topic`, `include_domains`, `exclude_domains`,
+  `country`, `include_answer`, `include_raw_content`. Response: `results[]` with
+  `url/title/content/score`, plus `answer`, `response_time`, `request_id`.
+- It **replaces Brave/DDG scraping** as the conventional-search proxy (Brave 429s our egress IP
+  after ~7-8 queries; DDG HTML 202s intermittently). Recorded `test_type: conventional_proxy` —
+  NEVER as an AI-platform result. `include_answer` defaults OFF on purpose.
+- `classify_visibility` returns only `cited`/`absent`/`inconclusive` — never `recommended`,
+  because a ranked list does not recommend.
+- Remote MCP: `https://mcp.tavily.com/mcp/?tavilyApiKey=${TAVILY_API_KEY}` (server
+  `tavily-mcp` v4.0.4, responds to JSON-RPC `initialize`). Repo-level `.mcp.json` added.
+- Tavily errors: 401/403 auth, 429 rate limit (carries `Retry-After`), 400/404/422 bad request,
+  5xx server. Body may be HTML from a gateway — handle non-JSON.
+- **Baseline 2026-10-15:** 10/10 target queries → `absent`; brand-name control query → `cited`
+  at rank 1 (proves the matcher works). See KNOWN_ISSUES ISSUE-014/015.
+
+## Confirmed business facts
+- Legal/display name is exactly **"Straight Flush Plumbing & Leak Detection"** (owner-confirmed).
+  `SF_NAMES` matches `straight flush plumbing` / `straightflushplumbing`. The bare phrase
+  "straight flush" is deliberately NOT matched (poker hand; "Straight Flush Rooter of Ohio").
+- NAP: `(949) 374-6524` / `+19493746524`; `78 Cameray Heights, Laguna Niguel, CA 92677`.
+- **Stale/competing properties** (found via Tavily brand query, not previously in the repo):
+  `straightflushplumb8.wixsite.com` (Wix) and `straight-flush-plumbing-7fb7cf71.base44.app`.
+  **Owner-confirmed as owned** 2026-10-15 — see the entity consolidation section below.
+
+## Entity consolidation — owned duplicate properties (2026-10-15)
+- **Owner-confirmed owned hosts** (registry lives in `scripts/entity_consistency_check.py`
+  as `DUPLICATE_HOSTS`): `straight-flush-plumbing-7fb7cf71.base44.app`,
+  `straightflushplumb8.wixsite.com`, `flush-pro-flow.base44.app`.
+- `straight-flush-plumbing-7fb7cf71.base44.app` is a **live indexable duplicate** —
+  48 URLs in its sitemap, `index, follow`, self-canonical, `Allow: /`, zero links
+  to the real site. Its JSON-LD declares the business `@id` as
+  `https://flush-pro-flow.base44.app/#business` (that host 404s) — a dangling
+  entity reference. Full detail: `growth-engine/ENTITY_CONSOLIDATION_PLAN.md`.
+- `straightflushplumb8.wixsite.com` is already 404 + noindex on all paths tried.
+- Regression check: `python3 scripts/entity_consistency_check.py --run` → **exit 1
+  while any duplicate is indexable**, exit 0 when clean. History:
+  `growth-engine/data/entity_consistency_history.jsonl`.
+- **NEVER add `sameAs` links from the real site to the duplicates.** `sameAs`
+  asserts "this is also me" and would *strengthen* the stale association.
+  Consolidation here = removal, not linkage.
+- Unverified claims on the duplicate, must not be republished without evidence:
+  "24/7 emergency service", "premier", "same-day slab leak detection".
+- Changing those external properties is **Level 3 / owner-only**. Agents report,
+  never touch.
+
+## Secrets handling
+- Never write a key into a repo file, report, or commit. `.mcp.json` uses `${TAVILY_API_KEY}`
+  interpolation, never a literal. Keys live only in the user's own environment / OpenHands secrets.
+- If a user pastes a key into chat, tell them to **rotate it** — the transcript is logged.
+
 ## Conventions that matter
 - Never commit to `main`; branch + PR only. Never merge own PR.
 - Research/report branches: `intelligence-hq/daily-<date>`; site-change branches: `intelligence-hq/site-<date>-<slug>`.
 - Knowledge persistence: append to `data/*.jsonl`, add dated report files, never delete history.
-- Tests: `python3 growth-engine/tests/validate_knowledge_base.py` (must pass), `bash growth-engine/tests/crawler_access_check.sh`.
+- Tests: `python3 growth-engine/tests/validate_knowledge_base.py` (must pass), `bash growth-engine/tests/crawler_access_check.sh`, `python3 scripts/seo_audit.py`.
 - ISSUE-001 (Cloudflare under-attack mode blocking crawlers) was resolved 2026-10-11; `crawler_access_check.sh` is the regression test.
+- The workspace sandbox starts with an EMPTY git repo for this project. Restore it with
+  `git remote add origin ... && git fetch origin main && git checkout -B main origin/main`.
+  If `.openhands/` (your memory dir) collides with the repo's committed `.openhands/`, move it
+  aside first (`mv .openhands /tmp/notes`) or the checkout aborts.

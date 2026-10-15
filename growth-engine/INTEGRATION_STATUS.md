@@ -63,7 +63,8 @@ check is only marked ✅ after an actual successful call. Prior verification
 
 | Integration | Issue |
 |---|---|
-| Brave Search scraping | HTTP **429** to our egress IP on 2026-10-12 (used DuckDuckGo Lite instead) |
+| Tavily Search API (conventional proxy) | **connected & verified** | `TAVILY_API_KEY` set. Live 10-query sweep 2026-10-15 returned 10/10 HTTP 200, 0 errors. Replaces Brave/DDG scraping. Client: `growth-engine/tavily_search.py` |
+| Brave Search scraping | **superseded** | HTTP **429** to our egress IP after ~7-8 queries. Tavily replaces it. |
 | Bing search scraping | HTTP 200 returned but organic anchors not reliably parseable here |
 | DuckDuckGo HTML | 202 (anti-bot/rate-limit) on prior runs; Lite endpoint worked 2026-10-12 |
 
@@ -80,7 +81,7 @@ check is only marked ✅ after an actual successful call. Prior verification
 | Gemini | **not testable** | — |
 | Microsoft Copilot | **not testable** | — |
 | Grok | **not testable** | — |
-| Perplexity | **not testable** | JS app; add Perplexity API key to enable |
+| Perplexity Agent API | **code ready, key not set** | `PERPLEXITY_API_KEY` missing. Client + CLI + tests committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`); enable by exporting the key. No JS scraping involved. |
 | Notification channel (email/Slack/etc.) | **not configured / not verified** | Owner-approved notification target; Slack MCP not enabled |
 | Call tracking / lead data | **not connected** | Provider + creds |
 

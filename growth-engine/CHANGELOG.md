@@ -3,6 +3,122 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-15 — Entity consolidation: owned duplicates found and scoped
+
+**Owner confirmation:** the Wix account and the base44 URL(s) are **owned** by
+Straight Flush Plumbing & Leak Detection. ISSUE-014 moved from "blocked on
+ownership" to "actionable".
+
+**Added:**
+- `growth-engine/ENTITY_CONSOLIDATION_PLAN.md` — verified findings, the four-host
+  entity map, and the ordered remediation plan.
+- `scripts/entity_consistency_check.py` — regression check for owned duplicates.
+  Classifies each known host `canonical` / `live_duplicate` / `gone` / `noindex` /
+  `unknown`; exits 1 while a live duplicate serves indexable content.
+- `growth-engine/tests/test_entity_consistency_check.py` — 25 tests, no network.
+- `growth-engine/data/entity_consistency_history.jsonl` — run history.
+
+**Key findings (all verified live 2026-10-15):**
+- `straight-flush-plumbing-7fb7cf71.base44.app` is a **live, indexable duplicate**:
+  HTTP 200, `<meta robots>` `index, follow`, self-referencing canonical, `Allow: /`,
+  and **48 URLs in its own sitemap** — mirroring the real site's services, adding
+  18 city pages and **5 blog posts on the same keywords**. Zero links to the real
+  site. Leftover template pages `/million-dollar-bet` and `/analytics` are still
+  live and sitemapped.
+- Its JSON-LD declares a **third domain** as the business identity —
+  `@id: https://flush-pro-flow.base44.app/#business` — which currently returns
+  **404**. A dangling entity reference.
+- The Wix property `straightflushplumb8.wixsite.com` is already **404 + noindex**
+  on every path tried. Cleanup only.
+- Unverified claims on the duplicate that must not be republished: "24/7",
+  "premier", "same-day".
+
+**Wired into automation:** `morning-ai-search-visibility.prompt.md` step 1b runs
+the entity check and reports; it explicitly may **not** change an external
+property (Level 3, owner-only).
+
+**Updated:** `KNOWN_ISSUES.md` (ISSUE-014 rewritten with the verified table),
+`INTEGRATION_STATUS.md`.
+
+**Not changed:** no website page, schema, title, description, or copy. No external
+property touched. Steps 1–3 of the plan need owner go-ahead.
+
+## 2026-10-15 — Tavily Search integration + first real visibility baseline
+
+**Added:**
+- `growth-engine/tavily_search.py` — Tavily Search client
+  (`POST https://api.tavily.com/search`) over **stdlib `urllib` only** (no new
+  dependency). Bearer auth, `Retry-After`-aware retries, and the repo's shared
+  error taxonomy.
+- `scripts/tavily_search.py` — CLI: `--smoke`, `--run`, `--append`, `--dry-run`.
+- `growth-engine/tests/test_tavily_search.py` — 41 stdlib `unittest` tests; no
+  network and no key required.
+- `growth-engine/data/ai_visibility_history.jsonl` — **+10 rows** (186 → 196):
+  the first reproducible conventional-search baseline.
+
+**Why:** Brave rate-limited our egress IP with HTTP 429 after ~7-8 queries and
+DuckDuckGo HTML intermittently returned 202 — both repeatedly cost the daily run
+its research step. Tavily returns structured JSON from a documented API.
+
+**Honesty properties enforced in code and tests:**
+- Recorded as `test_type: conventional_proxy`, never as an AI-platform result.
+- `include_answer` defaults to **off**: Tavily's synthesised answer is Tavily's
+  own summarisation, not a consumer assistant's recommendation.
+- `classify_visibility` can return only `cited` / `absent` / `inconclusive` —
+  never `recommended`. A ranked list does not recommend.
+- A failed call is `inconclusive`, never `absent`.
+
+**Findings (recorded as ISSUE-014, ISSUE-015 — both OPEN, no change applied):**
+- 10/10 customer-intent queries returned **zero** `straightflushplumbingoc.com`
+  results (10/10 HTTP 200, no errors).
+- A brand-name control query **did** return the real domain at rank 1, validating
+  the matcher and proving the absence is genuine.
+- That control query also surfaced **stale/competing** Straight Flush properties:
+  `straightflushplumb8.wixsite.com` (Wix) and
+  `straight-flush-plumbing-7fb7cf71.base44.app` (base44.app). Not previously
+  recorded anywhere in the repo. Owner decision required (Level 3).
+
+**Updated:** `AI_VISIBILITY_METHODOLOGY.md` (Tavily is now the primary
+conventional proxy; Brave marked superseded), `INTEGRATION_STATUS.md`,
+`KNOWN_ISSUES.md`, `PYTHON_DEPENDENCIES.md`.
+
+**Not changed:** no website page, schema, title, description, or copy.
+
+## 2026-10-15 — Perplexity Agent API integration (web-grounded AI visibility)
+
+**Added:**
+- `growth-engine/ai_agent_client.py` — Perplexity **Agent API** client
+  (`POST https://api.perplexity.ai/v1/agent`) via the official SDK
+  (`from perplexity import Perplexity`). Normalises the response to
+  `output_text` + `search_results` sources + `output_text` annotations, maps
+  SDK errors onto the repo's existing taxonomy (`authentication_failed`,
+  `rate_limited`, `bad_request`, `server_error`, `connection_error`, `timeout`,
+  `unknown_error`), honours `Retry-After`, and classifies visibility using the
+  methodology's categories.
+- `scripts/perplexity_agent.py` — CLI: `--smoke` (one query, key-safe shape
+  summary), `--run` (curated 10-query suite from `KEYWORD_UNIVERSE.md`),
+  `--append` (write evidence rows), `--dry-run` (no network).
+- `growth-engine/tests/test_perplexity_agent.py` — 45 stdlib `unittest` tests;
+  no network and no API key required.
+- `requirements.txt` — the repo's first dependency file (`perplexityai>=0.43.8`).
+- `growth-engine/PYTHON_DEPENDENCIES.md` — dependency + environment-variable notes.
+
+**Updated:**
+- `AI_VISIBILITY_METHODOLOGY.md` — Perplexity row now records the Agent API as
+  the access method (code ready, key pending) instead of "JS app, not testable".
+- `INTEGRATION_STATUS.md` — Perplexity moved from "not testable" to
+  "code ready, key not set".
+
+**Honesty properties enforced in code and tests:**
+- A failed call is recorded `inconclusive`, never `absent` and never 0%.
+- `incorrect` is never auto-assigned (it requires human judgement).
+- The bare phrase "straight flush" is not treated as a brand match, so a
+  namesake business is neither credited nor penalised.
+- The API key is never printed, logged, or stored in any record.
+
+**Not changed:** no website page, schema, title, description, or copy. No
+`ai_visibility_history.jsonl` rows were written (the key is not yet configured).
+
 ## 2026-10-15 — Owner-requested local SEO audit + tooling fixes
 
 **Added:**

@@ -38,8 +38,9 @@ into one score.
 | Gemini | gemini.google.com | **No** — not scriptable here | Test manually |
 | Microsoft Copilot | copilot.microsoft.com | **No** — not scriptable here | Test manually |
 | Grok | grok.com / x.ai | **No** — not scriptable here | Test manually |
-| Perplexity | perplexity.ai | **No** — JS app (301→app) | Test manually, or add a Perplexity API key |
-| **Brave Search** | `search.brave.com/search?q=` | **Yes** — returns parseable HTML | Used as the conventional-search proxy |
+| Perplexity Agent API | `POST https://api.perplexity.ai/v1/agent` | **Code ready** — needs `PERPLEXITY_API_KEY` | Web-grounded answers + sources. Client: `growth-engine/ai_agent_client.py`; CLI: `python3 scripts/perplexity_agent.py --smoke` |
+| **Tavily Search API** | `POST api.tavily.com/search` | **Yes** — documented JSON API | **Primary** conventional-search proxy. Structured results, no scraping, no IP rate-limit. Client: `growth-engine/tavily_search.py`; CLI: `python3 scripts/tavily_search.py --smoke`. |
+| Brave Search (superseded) | `search.brave.com/search?q=` | HTML scraping; **HTTP 429** after ~7-8 rapid queries | Replaced by Tavily. Retained only as a fallback. |
 | Bing | `bing.com/search` | Partial — HTML returned but result anchors not reliably parseable in this environment | Retry with dedicated parsing |
 | DuckDuckGo HTML | `html.duckduckgo.com/html` | Intermittent — 202 (rate-limit/anti-bot) | Retry later |
 

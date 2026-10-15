@@ -164,3 +164,101 @@ Each issue: evidence, impact, fix, status, approval level.
   (`(949) 374-6524` / `+19493746524`; `78 Cameray Heights`, `Laguna Niguel, CA 92677`).
 - **Fix (proposed):** repoint the link; change the example placeholder.
 - **Approval:** Level 1 (link) / Level 2 (markup).
+
+---
+
+## ISSUE-014 — Competing/stale "Straight Flush" properties split the entity  [HIGH · OWNERSHIP CONFIRMED]
+
+- **Owner confirmation (2026-10-15):** the owner **does own** the Wix account and
+  the base44 URL(s). This is not a third-party problem — it is controllable.
+- **Full evidence + remediation plan:** `growth-engine/ENTITY_CONSOLIDATION_PLAN.md`.
+- **Automated regression check:** `python3 scripts/entity_consistency_check.py --run`
+  (exit 1 while a live duplicate exists).
+
+### Verified state of each host (2026-10-15)
+
+| Host | HTTP | robots | Verdict |
+|---|---|---|---|
+| `straightflushplumbingoc.com` | 200 | indexable, self-canonical | **canonical** (keep) |
+| `straight-flush-plumbing-7fb7cf71.base44.app` | 200 | `index, follow` | **live duplicate — 48 URLs** |
+| `straightflushplumb8.wixsite.com` | 404 | noindex | gone (cleanup only) |
+| `flush-pro-flow.base44.app` | 404 | — | gone, but still declared as the business `@id` |
+
+### The live duplicate in detail
+
+`straight-flush-plumbing-7fb7cf71.base44.app` is a **live, indexable** app-builder
+site with **48 URLs in its own sitemap**, `Allow: /`, a self-referencing
+canonical, and `<title>Straight Flush Plumbing</title>`. It carries the correct
+phone `(949) 374-6524` and targets the same cities.
+
+- Service pages mirroring the real site: `/leak-detection`, `/slab-leak-repair`,
+  `/drain-cleaning`, `/water-heater`, `/gas-line`, `/sewer-line`, `/pipe-repair`,
+  `/repiping-orange-county`, `/water-main-repair`, `/emergency-plumbing`
+- 18 city pages: `/plumber-laguna-niguel`, `/plumber-mission-viejo`,
+  `/plumber-irvine`, … through `/plumber-laguna-woods`
+- **5 blog posts on the same keywords**, e.g.
+  `/blog/how-to-detect-slab-leak-orange-county`,
+  `/blog/why-water-bill-high-laguna-niguel`
+- **Leftover template pages still live and sitemapped:** `/million-dollar-bet`,
+  `/analytics`
+- **Zero links** to the real site.
+
+### Entity fragmentation (four hosts, one business)
+
+Its JSON-LD declares a **different domain** as the business identity:
+
+```
+"@id":  "https://flush-pro-flow.base44.app/#business"
+"url":  "https://flush-pro-flow.base44.app"
+"name": "Straight Flush Plumbing & Leak Detection"
+"telephone": "+19493746524"
+```
+
+`flush-pro-flow.base44.app` returns **404** on `/`, so the entity is declared
+under a domain that no longer serves a page — a dangling reference.
+
+The real site carries 3 JSON-LD blocks and **zero** references to either
+duplicate, so the duplicates are not disavowed from the real side either.
+
+### Unverified claims on the duplicate (must not be republished without evidence)
+
+- "24/7 emergency service"
+- "Orange County's **premier** leak detection and emergency plumbing specialists"
+- "**same-day** slab leak detection"
+
+### Recommended fix (owner action, Level 3 — not auto-applied)
+
+1. Delete/unpublish the base44 app (highest value). `410 Gone` is the correct
+   signal; redirect only if you control the domain.
+2. Delete the Wix site from the account (all pages already 404).
+3. Request removal in Google Search Console and Bing Webmaster Tools.
+4. Re-run `scripts/entity_consistency_check.py --run` → must exit 0.
+5. Re-run the brand-name Tavily control query → only the real domain should appear.
+
+### Explicitly NOT recommended
+
+- **Do not** add `sameAs` links from the real site to the duplicates. `sameAs`
+  asserts "this is also me" and would *strengthen* the stale association.
+- **Do not** copy the base44 blog posts verbatim to the real site — that recreates
+  the duplicate-content problem on your own domain.
+
+- **Status:** **OPEN** — ownership confirmed, findings verified, no external change
+  applied. Awaiting owner go-ahead for steps 1–3.
+
+---
+
+## ISSUE-015 — Site absent from conventional search for all 10 target queries  [HIGH · OPEN]
+
+- **Evidence:** 2026-10-15 Tavily sweep of the curated 10-query suite from
+  `KEYWORD_UNIVERSE.md` → `straight_flush: absent` for all 10 (see ISSUE-014 for
+  the control that validates the matcher). Competitors consistently present:
+  `efficientplumbing.com`, `rotorooter.com`, `barkerandsonsplumbing.com`,
+  `scottenglishplumbing.net`, `mckplumb.com`, `yelp.com`, `bbb.org`.
+- **Impact:** the core business problem the growth engine exists to fix, now
+  measured reproducibly. Baseline established 2026-10-15.
+- **Fix:** content / service-area work in the Priority 4-5 band of the master
+  prompt. Do **not** treat as a single-cause problem.
+- **Baseline record:** `growth-engine/data/ai_visibility_history.jsonl`
+  (rows with `platform: tavily_search`, `test_type: conventional_proxy`).
+- **Approval:** Level 2 for site content changes.
+- **Status:** **OPEN** — baseline recorded, work not started.

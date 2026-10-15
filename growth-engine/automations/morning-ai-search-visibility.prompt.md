@@ -63,13 +63,31 @@ Never print or commit the token. If the clone fails, report it and stop.
    If the homepage or key paths are NOT 200 / still return `cf-mitigated:
    challenge`, mark this run's severity `critical` and state in the report that
    ISSUE-001 remains open (all on-page work inert).
+1b. **Entity consistency.** Run
+   `python3 scripts/entity_consistency_check.py --run --append`.
+   This checks the real site plus every known owned host (ISSUE-014) and exits
+   non-zero if any duplicate is serving *indexable* content again. If it exits
+   non-zero, record a `high` severity finding in the report and name the host.
+   Do NOT attempt to change an external property — those are Level 3 owner
+   actions. Report only.
 2. **Select today's query sample.** From `KEYWORD_UNIVERSE.md`, pick 20-40
    queries (or fewer if access/quotas limit you), weighted to commercially
    valuable, historically weak, and not-recently-tested queries. Rotate coverage
    so every core service and every Tier-1 city appears regularly. Do not
    exhaustively permute everything each day. Record the exact query strings.
 3. **Execute the sample.**
-   - **Conventional search (works here):** fetch the Brave results for
+   - **Conventional search (preferred):** use the Tavily Search API via
+     `python3 scripts/tavily_search.py --run --append`. This is the reliable path
+     and replaces the old Brave/DuckDuckGo-HTML scraping, which rate-limited our
+     egress IP (Brave HTTP 429 after ~7-8 queries). Record rows with
+     `test_type: conventional_proxy`.
+   - **AI answer engines:** use the Perplexity Agent API via
+     `python3 scripts/perplexity_agent.py --run --append` when
+     `PERPLEXITY_API_KEY` is set. This is a genuine AI-platform result — record
+     `test_type: ai_platform`. If the key is absent, mark the platform
+     `unmeasured` and say so; never substitute a conventional-search result for
+     an AI-platform one.
+   - **Legacy fallback:** Brave / DuckDuckGo HTML only if Tavily is unavailable.
      `https://search.brave.com/search?q=<urlencoded>` with a normal browser
      User-Agent via curl. Also try DuckDuckGo HTML
      (`https://html.duckduckgo.com/html/?q=...`) and Bing
