@@ -93,6 +93,34 @@ PageSpeed Insights API returned HTTP 429 (quota, no key).
 **Not changed:** `AGENTS.md`, approved-claims/business facts, the existing
 automations, and no production deploy (no merge).
 
+## 2026-10-15 (later) — SEO depth pass (title length + social cards)
+
+**Added:** `scripts/patch_titles.py` (idempotent title shortener; asserts <=60c and
+mutual uniqueness before writing).
+
+**Changed (Level 2, verified):**
+- **29 indexable pages** had titles of 61-89c → rewritten to <=60c keeping the
+  primary keyword and intent; social `og:title`/`twitter:title` mirrors updated
+  when they carried the same string. Now 0 indexable titles exceed 60c.
+- `service-areas.html`, `academy/annual-plumbing-checkup-checklist.html` — added
+  the standard Open Graph + Twitter card block (they were the only 2 indexable
+  pages with no social metadata); uses the existing shared `og:image`
+  (`assets/img/lance-hero.jpeg`), no new asset.
+- `growth-engine/tests/validate_knowledge_base.py` — title <=60c and description
+  <=165c guards added (a shorter title silently making two pages collide now
+  fails the build).
+
+**Verification:** `validate_knowledge_base.py` OK (133 files); `seo_audit.py`
+0 duplicate indexable titles, 0 duplicate descriptions among indexables, 0 broken
+links, 0 invalid JSON-LD; 0 indexable titles >60c.
+
+**Reviewed, no change needed:** robots.txt (all crawlers incl. AI allow-listed,
+sitemap declared), `404.html` (`noindex` + self-canonical — correct), heading
+hierarchy (h2→h4 "skips" are 33 shared footer columns, site-wide by design; no
+content-heading skips), click-to-call (all indexable pages have `tel:` links),
+empty `alt` attributes (none). Case-study duplicate bodies are the intentional
+noindex root stubs (ISSUE-004).
+
 ## 2026-10-11 — Daily run (visibility sweep + competitor refresh)
 
 **Added:** `reports/daily/2026-10-11.md`.

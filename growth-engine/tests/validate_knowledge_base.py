@@ -90,11 +90,15 @@ for p in indexable_pages():
         if key in seen_titles:
             errors.append(f"{rel}: duplicate <title> with {seen_titles[key]}")
         seen_titles[key] = rel
+        if len(key) > 60:
+            errors.append(f"{rel}: title is {len(key)}c (>60, SERP truncation)")
     if md:
         key = md.group(1).strip()
         if key in seen_descs:
             errors.append(f"{rel}: duplicate meta description with {seen_descs[key]}")
         seen_descs[key] = rel
+        if len(key) > 165:
+            errors.append(f"{rel}: meta description is {len(key)}c (>165)")
 
 # --- Internal links resolve, including cross-file fragments (dead-anchor guard) ---
 # Indexable pages only: the noindex root stubs use "../" paths that a browser

@@ -197,3 +197,26 @@ Each issue: evidence, impact, fix, status, approval level.
   needed, mint a scoped API key; then re-run
   `curl -H "Authorization: Bearer $KEY" https://app.all-hands.dev/api/automation/v1?limit=30`.
 - **Approval:** informational.
+
+---
+
+## ISSUE-012 — Over-length `<title>` tags on 29 indexable pages  [LOW · RESOLVED 2026-10-15]
+
+- **Evidence:** 29 indexable pages had titles of 61–89 characters (mostly a
+  redundant "| Leak Detection Academy" / "| Orange County" tail); one was 89c.
+- **Impact:** Google truncates title links beyond ~60c in the SERP; truncation can
+  hurt CTR and invites Google to rewrite the link.
+- **Fix applied 2026-10-15:** shortened to <=60c keeping the primary keyword and
+  intent (`scripts/patch_titles.py`, idempotent). Two case-study titles that would
+  otherwise have collided were differentiated. 0 indexable titles now exceed 60c;
+  unique-title/length guards added to `validate_knowledge_base.py`.
+
+---
+
+## ISSUE-013 — Two indexable pages had no social (Open Graph/Twitter) metadata  [LOW · RESOLVED 2026-10-15]
+
+- **Evidence:** `service-areas.html` and
+  `academy/annual-plumbing-checkup-checklist.html` were the only indexable pages
+  missing `og:*`/`twitter:*` tags.
+- **Fix applied 2026-10-15:** added the site's standard social block, reusing the
+  existing shared `og:image` (`assets/img/lance-hero.jpeg`) — no new asset.
