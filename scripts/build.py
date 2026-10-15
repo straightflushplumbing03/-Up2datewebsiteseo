@@ -238,6 +238,29 @@ def write_page(rel_path, html):
     except ImportError:
         pass
     full = os.path.join(ROOT, rel_path)
+
+    # The gen_*.py generators predate the per-page JSON-LD and meta passes that
+    # were applied directly to the committed HTML, so regenerating a page
+    # silently reverts production SEO. Measured: `gen_cities.py` alone drops
+    # 3 of 4 JSON-LD blocks per city page and overwrites the unique city
+    # titles/descriptions with the old templated ones. Refuse unless forced.
+    if os.path.exists(full) and not os.environ.get("SF_ALLOW_REGEN"):
+        with open(full, encoding="utf-8") as f:
+            existing = f.read()
+        losses = []
+        if existing.count("application/ld+json") > html.count("application/ld+json"):
+            losses.append("JSON-LD blocks")
+        if "#business" in existing and "#business" not in html:
+            losses.append("business @id (#business)")
+        if losses:
+            raise SystemExit(
+                f"\nREFUSING to overwrite {rel_path}.\n"
+                f"The regenerated output would drop: {', '.join(losses)}\n"
+                f"This generator is stale relative to the committed page. Update the\n"
+                f"generator (or edit the page directly) instead of regenerating.\n"
+                f"Set SF_ALLOW_REGEN=1 to override and write anyway.\n"
+            )
+
     os.makedirs(os.path.dirname(full), exist_ok=True)
     with open(full, "w", encoding="utf-8") as f:
         f.write(html)
