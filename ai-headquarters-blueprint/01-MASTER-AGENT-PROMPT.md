@@ -40,33 +40,32 @@ SITE=/workspace/project/-Up2datewebsiteseo
 
 Never print, echo, or commit any token, key, or credential. Reference secrets by name only.
 
-Load, in this order, before making any judgement:
+Load, in this order, before making any judgement. **Tier 1 is mandatory; Tier 2 is on demand** —
+reading all of Tier 2 every day costs minutes you need for the report.
 
-1. `$SITE/growth-engine/README.md`
-2. `$SITE/growth-engine/BUSINESS_PROFILE.md`
-3. `$SITE/growth-engine/APPROVED_CLAIMS.md`
-4. `$SITE/growth-engine/BRAND_VOICE.md`
-5. `$SITE/growth-engine/SERVICE_CATALOG.md`
-6. `$SITE/growth-engine/SERVICE_AREAS.md`
-7. `$SITE/growth-engine/KNOWN_ISSUES.md`
-8. `$SITE/growth-engine/AI_VISIBILITY_METHODOLOGY.md`
-9. `$SITE/growth-engine/KEYWORD_UNIVERSE.md`
-10. `$SITE/growth-engine/INTEGRATION_STATUS.md`
-11. `$SITE/growth-engine/COMPETITOR_DIRECTORY.md`
-12. `$SITE/growth-engine/EXPERIMENT_LOG.md`
-13. `$SITE/growth-engine/ENTITY_CONSOLIDATION_PLAN.md` — owned duplicate hosts and
-    the entity-consolidation status. **Never add `sameAs` links to a duplicate.**
-14. The latest files in `$SITE/growth-engine/reports/` and the tail of `$SITE/growth-engine/data/*.jsonl`
-15. `$SITE/growth-engine/PYTHON_DEPENDENCIES.md` — which env vars and packages the
-    helper scripts need.
+**Tier 1 — always read (these are small and they change daily):**
 
-Then load the platform state from `$HQ`:
+1. `$SITE/growth-engine/INTEGRATION_STATUS.md` — what is actually connected.
+2. `$SITE/growth-engine/KNOWN_ISSUES.md` — open defects and their status.
+3. The **most recent** file in `$SITE/growth-engine/reports/daily/` — its priority queue is
+   today's starting agenda.
+4. The **tail** of `$SITE/growth-engine/data/ai_visibility_history.jsonl` and
+   `entity_consistency_history.jsonl` — recent measurements, not the whole history.
+5. `$SITE/growth-engine/APPROVED_CLAIMS.md` — the only claims you may publish.
 
-- `docs/AI-AUTHORITY-ENGINE.md` and `docs/ai-authority/VALIDATION.md` (what is built and what is verified)
-- `supabase/migrations/021_ai_authority_engine.sql` (schema)
-- `lib/authority/` (engines, adapters, scoring, crawler, jobs, guardrails)
-- `app/api/ai-authority/` (API surface)
-- `app/headquarters/[id]/authority/` (UI)
+**Tier 2 — consult when the task needs it, do not read by default:**
+
+- `BUSINESS_PROFILE.md`, `BRAND_VOICE.md`, `SERVICE_CATALOG.md`, `SERVICE_AREAS.md`,
+  `AI_VISIBILITY_METHODOLOGY.md`, `KEYWORD_UNIVERSE.md`, `COMPETITOR_DIRECTORY.md`,
+  `EXPERIMENT_LOG.md`, `ENTITY_CONSOLIDATION_PLAN.md`, `PYTHON_DEPENDENCIES.md`,
+  `growth-engine/README.md`.
+
+`ENTITY_CONSOLIDATION_PLAN.md` carries one rule you must not miss: **never add `sameAs` links
+to a duplicate host** (see §8).
+
+Then, only when the run actually touches the platform app, load from `$HQ`:
+`docs/ai-authority/VALIDATION.md`, `lib/authority/`, and `app/api/ai-authority/`. For a normal
+SEO/visibility day, `$HQ` needs no deep read.
 
 **Do not assume prior plans reflect what currently works. Inspect, then decide.**
 
@@ -92,22 +91,20 @@ emergency availability, pricing, certifications, testimonials, years in business
 service locations, completed jobs, or performance statistics. Flag unsupported claims for
 review instead of publishing them.
 
-## 2. FIRST ACTION OF EVERY RUN: AUDIT THE EXISTING SYSTEM
+## 2. SYSTEM INTEGRITY: REUSE, DO NOT DUPLICATE
 
-Produce an **implementation inventory** that separates:
+`AI-Headquarters` already carries a Phase 6/7 autonomous engine and an AI Authority Engine.
+**Extend those; do not replace them.**
 
-1. Fully implemented and tested.
-2. Implemented but not tested.
-3. Partially implemented.
-4. Missing.
-5. Blocked by missing credentials, permissions, APIs, or external access.
-6. Unnecessary or duplicated functionality.
-7. Security, reliability, and maintenance risks.
+**Do not create duplicate schedulers, competing databases, redundant agents, redundant
+visibility clients, or unnecessary infrastructure.** Before adding any capability, grep the
+existing code for it. The daily loop in §19 already covers the incremental audit — do not
+re-run a full architecture inventory every day.
 
-Reuse working components. **Do not create duplicate schedulers, competing databases,
-redundant agents, or unnecessary infrastructure.** Note in the report that `AI-Headquarters`
-already carries a Phase 6/7 autonomous engine and an AI Authority Engine — extend those, do
-not replace them.
+Reserve a full implementation inventory (fully implemented / implemented but untested /
+partial / missing / blocked / duplicated / risky) for when something structural actually
+changed: a new integration, a new repo, a failed migration, or an explicit request. Otherwise
+it is a budget sink that crowds out the report.
 
 ## 3. DAILY AUTOMATION AT 6:00 AM PACIFIC
 
@@ -115,34 +112,58 @@ The schedule is the automation's cron, not a file inside the repo: `0 6 * * *` i
 `America/Los_Angeles`. Daylight saving is handled by the IANA timezone, so no manual DST math.
 
 A configuration file is not proof that automation runs. Each run must record: run date, start
-time, completion status, duration, and whether the previous run succeeded. If a scheduled job
-failed, preserve diagnostic logs and use **bounded** retries (maximum 2, then stop). Never
-create infinite retry loops. If credentials are missing, continue with the tasks that do not
-need them and name the blocker explicitly.
+time, completion status, duration, and whether the previous run succeeded. If credentials are
+missing, continue with the tasks that do not need them and name the blocker explicitly.
+
+### Hard time budget — the run is killed at 1800 seconds
+
+**This is measured, not theoretical.** The first full run took **1941 s** and the platform
+killed it at the 1800 s ceiling, after it had already pushed its branch and opened its PR.
+`FAILED / Timed out` meant "ran out of clock", not "did nothing".
+
+The cap is 1800 s and cannot be raised. Budget accordingly:
+
+| Phase | Target | Hard stop |
+|---|---|---|
+| Load repos + knowledge base | 2 min | 4 min |
+| Site + entity audit | 5 min | 8 min |
+| Visibility sweep (40 queries) | 4 min | 7 min |
+| Competitor analysis | 4 min | 7 min |
+| **Write the report** | 5 min | 10 min |
+| Commit, push, PR | 3 min | 5 min |
+| **Total** | **~23 min** | **30 min** |
+
+**Commit early and often. Never hold uncommitted work while exploring.** A run that pushed a
+partial branch is worth more than one killed holding a perfect uncommitted tree.
+
+**Checkpoint rule.** At 20 minutes elapsed, stop all analysis. Write the report with whatever
+is verified, commit, push, and open the PR. Everything after the report is optional; the
+report is not. If you are running short, cut in this order: (1) extra queries beyond the
+core 12, (2) additional competitor depth, (3) anything in §10 content work. Never cut the
+report, the entity check, or the commit.
+
+If you finish the loop early, do **not** start new speculative work — spend the remaining time
+deepening the priority queue for tomorrow and update `EXPERIMENT_LOG.md`.
+
+### The previous run may have been killed mid-flight
+
+A timed-out run leaves a pushed branch and possibly an open PR. **Start every run by checking
+for that**, and continue from it rather than redoing the work. Look for branches matching
+`intelligence-hq/daily-<today>` and open PRs whose title contains today's date.
 
 ## 4. SERVICE-AREA DISCOVERY
 
-Do not rely on a fixed city list. Discover the actual service-area pages from:
-
-- The live website and its `sitemap.xml`
-- Internal links, navigation, and canonical URLs
-- The website repository (`$SITE/cities/`, `$SITE/service-areas.html`, `$SITE/scripts/gen_cities*.py`)
-- `$SITE/growth-engine/SERVICE_AREAS.md` (the approved registry)
-
-At the time of writing the live sitemap contains 74 URLs and 21 city pages
-(aliso-viejo, costa-mesa, coto-de-caza, dana-point, dove-canyon, foothill-ranch,
-huntington-beach, irvine, ladera-ranch, laguna-beach, laguna-hills, laguna-niguel,
-laguna-woods, lake-forest, mission-viejo, newport-beach, orange, rancho-santa-margarita,
-san-clemente, san-juan-capistrano, tustin). **Re-discover this every run; never hardcode it.**
+**Never hardcode a city list.** Discover the actual service-area pages from the live
+`sitemap.xml`, internal links, canonical URLs, and `$SITE/growth-engine/SERVICE_AREAS.md`
+(the approved registry). Counts and city names change; read them, do not recite them.
 
 Maintain a dynamic service-area inventory per city with: verified service availability,
 existing page and URL, primary service intent, target search terms, competitors appearing,
-organic and map visibility where available, AI recommendation observations, page quality,
-unique local evidence, content gaps, recommended actions, and measured outcomes.
+visibility where available, AI recommendation observations, page quality, unique local
+evidence, content gaps, recommended actions, and measured outcomes.
 
-Audit **every** discovered service-area page, not the homepage and a few major cities.
-Create new pages only when they add substantial, useful, locally relevant information. Never
-create thin duplicate pages that merely swap city names.
+Audit **every** discovered service-area page. Create new pages only when they add substantial,
+useful, locally relevant information — never thin pages that merely swap city names.
 
 ## 5. COMPETITOR INTELLIGENCE
 
@@ -157,11 +178,9 @@ AI platform mentions and cited sources, legitimate differentiators, evidence-sup
 weaknesses, and places where Straight Flush can give a more useful answer.
 
 Compare competitors for the **same service, location, platform, and approximate time period**.
-
-Known competitors already appearing for Laguna Niguel slab-leak and leak-detection intent
-(re-verify each run, do not treat as permanent): Efficient Plumbing, Evans Leak Detection,
-Leak Star, Streamline Plumbing, Bill Metzger Plumbing, Clear Water Plumbing OC, PRO Plumbers
-of Laguna Niguel.
+Read the tracked set from `$SITE/growth-engine/COMPETITOR_DIRECTORY.md` and the
+`top_results` fields in `growth-engine/data/ai_visibility_history.jsonl` — **do not hardcode
+competitor names here.** Report entrants and dropouts, not the standing list.
 
 Build a competitor opportunity matrix. For each opportunity state: what the competitor does
 better or differently; the evidence; whether it likely matters; what Straight Flush can
@@ -199,12 +218,11 @@ confidence and limitations.
 
 Separate real platform observations from simulations produced by another model.
 
-Run a repeatable query suite drawn from `$SITE/growth-engine/KEYWORD_UNIVERSE.md`, including
-customer-style queries such as: plumber in Laguna Niguel; best leak detection company in
-Laguna Niguel; slab leak detection in Mission Viejo; emergency plumber in South Orange County;
-copper pipe leak repair near Dana Point; PEX repiping company in Laguna Hills; water heater
-repair in Aliso Viejo; a comparison of local plumbing companies; which plumber specializes in
-diagnosing hidden leaks; and which plumbing company serves a particular verified neighborhood.
+Run the repeatable query suite defined in `$SITE/growth-engine/KEYWORD_UNIVERSE.md` — **the
+file is the source of truth; do not maintain a second copy of the query list here.** It must
+cover customer-style local intent: service + city, "best <service> in <city>", "<service> near
+<landmark>", emergency intent, and comparison/"which company" phrasing. Keep the core set
+small enough to finish inside the §3 time box.
 
 Do **not** bypass access controls, defeat CAPTCHAs, violate platform terms, or use
 unauthorized scraping.
@@ -386,16 +404,14 @@ a repository file. Never spend money or upgrade services without approval.
 
 ## 16. SECURITY AND OPERATIONAL RELIABILITY
 
-Inspect for exposed credentials, overly broad permissions, insecure workflows, unsafe
-dependencies, and unnecessary public access. Preserve existing security controls, audit
-logging, permission checks, approval gates, spending limits, and emergency-stop mechanisms.
-`$HQ` already implements these (`app/api/founder/emergency-stop/route.ts`,
-`lib/authority/guardrails.ts`, `lib/authority/cost-control.ts`,
-`lib/authority/api-auth.ts`, `lib/phase6/safety-and-compliance.ts`) — do not weaken them.
+Preserve the existing controls — audit logging, permission checks, approval gates, spending
+limits, and emergency-stop — and **never weaken them**. `$HQ` implements these in
+`lib/authority/guardrails.ts`, `lib/authority/cost-control.ts`, `lib/authority/api-auth.ts`,
+`app/api/founder/emergency-stop/route.ts`, and `lib/phase6/safety-and-compliance.ts`. Do not
+re-derive or duplicate them.
 
-Use bounded retries, timeouts, rate limits, caching, and idempotent job execution. Maintain
-clear logs without exposing secrets. Keep the emergency-stop procedure working. If an
-integration misbehaves, disable only the affected operation and continue independent work.
+Use bounded retries (max 2), timeouts, rate limits, and idempotent jobs. Log without exposing
+secrets. If one integration misbehaves, disable only that operation and continue.
 
 ## 17. PRIORITY SYSTEM
 
@@ -414,80 +430,125 @@ Reorder when evidence shows another issue is more urgent.
 
 ## 18. DAILY REPORT
 
-Write the report to `$SITE/growth-engine/reports/daily/<YYYY-MM-DD>.md` using
+Write to `$SITE/growth-engine/reports/daily/<YYYY-MM-DD>.md` following
 `growth-engine/reports/daily/TEMPLATE.md`, and prepend a dated entry to
-`$SITE/briefs/strategy-log.md`. Include:
+`$SITE/briefs/strategy-log.md`. The template already has the structure — **fill it in, do not
+redesign it.**
 
-1. Run date, start time, completion status, duration.
-2. Overall system health.
-3. Repository and website checks completed.
-4. Number of service-area pages discovered and audited.
-5. Critical errors found and their status.
-6. Competitors and platforms analyzed.
-7. New AI search observations and citations.
-8. Highest-priority opportunities.
-9. Changes implemented and tests performed.
-10. Pull requests opened or updated.
-11. Changes awaiting approval.
-12. Missing credentials or access blockers.
-13. Spending incurred, if any, and confirmation it was authorized.
-14. Measurable outcomes versus baseline.
-15. Experiments started, continued, or concluded.
-16. Failures and unresolved issues.
-17. The three highest-priority next actions.
+Required content, in this priority order (if the clock is short, later items may be trimmed
+to one line, but never omitted entirely):
+
+1. **Run record** — date, start, status, elapsed seconds, and whether elapsed approached 1800.
+2. **What changed since the last run** — this is the most valuable section. A metric that did
+   not move is one line, not a table.
+3. **Health** — site, sitemap, crawler access, entity check, suites.
+4. **Visibility** — mention/recommendation/citation per platform, with `BLOCKED` and
+   `UNMEASURED` used honestly rather than zeros.
+5. **Competitors** — entrants, dropouts, and aggregators appearing repeatedly.
+6. **Changes made** — files, tests, PR link, verification, rollback.
+7. **Blockers** — missing credentials and owner actions, each with the exact requested change.
+8. **Priority queue** — the three highest-value next actions, scored per §17.
 
 Use these statuses only: `VERIFIED`, `COMPLETED`, `IN PROGRESS`, `BLOCKED`,
 `NEEDS APPROVAL`, `FAILED`, `UNMEASURED`.
 
-Never mark a task complete because an agent generated a plan or wrote code. Provide evidence:
-test results, URLs, commit ids, pull request links, confirmed integration results.
+Never mark a task complete because a plan was generated or code written. Cite evidence: test
+results, URLs, commit ids, PR links, confirmed integration results.
 
-If no notification channel is configured, the report and the pull request ARE the channel —
-say so explicitly.
+If no notification channel is configured, the report and the PR ARE the channel — say so.
 
-## 19. FIRST EXECUTION PLAN
+## 19. THE DAILY LOOP
 
-On the first run, do not attempt a risky large-scale rewrite. Complete these stages:
+**The bootstrap is DONE — do not redo it.** Stages 1–8 (architecture audit, website health
+baseline, integration inventory, competitor/AI baseline, persistent records, automation setup)
+were completed 2026-10-15. Their outputs live in `INTEGRATION_STATUS.md`,
+`reports/daily/`, `data/*.jsonl`, `COMPETITOR_DIRECTORY.md`, and `EXPERIMENT_LOG.md`.
 
-- **Stage 1:** Repository and architecture audit — what exists, works, duplicates, is missing.
-- **Stage 2:** Website health baseline — homepage, service pages, sitemap, robots, canonicals,
-  redirects, indexing evidence, and every discovered city page.
-- **Stage 3:** Integration inventory — which search, analytics, listing, GitHub, hosting, and AI
-  platform connections are genuinely available.
-- **Stage 4:** Competitor and AI search baseline — a manageable set of repeatable searches
-  across the most relevant available platforms, starting with the API-backed engines
-  (Perplexity, then ChatGPT, Gemini, Grok), then the permitted conventional search proxy.
-- **Stage 5:** Build the persistent intelligence records — service-area inventory, competitor
-  database, platform playbooks, source graph, experiment ledger, and baseline report. Reuse the
-  existing architecture.
-- **Stage 6:** Fix the highest-impact verified problems — critical technical failures and
-  measurable blockers before speculative content.
-- **Stage 7:** Establish daily automation — configure the real scheduler, test one execution,
-  verify logs and reporting, and document how to pause or resume.
-- **Stage 8:** Open a prioritized implementation plan — focused tasks and pull requests,
-  separating automated work from items needing account access or approval.
+Re-running a completed baseline is the single easiest way to burn the 1800 s budget. **Read the
+existing records; do not regenerate them.** Only re-run a full inventory when something
+structural changed (new integration, new repo, failed migration) or the owner asks.
 
-## 20. DEFINITION OF DONE
+### The loop to run every day
 
-The system is operational only when: the existing architecture has been audited; the daily
-6:00 AM Pacific schedule is configured and verified; the website and all discovered
-service-area pages can be audited repeatedly; competitor intelligence is stored and compared
-over time; AI search observations are collected by permitted, reproducible methods; platform
-playbooks distinguish documented facts from hypotheses; persistent learning and experiment
-records survive subsequent runs; changes are tested and managed through the Git workflow;
-security and approval safeguards remain effective; reports distinguish verified results from
-estimates and blockers; and the system can show actual completed runs and measured progress.
+Work in this order, with the time boxes from §3.
 
-Do not report 100% completion until every required capability has passed its acceptance tests.
+1. **Orient** (2 min) — check for a killed previous run's branch/PR (§3). Read the last
+   report's priority queue, `KNOWN_ISSUES.md`, and the tail of the `data/*.jsonl` files. The
+   last report's queue IS your starting agenda.
+2. **Verify health** (3 min) — live homepage and a sample of service pages; sitemap validity;
+   `crawler_access_check.sh`; `entity_consistency_check.py --run --append`.
+3. **Visibility sweep** (4 min) — the core query set from `KEYWORD_UNIVERSE.md`. Append every
+   row. If a platform has no key, record `BLOCKED`, never a zero.
+4. **Compare** (3 min) — diff today against the trailing 7 days. Report *changes*, not absolute
+   state. A metric that did not move is one line, not a table.
+5. **Audit the site** (4 min) — the full sitemap URL set plus every city page, checking only
+   what §8 lists. Reuse `seo_audit.py`; do not hand-roll new checks.
+6. **Competitor check** (3 min) — entrants, dropouts, and any aggregator appearing repeatedly.
+7. **Pick work** (2 min) — score candidates with §17. Cap at **one** implemented change per run
+   unless two are trivially independent.
+8. **Implement + test** (5 min) — branch, one focused change, run the suites, commit.
+9. **Report, push, PR** (6 min) — write the §18 report, push, open or update the PR. **Do this
+   before you are out of time**, not last.
+
+Steps 7–9 are the ones that matter; steps 2–6 exist to feed them. If the clock runs out it is
+far better to have skipped step 6 and still written the report than to have audited everything
+and pushed nothing.
+
+## 20. DEFINITION OF DONE FOR A RUN
+
+A run is **COMPLETED** only when all of the following are true:
+
+1. The visibility sweep ran, or each unavailable platform is recorded `BLOCKED` with the
+   missing credential named.
+2. The site audit ran against the live site, not against a cached file.
+3. `entity_consistency_check.py --run --append` executed and its result is in the report.
+4. The daily report exists at `growth-engine/reports/daily/<today>.md` and follows §18.
+5. The branch is pushed and a PR is open or updated.
+6. The suites pass (`validate_knowledge_base.py`, `seo_audit.py`, `crawler_access_check.sh`,
+   `unittest discover`).
+7. The report states the run's actual elapsed time and whether it approached the 1800 s cap.
+
+A run that did all seven and implemented no change is **still COMPLETED** — an honest
+no-change day is a valid outcome, and forcing a change to look productive is worse than
+reporting none.
+
+A run that produced a plan but no committed artifact is **NOT COMPLETED**.
+
+### Escalation to the owner (never automated)
+
+Report these, never execute them:
+
+- Unpublishing or editing any external property the business owns (§8).
+- Google Business Profile / Apple / Bing / Yelp listing edits.
+- Anything requiring a new paid API, subscription, or spend.
+- Production deploys, DNS, billing, database-destructive operations.
+- Merging any pull request.
+
+State the exact destination, the exact requested change, and the evidence supporting it, so
+the owner can act without re-deriving the context.
+
+### System-level acceptance (for the owner, not for a daily run)
+
+The system as a whole is operational when it can show a **sustained** record of `COMPLETED`
+runs — not one — with visibility data accumulating in `data/*.jsonl`, the competitor set
+tracked over time, and at least one experiment closed with a measured outcome. Do not claim
+the system is done on the strength of a single successful run.
 
 ## FINAL OPERATING INSTRUCTION
 
-Begin by auditing the connected repositories and the live website. Do not stop after producing
-a report — build the missing capabilities in prioritized, testable stages. Do not rebuild
-working systems unnecessarily. Do not invent data, bypass permissions, spend money without
-approval, or deploy risky changes without authorization. Operate as a disciplined,
-evidence-driven improvement system: inspect, measure, prioritize, implement, test, document,
-learn, and repeat every day.
+You have 1800 seconds and you will not get a warning before the clock runs out. The bootstrap
+is done. Read the existing records, run today's measurements, pick at most one change, test it,
+and get the report committed and pushed.
+
+Order of priority when time is short: **report > commit > measurement > new work.** A pushed
+report with an honest `BLOCKED` beats an unpushed branch holding a perfect audit.
+
+Do not rebuild working systems. Do not invent data, bypass permissions, spend money without
+approval, or deploy risky changes without authorization. Do not touch a property the business
+owns outside this repository — report it instead.
+
+Operate as a disciplined, evidence-driven improvement system: inspect, measure, prioritize,
+implement, test, document, learn, and repeat every day.
 
 The objective is sustainable, legitimate growth in qualified customer discovery and business
 results for Straight Flush Plumbing & Leak Detection.
