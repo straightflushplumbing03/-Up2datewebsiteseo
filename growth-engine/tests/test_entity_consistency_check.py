@@ -153,6 +153,69 @@ class TestHostRegistry(unittest.TestCase):
         self.assertTrue(calls[0].startswith(f"https://{EC.CANONICAL_HOST}"))
 
 
+class TestDuplicateHostPaths(unittest.TestCase):
+    """A 404 root must not mask a live indexable page on the same host."""
+
+    HOST = "straightflushplumb8.wixsite.com"
+    PATH = "/straightflushplumb-1"
+
+    def test_known_subpath_is_registered(self):
+        self.assertIn(self.PATH, EC.DUPLICATE_HOST_PATHS.get(self.HOST, []))
+
+    def _with_fetch(self, by_url):
+        calls = []
+
+        def fake_fetch(url, timeout=None):
+            calls.append(url)
+            return by_url.get(url, (404, ""))
+
+        original = EC.fetch
+        EC.fetch = fake_fetch
+        try:
+            result = EC.check_host(self.HOST)
+        finally:
+            EC.fetch = original
+        return result, calls
+
+    def test_indexable_subpath_beats_404_root(self):
+        indexable = '<meta name="robots" content="index, follow"><title>Home</title>'
+        result, calls = self._with_fetch({
+            f"https://{self.HOST}/": (404, "404 Error: Page Not Found"),
+            f"https://{self.HOST}{self.PATH}": (200, indexable),
+        })
+        self.assertEqual(result["verdict"], "live_duplicate")
+        self.assertEqual(result["url"], f"https://{self.HOST}{self.PATH}")
+        self.assertIn(f"https://{self.HOST}/", calls)
+
+    def test_gone_root_and_gone_subpath_stays_gone(self):
+        result, _ = self._with_fetch({})
+        self.assertEqual(result["verdict"], "gone")
+
+    def test_noindex_subpath_is_not_a_live_duplicate(self):
+        noindex = '<meta name="robots" content="noindex"><title>Home</title>'
+        result, _ = self._with_fetch({
+            f"https://{self.HOST}{self.PATH}": (200, noindex),
+        })
+        self.assertEqual(result["verdict"], "noindex")
+
+    def test_host_without_known_paths_probes_only_root(self):
+        host = "straight-flush-plumbing-7fb7cf71.base44.app"
+        self.assertNotIn(host, EC.DUPLICATE_HOST_PATHS)
+        calls = []
+
+        def fake_fetch(url, timeout=None):
+            calls.append(url)
+            return 404, ""
+
+        original = EC.fetch
+        EC.fetch = fake_fetch
+        try:
+            EC.check_host(host)
+        finally:
+            EC.fetch = original
+        self.assertEqual(calls, [f"https://{host}/"])
+
+
 class TestCli(unittest.TestCase):
     def test_cli_exit_codes_reflect_duplicates(self):
         import subprocess

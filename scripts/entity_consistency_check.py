@@ -41,6 +41,15 @@ DUPLICATE_HOSTS = [
     "flush-pro-flow.base44.app",  # declared as the business @id in base44 JSON-LD
 ]
 
+# A site-builder host can answer 404 at its root while a published *page* under
+# it still serves indexable content. Checking only "/" therefore reports "gone"
+# for a live duplicate: on 2026-10-15 straightflushplumb8.wixsite.com/ returned
+# 404 but /straightflushplumb-1 returned 200 with no noindex and ranked #1 for
+# the brand query. Probe the known page paths as well as the root.
+DUPLICATE_HOST_PATHS = {
+    "straightflushplumb8.wixsite.com": ["/straightflushplumb-1"],
+}
+
 HISTORY = os.path.join(ROOT, "growth-engine", "data", "entity_consistency_history.jsonl")
 
 UA = "Mozilla/5.0 (compatible; StraightFlushEntityCheck/1.0)"
@@ -92,6 +101,17 @@ def is_indexable(status, robots):
     return not (robots and "noindex" in robots)
 
 
+# Ordering used when a host is probed at several URLs: the most severe verdict
+# wins, so an indexable subpage is never masked by a 404 root.
+_VERDICT_RANK = {
+    "live_duplicate": 4,
+    "noindex": 3,
+    "unknown": 2,
+    "gone": 1,
+    "canonical": 0,
+}
+
+
 def classify(host, status, body):
     """Classify one host. Returns (verdict, detail_dict)."""
     robots = robots_meta(body)
@@ -116,10 +136,23 @@ def classify(host, status, body):
 
 
 def check_host(host):
-    url = f"https://{host}/"
-    status, body = fetch(url)
-    verdict, detail = classify(host, status, body)
-    return {"host": host, "url": url, "verdict": verdict, **detail}
+    """Check a duplicate host's root and any known published paths.
+
+    The worst verdict across the probed URLs wins, and that URL's evidence is
+    returned, so a live page cannot be masked by a 404 root.
+    """
+    urls = [f"https://{host}/"]
+    for path in DUPLICATE_HOST_PATHS.get(host, []):
+        urls.append(f"https://{host}{path}")
+
+    best = None
+    for url in urls:
+        status, body = fetch(url)
+        verdict, detail = classify(host, status, body)
+        candidate = {"host": host, "url": url, "verdict": verdict, **detail}
+        if best is None or _VERDICT_RANK[verdict] > _VERDICT_RANK[best["verdict"]]:
+            best = candidate
+    return best
 
 
 def check_all():
