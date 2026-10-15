@@ -190,6 +190,63 @@ def norm_href(href, page_rel):
     return path or "index.html"
 
 
+def url_path(rel):
+    """Filesystem path -> canonical URL path.
+
+    index.html maps to the directory URL, because that is the form the sitemap
+    lists and the form the page's own canonical points to.
+    """
+    if rel.endswith("/index.html"):
+        return "/" + rel[: -len("index.html")]
+    if rel == "index.html":
+        return "/"
+    return "/" + rel
+
+
+def rel_path(url):
+    """Canonical URL path -> filesystem path."""
+    if url == "/":
+        return "index.html"
+    if url.endswith("/"):
+        return url.lstrip("/") + "index.html"
+    return url.lstrip("/")
+
+
+def sitemap_coverage(pages, sm_urls):
+    """Compare the sitemap against the page set in URL space.
+
+    Comparing raw filesystem paths is wrong twice over: a hub is listed as
+    `/services/` while its file is `services/index.html`, and the noindex legacy
+    mirrors are absent from the sitemap by design. Both mistakes made the audit
+    report healthy pages as broken.
+    """
+    sm_paths = set()
+    for u in sm_urls:
+        m = re.match(rf"https?://(?:www\.)?{re.escape(DOMAIN)}(/.*)$", u)
+        if m:
+            pth = m.group(1)
+            sm_paths.add(pth if pth.endswith("/") else (pth or "/"))
+    fs_urls = {url_path(p) for p in pages}
+    non_self_canon = []
+    for u_path in sorted(sm_paths):
+        rel = rel_path(u_path)
+        if rel in pages and pages[rel].canonical:
+            c = norm_href(pages[rel].canonical, rel)
+            # Both sides through url_path: a canonical of `/services/` and the
+            # file `services/index.html` are the same URL, not a mismatch.
+            if c and url_path(c) != url_path(rel):
+                non_self_canon.append((u_path, c))
+    return {
+        "sm_paths": sm_paths,
+        "in_sm_not_fs": sorted(sm_paths - fs_urls),
+        "in_fs_not_sm": sorted(
+            url_path(p) for p in pages
+            if url_path(p) not in sm_paths and not pages[p].is_stub
+        ),
+        "non_self_canon": non_self_canon,
+    }
+
+
 def main():
     pages = {}
     for dirpath, dirnames, filenames in os.walk(ROOT):
@@ -310,27 +367,11 @@ def main():
     with open(sm_path, encoding="utf-8") as fh:
         sm = fh.read()
     sm_urls = re.findall(r"<loc>(.*?)</loc>", sm)
-    sm_paths = set()
-    for u in sm_urls:
-        m = re.match(rf"https?://(?:www\.)?{re.escape(DOMAIN)}(/.*)$", u)
-        if m:
-            pth = m.group(1).lstrip("/")
-            if pth.endswith("/"):
-                pth += "index.html"
-            sm_paths.add(pth or "index.html")
-    fs_paths = set(pages)
-    print(f"  sitemap URLs: {len(sm_urls)}  (unique paths: {len(sm_paths)})")
-    in_sm_not_fs = sorted(sm_paths - fs_paths)
-    in_fs_not_sm = sorted(p for p in fs_paths - sm_paths)
-    print(f"  in sitemap but NO file: {len(in_sm_not_fs)} {in_sm_not_fs[:8]}")
-    print(f"  file exists but NOT in sitemap: {len(in_fs_not_sm)} {in_fs_not_sm[:12]}")
-    non_self_canon_in_sm = []
-    for u_path in sorted(sm_paths):
-        if u_path in pages and pages[u_path].canonical:
-            c = norm_href(pages[u_path].canonical, u_path)
-            if c and c != u_path:
-                non_self_canon_in_sm.append((u_path, c))
-    print(f"  sitemap URLs whose canonical points elsewhere: {len(non_self_canon_in_sm)} {non_self_canon_in_sm[:5]}")
+    cov = sitemap_coverage(pages, sm_urls)
+    print(f"  sitemap URLs: {len(sm_urls)}  (unique paths: {len(cov['sm_paths'])})")
+    print(f"  in sitemap but NO file: {len(cov['in_sm_not_fs'])} {cov['in_sm_not_fs'][:8]}")
+    print(f"  indexable file NOT in sitemap: {len(cov['in_fs_not_sm'])} {cov['in_fs_not_sm'][:12]}")
+    print(f"  sitemap URLs whose canonical points elsewhere: {len(cov['non_self_canon'])} {cov['non_self_canon'][:5]}")
 
     # ---- duplicate-content clusters (near-duplicate titles/h1s across dirs)
     print("\n=== 5. DUPLICATE-CONTENT CLUSTERS (root vs subdir) ===")
