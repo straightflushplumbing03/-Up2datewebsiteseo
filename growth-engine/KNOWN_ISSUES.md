@@ -188,15 +188,29 @@ Each issue: evidence, impact, fix, status, approval level.
   with the session's `OPENHANDS_API_KEY` returns `{"automations":[],"total":0}`
   (HTTP 200), while `growth-engine/KNOWN_ISSUES.md` (ISSUE-005) documents two
   active loops (`SFPL Intelligence HQ Daily 6 AM`, `HQ-W`) plus a Sentinel job.
-- **Impact / not verified:** it is **not** confirmed that the automations were
-  deleted. The most likely explanation is that this session authenticates as a
-  different user/org than the account that owns the automations, so the list is
-  scoped to an empty org. Cannot be resolved without the owning account's
-  credential.
-- **Owner action:** confirm which account/org owns the daily automations and, if
-  needed, mint a scoped API key; then re-run
-  `curl -H "Authorization: Bearer $KEY" https://app.all-hands.dev/api/automation/v1?limit=30`.
-- **Approval:** informational.
+- **Additional evidence (2026-10-15, follow-up):**
+  - The key **is valid** and belongs to the **correct owner account**:
+    `GET /api/v1/settings` returns `email: straightflushplumbing03@gmail.com`.
+    (Unauthenticated → 401; a bad key → `Invalid or expired API key`.)
+  - The list is **genuinely empty for that account**, not a permissions/scope
+    artifact: `GET /api/automation/v1/5dc89b41-…` (the HQ-D id recorded in
+    `automations/README.md`) returns **404 `{"detail":"Automation not found"}`**,
+    and `?limit=100`, `enabled=false`, `include_disabled=true`, `all=true` all
+    return `total:0`.
+  - No local automation service is running (`ss`/`netstat` show no listeners on
+    8000/8001/3000).
+  - Prior KB state: the same key saw the loops **ACTIVE** on 2026-10-12
+    (`INTEGRATION_STATUS.md`), so they existed and have since disappeared from
+    the account's list.
+- **Impact / not verified:** the automations are no longer present under this
+  account as of 2026-10-15. Whether they were **deleted**, **disabled and purged**,
+  or are owned by a **different account**, cannot be determined from here. The
+  dates/ids in the KB are prior evidence, not proof of current state.
+- **Owner action:** check OpenHands Cloud → Automations under
+  `straightflushplumbing03@gmail.com`; if the two loops are gone, recreate them
+  from the canonical prompts in `growth-engine/automations/` (HQ-D `0 6 * * *` PT,
+  HQ-W `0 6 * * 1` PT) and record the new ids in `automations/README.md`.
+- **Approval:** informational (recreating automations is a Level 3 action).
 
 ---
 
