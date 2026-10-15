@@ -3,6 +3,28 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-15 — ISSUE-009 root cause corrected: runs die at the ceiling, not for lack of a sandbox
+
+**Correction.** The earlier diagnosis on this branch read the platform error
+`environment_unavailable` / "Timed out: Sandbox not available" as a transient
+sandbox-provisioning failure and proposed a retry. That was wrong. Four failed runs
+(all at the enforced ceiling, `started_at → timeout_at` ≈ 1920 s) show the error is a
+**symptom of running out of clock**: the platform kills the run, tears down the
+sandbox, and its post-run verification then reports no sandbox. The discriminator is
+**elapsed time**, not the error string.
+
+- Real fix (already on `main`, commit `897e7be`): `scripts/daily_measure.py`
+  deterministic pre-stage (~5 s) + a prompt budgeted around the real ~1920 s ceiling.
+  A dispatched run completed in **947 s**.
+- `tests/classify_automation_run.py` now keys on elapsed time vs. the ceiling:
+  `budget_overrun` (do NOT retry) vs. `sandbox` (retry once). Fixtures include the
+  real `67e154d9` (no sandbox_id, 1926 s) as the case a naive rule gets wrong.
+- The retry watchdog is now a narrow safety net: it re-dispatches only on a *fast*
+  failure that never reached the ceiling.
+
+**Updated:** `KNOWN_ISSUES.md` (ISSUE-009 root cause corrected), `automations/README.md`
+(reliability section), `reports/daily/2026-10-13-incident-sandbox-failure.md`.
+
 ## 2026-10-15 — Entity consolidation: owned duplicates found and scoped
 
 **Owner confirmation:** the Wix account and the base44 URL(s) are **owned** by

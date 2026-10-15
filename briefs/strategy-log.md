@@ -5,6 +5,39 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-15 (reliability) — Daily-run failures: corrected root cause + watchdog narrowed
+
+**Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/fix-sandbox-failure-2026-10-13` (PR #36).
+
+**Corrected diagnosis.** A failed run can carry `environment_unavailable` / "Timed
+out: Sandbox not available" and yet not be a sandbox-provisioning failure. Four runs
+failed at the **enforced ceiling** (`started_at → timeout_at` ≈ 1920 s, ~32 min, not
+the 1800 s in the config): `67e154d9` (1926 s), `1cda9bca` (1954 s), and two
+`kind: timeout` runs at 1941/2004 s. The platform kills the run for running out of
+clock, tears down the sandbox, and its post-run verification then reports no sandbox.
+The error is a *symptom*, not a cause. The discriminator is **elapsed time**, not the
+error string.
+
+**Change 1 — real fix (already on `main`, commit `897e7be`).** `scripts/daily_measure.py`
+is a deterministic pre-stage (~5 s) that runs every check and writes
+`growth-engine/data/daily_context.json`; the master prompt is budgeted around the real
+ceiling. A dispatched run then COMPLETED in **947 s**.
+
+**Change 2 — retry watchdog narrowed.** `automations/ai-headquarters-daily-watchdog.prompt.md`
+now re-dispatches only on a *fast* failure that never reached the ceiling. Previously it
+would have re-dispatched any `environment_unavailable` run — i.e. every budget overrun —
+which wastes ~30 min of sandbox and can race the first run's branch.
+
+**Change 3 — classifier.** `tests/classify_automation_run.py` keys on elapsed time vs.
+the ceiling (`budget_overrun` = do NOT retry; `sandbox` = retry once), with the real
+`67e154d9` as the regression fixture a naive "sandbox marker → retry" rule gets wrong.
+
+**Expected outcome:** daily failures are read correctly, the watchdog stops amplifying
+overruns, and a genuine provisioning blip still gets one retry.
+
+**Result / next:** confirm the next scheduled run fits its budget.
+
 ## 2026-10-15 (daily) — Automation-integrity run: lastmod idempotency + key resolution
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
