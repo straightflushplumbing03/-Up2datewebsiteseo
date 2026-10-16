@@ -19,17 +19,14 @@ import re
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+from csp_policy import csp_content  # noqa: E402  (same dir, imported for its single definition)
+
 SEARCH_DIRS = ["", "about", "academy", "assets", "case-studies", "cities",
                "guides", "insurance", "services"]
 
-CSP_CONTENT = (
-    "default-src 'self'; style-src 'self' https://fonts.googleapis.com; "
-    "font-src https://fonts.gstatic.com; img-src 'self' data: "
-    "https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; "
-    "script-src 'self'; frame-src https://www.google.com; connect-src 'self'; "
-    "object-src 'none'; base-uri 'self'; form-action https://formspree.io; "
-    "upgrade-insecure-requests"
-)
+# The policy is defined once in csp_policy.py; do not inline it here, or this
+# script will silently revert the GA4 change the next time it runs.
+CSP_CONTENT = csp_content()
 META_CSP = '<meta http-equiv="Content-Security-Policy" content="' + CSP_CONTENT + '">'
 META_REFERRER = '<meta name="referrer" content="strict-origin-when-cross-origin">'
 META_CSP_RE = re.compile(r'<meta http-equiv="Content-Security-Policy" content="[^"]*">')
