@@ -285,25 +285,31 @@ read `/runs`.
 The daily agent opens PRs and requests review; it never merges. For the gate to be real and
 not self-restraint, the repository must enforce it. Fail closed if any box is unchecked.
 
-- [ ] Branch protection on `main`: **Require a pull request before merging**.
-- [ ] Branch protection: **Require approvals ≥ 1**, and do **not** enable "Allow specified
-      actors to bypass required pull requests" for the agent account.
-- [ ] Branch protection: **Dismiss stale approvals** when new commits are pushed.
-- [ ] Github Actions (or any CI) marks the required status checks: `unittest discover`,
-      `validate_knowledge_base.py`, `seo_audit.py`.
-- [ ] Optional: enable **Copilot code review** so every PR gets an automated pass before a
-      human looks; the agent requests it with
-      `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers`
-      `{"reviewers":["copilot-pull-request-reviewer[bot]"]}`.
-- [ ] Confirm the agent's token cannot merge: a merge attempt from the automation must return
-      `403` once the ruleset is active.
+**Known gap:** the agent runs as the `straightflushplumbing03` account, which is also the only
+account with access. GitHub will not let a PR's author be its reviewer, and branch protection
+cannot require "a different account approved" when there is only one account. So today the gate
+is the agent's own instruction. To make it enforced:
 
-Request a human review when you open a PR:
+- [ ] **Add a second GitHub account as a collaborator** (even a spare account you control).
+      Until then, Copilot review is the only automated reviewer available.
+- [ ] Branch protection on `main`: **Require a pull request before merging**.
+- [ ] Branch protection: **Require approvals >= 1**, and do **not** enable "Allow specified
+      actors to bypass required pull requests".
+- [ ] Branch protection: **Dismiss stale approvals** when new commits are pushed.
+- [ ] Required status checks: `unittest discover`, `validate_knowledge_base.py`, `seo_audit.py`
+      (needs a CI workflow; the repo has none yet).
+- [ ] Optional: enable **Copilot code review** so every PR gets an automated pass; request it
+      with `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers`
+      `{"reviewers":["copilot-pull-request-reviewer[bot]"]}`.
+- [ ] Confirm the agent cannot bypass: after rules are active, a self-merge attempt must fail.
+
+Request an available review when you open a PR (the owner account cannot review its own PR):
 
 ```bash
+# Copilot (works today if Copilot review is enabled on the repo)
 curl -s -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
   -H "Content-Type: application/json" \
   "https://api.github.com/repos/straightflushplumbing03/-Up2datewebsiteseo/pulls/<N>/requested_reviewers" \
-  -d '{"reviewers":["straightflushplumbing03"]}'
+  -d '{"reviewers":["copilot-pull-request-reviewer[bot]"]}'
 ```
 

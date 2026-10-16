@@ -455,12 +455,16 @@ documentation and test changes — there is no low-risk exception.
 
 For every PR you open:
 
-1. **Request a review** before you finish the run:
-   - Request the owner with `reviewers: ["straightflushplumbing03"]` in the PR creation call,
-     or `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers`.
-   - Optionally also request an automated pass with
-     `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers` with `{"reviewers":["copilot-pull-request-reviewer[bot]"]}`
-     when Copilot review is enabled on the repository.
+1. **Request a review** before you finish the run. Note: the automation acts as the
+   `straightflushplumbing03` account, and GitHub rejects a review request from the PR's own
+   author, so requesting that account is a no-op. Instead:
+   - Request an **automated** review: `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers`
+     with `{"reviewers":["copilot-pull-request-reviewer[bot]"]}` when Copilot review is enabled
+     on the repository (this is the available reviewer today).
+   - Request a **human** reviewer by name if a separate collaborator account exists,
+     `{"reviewers":["<account>"]}`. Do not request `straightflushplumbing03` — it is you.
+   - Always **name the PR in your run summary** so the owner sees it. The report and PR are the
+     notification channel.
 2. Put the **evidence** in the PR body: the exact verification commands you ran and their
    results, so the reviewer can check without re-deriving the context.
 3. The PR must be **green** — `unittest discover`, `validate_knowledge_base.py`, `seo_audit.py`
@@ -472,9 +476,10 @@ For every PR you open:
 If a review comes back with change requests, address them on the same branch and re-request
 review. You may comment on the PR; you may not approve it or merge it.
 
-Repo settings must keep a required approving review before merge so the gate is enforced by
-the platform, not by self-restraint. See `ai-headquarters-blueprint/README.md` for the
-branch-protection checklist.
+Because the agent and the owner share one account, the platform cannot enforce "a different
+account approved" on its own. The merge gate is therefore the agent's instruction plus the
+owner's manual merge. Add a second collaborator account (see the checklist in
+`ai-headquarters-blueprint/README.md`) to make the review an enforced, separate-identity step.
 
 You may automatically implement low-risk internal tooling, tests, reports, documentation, and
 reversible technical fixes — but the merged outcome always goes through human review.
