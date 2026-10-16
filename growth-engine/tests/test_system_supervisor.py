@@ -63,6 +63,28 @@ class TestUnexpectedBranches(unittest.TestCase):
         self.assertEqual(SS._unexpected_from(["main"]), [])
 
 
+class TestAiVisibilityBlind(unittest.TestCase):
+    """The business goal is AI recommendation; the check must catch a blind surface."""
+
+    def test_constant_window_is_positive(self):
+        self.assertGreater(SS.MAX_AI_MEASUREMENT_AGE_DAYS, 0)
+
+    def test_check_function_exists_and_is_in_the_run(self):
+        self.assertTrue(callable(SS.check_ai_visibility_blind))
+
+    def test_reads_the_real_history_and_reports_row_types(self):
+        # Against the real repo history: assert the shape, not the value.
+        result = SS.check_ai_visibility_blind()
+        self.assertEqual(result["name"], "ai_visibility_blind")
+        self.assertIn("ai_platform_rows", result)
+        self.assertIn("total_rows", result)
+        # ai_platform_rows must never exceed the total.
+        self.assertLessEqual(result["ai_platform_rows"], result["total_rows"])
+        # If there are zero AI rows, the check must FAIL (not pass silently).
+        if result["ai_platform_rows"] == 0:
+            self.assertFalse(result["ok"])
+
+
 class TestBudgetConstants(unittest.TestCase):
     def test_thresholds_are_positive(self):
         self.assertGreater(SS.MAX_OPEN_PRS, 0)

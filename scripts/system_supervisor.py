@@ -21,6 +21,7 @@ WHAT IT CHECKS (each is PASS / FAIL / BLOCKED, never a silent zero)
   automations_enabled   exactly one enabled *content* automation (the invariant)
   schedule_intact       the live daily cron is still Mon/Wed/Fri 06:00 PT
   prompt_matches_repo   the live prompt equals the repo prompt (no silent drift)
+  ai_visibility_blind   AI-platform rows exist and are recent (the business goal)
   self_merges           no PR was merged by the account that opened it
   open_pr_backlog       open PRs are below the backlog threshold
   change_volume         files/pages changed since the last check are within budget
@@ -67,6 +68,7 @@ EXPECTED_CONTENT_AUTOMATIONS = 1
 MAX_OPEN_PRS = 5          # more than this is a backlog the owner has not cleared
 MAX_CHANGED_FILES = 120   # churn budget between two supervisor runs
 MAX_PAGES_ADDED = 25      # new indexable pages between two supervisor runs
+MAX_AI_MEASUREMENT_AGE_DAYS = 10  # AI-platform rows must be newer than this
 
 # Remote branch prefixes any automation is allowed to create.
 KNOWN_BRANCH_PREFIXES = (
@@ -231,6 +233,62 @@ def _unexpected_from(branches):
                   if b != "main" and not b.startswith(KNOWN_BRANCH_PREFIXES))
 
 
+def check_ai_visibility_blind():
+    """Is the AI-platform surface actually being measured?
+
+    This is the business-critical check for the stated goal — being recommended by
+    AI engines. Every row in the history so far is a *conventional search proxy*
+    (Tavily/Brave/DDG); `test_type: ai_platform` rows are what prove the AI surface
+    is measured. Zero such rows means the programme is blind, not that the business
+    is invisible. We fail the *measurement*, never record a visibility zero.
+    """
+    path = os.path.join(ROOT, "growth-engine", "data", "ai_visibility_history.jsonl")
+    if not os.path.exists(path):
+        return _check("ai_visibility_blind", False, "no visibility history file")
+    ai_rows = 0
+    latest = None
+    total = 0
+    with open(path, encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            total += 1
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if r.get("test_type") == "ai_platform":
+                ai_rows += 1
+                ts = r.get("ts") or ""
+                if latest is None or ts > latest:
+                    latest = ts
+    if ai_rows == 0:
+        return _check(
+            "ai_visibility_blind", False,
+            f"0 of {total} history rows are AI-platform measurements — the AI surface "
+            "has never been measured (all rows are conventional-search proxies)",
+            ai_platform_rows=0, total_rows=total,
+            fix="provision a GEMINI_API_KEY (free tier) — see INTEGRATION_STATUS.md",
+        )
+    # Stale if the newest AI measurement is older than the window.
+    try:
+        newest = dt.datetime.fromisoformat(latest.replace("Z", "+00:00"))
+        age_days = (dt.datetime.now(dt.timezone.utc) - newest).days
+    except (ValueError, AttributeError):
+        return _check("ai_visibility_blind", True,
+                      f"{ai_rows} AI-platform row(s); latest ts unparsable ({latest!r})",
+                      ai_platform_rows=ai_rows, total_rows=total)
+    ok = age_days <= MAX_AI_MEASUREMENT_AGE_DAYS
+    return _check(
+        "ai_visibility_blind", ok,
+        f"{ai_rows} AI-platform row(s); latest {age_days} day(s) ago "
+        f"(window {MAX_AI_MEASUREMENT_AGE_DAYS})",
+        ai_platform_rows=ai_rows, total_rows=total, latest_ai_ts=latest,
+        age_days=age_days,
+    )
+
+
 def check_change_volume(since):
     if not since:
         # No prior supervisor run: this IS the baseline. Do not fail on history
@@ -326,6 +384,7 @@ def main():
         auto_check,
         check_schedule_intact(by_id),
         check_prompt_matches_repo(by_id),
+        check_ai_visibility_blind(),
         check_self_merges(since),
         check_open_pr_backlog(),
         check_change_volume(since),

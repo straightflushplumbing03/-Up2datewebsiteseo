@@ -614,3 +614,30 @@ duplicate, so the duplicates are not disavowed from the real side either.
   missing `og:*`/`twitter:*` tags.
 - **Fix applied 2026-10-15:** added the site's standard social block, reusing the
   existing shared `og:image` (`assets/img/lance-hero.jpeg`) — no new asset.
+
+---
+
+## ISSUE-027 — Free AI-visibility surface has never been measured; the programme is blind  [HIGH · OPEN]
+
+- **Evidence:** `growth-engine/data/ai_visibility_history.jsonl` holds **337 rows and zero
+  of them are `test_type: ai_platform`**. Every row is a conventional-search proxy
+  (Tavily `conventional_proxy` 280, plus historical Brave/Bing/DDG). The free Gemini
+  Search-grounded surface (`scripts/gemini_visibility.py`,
+  `growth-engine/gemini_search_client.py`) has run **zero times**.
+- **Root cause:** `GEMINI_API_KEY` is *registered* in the environment but resolves to an
+  **empty string** (`len == 0`); `GOOGLE_API_KEY` / `Gemini_api_key` are absent. The client
+  correctly treats this as `BLOCKED` (a missing key is not zero visibility), so the run has
+  never recorded a false zero — but the AI surface has also never once been measured.
+- **Impact:** the stated business goal is to be recommended by AI engines for local service
+  queries. We currently have **no measurement of that at all** — only a conventional-search
+  proxy that says nothing about AI recommendation behaviour. We cannot improve what we do
+  not measure, and we cannot prove progress to the owner.
+- **Not the same as ISSUE-017/019:** those fixed *how* the key name is read and injected.
+  This is *key provisioning* — no code fix can supply the value.
+- **Fix (owner action, Level 3):** create a **free** Gemini API key at
+  https://aistudio.google.com/apikey and register it as the secret `GEMINI_API_KEY`
+  (non-empty). The client already accepts it; no code change needed. Then the next
+  pre-stage records the first real AI-platform rows.
+- **Guard added:** `scripts/system_supervisor.py` check `ai_visibility_blind` fails the run
+  while zero (or stale) AI-platform rows exist, so the blindness stays visible instead of
+  being quietly reported as `BLOCKED` forever.
