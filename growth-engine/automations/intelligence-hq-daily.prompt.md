@@ -145,10 +145,19 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
 
 6. **Low-risk, reversible improvements only.** Before any code change: inspect the
    current code, confirm the evidence justifies it, keep it minimal and reversible,
-   and **run the relevant tests** (`python3 growth-engine/tests/validate_knowledge_base.py`
-   and, for HTML changes, `python3 scripts/seo_audit.py` if present). Review every
-   change. If evidence is weak, propose instead of changing. If no safe change is
-   warranted, make none — say so.
+   and **run the relevant tests**. The full unit suite is the gate — run it before
+   and after any change, and do not push if it is not green:
+
+   ```bash
+   python3 -m unittest discover -s growth-engine/tests -p "test_*.py"
+   python3 growth-engine/tests/validate_knowledge_base.py
+   python3 scripts/seo_audit.py      # for HTML changes
+   ```
+
+   If a change breaks a test, the change is wrong — revert it rather than editing
+   the test to match. A test that is edited to pass hides the regression it was
+   written to catch. Review every change. If evidence is weak, propose instead of
+   changing. If no safe change is warranted, make none — say so.
 
 7. **Write the dated daily report** to
    `growth-engine/reports/daily/<YYYY-MM-DD>.md` following

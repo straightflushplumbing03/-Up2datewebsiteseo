@@ -183,9 +183,14 @@ def norm_href(href, page_rel):
         path = href.lstrip("/")
     else:
         base_dir = os.path.dirname(page_rel)
-        path = os.path.normpath(os.path.join(base_dir, href)).replace(os.sep, "/")
-        if path.startswith("../"):
+        joined = os.path.normpath(os.path.join(base_dir, href)).replace(os.sep, "/")
+        if joined.startswith("../"):
             return None
+        # normpath strips a trailing slash, which collapses `../services/` to
+        # `services`. That is a different string from the root-relative form
+        # `/services/`, so the same destination produced two values and
+        # `sitemap_coverage` reported healthy pages as non-self-canonical.
+        path = joined + "/" if href.endswith("/") and not joined.endswith("/") else joined
     path = path.split("#")[0].split("?")[0]
     return path or "index.html"
 
