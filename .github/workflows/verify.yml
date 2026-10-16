@@ -1,0 +1,52 @@
+name: Verify
+
+# `main` deploys straight to the live site (GitHub Pages from this branch), and
+# no CI existed, so "the suite is green" was the reporting agent's own claim
+# about its own code. This runs the blueprint's gates on every PR, so the claim
+# comes from GitHub instead.
+#
+# Every gate is stdlib-only and network-free, so this needs no secrets and no
+# third-party installs — it runs in about a minute.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # refresh_sitemap.py derives lastmod from each file's last git commit
+          # date. A shallow clone collapses those dates, which changes the
+          # tool's behaviour, so the sitemap step below needs full history.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Unit tests
+        run: python3 -m unittest discover -s growth-engine/tests -p "test_*.py" -v
+
+      - name: Knowledge base and site invariants
+        run: python3 growth-engine/tests/validate_knowledge_base.py
+
+      - name: SEO audit
+        run: python3 scripts/seo_audit.py
+
+      - name: Sitemap covers exactly the indexable page set
+        # Asserts the invariant that actually broke twice (ISSUE-016, ISSUE-020):
+        # the URL set must match the indexable pages. `lastmod` is deliberately
+        # not asserted — it legitimately moves whenever a page changes, so
+        # byte-comparing the file here would fail on honest date drift.
+        run: |
+          python3 scripts/refresh_sitemap.py | tee /tmp/sitemap.out
+          grep -Fq 'missing: []' /tmp/sitemap.out
+          grep -Fq 'extra: []' /tmp/sitemap.out
