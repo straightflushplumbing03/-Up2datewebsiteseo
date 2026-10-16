@@ -57,8 +57,10 @@ call. Prior verification 2026-10-09.
 
 ## Highest-value integrations to unlock
 
-1. **Perplexity API key** — the cheapest way to get a *real* AI-answer-engine
-   visibility signal in-automation.
+1. **Gemini API key** (free tier) — a *real* AI-answer-engine visibility signal
+   in-automation at no cost. Register `GEMINI_API_KEY` and the daily run measures
+   AI-platform visibility via `scripts/gemini_visibility.py`. (Perplexity is a
+   paid second engine, optional.)
 2. **Google Search Console** — the only reliable source for organic impressions,
    clicks, query, and indexing/coverage data.
 3. **Google Business Profile** — local pack visibility is a primary channel for
@@ -74,10 +76,11 @@ call. Prior verification 2026-10-09.
 | Google Search AI Overviews / AI Mode | **not testable** | No SERP API key; SERP served as JS shell to curl |
 | ChatGPT Search | **not testable** | chatgpt.com 403 to non-browser clients |
 | Claude web search | **not testable** | not scriptable in this environment |
-| Gemini | **not testable** | — |
+| Gemini web search (consumer app) | **not testable** | gemini.google.com not scriptable |
+| Gemini Search API | **free tier — code ready, key not set** | `GEMINI_API_KEY` missing. Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`); enable by exporting the key. Free tier (~500 grounded requests/day on Flash). |
 | Microsoft Copilot | **not testable** | — |
 | Grok | **not testable** | — |
-| Perplexity Agent API | **code ready, key not set** | `PERPLEXITY_API_KEY` missing. Client + CLI + tests committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`); enable by exporting the key. No JS scraping involved. |
+| Perplexity Agent API | **optional — key not set** | `PERPLEXITY_API_KEY` missing. Metered, no free tier; a paid second engine. Client + CLI committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`). |
 | Notification channel (email/Slack/etc.) | **not configured / not verified** | Owner-approved notification target; Slack MCP not enabled |
 | Call tracking / lead data | **not connected** | Provider + creds |
 
