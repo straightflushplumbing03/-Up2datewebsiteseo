@@ -23,6 +23,10 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   Prompt source: `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md`.
 - **Retry Watchdog** — id `b946624c-79c2-40a6-be1b-258388a15fb4`,
   `30 6,9,12,15,18 * * *`, timeout 600. Dispatch-only; never does SEO work.
+- **System Supervisor (HQ-S)** — id `c1b547c8-da3b-4fa1-ba8a-e99a55e0f59e`,
+  `0 7 * * 2,6` (Tue/Sat 07:00 PT), timeout 900. Oversight: runs
+  `scripts/system_supervisor.py` (deterministic drift detector, no LLM until the report) and
+  opens a report PR. Never merges/edits. Prompt `automations/ai-headquarters-supervisor.prompt.md`.
 - Disabled rollback points: `e6684830-...`, `df4bcd68-...`. Retired (404): `5dc89b41`,
   `0582d219`, `4c5213f7`.
 - **Invariant: exactly ONE enabled content automation.** Check before enabling anything.
@@ -53,6 +57,11 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   `GEMINI_API_KEY` / `Perplexity_api_key`. Names are case-sensitive as the user typed them.
 - MCP `github_update_pull_request` can 403 on this repo; `curl -X PATCH` with
   `$GITHUB_TOKEN` works.
+- **The automation runs as the OWNER's GitHub account `straightflushplumbing03`** — the repo's
+  only collaborator. So a review request to that account is rejected
+  (`422 Review cannot be requested from pull request author`), and branch protection cannot
+  enforce "a different account approved" until a second collaborator is added. The merge gate is
+  currently the agent's instruction + the owner's manual merge. See the README checklist.
 
 ## Run-budget rule (ISSUE-006 / ISSUE-009)
 - **The expensive part is deciding how to measure, not measuring.** Two runs died at
