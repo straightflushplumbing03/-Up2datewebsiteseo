@@ -70,7 +70,7 @@ class TestTagPresent(unittest.TestCase):
             )
 
     def test_measurement_id_is_the_expected_one(self):
-        self.assertEqual(MEASUREMENT_ID, "G-651QV5WYP2")
+        self.assertEqual(MEASUREMENT_ID, "G-DFS6B1LV4P")
         self.assertIn(MEASUREMENT_ID, GTAG_BLOCK)
 
 

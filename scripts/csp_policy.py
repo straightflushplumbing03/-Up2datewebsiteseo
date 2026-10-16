@@ -22,7 +22,7 @@ https://developers.google.com/tag-platform/security/guides/csp
 import base64
 import hashlib
 
-MEASUREMENT_ID = "G-651QV5WYP2"
+MEASUREMENT_ID = "G-DFS6B1LV4P"
 
 GTAG_BLOCK = """<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={mid}"></script>
