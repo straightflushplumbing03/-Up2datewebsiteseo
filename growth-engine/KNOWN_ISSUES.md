@@ -614,3 +614,38 @@ duplicate, so the duplicates are not disavowed from the real side either.
   missing `og:*`/`twitter:*` tags.
 - **Fix applied 2026-10-15:** added the site's standard social block, reusing the
   existing shared `og:image` (`assets/img/lance-hero.jpeg`) — no new asset.
+
+---
+
+## ISSUE-027 — The live automation prompt has drifted from its repo source of truth, and a builder could revert the schedule  [HIGH · OPEN]
+
+- **Evidence (2026-10-16):**
+  - The live job `1485d659-8663-4776-a507-db0fefed8483` prompt and
+    `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md` (its documented source)
+    **differ**. The live prompt contains a section `### Merging your own pull
+    request` granting self-merge authority; that text exists **nowhere** in the
+    repository (`git log -S` finds no commit adding it). The repo prompt instead
+    states "**Never merge your own pull request.**"
+  - PRs #50, #51, #52 and #53 were all authored by `straightflushplumbing03` **and
+    merged by `straightflushplumbing03`** on 2026-10-16. The repo policy forbids
+    self-merge, so either the live prompt overrides the repo, or a human merged.
+    This must be resolved by the owner, not assumed.
+  - The live prompt was rewritten repeatedly during the session
+    (`updated_at` advanced 02:33 to 02:37 while a run was `RUNNING`), so a
+    concurrent session edits its own live prompt.
+  - `build_payload.py` **hardcoded** `0 6 * * *`. Re-running it to recreate the
+    job would have silently reverted the schedule to every day.
+- **Impact:** The prompt that actually runs is not the prompt in the repo, so
+  review of `01-MASTER-AGENT-PROMPT.md` is not review of the live behaviour. The
+  hardcoded builder is a second path back to the old daily schedule. Governance
+  (self-merge) is ambiguous.
+- **Fix applied 2026-10-16 (partial):** `build_payload.py` now derives the cron
+  from the prompt source instead of restating it, with a regression test
+  (`growth-engine/tests/test_build_payload.py`). This removes the schedule-revert
+  path.
+- **Still open / owner decision:** (1) Decide the self-merge policy and make the
+  live prompt and the repo agree. (2) Reconcile the live prompt with
+  `01-MASTER-AGENT-PROMPT.md` — or declare the repo file the source and re-push
+  it. Agents must not overwrite a live prompt another session is editing.
+- **Approval level:** Level 3 (owner) for the policy decision; the builder fix is
+  Level 2.
