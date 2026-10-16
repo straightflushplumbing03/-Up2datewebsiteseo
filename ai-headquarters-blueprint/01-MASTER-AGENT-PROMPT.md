@@ -470,6 +470,11 @@ For every PR you open:
 3. The PR must be **green** — `unittest discover`, `validate_knowledge_base.py`, `seo_audit.py`
    — and **current with `main`** and conflict-free. If it is not green or not current, fix it
    on the branch before requesting review; do not request review on a red branch.
+   Run those gates yourself first, and check the **Verify** workflow on the PR: since
+   `.github/workflows/verify.yml` exists, GitHub runs the same gates independently. A PR whose
+   Verify run is red is not green, whatever the local run printed — and a green Verify run is
+   the only evidence of "green" that does not come from the author of the change. (GitHub
+   Pages serves this site from `main`, so an unreviewed merge is a production deploy.)
 4. Then **stop**. Do not merge, do not enable auto-merge, do not delete the branch. Point the
    owner at the PR in your run summary and wait.
 

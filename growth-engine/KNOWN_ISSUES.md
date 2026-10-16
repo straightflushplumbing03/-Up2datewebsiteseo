@@ -51,24 +51,26 @@ Each issue: evidence, impact, fix, status, approval level.
 
 ---
 
-## ISSUE-003 — Duplicate open PRs (draft content not merged)  [LOW · OPEN]
+## ISSUE-003 — Duplicate open PRs (draft content not merged)  [LOW · RESOLVED 2026-10-16]
 
-- **Evidence:** PRs #15, #16, #17, #18 all open; #16 and #17 touch overlapping
+- **Evidence:** PRs #15, #16, #17, #18 were all open; #16 and #17 touched overlapping
   leak-detection FAQ/schema changes.
-- **Impact:** review noise; potential conflicting edits if merged blindly.
-- **Fix:** owner/Implementer reviews and merges the best version of each, closes
-  duplicates. Not blocking.
-- **Approval:** Level 2.
+- **Verified 2026-10-16:** all four are **closed** (`state=closed`, `merged=false`) and the
+  repo has no open PRs from that set. Nothing to merge or close.
+- **Fix:** none needed. Re-open only if a specific change from one of them is wanted, as a
+  fresh small PR against current `main`.
+- **Approval:** — (closed).
 
 ---
 
-## ISSUE-004 — Stale PR #11 and committed `.git-2/`  [LOW · OPEN]
+## ISSUE-004 — Stale PR #11 and committed `.git-2/`  [LOW · RESOLVED 2026-10-16]
 
-- **Evidence:** PR #11 stale since 2026-09-28, `mergeable=false`, ~10k lines of
-  unrelated churn including a committed `.git-2/` object store.
-- **Impact:** repo hygiene / confusion.
-- **Fix:** close PR #11; re-land wanted pieces in small PRs. Not blocking.
-- **Approval:** Level 2.
+- **Evidence:** PR #11 was stale since 2026-09-28, `mergeable=false`, ~10k lines of unrelated
+  churn including a committed `.git-2/` object store.
+- **Verified 2026-10-16:** PR #11 is **closed** (unmerged, closed 2026-10-15T21:04:55Z) and
+  `.git-2/` is **not tracked** (`git ls-files .git-2` is empty).
+- **Fix:** none needed.
+- **Approval:** — (closed).
 
 ---
 
@@ -248,16 +250,23 @@ Each issue: evidence, impact, fix, status, approval level.
 
 ---
 
-## ISSUE-013 — Link to a `noindex` page + placeholder input phone  [INFO · OPEN]
+## ISSUE-013 — Link to a `noindex` page + placeholder input phone  [INFO · WON'T FIX 2026-10-16]
 
 - **Evidence:** `about.html` links to
   `about/straight-flush-plumbing-orange-county.html` (`noindex,follow`);
-  `index.html:549` and `contact.html:120` use
+  `index.html:543` and `contact.html:120` use
   `title="Phone number, e.g. (949) 555-0123"`.
-- **Impact:** cosmetic/cleanliness only. Displayed/tel: NAP is consistent
-  (`(949) 374-6524` / `+19493746524`; `78 Cameray Heights`, `Laguna Niguel, CA 92677`).
-- **Fix (proposed):** repoint the link; change the example placeholder.
-- **Approval:** Level 1 (link) / Level 2 (markup).
+- **Re-examined 2026-10-16 — both halves are correct as written, not defects:**
+  - The placeholder is a `title` attribute on an **empty form field**; it is not displayed NAP.
+    `(949) 555-0123` sits in the `555-0100`–`555-0199` block, which is reserved for fictional
+    use — the correct convention for an example. The live NAP (`(949) 374-6524`) is unaffected.
+  - The linked page is deliberately `noindex` (it does not appear in the sitemap, correctly) and
+    `follow` is set, so the link leaks no equity and funnels nothing to a dead end. An indexable
+    page linking to an internal, `follow`-enabled profile page is normal.
+- **Impact:** none. No measurable SEO, conversion, or user-facing effect.
+- **Fix:** none. Changing shipped HTML for a cosmetic non-issue is churn without a metric;
+  revisit only if the profile page is promoted to indexable.
+- **Approval:** — (won't fix).
 
 ---
 
@@ -562,35 +571,30 @@ duplicate, so the duplicates are not disavowed from the real side either.
 
 ---
 
-## ISSUE-024 — Automation API returns zero automations for this session's credential  [MEDIUM · OPEN / INVESTIGATE]
+## ISSUE-024 — Automation API returns zero automations for this session's credential  [MEDIUM · RESOLVED 2026-10-16]
 
 - **Evidence (2026-10-15):** `GET https://app.all-hands.dev/api/automation/v1`
-  with the session's `OPENHANDS_API_KEY` returns `{"automations":[],"total":0}`
+  with the session's `OPENHANDS_API_KEY` returned `{"automations":[],"total":0}`
   (HTTP 200), while `growth-engine/KNOWN_ISSUES.md` (ISSUE-005) documents two
   active loops (`SFPL Intelligence HQ Daily 6 AM`, `HQ-W`) plus a Sentinel job.
 - **Additional evidence (2026-10-15, follow-up):**
   - The key **is valid** and belongs to the **correct owner account**:
     `GET /api/v1/settings` returns `email: straightflushplumbing03@gmail.com`.
     (Unauthenticated → 401; a bad key → `Invalid or expired API key`.)
-  - The list is **genuinely empty for that account**, not a permissions/scope
-    artifact: `GET /api/automation/v1/5dc89b41-…` (the HQ-D id recorded in
-    `automations/README.md`) returns **404 `{"detail":"Automation not found"}`**,
-    and `?limit=100`, `enabled=false`, `include_disabled=true`, `all=true` all
-    return `total:0`.
-  - No local automation service is running (`ss`/`netstat` show no listeners on
-    8000/8001/3000).
-  - Prior KB state: the same key saw the loops **ACTIVE** on 2026-10-12
-    (`INTEGRATION_STATUS.md`), so they existed and have since disappeared from
-    the account's list.
-- **Impact / not verified:** the automations are no longer present under this
-  account as of 2026-10-15. Whether they were **deleted**, **disabled and purged**,
-  or are owned by a **different account**, cannot be determined from here. The
-  dates/ids in the KB are prior evidence, not proof of current state.
-- **Owner action:** check OpenHands Cloud → Automations under
-  `straightflushplumbing03@gmail.com`; if the two loops are gone, recreate them
-  from the canonical prompts in `growth-engine/automations/` (HQ-D `0 6 * * *` PT,
-  HQ-W `0 6 * * 1` PT) and record the new ids in `automations/README.md`.
-- **Approval:** informational (recreating automations is a Level 3 action).
+  - The list was **empty for that account at that time**: `GET /api/automation/v1/5dc89b41-…`
+    returned **404 `{"detail":"Automation not found"}`**, and `?limit=100`, `enabled=false`,
+    `include_disabled=true`, `all=true` all returned `total:0`.
+- **RESOLVED 2026-10-16.** The endpoint is fine and the key is fine; the earlier empty list
+  was a transient/stale read. The same key now returns **6 automations**, including the active
+  content job `1485d659-8663-4776-a507-db0fefed8483` (`0 6 * * 1,3,5`
+  `America/Los_Angeles`, enabled) and the watchdog `b946624c-…`. Two further loops are present
+  but disabled (`e6684830-…`, `df4bcd68-…`), and the retired id `5dc89b41-…` is still 404 as
+  expected. Verified by listing with the same credential used on 2026-10-15.
+- **Impact:** none outstanding. The automations are present and correct; no recreation needed.
+- **Caution for future runs:** do **not** cite this issue as evidence that "the automations
+  are gone" — that reading was wrong and it was used to justify an unnecessary policy change.
+  Re-list with the API before acting on any automation-absence claim.
+- **Approval:** — (resolved).
 
 ---
 
@@ -614,3 +618,25 @@ duplicate, so the duplicates are not disavowed from the real side either.
   missing `og:*`/`twitter:*` tags.
 - **Fix applied 2026-10-15:** added the site's standard social block, reusing the
   existing shared `og:image` (`assets/img/lance-hero.jpeg`) — no new asset.
+
+---
+
+## ISSUE-027 — No CI: the merge gate's "green" was self-reported  [MEDIUM · RESOLVED 2026-10-16]
+
+- **Evidence:** the repo had no `.github/workflows/` at all. Meanwhile
+  `01-MASTER-AGENT-PROMPT.md` §14 requires a PR to be "green" — `unittest discover`,
+  `validate_knowledge_base.py`, `seo_audit.py` — before review. Those gates were run by the
+  same agent that wrote the change, and **GitHub Pages serves the live site from `main`**, so
+  an unreviewed merge is a production deploy. A gate that only the author measures is not a gate.
+- **Impact:** a change could be declared green with a failing suite, a broken sitemap, or a
+  knowledge-base violation, and reach the live domain — with no independent check.
+- **Fix applied 2026-10-16:** added `.github/workflows/verify.yml`. It runs the §14 gates on
+  every PR and on pushes to `main`, with `permissions: contents: read`, no secrets, and no
+  third-party installs (every gate is stdlib-only). Uses `fetch-depth: 0` because
+  `refresh_sitemap.py` derives `lastmod` from git commit dates and behaves differently in a
+  shallow clone. The sitemap step asserts the *URL-set* invariant (`missing: []` / `extra: []`)
+  rather than byte-comparing the file, since `lastmod` legitimately moves when a page changes.
+- **Verification:** all five steps reproduced locally and pass (298 unittest, knowledge base
+  OK, `seo_audit` exit 0, sitemap `missing: [] extra: []`). Blueprint §14 now requires checking
+  the PR's Verify run, and names it as the only self-independent evidence of "green".
+- **Approval:** Level 2 (tooling / CI config).
