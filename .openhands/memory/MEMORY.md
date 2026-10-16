@@ -101,7 +101,8 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
 ## Conventions that matter
-- Never commit to `main`; branch + PR only. **Never merge your own PR.**
+- Never commit to `main`; branch + PR only. **Never merge any PR — open it, request review, hand
+  the merge to the owner.** No low-risk exception; review is required before merge.
 - Branches: research `intelligence-hq/daily-<date>`; site changes `intelligence-hq/site-<date>-<slug>`.
 - Knowledge persistence: append to `data/*.jsonl`, add dated reports, never delete history.
   `MEMORY.md` is edited in place (not appended).

@@ -277,3 +277,33 @@ read `/runs`.
 4. Read the first report. Expect many `BLOCKED` / `UNMEASURED` lines. That is correct and honest.
 5. Then work Phase 4 in `02-IMPLEMENTATION-SKETCH.md` (Search Console, Bing, GA4) to convert
    `UNMEASURED` into real numbers.
+
+---
+
+## Review-before-merge checklist (owner)
+
+The daily agent opens PRs and requests review; it never merges. For the gate to be real and
+not self-restraint, the repository must enforce it. Fail closed if any box is unchecked.
+
+- [ ] Branch protection on `main`: **Require a pull request before merging**.
+- [ ] Branch protection: **Require approvals ≥ 1**, and do **not** enable "Allow specified
+      actors to bypass required pull requests" for the agent account.
+- [ ] Branch protection: **Dismiss stale approvals** when new commits are pushed.
+- [ ] Github Actions (or any CI) marks the required status checks: `unittest discover`,
+      `validate_knowledge_base.py`, `seo_audit.py`.
+- [ ] Optional: enable **Copilot code review** so every PR gets an automated pass before a
+      human looks; the agent requests it with
+      `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers`
+      `{"reviewers":["copilot-pull-request-reviewer[bot]"]}`.
+- [ ] Confirm the agent's token cannot merge: a merge attempt from the automation must return
+      `403` once the ruleset is active.
+
+Request a human review when you open a PR:
+
+```bash
+curl -s -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+  -H "Content-Type: application/json" \
+  "https://api.github.com/repos/straightflushplumbing03/-Up2datewebsiteseo/pulls/<N>/requested_reviewers" \
+  -d '{"reviewers":["straightflushplumbing03"]}'
+```
+

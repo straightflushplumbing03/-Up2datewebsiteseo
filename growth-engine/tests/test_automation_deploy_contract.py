@@ -52,31 +52,41 @@ class TestPromptMarkers(unittest.TestCase):
         self.assertGreater(len(m.group(1).strip()), 5000)
 
 
-class TestMergePolicyIsDeployable(unittest.TestCase):
-    """The owner asked for PRs to merge automatically; the prompt must permit it.
+class TestMergePolicyRequiresReview(unittest.TestCase):
+    """The owner requires review before merge; agents never merge.
 
-    'Never merge your own pull request' was an absolute prohibition, so every run
-    left its PR open forever and the gate never advanced.
+    Policy history: an absolute 'Never merge your own pull request' ban came first
+    (every run left its PR open forever). That was briefly relaxed to a scoped
+    self-merge authority, then the owner asked for the opposite: open the PR,
+    request a review, and let a human merge. These tests pin that final policy.
     """
 
     def setUp(self):
         self.text = read(PROMPT_FILE)
 
-    def test_absolute_merge_prohibition_is_gone(self):
-        self.assertNotIn("Never merge your own pull request", self.text)
+    def test_self_merge_authority_is_gone(self):
+        self.assertNotIn("Merging your own pull request", self.text)
 
-    def test_scoped_merge_authority_is_present(self):
-        self.assertIn("Merging your own pull request", self.text)
+    def test_agents_are_told_never_to_merge(self):
+        self.assertIn("never merge a pull request", self.text)
 
-    def test_merge_authority_keeps_human_gates(self):
-        # The authority is scoped, not blanket. These limits must survive edits.
-        self.assertIn("business fact", self.text)
-        self.assertIn("leave the PR open", self.text)
+    def test_review_is_required_before_merge(self):
+        low = self.text.lower()
+        self.assertIn("request a review", low)
+        self.assertIn("reviewed", low)
 
-    def test_escalation_list_does_not_contradict_the_authority(self):
-        # §20's escalation list must not still read as an absolute ban, or the two
-        # sections disagree and a run has to guess which one wins.
-        self.assertNotIn("- Merging any pull request.", self.text)
+    def test_the_stop_instruction_is_present(self):
+        # A run must not merge, enable auto-merge, or delete the branch.
+        self.assertIn("do not enable auto-merge", self.text)
+
+    def test_escalation_list_bans_all_merging(self):
+        # §20 must read as an absolute ban, agreeing with §14.
+        self.assertIn("- Merging any pull request.", self.text)
+
+    def test_pr_body_must_carry_evidence(self):
+        low = self.text.lower()
+        self.assertIn("evidence", low)
+        self.assertIn("verification commands", low)
 
 
 class TestTestGateIsMandated(unittest.TestCase):

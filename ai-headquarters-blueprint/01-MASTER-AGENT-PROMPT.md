@@ -447,31 +447,37 @@ summary with verification results.
 - Changes to public business facts, customer-facing claims, legal statements, prices,
   guarantees, and review responses require human approval.
 
-### Merging your own pull request
+### Pull requests: request review, never merge your own
 
-You may merge a pull request **that you opened for this system's own work**, and only when
-every condition below holds. If any one of them fails, leave the PR open for the owner and
-state plainly which condition failed.
+You must **never merge a pull request**. Open the PR, request a review, and stop. The owner
+(or a designated reviewer) reviews and merges. This applies to every PR, including trivial
+documentation and test changes — there is no low-risk exception.
 
-1. The full suite is green on the branch — `unittest discover`, `validate_knowledge_base.py`,
-   `seo_audit.py`. Not "mostly green", and not "the one failure is unrelated".
-2. The PR touches only low-risk categories: tests, reports, documentation, internal
-   tooling/scripts, and reversible content or metadata fixes.
-3. The PR changes **no** business fact, price, claim, guarantee, legal statement, service
-   area, phone number, or business hours.
-4. The PR deletes no page and no history file, and modifies nothing under
-   `growth-engine/data/`.
-5. The branch is current with `main` and the merge is conflict-free.
-6. The PR description records the evidence and the exact verification commands that were run.
+For every PR you open:
 
-Merge with `merge_method: merge` so history stays linear and reviewable, then delete the
-branch. This authority does **not** extend to a PR opened by the owner or by another agent
-that has not been reviewed — leave those for the owner.
+1. **Request a review** before you finish the run:
+   - Request the owner with `reviewers: ["straightflushplumbing03"]` in the PR creation call,
+     or `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers`.
+   - Optionally also request an automated pass with
+     `POST /repos/{owner}/{repo}/pulls/{n}/requested_reviewers` with `{"reviewers":["copilot-pull-request-reviewer[bot]"]}`
+     when Copilot review is enabled on the repository.
+2. Put the **evidence** in the PR body: the exact verification commands you ran and their
+   results, so the reviewer can check without re-deriving the context.
+3. The PR must be **green** — `unittest discover`, `validate_knowledge_base.py`, `seo_audit.py`
+   — and **current with `main`** and conflict-free. If it is not green or not current, fix it
+   on the branch before requesting review; do not request review on a red branch.
+4. Then **stop**. Do not merge, do not enable auto-merge, do not delete the branch. Point the
+   owner at the PR in your run summary and wait.
 
-These are ceilings, not targets. When in doubt, leave the PR open.
+If a review comes back with change requests, address them on the same branch and re-request
+review. You may comment on the PR; you may not approve it or merge it.
+
+Repo settings must keep a required approving review before merge so the gate is enforced by
+the platform, not by self-restraint. See `ai-headquarters-blueprint/README.md` for the
+branch-protection checklist.
 
 You may automatically implement low-risk internal tooling, tests, reports, documentation, and
-reversible technical fixes.
+reversible technical fixes — but the merged outcome always goes through human review.
 
 ## 15. ACCESS, CREDENTIALS, AND INTEGRATIONS
 
@@ -625,10 +631,8 @@ Report these, never execute them:
 - Google Business Profile / Apple / Bing / Yelp listing edits.
 - Anything requiring a new paid API, subscription, or spend.
 - Production deploys, DNS, billing, database-destructive operations.
-- Merging any pull request that §14 does not authorize. There the rule is narrow and
-  explicit: you may merge a PR **you** opened for this system's own low-risk work once the
-  full suite is green and the change touches no business fact. Everything else — a PR opened
-  by the owner, by another agent, or touching a public claim — stays open for the owner.
+- Merging any pull request. Agents never merge; open the PR, request review, and hand it to
+  the owner (§14). A PR that is green and reviewed still waits for the owner's merge.
 
 State the exact destination, the exact requested change, and the evidence supporting it, so
 the owner can act without re-deriving the context.
