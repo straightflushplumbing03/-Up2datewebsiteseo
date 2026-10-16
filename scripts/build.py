@@ -9,6 +9,8 @@ structurally consistent with the flagship homepage.
 import os
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+from csp_policy import GTAG_BLOCK, meta_csp_tag  # noqa: E402  (single CSP source)
+
 PHONE_DISPLAY = "(949) 374-6524"
 PHONE_TEL = "+19493746524"
 EMAIL = "straightflushplumbing03@gmail.com"
@@ -64,9 +66,10 @@ def head(title, description, canonical, prefix, schema=""):
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
+{GTAG_BLOCK}
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self' https://cdnjs.cloudflare.com; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; upgrade-insecure-requests">
+{meta_csp_tag()}
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>{title}</title>
 <meta name="description" content="{description}">

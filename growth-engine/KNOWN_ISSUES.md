@@ -640,3 +640,47 @@ duplicate, so the duplicates are not disavowed from the real side either.
   OK, `seo_audit` exit 0, sitemap `missing: [] extra: []`). Blueprint §14 now requires checking
   the PR's Verify run, and names it as the only self-independent evidence of "green".
 - **Approval:** Level 2 (tooling / CI config).
+
+---
+
+## ISSUE-028 — GA4 tag would have been silently blocked by the CSP  [HIGH · RESOLVED 2026-10-16]
+
+- **Evidence:** the requested Google tag (GA4 `G-651QV5WYP2`) loads a script from
+  `googletagmanager.com`, runs an inline `gtag()` bootstrap, and beacons to
+  `google-analytics.com`. Every page's meta CSP said `script-src 'self'` and
+  `connect-src 'self'`, so all three were blocked. Pasting the snippet as instructed
+  would have left the tag visible in the markup while GA4 recorded **nothing** — the
+  worst failure mode, because it looks installed.
+- **Impact:** complete loss of analytics with no error visible to the owner. Any
+  conversion work built on GA4 data would have been built on nothing.
+- **Fix applied 2026-10-16:**
+  - Tag inserted immediately after `<head>` on all 134 pages (one per page).
+  - CSP widened per Google's documented requirements
+    (https://developers.google.com/tag-platform/security/guides/csp) to allow
+    `https://www.googletagmanager.com` in `script-src`/`frame-src` and
+    `https://www.googletagmanager.com https://*.google-analytics.com` in
+    `connect-src`/`img-src`.
+  - The inline bootstrap is allowed by **SHA-256 hash, not `'unsafe-inline'`**, so the
+    site keeps its XSS protection.
+  - **Three** CSP emitters existed (`add_security_meta.py`, `build.py`,
+    `cloudflare_add_security_headers.py`) and had already drifted — the header rule
+    lacked `form-action`, and `build.py` allowed an unused CDN. All three now import
+    `scripts/csp_policy.py`, which holds the policy once, so a future run of
+    `add_security_meta.py` can no longer silently revert the GA allowance.
+  - `build.py`'s page template had **no tag and no CSP at all**; new pages would have
+    shipped uninstrumented. Fixed.
+  - `guides/index.html` had no CSP at all before this change (pre-existing gap).
+- **Verification:** 11 new regression tests (`test_ga4_tag.py`) assert the tag is present
+  exactly once per page, sits directly after `<head>`, that the CSP allows what the tag
+  needs and was not weakened to `'unsafe-inline'`, and that the inline hash matches the
+  snippet the pages actually contain. Suite: 309 tests OK.
+  - Headless Chromium on the real page: **0 violations** against `script-src`,
+    `connect-src`, or `img-src`; no inline-script refusals.
+  - End-to-end: with `googletagmanager.com` mapped to a local listener, the browser
+    opened a TLS connection to it — proving the tag is genuinely fetched, not just
+    present in markup.
+- **Note:** 138 pre-existing `style-src` violations (inline `style=` attributes) were
+  observed and left alone — unrelated to this task and would need hash/`unsafe-hashes`
+  work. Recorded so a future run does not misdiagnose them as tag-related.
+- **Approval:** Level 2 for the CSP/analytics plumbing. Requires the owner to confirm
+  data appears in GA4 after the Pages deploy.
