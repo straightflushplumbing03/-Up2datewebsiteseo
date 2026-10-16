@@ -5,6 +5,33 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
+
+**Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-16`.
+
+**Change 1 — Gemini model slug (High).** The committed default `gemini-2.5-flash` now
+answers **HTTP 404 "no longer available to new users"** for new API keys. Every grounded
+AI query was failing and was recorded `inconclusive` — the measurement apparatus had
+stopped measuring while still looking like a clean day. Replaced with
+`gemini-flash-latest` and added a bounded retired-model fallback chain so a future
+retirement surfaces as a fallback, not as silence. 9 regression tests added.
+
+**Change 2 — sitemap ordering (Medium).** Committed `sitemap.xml` had `/guides/` at
+index 59; the generator's canonical order places it ~10. `refresh_sitemap.py` rewrote
+the file every run, so `check_sitemap_idempotent` reported `sitemap_dirty: true` on a
+clean tree. Committed the generator's own output; second run is byte-identical. URL set,
+lastmods, changefreq and priority are unchanged — pure ordering.
+
+**Verification.** Full suite 286 pass. Live probe: `gemini-2.5-flash` → 404,
+`gemini-3.5-flash` resolves (grounding now 429 quota for all models today — a separate,
+honest blocker). Generator 2nd run byte-identical.
+
+**Target:** `growth-engine/gemini_search_client.py`, `sitemap.xml`.
+**Result:** COMPLETED. **Keep.**
+**Blocker (owner):** Gemini grounding quota exhausted (429); two owned duplicate hosts
+remain indexable and need removal by the owner, not linkage.
+
 ## 2026-10-15 (reliability) — Daily-run failures: corrected root cause + watchdog narrowed
 
 **Status:** Tooling and records only. **No website page, schema, claim or copy changed.**
