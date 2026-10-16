@@ -159,6 +159,37 @@ def check_visibility(queries: int):
     return {"name": "visibility_sweep", "ok": ok, "exit_code": code, "detail": _tail(out, 8)}
 
 
+def check_ai_visibility(queries: int):
+    """Gemini Search-grounded AI sweep. Absent key is BLOCKED, never a zero.
+
+    This is the *AI-platform* measurement (test_type: ai_platform). It is
+    distinct from the Tavily conventional-search proxy above. Free tier.
+    """
+    have_key = any(
+        os.environ.get(n) for n in ("GEMINI_API_KEY", "GOOGLE_API_KEY", "Gemini_api_key")
+    )
+    if not have_key:
+        return {
+            "name": "ai_visibility_sweep",
+            "ok": False,
+            "blocked": True,
+            "detail": "no Gemini key in this environment",
+            "note": (
+                "record the AI platform BLOCKED, never zero. If the key is registered, "
+                "the platform did not inject it because this command did not name the "
+                "secret; re-run with it named:  export GEMINI_API_KEY=\"${GEMINI_API_KEY}\" "
+                "&& python3 scripts/daily_measure.py"
+            ),
+        }
+    ok, code, out = _run(
+        [sys.executable, "scripts/gemini_visibility.py", "--run", "--append",
+         "--limit", str(queries)],
+        timeout=600,
+    )
+    return {"name": "ai_visibility_sweep", "ok": ok, "exit_code": code,
+            "detail": _tail(out, 8)}
+
+
 def summarise_history():
     """Row counts per history file, plus the last visibility row per platform."""
     data_dir = os.path.join(ROOT, "growth-engine", "data")
@@ -198,6 +229,8 @@ def main() -> int:
                     help="skip the network sweep (fast path)")
     ap.add_argument("--queries", type=int, default=40,
                     help="max queries for the Tavily sweep (default 40)")
+    ap.add_argument("--ai-queries", type=int, default=5,
+                    help="max queries for the Gemini AI-visibility sweep (default 5)")
     args = ap.parse_args()
 
     started = _now()
@@ -213,8 +246,13 @@ def main() -> int:
             "name": "visibility_sweep", "ok": False, "blocked": True,
             "detail": "--skip-tavily", "note": "record BLOCKED, never zero",
         })
+        checks.append({
+            "name": "ai_visibility_sweep", "ok": False, "blocked": True,
+            "detail": "--skip-tavily", "note": "record BLOCKED, never zero",
+        })
     else:
         checks.append(check_visibility(args.queries))
+        checks.append(check_ai_visibility(args.ai_queries))
 
     counts, latest = summarise_history()
     ctx = {

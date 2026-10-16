@@ -38,7 +38,8 @@ into one score.
 | Gemini | gemini.google.com | **No** — not scriptable here | Test manually |
 | Microsoft Copilot | copilot.microsoft.com | **No** — not scriptable here | Test manually |
 | Grok | grok.com / x.ai | **No** — not scriptable here | Test manually |
-| Perplexity Agent API | `POST https://api.perplexity.ai/v1/agent` | **Code ready** — needs `PERPLEXITY_API_KEY` | Web-grounded answers + sources. Client: `growth-engine/ai_agent_client.py`; CLI: `python3 scripts/perplexity_agent.py --smoke` |
+| **Gemini Search API** | `POST …/v1beta/models/{model}:generateContent` with `google_search` grounding | **Yes** — documented JSON API, free tier | **Primary AI-answer-engine measurement.** A genuine web-grounded answer + citations, at no cost on the Flash free tier (~500 grounded requests/day). Client: `growth-engine/gemini_search_client.py`; CLI: `python3 scripts/gemini_visibility.py --smoke`. Recorded `test_type: ai_platform`, `platform: gemini_search`. |
+| Perplexity Agent API | `POST https://api.perplexity.ai/v1/agent` | **Optional** — metered, no free tier | Second AI-answer engine when its key is set. Client: `growth-engine/ai_agent_client.py`; CLI: `python3 scripts/perplexity_agent.py --smoke`. Prefer the free Gemini path unless Perplexity is deliberately budgeted. |
 | **Tavily Search API** | `POST api.tavily.com/search` | **Yes** — documented JSON API | **Primary** conventional-search proxy. Structured results, no scraping, no IP rate-limit. Client: `growth-engine/tavily_search.py`; CLI: `python3 scripts/tavily_search.py --smoke`. |
 | Brave Search (superseded) | `search.brave.com/search?q=` | HTML scraping; **HTTP 429** after ~7-8 rapid queries | Replaced by Tavily. Retained only as a fallback. |
 | Bing | `bing.com/search` | Partial — HTML returned but result anchors not reliably parseable in this environment | Retry with dedicated parsing |

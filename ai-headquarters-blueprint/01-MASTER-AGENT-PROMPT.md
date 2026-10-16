@@ -55,7 +55,8 @@ secret, so the child process starts with `Tavily_api_key` unset, `daily_measure.
 visibility sweep `BLOCKED` (`no Tavily key in this environment`), and the run records a
 false blocker while the key is present. Naming it in the command — even just to re-export it —
 makes the platform inject the real value. The 2026-10-15 run lost the whole sweep to this, and
-the same trap applies to `Perplexity_api_key` for `scripts/perplexity_agent.py`. This is a
+the same trap applies to `Gemini_api_key` for `scripts/gemini_visibility.py` (and
+`Perplexity_api_key` for the optional `scripts/perplexity_agent.py`). This is a
 property of the platform's injection, not a defect in the client code, so the fix is the
 command, not the script.
 
@@ -139,8 +140,9 @@ it is a budget sink that crowds out the report.
 
 ## 3. DAILY AUTOMATION AT 6:00 AM PACIFIC
 
-The schedule is the automation's cron, not a file inside the repo: `0 6 * * *` in
-`America/Los_Angeles`. Daylight saving is handled by the IANA timezone, so no manual DST math.
+The schedule is the automation's cron, not a file inside the repo: `0 6 * * 1,3,5`
+(Mon/Wed/Fri) in `America/Los_Angeles`. Daylight saving is handled by the IANA
+timezone, so no manual DST math.
 
 A configuration file is not proof that automation runs. Each run must record: run date, start
 time, completion status, duration, and whether the previous run succeeded. If credentials are
@@ -250,7 +252,8 @@ Maintain a separate platform profile for each surface:
 
 | Surface | Current programmatic access | How to test |
 |---|---|---|
-| Perplexity Agent API | Code ready (`$SITE/scripts/perplexity_agent.py`); needs `PERPLEXITY_API_KEY` | API |
+| Gemini Search API | **Primary free AI surface** — `$SITE/scripts/gemini_visibility.py` with `GEMINI_API_KEY`. A genuine web-grounded answer + citations, free tier. Record `test_type: ai_platform`, `platform: gemini_search`. | API |
+| Perplexity Agent API | Optional second AI surface (`$SITE/scripts/perplexity_agent.py`); needs `PERPLEXITY_API_KEY` and is **metered with no free tier**. Use only if deliberately budgeted. | API |
 | Conventional web search (Tavily) | **Working** — `$SITE/scripts/tavily_search.py`. This is a *conventional search proxy*, NOT an AI surface. Record `test_type: conventional_proxy`. | API |
 | ChatGPT / OpenAI search | Available via `OPENAI_API_KEY` (models the model, not every consumer surface) | API |
 | Gemini | Available via `GEMINI_API_KEY` (returns grounding sources when search grounding is on) | API |
@@ -311,7 +314,7 @@ Existing tooling to reuse: `$SITE/growth-engine/tests/crawler_access_check.sh`,
 `$SITE/growth-engine/tests/cloudflare_audit.py`,
 `$SITE/scripts/entity_consistency_check.py`,
 `$SITE/scripts/tavily_search.py`,
-`$SITE/scripts/perplexity_agent.py`, and `$HQ` gates
+`$SITE/scripts/gemini_visibility.py`, and `$HQ` gates
 (`npx tsc --noEmit`, `npx next lint`, `npm run build`, `npx vitest`).
 
 ### Entity consistency is a first-class check
