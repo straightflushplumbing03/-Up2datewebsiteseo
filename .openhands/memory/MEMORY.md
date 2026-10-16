@@ -110,6 +110,14 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
 ## Conventions that matter
+- **Google tag/analytics:** the site's single Google tag lives once in
+  `scripts/csp_policy.py` (`MEASUREMENT_ID`); pages bake a copy into markup and the
+  meta CSP allows the inline `gtag()` bootstrap by **SHA-256 hash derived from the
+  snippet**. Changing the ID requires regenerating the hash (`add_security_meta.py`)
+  or the tag loads and records nothing (ISSUE-028, ISSUE-030). Only ONE Google tag
+  per page — a new ID is a **replace**, never a second paste. Verify a tag actually
+  runs with Chromium `--log-net-log` + grep for `gtag/js?id=<ID>`.
+  Current ID: `G-DFS6B1LV4P` (replaced `G-651QV5WYP2` 2026-10-16).
 - Never commit to `main`; branch + PR only. **Never merge any PR — open it, request review, hand
   the merge to the owner.** No low-risk exception; review is required before merge.
 - Branches: research `intelligence-hq/daily-<date>`; site changes `intelligence-hq/site-<date>-<slug>`.
