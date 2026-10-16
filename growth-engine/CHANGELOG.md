@@ -93,6 +93,40 @@ PageSpeed Insights API returned HTTP 429 (quota, no key).
 **Not changed:** `AGENTS.md`, approved-claims/business facts, the existing
 automations, and no production deploy (no merge).
 
+## 2026-10-15 (GTM) — Install Google Tag Manager site-wide (owner-supplied container)
+
+**Added:** `scripts/patch_gtm.py` (idempotent GTM installer).
+
+**Changed (owner-requested):**
+- All **133** HTML files now carry the Google Tag Manager container
+  `GTM-KNVW3QG7`: the loader script in `<head>` and the `<noscript>` iframe right
+  after `<body>`.
+- **CSP updated** so GTM can actually run. The site had `script-src 'self'` on
+  every page, which would have **silently blocked** the GTM loader (it is an
+  inline `<script>`). `script-src` is now
+  `'self' 'unsafe-inline' https://www.googletagmanager.com`, and `img-src`,
+  `frame-src`, and `connect-src` allow the `googletagmanager.com` /
+  `google-analytics.com` endpoints. The same policy was propagated to
+  `_headers`, `CLOUDFLARE-SETUP.md`, `scripts/cloudflare_add_security_headers.py`,
+  and `scripts/add_security_meta.py` so no script reverts it.
+
+**Tradeoff (recorded):** `'unsafe-inline'` in `script-src` weakens XSS hardening.
+It is required because (a) the GTM loader is inline, (b) GTM injects inline
+scripts for its tags, and (c) GitHub Pages cannot mint a per-request nonce. The
+stronger alternative is a nonce delivered via a Cloudflare Transform Rule rather
+than a `<meta>` CSP; that remains available under ISSUE-007/P-007 if the owner
+prefers it.
+
+**Placement note:** the GTM loader sits immediately after the CSP `<meta>` (as
+high in `<head>` as the CSP allows); the CSP must precede it so the policy governs
+the snippet. To also stop the single render-blocking Google Fonts stylesheet and
+get GTM closer to the top of `<head>`, the owner can self-host the fonts — offered,
+not done (unrequested visual risk).
+
+**Verification:** every HTML file has exactly 1 loader + 1 noscript; the 5 CSP
+definitions are byte-identical; `validate_knowledge_base.py` OK (133 files);
+`seo_audit.py` 0 invalid JSON-LD / 0 broken links / 0 duplicate titles.
+
 ## 2026-10-15 (later) — SEO depth pass (title length + social cards)
 
 **Added:** `scripts/patch_titles.py` (idempotent title shortener; asserts <=60c and

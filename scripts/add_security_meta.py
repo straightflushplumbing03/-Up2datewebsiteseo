@@ -25,8 +25,14 @@ SEARCH_DIRS = ["", "about", "academy", "assets", "case-studies", "cities",
 CSP_CONTENT = (
     "default-src 'self'; style-src 'self' https://fonts.googleapis.com; "
     "font-src https://fonts.gstatic.com; img-src 'self' data: "
-    "https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; "
-    "script-src 'self'; frame-src https://www.google.com; connect-src 'self'; "
+    "https://*.googleusercontent.com https://maps.google.com "
+    "https://maps.gstatic.com https://www.googletagmanager.com "
+    "https://www.google-analytics.com https://*.google-analytics.com; "
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; "
+    "frame-src https://www.google.com https://www.googletagmanager.com; "
+    "connect-src 'self' https://www.googletagmanager.com "
+    "https://www.google-analytics.com https://*.google-analytics.com "
+    "https://*.analytics.google.com https://stats.g.doubleclick.net; "
     "object-src 'none'; base-uri 'self'; form-action https://formspree.io; "
     "upgrade-insecure-requests"
 )
