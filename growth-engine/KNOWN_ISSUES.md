@@ -684,3 +684,28 @@ duplicate, so the duplicates are not disavowed from the real side either.
   work. Recorded so a future run does not misdiagnose them as tag-related.
 - **Approval:** Level 2 for the CSP/analytics plumbing. Requires the owner to confirm
   data appears in GA4 after the Pages deploy.
+
+---
+
+## ISSUE-029 — Cloudflare injects a nonce and blocks its own injected scripts  [LOW · OWNER/CF]
+
+- **Evidence:** loading the live page in headless Chromium after the GA4 deploy shows
+  Cloudflare rewriting the meta CSP on the fly to add
+  `'nonce-86227767-04fa-4953-b7a4-aa2195114213'` to `script-src`, then:
+  - an inline script at the page's last line is refused because it carries **no** nonce;
+  - `https://static.cloudflareinsights.com/beacon.min.js` (Cloudflare Web Analytics) is
+    refused because that host is not in `script-src`.
+  Both are Cloudflare's own injections; the site's own scripts carry no nonce and are
+  unaffected.
+- **Impact:** Cloudflare Web Analytics does not load, and one inline block is refused.
+  This is **not** related to the GA4 tag — verified independently (below) — but it is
+  noise that will make any future CSP debugging confusing, and could be misread as
+  "the CSP is broken".
+- **Not fixed deliberately:** adding `static.cloudflareinsights.com` to `script-src`
+  would silence it, but that is a third-party analytics decision the owner should make,
+  and it widens the allowlist. Cloudflare's own nonce behaviour cannot be fixed from the
+  repo. Recorded rather than guessed at.
+- **Verification that GA4 is NOT affected:** the live page was loaded with
+  `googletagmanager.com` mapped to a local listener; the browser opened **2 TLS
+  connections** to it, so the GA4 tag is fetched and executed on production.
+- **Approval:** owner decision (add CF Insights to the allowlist, or leave it).
