@@ -26,6 +26,13 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
 - Disabled rollback points: `e6684830-...`, `df4bcd68-...`. Retired (404): `5dc89b41`,
   `0582d219`, `4c5213f7`.
 - **Invariant: exactly ONE enabled content automation.** Check before enabling anything.
+- **Editing the blueprint does NOT change the running job.** OpenHands stores a copy of the
+  prompt at creation. Deploy with `python3 ai-headquarters-blueprint/build_payload.py
+  --deploy` (PATCHes id `1485d659-...`), then verify via the GET. The cron constants live in
+  `build_payload.py`, NOT the markdown — a second copy is how the schedule once silently
+  reverted to daily. Guarded by `growth-engine/tests/test_automation_deploy_contract.py`.
+- `growth-engine/automations/*.prompt.md` document **retired** automations (`5dc89b41` -> 404);
+  editing them changes nothing at run time.
 - Changing the schedule = `PATCH /api/automation/v1/{id}` with **only** `trigger`; verified
   2026-10-16 that prompt/repos/timeout survive untouched. A UI form edit does NOT change
   the live job — use the API.
