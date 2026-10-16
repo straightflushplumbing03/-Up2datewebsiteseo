@@ -140,8 +140,9 @@ it is a budget sink that crowds out the report.
 
 ## 3. DAILY AUTOMATION AT 6:00 AM PACIFIC
 
-The schedule is the automation's cron, not a file inside the repo: `0 6 * * *` in
-`America/Los_Angeles`. Daylight saving is handled by the IANA timezone, so no manual DST math.
+The schedule is the automation's cron, not a file inside the repo: `0 6 * * 1,3,5`
+(Mon/Wed/Fri) in `America/Los_Angeles`. Daylight saving is handled by the IANA
+timezone, so no manual DST math.
 
 A configuration file is not proof that automation runs. Each run must record: run date, start
 time, completion status, duration, and whether the previous run succeeded. If credentials are

@@ -18,7 +18,7 @@ Record the id here after creation so future runs can self-inspect.
 
 | Automation | id | Cron (America/Los_Angeles) | State |
 |---|---|---|---|
-| SFPL AI Headquarters Daily | `1485d659-8663-4776-a507-db0fefed8483` | `0 6 * * *` | **ACTIVE** — trimmed prompt, 29,846 chars |
+| SFPL AI Headquarters Daily | `1485d659-8663-4776-a507-db0fefed8483` | `0 6 * * 1,3,5` | **ACTIVE** — Mon/Wed/Fri 06:00 PT (trigger changed 2026-10-16) |
 | SFPL AI Headquarters Daily (superseded) | `e6684830-a9a5-43d8-9d5a-34fed5257bbf` | `0 6 * * *` | disabled — rollback point only |
 | Daily Retry Watchdog | `b946624c-79c2-40a6-be1b-258388a15fb4` | `30 6,9,12,15,18 * * *` | **ACTIVE** — re-dispatches the daily job once on a sandbox failure |
 | "New Automation" (legacy) | `df4bcd68-75f3-46f4-ab6f-a4027e5bf8a9` | `0 6 * * 1-5` | disabled — empty prompt, never succeeded |
