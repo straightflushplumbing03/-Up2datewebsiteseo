@@ -186,8 +186,26 @@ def check_ai_visibility(queries: int):
          "--limit", str(queries)],
         timeout=600,
     )
-    return {"name": "ai_visibility_sweep", "ok": ok, "exit_code": code,
-            "detail": _tail(out, 8)}
+    result = {"name": "ai_visibility_sweep", "ok": ok, "exit_code": code,
+              "detail": _tail(out, 8)}
+    if code == 3:
+        # Exit 3 = every grounded query was refused by the platform (quota, 5xx,
+        # network). That is a blocked AI surface, not a zero and not a code defect.
+        result.update({
+            "ok": False,
+            "blocked": True,
+            "note": (
+                "every grounded query was refused by the Gemini API (see detail) — "
+                "record the AI platform BLOCKED, never zero. Restore grounding quota "
+                "or provide a second AI-surface key; the inconclusive rows are kept."
+            ),
+        })
+    elif code == 2:
+        # Every query failed for other reasons: the inconclusive rows are honest,
+        # but the sweep measured nothing, so it is a failure to investigate.
+        result["note"] = ("every grounded query failed — recorded inconclusive, "
+                          "never zero; see detail")
+    return result
 
 
 def summarise_history():
