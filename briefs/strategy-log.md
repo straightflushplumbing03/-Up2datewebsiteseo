@@ -5,6 +5,34 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-16 (second run) — A fully-failed Gemini sweep exited 0 and read as a clean pass
+
+**Status:** Internal tooling only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-16b`.
+
+**Change — Gemini `--run` exit code (High).** `scripts/gemini_visibility.py --run` returned
+`0` even when *every* grounded query was refused by the platform. The 02:30Z run fixed the
+retired-model 404; the same class of failure survived at the exit-code layer. With today's
+HTTP 429 quota block the sweep writes N `inconclusive` rows and still exited `0`, so
+`daily_measure.check_ai_visibility` counted a **blocked** AI surface as `ok=True` — a clean
+pass on a day the platform was never successfully queried.
+
+Exit code now reflects the outcome: `3` = the platform refused every query (BLOCKED),
+`2` = other total failure, `0` = at least one row measured. `daily_measure` maps `3` to
+`blocked` with an actionable note. The `inconclusive` rows are still written — a failed test
+is not zero.
+
+**Verification.** Full suite 319 pass (was 309; 10 new regression tests). Live: quota-blocked
+`--run --limit 1` → `EXIT=3` + "Every grounded query was refused by the platform
+(rate_limited) — recorded BLOCKED, never zero." One-success case → `0`.
+
+**Target:** `growth-engine/gemini_search_client.py`, `scripts/daily_measure.py`.
+
+**Next:** apply the same exit-code contract to `scripts/tavily_search.py`, which shares the
+shape (returns `0` when every query fails).
+
+---
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**
