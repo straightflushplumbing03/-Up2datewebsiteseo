@@ -76,6 +76,11 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   retry once. Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`.
 
 ## AI visibility measurement
+- **THE BUSINESS GOAL IS UNMEASURED (ISSUE-027, HIGH, OPEN).** `ai_visibility_history.jsonl`
+  has 337 rows and **zero `test_type: ai_platform`** — all are conventional-search proxies.
+  `GEMINI_API_KEY` is *registered but empty* (len 0), so the free AI surface has **never run**.
+  Fix is owner-only: provision a free key at aistudio.google.com/apikey as `GEMINI_API_KEY`.
+  Guarded by `scripts/system_supervisor.py::check_ai_visibility_blind` (fails while 0/stale).
 - **Primary AI surface (free): Gemini Search API** — `growth-engine/gemini_search_client.py`,
   CLI `scripts/gemini_visibility.py`, key `GEMINI_API_KEY`. `google_search` grounding gives a
   real web-grounded answer **+ citations**; free tier (~500 grounded req/day on Flash).
