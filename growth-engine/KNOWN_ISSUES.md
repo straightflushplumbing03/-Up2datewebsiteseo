@@ -709,3 +709,41 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `googletagmanager.com` mapped to a local listener; the browser opened **2 TLS
   connections** to it, so the GA4 tag is fetched and executed on production.
 - **Approval:** owner decision (add CF Insights to the allowlist, or leave it).
+
+---
+
+## ISSUE-030 — GA4 measurement ID replaced, not added a second time  [MEDIUM · RESOLVED 2026-10-16]
+
+- **Context:** the owner supplied a Google tag for measurement ID
+  **`G-DFS6B1LV4P`** with Google's standing instruction to paste it immediately
+  after `<head>` on every page and **not add more than one Google tag to each
+  page**. Every page already carried exactly one Google tag for a *different*
+  property, `G-651QV5WYP2` (ISSUE-028, same day).
+- **Decision:** "add this tag" cannot mean pasting a second one — that would
+  break the one-tag rule and split reporting across two properties. The new ID
+  **replaces** the old as the site's single Google tag. The alternative reading
+  (a GTM container `GTM-KNVW3QG7` was also supplied) does **not** apply: that
+  container was inspected and is **empty** (`"tags":[], "predicates":[],
+  "rules":[]`, no `G-` reference to either property), and adding a GTM snippet
+  plus a GA4 snippet is exactly the double-tagging the instruction forbids.
+- **Change:** `MEASUREMENT_ID` in `scripts/csp_policy.py` (the single source of
+  truth) set to `G-DFS6B1LV4P`; all **134** pages re-IDed; the meta CSP on every
+  page and the `_headers` fallback regenerated so the inline `gtag()` bootstrap
+  hash still matches the snippet. Old ID count: 268 -> 0. New ID: 268
+  occurrences (2 per page: loader URL + `gtag('config')`).
+- **Why the CSP had to move too:** the inline bootstrap is allowed by SHA-256
+  hash, which is derived from the snippet text. Changing the ID without
+  regenerating the hash would leave the tag present in markup and **blocked** —
+  the same silent failure as ISSUE-028.
+- **Verification:** 309 unittest OK (incl. `test_ga4_tag.py`, ID assertion
+  updated); `validate_knowledge_base.py` OK; `seo_audit.py` exit 0;
+  `crawler_access_check.sh` OK. Headless Chromium on the real page: **no
+  `script-src` or `connect-src` violations** (only the 138 pre-existing
+  `style-src` ones from ISSUE-028); netlog shows a request to
+  `https://www.googletagmanager.com/gtag/js?id=G-DFS6B1LV4P` and `dataLayer`
+  initialised in the DOM — the tag is fetched and executed, not merely present.
+- **Note:** `G-651QV5WYP2` and `G-DFS6B1LV4P` are two different GA4 properties.
+  If `G-651QV5WYP2` holds historical data the owner wants to keep, no
+  back-fill happens automatically; the site now reports to `G-DFS6B1LV4P` only.
+  Owner should confirm data appears in the new property after the Pages deploy.
+- **Approval:** Level 2 (analytics plumbing), same class as ISSUE-028.
