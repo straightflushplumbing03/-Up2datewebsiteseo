@@ -274,5 +274,82 @@ class RecordTests(unittest.TestCase):
                 self.assertEqual(len(fh.read().strip().splitlines()), 2)
 
 
+class ModelChainTests(unittest.TestCase):
+    """A slug Google retires must not zero the day's AI sweep.
+
+    `gemini-2.5-flash` began answering 404 "no longer available to new users",
+    which made every grounded query inconclusive.
+    """
+
+    def test_default_model_is_the_stable_latest_alias(self):
+        self.assertEqual(G.DEFAULT_MODEL, "gemini-flash-latest")
+
+    def test_retired_default_slug_is_not_reinstated(self):
+        self.assertNotEqual(G.DEFAULT_MODEL, "gemini-2.5-flash")
+
+    def test_default_chain_starts_with_default_and_is_unique(self):
+        client = G.GeminiClient(api_key="k", opener=FakeOpener([]))
+        self.assertEqual(client._models[0], G.DEFAULT_MODEL)
+        self.assertEqual(len(client._models), len(set(client._models)))
+        self.assertIn("gemini-2.5-flash", client._models)
+
+    def test_explicit_model_pins_a_single_slug(self):
+        client = G.GeminiClient(api_key="k", model="gemini-3.5-flash",
+                                opener=FakeOpener([]))
+        self.assertEqual(client._models, ["gemini-3.5-flash"])
+
+    def test_env_model_pins_a_single_slug(self):
+        os.environ["GEMINI_MODEL"] = "gemini-3.5-flash"
+        try:
+            client = G.GeminiClient(api_key="k", opener=FakeOpener([]))
+            self.assertEqual(client._models, ["gemini-3.5-flash"])
+        finally:
+            del os.environ["GEMINI_MODEL"]
+
+    def test_falls_back_when_a_slug_is_retired(self):
+        opener = FakeOpener([
+            _http_error(404, {"error": {"status": "NOT_FOUND",
+                                        "message": "model is no longer available to new users"}}),
+            _body("plumber found"),
+        ])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=["gemini-3.8-flash"])
+        result = client.ask("q")
+        self.assertTrue(result["ok"])
+        self.assertEqual(len(opener.calls), 2)
+        self.assertIn("gemini-3.8-flash", opener.calls[1].full_url)
+
+    def test_does_not_fall_back_on_other_404(self):
+        opener = FakeOpener([
+            _http_error(404, {"error": {"status": "NOT_FOUND",
+                                        "message": "model not found"}}),
+        ])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=["gemini-3.8-flash"])
+        with self.assertRaises(G.GeminiError):
+            client.ask("q")
+        self.assertEqual(len(opener.calls), 1)
+
+    def test_exhausted_chain_raises_the_last_error(self):
+        retired = _http_error(404, {"error": {"status": "NOT_FOUND",
+                                              "message": "no longer available"}})
+        opener = FakeOpener([retired, _http_error(
+            404, {"error": {"status": "NOT_FOUND", "message": "no longer available"}})])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=["gemini-3.8-flash"])
+        with self.assertRaises(G.GeminiError) as ctx:
+            client.ask("q")
+        self.assertEqual(ctx.exception.status_code, 404)
+        self.assertEqual(len(opener.calls), 2)
+
+    def test_grounding_429_still_raises_rate_limited(self):
+        """A blocked grounding sweep stays inconclusive, never absent."""
+        opener = FakeOpener([_http_error(429, {"error": {"status": "RESOURCE_EXHAUSTED"}})] * 3)
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None)
+        with self.assertRaises(G.GeminiError) as ctx:
+            client.ask("q")
+        self.assertEqual(ctx.exception.error_type, "rate_limited")
+
+
 if __name__ == "__main__":
     unittest.main()

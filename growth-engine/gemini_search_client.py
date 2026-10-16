@@ -44,7 +44,13 @@ import urllib.parse
 import urllib.request
 
 API_ROOT = "https://generativelanguage.googleapis.com/v1beta/models"
-DEFAULT_MODEL = "gemini-2.5-flash"
+# `gemini-2.5-flash` was retired for new API keys and now answers HTTP 404, which
+# silently turned every AI-visibility query into an inconclusive row. The
+# `-latest` alias is maintained by Google across version bumps, so it does not
+# rot the same way; the pinned versions below are tried in order if it is
+# unavailable. See MODEL_FALLBACKS and GeminiClient._model_chain.
+DEFAULT_MODEL = "gemini-flash-latest"
+MODEL_FALLBACKS = ("gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash")
 DEFAULT_TIMEOUT_S = 60
 MAX_RETRIES = 3
 
@@ -188,9 +194,18 @@ class GeminiClient:
     """Stdlib wrapper over `models/{model}:generateContent` with Search grounding."""
 
     def __init__(self, api_key=None, model=None, timeout=DEFAULT_TIMEOUT_S,
-                 max_retries=MAX_RETRIES, sleep=time.sleep, opener=None):
+                 max_retries=MAX_RETRIES, sleep=time.sleep, opener=None,
+                 model_fallbacks=None):
         self._api_key = (api_key or _env_api_key()).strip()
         self.model = (model or os.environ.get("GEMINI_MODEL") or DEFAULT_MODEL).strip()
+        # An explicit `model` or GEMINI_MODEL pins exactly one slug (so a bad
+        # override fails loudly); the default resolves through the fallback chain
+        # so a retired slug degrades instead of zeroing the day's AI sweep.
+        if model or os.environ.get("GEMINI_MODEL"):
+            self._models = [self.model]
+        else:
+            chain = model_fallbacks if model_fallbacks is not None else MODEL_FALLBACKS
+            self._models = [self.model] + [m for m in chain if m != self.model]
         self.timeout = timeout
         self.max_retries = max_retries
         self._sleep = sleep
@@ -199,14 +214,21 @@ class GeminiClient:
     def _endpoint(self):
         return f"{API_ROOT}/{urllib.parse.quote(self.model, safe='')}:generateContent"
 
-    def _request(self, query):
+    @staticmethod
+    def _is_retired_model(err):
+        """A 404 for a slug Google retired reads as a bad request but is not
+        the caller's fault, so it is worth trying the next model."""
+        return err.status_code == 404 and "no longer available" in str(err).lower()
+
+    def _request(self, query, model):
         payload = {
             "contents": [{"parts": [{"text": query}]}],
             "tools": [{"google_search": {}}],
         }
         data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
-            self._endpoint(), data=data, method="POST",
+            f"{API_ROOT}/{urllib.parse.quote(model, safe='')}:generateContent",
+            data=data, method="POST",
             headers={
                 "Content-Type": "application/json",
                 "x-goog-api-key": self._api_key,
@@ -218,14 +240,28 @@ class GeminiClient:
         """Ask a Search-grounded question. Returns a normalised result dict.
 
         Raises GeminiError on failure so callers can record `inconclusive`.
-        Retries 429/5xx/connection errors up to max_retries.
+        Retries 429/5xx/connection errors up to max_retries. A 404 for a slug
+        Google has retired moves to the next model in the chain rather than
+        failing the whole sweep.
         """
         _require_key()
+        last_err = None
+        for idx, model in enumerate(self._models):
+            try:
+                return self._ask_once(query, model)
+            except GeminiError as err:
+                last_err = err
+                if not self._is_retired_model(err) or idx == len(self._models) - 1:
+                    raise
+                self.model = self._models[idx + 1]
+        raise last_err
+
+    def _ask_once(self, query, model):
         attempt = 0
         while True:
             attempt += 1
             try:
-                with self._request(query) as resp:
+                with self._request(query, model) as resp:
                     body = json.loads(resp.read().decode("utf-8"))
                 return self._normalise(body, query)
             except urllib.error.HTTPError as exc:
