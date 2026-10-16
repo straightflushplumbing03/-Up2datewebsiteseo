@@ -10,6 +10,7 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 |----|-----------|---------------|-------|--------------------|
 | **D** | **SFPL AI Headquarters Daily** | `0 6 * * 1,3,5` (Mon/Wed/Fri) | L1 + L2 (PRs) | `1485d659-8663-4776-a507-db0fefed8483` (created 2026-10-15; trigger changed to Mon/Wed/Fri 2026-10-16, ACTIVE) |
 | **R** | **SFPL AI Headquarters Daily Retry Watchdog** | `30 6,9,12,15,18 * * *` | L1 + re-dispatch | `b946624c-79c2-40a6-be1b-258388a15fb4` (created 2026-10-13; recreated 2026-10-15, ACTIVE) |
+| **S** | **SFPL AI Headquarters System Supervisor** | `0 7 * * 2,6` (Tue/Sat) | L1 + L2 (report PR) | `c1b547c8-da3b-4fa1-ba8a-e99a55e0f59e` (created 2026-10-16, ACTIVE) |
 | ~~HQ-D~~ | ~~SFPL Intelligence HQ Daily 6 AM~~ | `0 6 * * *` | L1 + L2 (PRs) | `5dc89b41-6880-40e6-950c-14a635f7bd62` (**retired 2026-10-15 — 404**) |
 | ~~HQ-W~~ | ~~SFPL Intelligence HQ Weekly Review~~ | `0 6 * * 1` | L1 + L2 (PRs) | `0582d219-de15-42c2-83b5-4bc92995edce` (**retired 2026-10-15 — 404**) |
 | A | Morning AI Search Visibility & Competitor Intelligence | `0 6 * * *` | L1 + L2 (PRs) | `4c5213f7-080c-4edd-97a2-30962419bd14` (created 2026-10-09; **disabled 2026-10-12**, superseded by HQ-D) |
@@ -21,8 +22,21 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 > **One daily content job.** The system was redeployed on 2026-10-15 as
 > `SFPL AI Headquarters Daily` (see `ai-headquarters-blueprint/README.md`); the
 > generation-1 HQ-D/HQ-W ids now return `404`. The retry watchdog (`HQ-R`) is a
-> **reliability** job, not a second content job — it never does the daily work.
-> Exactly one *content* automation should be enabled at a time.
+> **reliability** job and the system supervisor (`HQ-S`) is an **oversight** job —
+> neither does the daily work. Exactly one *content* automation should be enabled
+> at a time; `scripts/system_supervisor.py` fails if that stops being true.
+
+## Oversight — the system supervisor (HQ-S)
+
+`ai-headquarters-supervisor.prompt.md`, `0 7 * * 2,6` PT (Tue + Sat). Because the
+daily content job runs Mon/Wed/Fri at 06:00, supervision lands the **next
+morning** and reviews what those runs actually produced. It runs
+`scripts/system_supervisor.py`, a deterministic drift detector (no LLM until the
+report), which checks that exactly one content automation is enabled, the schedule
+is intact, the live prompt matches the repo, no PR was self-merged, the open-PR
+backlog is bounded, change volume is within budget, and no unexplained branch
+appeared. It writes `growth-engine/reports/supervisor/<date>.md` and opens a PR —
+never merges. History: `growth-engine/data/supervisor_history.jsonl`.
 
 ## Reliability — runs that overrun the wall-clock ceiling (ISSUE-009)
 
