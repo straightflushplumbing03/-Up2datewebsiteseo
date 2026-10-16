@@ -117,8 +117,11 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   `MEMORY.md` is edited in place (not appended).
 - **Concurrent sessions mutate this repo** (owner merges within minutes): `git fetch` and check
   for newer `main`/open PRs before repo work; rebase before push; one PR per day.
-- No CI: run `validate_knowledge_base.py`, `unittest discover`, `crawler_access_check.sh`,
-  `seo_audit.py` by hand.
+- **CI now exists** (`.github/workflows/verify.yml`, added 2026-10-16): runs `unittest discover`,
+  `validate_knowledge_base.py`, `seo_audit.py`, and the sitemap URL-set invariant on every PR and
+  on pushes to `main`. Stdlib-only, `fetch-depth: 0` (refresh_sitemap.py needs git dates). Check
+  the PR's **Verify** run — it is the only evidence of "green" not authored by the change author.
+  Run the same gates by hand too (`crawler_access_check.sh` is still manual-only).
 - **Never run `scripts/gen_*.py` site-wide** — they revert per-page JSON-LD and unique city meta
   (4->1 JSON-LD blocks, 585 lines deleted). Edit `.html` directly. `write_page()` now guards it.
 - Root-level `.html` files are `noindex` stubs; indexable pages live in subdirectories.
