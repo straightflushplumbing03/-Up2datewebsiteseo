@@ -359,3 +359,68 @@ For each Tier A competitor, when crawlers can reach us (post-Cloudflare fix):
 fetch homepage, one city page, one service page; extract title/meta/H1 patterns,
 service list, schema types, FAQ presence, review display, and CTA; record in
 `data/competitor_observations.jsonl`. Do not scrape private data or impersonate.
+
+---
+
+## 2026-10-19 update — 18-query sweep (Tavily conventional proxy)
+
+Provider note: Brave returned HTTP 429 to this egress IP and DuckDuckGo HTML was
+unavailable, so the recorded sweep used the **Tavily Search API** as the
+conventional-search proxy (`test_type: conventional_proxy`). This is **conventional
+search, not an AI answer engine** — it must not be reported as a ChatGPT/Perplexity
+result. 18 queries × 10 results = 180 observed result slots. Rows:
+`data/ai_visibility_history.jsonl` (2026-10-19).
+
+### Tier A — appeared for 6+ of 18 queries
+
+| Domain | Queries | Notes |
+|---|---|---|
+| `efficientplumbing.com` | 9 | Laguna Niguel; fetched today (HTTP 200, 101,381 bytes). Title "Efficient Plumbing \| Best Laguna Niguel Plumber \| Water Leak". Schema `@types`: `LocalBusiness`, `OpeningHoursSpecification`, `Person`, `PostalAddress`, `AggregateRating`, `Rating`, `Review`. H1 "Efficient Plumbing & Water Leak Detection". |
+| `clearwaterplumbingoc.com` | 7 | Recurring; appears twice in one result set (pinhole leak, San Clemente). |
+| `scottenglishplumbing.net` | 6 | `/service-area/plumber-in-{city}` pattern. |
+| `rotorooter.com` | 6 | Franchise; strongest on emergency/water-heater intents. |
+
+### Tier B — appeared for 3–5 of 18 queries
+
+`barkerandsonsplumbing.com` (5) · `mckplumb.com` (4) · `billmetzgerplumbing.com` (4)
+· `evansleakdetection.com` (4) · `leakstar.com` (4) · `socalrepipes.com` (3) ·
+`streamlineplumbing.org` (3) · `primewestplumbing.com` (3) · `pristineplumbinginc.com` (3)
+· `drainandsewerpro.com` (3) · `integrityrepipe.com` (3).
+
+### Directory / aggregator dominance (visibility channels, not competitors)
+
+`yelp.com` appeared in **18/18** queries and `facebook.com` in **11/18** — every
+plumbing intent tested surfaced at least one aggregator. `mapquest.com` (2),
+`bbb.org` (1). **Hypothesis (medium confidence):** aggregator profile completeness,
+not on-page content alone, gates first-page presence for these intents. Causation is
+not established; the feature (aggregator presence) is verified.
+
+### Newly observed this run (not in prior directory entries)
+
+`lagunaniguelcaplumbingpros.com`, `proplumberlagunaniguel.com`,
+`lagunaniguelplumber.org`, `pexrepipe-repiping.com`, `pipebros.com`,
+`aterheatermaninc.com`, `aterheaterinstallrepair.com`, `aterheaterinstallations.com`,
+`speedywaterheatersoc.com`, `parzivalplumbing.com`, `largeplumbing.com`,
+`coastalinspection.us`, `tritonair.com`, `thepassionateplumber.com`,
+`ezplumbingusa.com`, `americanleakdetection.com`, `drakewillsplumbing.net`,
+`leakdetectionplumbers.com`. Recorded with dated source rows in
+`data/competitor_observations.jsonl`; causation for any ranking is a hypothesis.
+
+### Service-specific patterns (verified features; causation = hypothesis)
+
+- **Water heaters:** specialist domains (`aterheatermaninc.com`,
+  `aterheaterinstallrepair.com`, `speedywaterheatersoc.com`) occupy the top slots for
+  both water-heater queries; **no SF presence** observed.
+- **Leak detection:** specialist domains (`evansleakdetection.com`, `leakstar.com`,
+  `americanleakdetection.com`) recur; SF absent on all leak-detection queries.
+- **Repipe/PEX:** repipe-specialist domains (`socalrepipes.com`,
+  `integrityrepipe.com`, `pexrepipe-repiping.com`) recur.
+
+**SF visibility 2026-10-19:** `absent` on 18/18 conventional queries and 5/5
+AI-platform rows. This is a consistent negative result, not a ranking measurement —
+see the daily report's limitations section.
+
+**Next investigation queue (updated):** fetch `efficientplumbing.com` city and
+service pages (9/18 presence — highest observed), plus `clearwaterplumbingoc.com`
+(7/18); extract title/meta/H1, service list, schema, CTA, and whether a dedicated
+water-heater or leak-detection city page exists.

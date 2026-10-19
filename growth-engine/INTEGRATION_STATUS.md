@@ -79,6 +79,7 @@ call. Prior verification 2026-10-09.
 | Google Business Profile performance | **not connected** | GBP API access or owner export |
 | Google Search AI Overviews / AI Mode | **not testable** | No SERP API key; SERP served as JS shell to curl |
 | ChatGPT Search | **not testable** | chatgpt.com 403 to non-browser clients |
+| ChatGPT / OpenAI API | **key misnamed — not delivered** | `CHATGPT_API_KEY` is registered but is **absent** from the run environment; the adapter reads `OPENAI_API_KEY` (blueprint §3). HTTP 401 "Incorrect API key provided: ''" confirms an empty bearer. Re-register under `OPENAI_API_KEY` — see ISSUE-033 / `proposals/2026-10-09-priority-actions.md` P-008. |
 | Claude web search | **not testable** | not scriptable in this environment |
 | Gemini web search (consumer app) | **not testable** | gemini.google.com not scriptable |
 | Gemini Search API | **free, with Gemma fallback** | `GEMINI_API_KEY` is set. Grounding is **not** on the Gemini 3.x free tier (HTTP 429), so the client falls back to a free Google-Search-grounded **Gemma** model and labels the row `engine: gemma` (ISSUE-032). Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Enable the true Gemini surface with billing (Tier 1 = 5,000 free grounded requests/month). |
@@ -112,5 +113,22 @@ are redacted.
 | GitHub Pages deployment | Pages API: `status: built`, CNAME set | legacy build from `main` `/` |
 | Site crawler access | `crawler_access_check.sh` exit 0; all UAs 200 (2026-10-12) | ISSUE-001 **resolved** — no `cf-mitigated` |
 | DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12) | Used for the 2026-10-12 visibility sweep |
+| Tavily Search API (conventional proxy) | 18/18 queries returned 10/10 results (2026-10-19) | **Current default** conventional-search proxy; recorded as `test_type: conventional_proxy`, never as an AI-answer-engine result |
 | Bun/curl/dns/TLS checks | see `data/technical_health_history.jsonl` | |
+
+## Re-verified 2026-10-19
+
+- **Crawler access:** all bot UAs and `curl` paths 200; ISSUE-001 still resolved.
+- **Search providers:** Brave returns **HTTP 429** to this egress IP; DuckDuckGo HTML
+  unavailable; the Bing fallback probe returned partially degraded (definitional)
+  SERPs and 429s, so no rows were recorded from it. **Tavily** is the working
+  conventional-search proxy. Single-provider results are a known limitation.
+- **Measurement (still blocked, P-002):** `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*` /
+  `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **empty** — GSC, GA4, and
+  GBP remain unconnected. All impression/click/traffic/review metrics stay
+  `unverified` (never `0`). Google's **Generative AI performance report** in Search
+  Console is now named by Google as the first-party surface for generative-AI
+  visibility; it is gated by the same P-002 access (source:
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide,
+  fetched 2026-10-19).
 

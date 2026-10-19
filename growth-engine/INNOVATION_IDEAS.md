@@ -53,6 +53,12 @@ the owner, never execute.
 | idea-2026-10-13-18 | 2026-10-13 | Write the **GSC measurement runbook** to execute on the day P-002 clears | Website/ops (docs) | 4 | 4 | 5 | 5 | L1/L2 | scored | GSC now surfaces generative-AI (2026-06), web-multimodal (2026-09), and social/video platform properties (2026-07) — primary sources; GSC still not connected (P-002). | Documentation only; makes the first connected run productive instead of exploratory. |
 | idea-2026-10-13-19 | 2026-10-13 | Publish a **"calling an emergency plumber: what to have ready"** prep checklist | Website | 3 | 3 | 3 | 5 | L2 | candidate | Both emergency queries today franchise-dominated (`rotorooter.com`, `mrrooter.com`, `emergencyresponseplumbers.com`); homeowner intent = "what do I do now". | **No** response-time or service-area commitment (Level 3). Reduces call friction only. |
 | idea-2026-10-13-20 | 2026-10-13 | Point a lightweight **`llms.txt` path-200 self-check** at every URL referenced in `llms.txt`/`llms-full.txt` | Website/ops | 3 | 4 | 5 | 5 | L2 | candidate | `/llms-full.txt` + `/md/**` are now live (200), but `/md/` root 404s — a referenced-but-broken path would silently starve an AI crawler. | Read-only check; fail loudly on drift. |
+| idea-2026-10-19-01 | 2026-10-19 | **Re-frame `llms.txt`/`/md/**` copy** as agent/AI-consumer conveniences — remove any "helps Google / AI Overviews" framing | Website (docs+copy) | 3 | 5 | 2 | 5 | L1/L2 | scored | Google Search Central AI-optimization guide, fetched 2026-10-19 (HTTP 200): "Google Search itself doesn't use them"; llms.txt "will neither harm nor help your site's visibility or rankings in Google Search". | Primary-source correction of a claim we currently make; no behaviour change, text only. |
+| idea-2026-10-19-02 | 2026-10-19 | Add the **Search Console "Generative AI performance" report** to the P-002 unblock request + runbook | Business/measurement | 4 | 5 | 5 | 5 | L1/L2 | scored | Same primary source: eligibility needs the site "included in Search generative AI features in Search Console", and Google names the Generative AI performance report as the measurement surface. | Extends idea-2026-10-13-18; documentation only, no access change. |
+| idea-2026-10-19-03 | 2026-10-19 | Strengthen **third-party profile completeness** (Google Business Profile + Yelp) | Business | 5 | 4 | 3 | 4 | L3 | proposed | 2026-10-19 sweep: `yelp.com` appeared in **18/18** conventional queries and `facebook.com` in **11/18** — aggregator surfaces are the recurring answer for every plumbing intent we tested. Feature observed; causation = hypothesis. | Owner access required; propose only. No fake reviews, no paid placement. |
+| idea-2026-10-19-04 | 2026-10-19 | Add verified **`OpeningHoursSpecification` + `Person` (owner)** structured data to the LocalBusiness block | Website | 3 | 4 | 2 | 5 | L2 | candidate | `efficientplumbing.com` (Laguna Niguel, 9/18 queries today) ships `LocalBusiness` + `OpeningHoursSpecification` + `Person` + `PostalAddress`; SF's business facts are already approved in `APPROVED_CLAIMS.md`. | Only pre-approved facts; no hours invention (must match `BUSINESS_PROFILE.md`). Validates with `seo_audit.py`. |
+| idea-2026-10-19-05 | 2026-10-19 | Add **water-heater-repair per-city framing** (Aliso Viejo, Laguna Niguel) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Two water-heater queries today returned specialist domains (`aterheatermaninc.com`, `aterheaterinstallrepair.com`, `speedywaterheatersoc.com`) and **no** SF presence; SF has `/services/` water-heater content but no city frame. | Extends idea-2026-10-13-02 pattern to water heaters. No prices (Level 3). |
+| idea-2026-10-19-06 | 2026-10-19 | Record **`inconclusive`** (never `absent`) when a provider returns generic/definitional SERPs or 429 | Website/ops | 3 | 5 | 2 | 5 | L2 | scored | Today's Bing fallback probe returned dictionary/definitional results and 429s; the provider policy requires we not convert a degraded result set into a ranking claim. | Extends idea-2026-10-13-17; makes the honesty rule mechanical rather than manual. |
 
 > The first daily run by the new automation appends its own ≥5 dated ideas and
 > re-scores this table. This seed set documents the format and the evidence bar.
@@ -75,6 +81,27 @@ channel into reliable signal at near-zero risk; the OC hub (15) is the strongest
 response to a **demonstrated** cross-city breadth advantage. No item is actioned
 until it clears the risk gate and (for any HTML change) `validate_knowledge_base.py`
 + `scripts/seo_audit.py`.
+
+---
+
+### Prioritization (2026-10-19 daily run)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-19-01 re-frame llms.txt / `/md/**` copy | 3 | 5 | Low→High | Yes | ✅ L1/L2 | scored |
+| 2 | idea-2026-10-19-06 provider-degradation → `inconclusive` rule | 3 | 5 | Low→High | Yes | ✅ L2 | scored |
+| 3 | idea-2026-10-19-02 add Generative-AI report to P-002 runbook | 4 | 5 | Low→High | Yes | ✅ L1/L2 | scored |
+| 4 | idea-2026-10-19-04 `OpeningHoursSpecification` + `Person` schema | 3 | 4 | Low→High | Yes | ✅ L2 | candidate |
+| 5 | idea-2026-10-19-05 water-heater per-city framing | 4 | 4 | Med→High | Yes | ✅ L2 | candidate |
+| 6 | idea-2026-10-19-03 GBP/Yelp profile completeness | 5 | 4 | Med→High | No (owner) | ⛔ L3 | proposed |
+
+**Selection rule applied (2026-10-19):** the run produced one **high-evidence,
+primary-source correction** (Google states llms.txt neither helps nor harms Google
+Search visibility) and one **measurement-integrity** rule. Both are cheap and
+reversible, so they outrank the higher-impact-but-blocked L3 profile work. No item
+was actioned on the website today: ideas 01/02/06 are documentation/knowledge
+changes (applied as report + `INDUSTRY_WATCH.md` + `INTEGRATION_STATUS.md` edits,
+not HTML), and 03–05 stay `candidate`/`proposed` until a further confirming sweep.
 
 ---
 

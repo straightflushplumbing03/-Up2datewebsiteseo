@@ -861,3 +861,42 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+---
+
+## ISSUE-033 — A registered `CHATGPT_API_KEY` is not the name any adapter reads, so the key never reaches the run  [MEDIUM · OPEN 2026-10-19]
+
+- **Observed:** the owner registered a secret named **`CHATGPT_API_KEY`** in
+  OpenHands Settings. In this sandbox that variable is **not present** in the
+  process environment (`os.environ.get("CHATGPT_API_KEY") is None`), as are 14
+  case/spelling variants probed (`ChatGPT_api_key`, `chatgpt_api_key`,
+  `OPENAI_API_KEY`, `OPENAI_KEY`, `CHATGPT_KEY`, `CHATGPT_TOKEN`,
+  `OPENAI_API_TOKEN`, `GPT_API_KEY`, `CHAT_GPT_API_KEY`, `OPEN_AI_API_KEY`,
+  `ChatGPT_Api_Key`, …). A direct call
+  `curl -H "Authorization: Bearer $CHATGPT_API_KEY" https://api.openai.com/v1/models`
+  returned **HTTP 401 `invalid_api_key`** with message
+  `"Incorrect API key provided: ''"` — the shell expanded the unset variable to an
+  **empty** bearer, so this is a *delivery/naming* failure, not a rejected
+  credential. Only `github_token`, `GEMINI_API_KEY`, `Tavily_api_key` and the
+  platform's own vars carry values.
+- **Why it matters:** the blueprint (`ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md`
+  §3) states the adapters read **exact** names — `OPENAI_API_KEY` for the ChatGPT
+  adapter — and that "adding a key is what flips an engine from `unverified` to
+  measurable; no code change is needed". A key stored under `CHATGPT_API_KEY`
+  therefore flips nothing: the ChatGPT surface stays `unverified` and
+  `system_supervisor.py`'s `ai_visibility_blind` signal keeps firing.
+- **Not a site/business problem:** no website, schema, copy or claim is affected.
+- **Owner action (one step, no code):** re-register the same value under
+  **`OPENAI_API_KEY`** in OpenHands Settings → Secrets (keep or delete the
+  `CHATGPT_API_KEY` entry). Optionally also add `PERPLEXITY_API_KEY`. This is a
+  Level 3 credential/owner action, so it is proposed, not applied.
+- **Note on scope:** the OpenAI **ChatGPT API** models the model, not the consumer
+  `chatgpt.com` Search surface (which 403s to non-browser clients). A passing API
+  key makes the API surface measurable; it does **not** authorise scraping the
+  consumer UI, and no such scraping is done.
+- **Verification of the surrounding claim:** the Gemini path *was* exercised this
+  run — `growth-engine/data/ai_visibility_history.jsonl` holds **5 committed rows**
+  for 2026-10-19 with `test_type: ai_platform`, `platform: gemini_search`, all
+  `engine: gemma` — so the AI-visibility harness itself works; only the ChatGPT key
+  delivery is broken.
+- **Approval:** documentation only (knowledge-base + proposal).
+

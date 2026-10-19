@@ -15,6 +15,78 @@ cannot be traced to a fetched source, it is not written down.
 
 ---
 
+## 2026-10-19 — Google publishes a primary-source "mythbusting" guide for generative-AI search (llms.txt, chunking, structured data)
+
+- **What changed / observed:** Google Search Central's *AI optimization guide*
+  (`/search/docs/fundamentals/ai-optimization-guide`) now carries an explicit
+  "Mythbusting generative AI search: what you don't need to do" section. Verbatim
+  from the fetched page (HTTP 200, 192,068 bytes, fetched 2026-10-19):
+  - **LLMS.txt:** "You don't need to create new machine readable files, AI text
+    files, markup, or Markdown to appear in Google Search (including its
+    generative AI capabilities), as Google Search itself doesn't use them."
+    Maintaining one is "completely fine … for other services or systems," and it
+    "will neither harm nor help your site's visibility or rankings in Google
+    Search, as Google Search ignores them."
+  - **"Chunking" content:** "There's no requirement to break your content into tiny
+    pieces for AI to better understand it."
+  - **Rewriting content for AI:** "You don't need to write in a specific way just
+    for generative AI search."
+  - **Structured data:** "Structured data isn't required for generative AI search,
+    and there's no special schema.org markup you need to add."
+  - **Eligibility requirement (actionable):** "To be eligible to be shown in
+    generative AI features on Google Search, a page must be indexed and eligible to
+    be shown in Google Search with a snippet," and a site "must be included in
+    Search generative AI features in Search Console."
+  - **Measurement:** Google points to a **Generative AI performance report** in
+    Search Console (and warns against third-party tools claiming "internal" Google
+    metrics).
+- **Why it matters to Straight Flush:** the repo's `llms.txt` / `llms-full.txt` /
+  `/md/**` assets (ISSUE-001 follow-up, idea-2026-10-12-03) should be described
+  honestly as AI-consumer/agent-readable conveniences, **not** as a Google ranking
+  or AI-Overview lever. The durable levers remain the ordinary ones: indexable,
+  snippet-eligible pages. The Search Console Generative AI performance report is
+  the only first-party measurement path — and it sits behind the same unconnected
+  Google Search Console access as P-002.
+- **Source(s):** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (fetched 2026-10-19, HTTP 200) · https://developers.google.com/search/docs/fundamentals/ai-optimization-guide#mythbusting
+  · Search Central changelog entry "Clarifying guidance on llms.txt files"
+  (https://developers.google.com/search/updates, fetched 2026-10-19).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** re-frame `idea-2026-10-12-03` and the
+  `INTEGRATION_STATUS.md` AI-overview row; add the Generative-AI report to the
+  P-002 unblock request. No website code change warranted today.
+
+## 2026-10-19 — FAQ rich-result documentation removal confirmed in the live changelog (re-verification)
+
+- **What changed / observed:** Re-fetched the Search Central updates page
+  (2026-10-19, HTTP 200). The June 2026 entry "Removing documentation for the FAQ
+  rich result feature" is live, with the reason "The FAQ rich result feature is no
+  longer shown in Google Search results." The How-To deprecation entry remains
+  present. This **re-confirms** the 2026-10-13 entry below against a fresh fetch
+  rather than a cached recollection.
+- **Why it matters to Straight Flush:** no change to the 2026-10-13 conclusion —
+  `FAQPage` markup earns no Google rich result. Keep the answer-first FAQ *content*
+  (human/AEO value); stop citing rich-result eligibility.
+- **Source(s):** https://developers.google.com/search/updates (fetched 2026-10-19)
+  · https://developers.google.com/search/docs/appearance/structured-data/faqpage.
+  **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** none new; supports the 2026-10-13 entry.
+
+## 2026-10-19 — Third-party search-result quality degraded during this run (measurement caveat, not a site finding)
+
+- **What changed / observed:** During the 2026-10-19 run an exploratory **Bing**
+  fallback probe returned partially degraded SERPs for several plumbing queries —
+  generic/definitional results (dictionary domains) rather than local plumbing
+  pages — and several requests were rate-limited (HTTP 429). No row was recorded
+  from that probe; the recorded sweep used Tavily, which returned 10/10 results per
+  query. The degraded probe was therefore **not** used to classify any query.
+- **Why it matters to Straight Flush:** a weak *result set* is not evidence about
+  our ranking. It is a caveat on today's confidence, not a signal about the site.
+- **Source(s):** run observation 2026-10-19 (Bing fallback probe; HTTP 429 +
+  definitional results); recorded sweep in `growth-engine/data/ai_visibility_history.jsonl`
+  (provider `tavily_search`). **Confidence:** medium (observed, provider-side).
+- **Proposed action (if any):** none; note in the report.
+
 ## 2026-10-13 — Google Search Central deprecates the FAQ rich result
 
 - **What changed / observed:** Google Search Central removed the FAQ rich-result
