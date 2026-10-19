@@ -484,6 +484,21 @@ class TestGroundingFallback(unittest.TestCase):
                                 sleep=lambda s: None, model_fallbacks=[])
         self.assertEqual(client._fallback_models, list(G.FALLBACK_MODEL_CHAIN))
 
+    def test_ungrounded_fallback_tries_the_next_slug(self):
+        """A 200 with no grounding metadata is not a measurement; try the next."""
+        ungrounded = {"candidates": [{"content": {"parts": [{"text": "hi"}]}}]}
+        grounded = {"candidates": [{
+            "content": {"parts": [{"text": "hi"}]},
+            "groundingMetadata": {"webSearchQueries": ["q"],
+                                  "groundingChunks": [{"web": {
+                                      "uri": "https://x.com/a", "title": "x.com"}}]}}]}
+        opener = FakeOpener([_rate_limited(), ungrounded, grounded])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1)
+        result = client.ask_with_fallback("q")
+        self.assertTrue(result["grounded"])
+        self.assertEqual(result["model"], G.FALLBACK_MODEL_CHAIN[1])
+
 
 class TestUngroundedResponseHonesty(unittest.TestCase):
     """A 200 with no grounding metadata ran no web search; do not claim it did."""
@@ -510,13 +525,15 @@ class TestUngroundedResponseHonesty(unittest.TestCase):
                                 max_retries=1).ask("q")
         self.assertTrue(result["grounded"])
 
-    def test_ungrounded_record_says_web_search_no(self):
+    def test_ungrounded_record_is_inconclusive_not_absent(self):
         result = {"ok": True, "answer": "no web search ran", "model": "gemma-4-26b-a4b-it",
                   "engine": "gemma", "sources": [], "citations": [], "domains": [],
                   "search_queries": [], "grounded": False, "usage": {}}
         rec = G.build_record("q", "c", result)
         self.assertEqual(rec["web_search"], "no")
-        self.assertIn("no grounding metadata", rec["note"])
+        self.assertEqual(rec["straight_flush"], "inconclusive")
+        self.assertEqual(rec["test_type"], "test_failure")
+        self.assertEqual(rec["error_type"], "ungrounded_response")
 
     def test_grounded_record_says_web_search_yes(self):
         result = {"ok": True, "answer": "x", "model": "gemini-flash-latest",
@@ -613,12 +630,23 @@ class CliRunExitTests(unittest.TestCase):
 
     def test_one_success_keeps_exit_0(self):
         good = {"ok": True, "model": "m", "answer": "Straight Flush Plumbing",
-                "sources": [], "citations": [], "domains": [],
-                "search_queries": [], "usage": {}}
+                "sources": [{"url": "https://x.com/a", "domain": "x.com"}],
+                "citations": [], "domains": ["x.com"],
+                "search_queries": ["q"], "grounded": True, "usage": {}}
         side = [self._err("rate_limited", 429), good, self._err("rate_limited", 429)]
         code, out, _err = self._run_cli(side)
         self.assertEqual(code, 0)
         self.assertIn('"succeeded": 1', out)
+
+    def test_ungrounded_200_does_not_count_as_success(self):
+        """A 200 that ran no web search must not keep the sweep at exit 0."""
+        ungrounded = {"ok": True, "model": "m", "answer": "from memory",
+                      "sources": [], "citations": [], "domains": [],
+                      "search_queries": [], "grounded": False, "usage": {}}
+        code, out, err = self._run_cli([ungrounded] * 3)
+        self.assertEqual(code, 3)
+        self.assertIn('"succeeded": 0', out)
+        self.assertIn("BLOCKED", err)
 
     def test_empty_query_list_is_not_a_failure(self):
         """No queries measured nothing, but must not read as "every query failed"."""

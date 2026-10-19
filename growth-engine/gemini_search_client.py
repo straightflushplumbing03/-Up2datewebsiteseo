@@ -85,6 +85,7 @@ ERROR_TYPES = (
     "server_error",
     "connection_error",
     "timeout",
+    "ungrounded_response",
     "unknown_error",
 )
 
@@ -355,6 +356,13 @@ class GeminiClient:
                             and idx < len(self._fallback_models) - 1:
                         continue
                     raise
+                # A 200 with no grounding metadata measured nothing; another Gemma
+                # slug may ground, so try the next before giving up.
+                if not result.get("grounded") \
+                        and idx < len(self._fallback_models) - 1:
+                    last_err = GeminiError(
+                        "ungrounded response", error_type="ungrounded_response")
+                    continue
                 result["engine"] = _engine_of(model)
                 result["fallback_from"] = self.model
                 return result
@@ -444,17 +452,44 @@ def build_record(query, city, result, *, platform="gemini_search",
     ts = ts or _now_iso()
     if result.get("ok"):
         answer = result.get("answer") or ""
-        classification = classify_visibility(
-            answer, result.get("sources") or [], result.get("citations") or [])
         engine = result.get("engine") or _engine_of(result.get("model"))
         fallback_from = result.get("fallback_from")
-        # A 200 with no grounding metadata answered from memory, not the web.
-        # Say so rather than claiming a search ran.
+        # A 200 with no grounding metadata answered from memory — no web search
+        # ran. That is a FAILED measurement of the grounded surface, not an
+        # "absent" one, so it is recorded `inconclusive` (the repo invariant: a
+        # failed test is never a zero/absent), with the reason spelled out.
         grounded = result.get("grounded")
         if grounded is None:
             grounded = bool(result.get("sources") or result.get("search_queries"))
         if not grounded:
-            web_search = "no"
+            return {
+                "ts": ts,
+                "platform": platform,
+                "test_type": "test_failure",
+                "query": query,
+                "city": city,
+                "web_search": "no",
+                "straight_flush": "inconclusive",
+                "top_results": [],
+                "confidence": "low",
+                "note": (note or
+                         "Ungrounded response: the model returned HTTP 200 but no "
+                         "grounding metadata, so no web search ran and the grounded "
+                         "surface was not measured. Recorded inconclusive, never "
+                         "absent/zero."),
+                "engine": engine,
+                "model": result.get("model"),
+                "fallback_from": fallback_from,
+                "error_type": "ungrounded_response",
+                "response_id": None,
+                "citations": [],
+                "sources": [],
+                "answer_sha256": hashlib.sha256(answer.encode("utf-8")).hexdigest(),
+                "answer_chars": len(answer),
+                "usage": result.get("usage"),
+            }
+        classification = classify_visibility(
+            answer, result.get("sources") or [], result.get("citations") or [])
         default_note = (
             "Gemini API with Google Search grounding (free tier); "
             f"engine={engine}; model={result.get('model')}; "
@@ -463,12 +498,6 @@ def build_record(query, city, result, *, platform="gemini_search",
             "This IS an AI-platform result (the answer engine ran), unlike the "
             "conventional_proxy rows."
         )
-        if not grounded:
-            default_note += (
-                " WARNING: the model returned no grounding metadata, so no web "
-                "search ran — this answer is from the model's own knowledge, not "
-                "live sources; recorded web_search=no."
-            )
         if engine == "gemma":
             default_note += (
                 f" Grounding on the Gemini 3.x family is not on the free tier, so "
@@ -661,7 +690,11 @@ def main(argv=None):
             platform_errors = {"rate_limited", "server_error",
                                "timeout", "connection_error"}
             error_types = {r.get("error_type") for r in records}
-            if error_types and error_types <= platform_errors:
+            # An all-ungrounded sweep is the free Gemma model not running the
+            # search tool — the grounded surface was not measured, so it is
+            # BLOCKED, not a soft failure.
+            if error_types and error_types <= (platform_errors
+                                                | {"ungrounded_response"}):
                 print("Every grounded query was refused by the platform "
                       f"({', '.join(sorted(error_types))}) — recorded BLOCKED, "
                       "never zero.", file=sys.stderr)
