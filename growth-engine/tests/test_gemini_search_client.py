@@ -368,6 +368,28 @@ class TestEngineClassification(unittest.TestCase):
         self.assertEqual(G._engine_of(None), "gemini")
 
 
+class TestSourceDomain(unittest.TestCase):
+    """Grounding uris are Google redirects; the real host is in `title`."""
+
+    def test_title_host_is_preferred_over_proxy_uri(self):
+        web = {"uri": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/XYZ",
+               "title": "thumbtack.com"}
+        self.assertEqual(G.source_domain(web), "thumbtack.com")
+
+    def test_proxy_uri_without_host_title_is_blank(self):
+        web = {"uri": "https://vertexaisearch.cloud.google.com/x", "title": None}
+        self.assertEqual(G.source_domain(web), "")
+
+    def test_real_uri_is_used_when_title_is_a_page_title(self):
+        web = {"uri": "https://www.efficientplumbing.com/a", "title": "Efficient Plumbing"}
+        self.assertEqual(G.source_domain(web), "efficientplumbing.com")
+
+    def test_cited_detected_via_real_domain_not_proxy_url(self):
+        src = [{"url": "https://vertexaisearch.cloud.google.com/x",
+                "domain": "straightflushplumbingoc.com"}]
+        self.assertEqual(G.classify_visibility("Yes.", src, []), "cited")
+
+
 class TestGroundingFallback(unittest.TestCase):
     """When Gemini refuses grounding, a labelled Gemma answer stands in."""
 

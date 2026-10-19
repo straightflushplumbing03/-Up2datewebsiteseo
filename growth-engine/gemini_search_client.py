@@ -183,9 +183,30 @@ def _error_type_for(status_code, provider_status=None):
     return "unknown_error"
 
 
+# Grounding chunks return the publisher's real host in `web.title` and only a
+# `vertexaisearch.cloud.google.com` redirect in `web.uri`. Using the uri would
+# record every source as that one proxy domain and destroy `top_results` and the
+# competitor extraction, so the title is preferred when it is a bare host.
+_PROXY_DOMAINS = ("vertexaisearch.cloud.google.com",)
+_HOST_RE = re.compile(r"^[a-z0-9-]+(\.[a-z0-9-]+)+$", re.I)
+
+
 def domain_of(url):
     m = re.match(r"https?://([^/]+)", url or "")
     return m.group(1).lower().lstrip("www.") if m else ""
+
+
+def source_domain(web):
+    """Best real publisher domain for a grounding chunk.
+
+    Prefers `title` when it is a bare host (the common case) because `uri` is a
+    Google redirect. Falls back to the uri host, ignoring the proxy itself.
+    """
+    title = (web.get("title") or "").strip().lower()
+    if _HOST_RE.match(title) and title not in _PROXY_DOMAINS:
+        return title.lstrip("www.")
+    host = domain_of(web.get("uri"))
+    return "" if host in _PROXY_DOMAINS else host
 
 
 def classify_visibility(answer, sources, citations):
@@ -199,7 +220,10 @@ def classify_visibility(answer, sources, citations):
         return "inconclusive"
 
     lowered = text.lower()
-    cited = any(SF_DOMAIN in (e.get("url") or "") for e in list(sources) + list(citations))
+    # `url` is a Google redirect proxy, so the real publisher lives in `domain`;
+    # check both so a genuine citation is still detected.
+    cited = any(SF_DOMAIN in ((e.get("url") or "") + " " + (e.get("domain") or ""))
+                for e in list(sources) + list(citations))
     mentioned = (SF_DOMAIN in lowered) or any(n in lowered for n in SF_NAMES)
 
     if cited:
@@ -383,7 +407,8 @@ class GeminiClient:
             if not url or url in seen:
                 continue
             seen.add(url)
-            sources.append({"url": url, "title": web.get("title"), "domain": domain_of(url)})
+            sources.append({"url": url, "title": web.get("title"),
+                            "domain": source_domain(web)})
         citations = [{"url": s["url"], "title": s["title"], "type": "grounding"}
                      for s in sources]
         domains = []
