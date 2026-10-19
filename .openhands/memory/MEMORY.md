@@ -76,10 +76,24 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   retry once. Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`.
 
 ## AI visibility measurement
-- **Primary AI surface (free): Gemini Search API** — `growth-engine/gemini_search_client.py`,
+- **Primary AI surface: Gemini Search API** — `growth-engine/gemini_search_client.py`,
   CLI `scripts/gemini_visibility.py`, key `GEMINI_API_KEY`. `google_search` grounding gives a
-  real web-grounded answer **+ citations**; free tier (~500 grounded req/day on Flash).
-  Records `test_type: ai_platform`, `platform: gemini_search`.
+  real web-grounded answer **+ citations**. Records `test_type: ai_platform`,
+  `platform: gemini_search`.
+- **Gemini grounding is NOT on the free tier for the 3.x family** (Google pricing: "Not
+  available"). `gemini-2.5-flash` (last free-grounding Flash) is retired for new keys → 404,
+  so a post-2.5 key can only reach 3.x and **every grounded Gemini call 429s** while the model
+  quota is barely used. Discriminator: 429 on grounded calls + 200 on `models.list`/ungrounded
+  generate + a low model-quota number = grounding entitlement, **not** exhaustion. Waiting for
+  the daily reset does not help. Fix = billing (Tier 1 = 5,000 free grounded req/mo) or a
+  grounding-eligible key.
+- **Labelled Gemma fallback (ISSUE-032, PR #67):** when every Gemini model refuses grounding,
+  a Google-Search-grounded `gemma-*` model answers on the same key/same Search index — free.
+  Rows carry `engine` + `fallback_from`; `note` says it is NOT the Gemini/AI-Overviews surface.
+  A pinned model disables it; `--no-fallback` disables it. Never make the substitution silent.
+- **Other free AI routes are dead ends from this egress IP:** Google AI Overviews → CAPTCHA;
+  Bing Copilot → "unavailable" headless; DDG AI Chat → JS challenge; OpenRouter free models
+  → no web search; Groq/Cerebras/Mistral/etc → no grounding on free tiers.
 - **Conventional-search proxy: Tavily** — `growth-engine/tavily_search.py`, stdlib only.
   `POST https://api.tavily.com/search`, `Authorization: Bearer tvly-...`. Recorded
   `test_type: conventional_proxy` — **never** as an AI-platform result.
@@ -110,6 +124,16 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
 ## Conventions that matter
+- **GitHub token in this environment is scoped to git push + PR create only.**
+  `PATCH /pulls/{n}` (edit body/title) and `POST /issues/{n}/comments` return
+  `403 Resource not accessible by personal access token`; the secondary
+  `GITHUB_PERSONAL_ACCESS_TOKEN` returns `401 Bad credentials`. So an agent can
+  push a branch and open a PR but **cannot edit the PR description or comment**.
+  Put everything needed in the initial PR body; if a change needs an explanation
+  the owner must be told in chat. **Draft gotcha:** a PR opened via the tool can
+  land as a **draft** (unmergeable). Flip it with GraphQL
+  `markPullRequestReadyForReview(pullRequestId: <node_id>)`; the REST
+  `PATCH {"draft": false}` returns 200 but silently does nothing.
 - **Google tag/analytics:** the site's single Google tag lives once in
   `scripts/csp_policy.py` (`MEASUREMENT_ID`); pages bake a copy into markup and the
   meta CSP allows the inline `gtag()` bootstrap by **SHA-256 hash derived from the

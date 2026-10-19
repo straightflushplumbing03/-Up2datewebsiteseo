@@ -351,5 +351,225 @@ class ModelChainTests(unittest.TestCase):
         self.assertEqual(ctx.exception.error_type, "rate_limited")
 
 
+def _rate_limited():
+    return _http_error(429, {"error": {"status": "RESOURCE_EXHAUSTED",
+                                       "message": "You exceeded your current quota"}})
+
+
+class TestEngineClassification(unittest.TestCase):
+    def test_gemma_slug_is_gemma(self):
+        self.assertEqual(G._engine_of("gemma-4-26b-a4b-it"), "gemma")
+
+    def test_gemini_slugs_are_gemini(self):
+        for m in ("gemini-flash-latest", "gemini-3.8-flash", "gemini-2.5-flash"):
+            self.assertEqual(G._engine_of(m), "gemini")
+
+    def test_missing_model_defaults_to_gemini(self):
+        self.assertEqual(G._engine_of(None), "gemini")
+
+
+class TestGroundingFallback(unittest.TestCase):
+    """When Gemini refuses grounding, a labelled Gemma answer stands in."""
+
+    def _client(self, responses, **kw):
+        return G.GeminiClient(api_key="k", opener=FakeOpener(responses),
+                              sleep=lambda s: None, model_fallbacks=[],
+                              max_retries=1, **kw)
+
+    def test_gemini_success_does_not_fall_back(self):
+        opener = FakeOpener([_body("gemini answer")])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1)
+        result = client.ask_with_fallback("q")
+        self.assertEqual(result["engine"], "gemini")
+        self.assertNotIn("fallback_from", result)
+        self.assertEqual(len(opener.calls), 1)
+
+    def test_refused_grounding_falls_back_to_gemma_labelled(self):
+        opener = FakeOpener([_rate_limited(), _body("gemma answer")])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        result = client.ask_with_fallback("q")
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["engine"], "gemma")
+        self.assertEqual(result["model"], "gemma-4-26b-a4b-it")
+        self.assertEqual(result["fallback_from"], G.DEFAULT_MODEL)
+        self.assertIn("gemma-4-26b-a4b-it", opener.calls[1].full_url)
+
+    def test_fallback_disabled_raises(self):
+        client = self._client([_rate_limited()], allow_fallback=False)
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+
+    def test_explicit_model_disables_fallback_by_default(self):
+        # A pinned model means "test that model"; substituting would be a lie.
+        client = G.GeminiClient(api_key="k", model="gemini-flash-latest",
+                                opener=FakeOpener([_rate_limited()]),
+                                sleep=lambda s: None, max_retries=1)
+        self.assertFalse(client._allow_fallback)
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+
+    def test_bad_request_does_not_fall_back(self):
+        # A 400 is a real failure, not a quota refusal; no substitution.
+        opener = FakeOpener([_http_error(400, {"error": {"status": "INVALID_ARGUMENT"}})])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+        self.assertEqual(len(opener.calls), 1)
+
+    def test_fallback_failure_is_raised_not_swallowed(self):
+        opener = FakeOpener([_rate_limited(),
+                             _http_error(503, {"error": {"status": "UNAVAILABLE"}})])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+
+    def test_plain_ask_never_falls_back(self):
+        opener = FakeOpener([_rate_limited()])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        with self.assertRaises(G.GeminiError):
+            client.ask("q")
+        self.assertEqual(len(opener.calls), 1)
+
+
+class TestFallbackRecordLabel(unittest.TestCase):
+    def test_gemma_record_carries_engine_and_fallback_from(self):
+        result = {"ok": True, "answer": "call Straight Flush Plumbing",
+                  "model": "gemma-4-26b-a4b-it", "engine": "gemma",
+                  "fallback_from": "gemini-flash-latest", "sources": [], "citations": [],
+                  "domains": [], "search_queries": ["q"], "usage": {}}
+        rec = G.build_record("q", "Laguna Niguel", result)
+        self.assertEqual(rec["engine"], "gemma")
+        self.assertEqual(rec["fallback_from"], "gemini-flash-latest")
+        self.assertIn("Gemma fallback", rec["note"])
+        self.assertIn("not the Gemini/AI-Overviews surface", rec["note"])
+        # still an AI-platform row — the answer engine ran
+        self.assertEqual(rec["test_type"], "ai_platform")
+
+    def test_gemini_record_has_no_fallback_marker(self):
+        result = {"ok": True, "answer": "x", "model": "gemini-flash-latest",
+                  "sources": [], "citations": [], "domains": [],
+                  "search_queries": [], "usage": {}}
+        rec = G.build_record("q", "c", result)
+        self.assertEqual(rec["engine"], "gemini")
+        self.assertIsNone(rec["fallback_from"])
+        self.assertNotIn("Gemma fallback", rec["note"])
+
+
+class CliRunExitTests(unittest.TestCase):
+    """The CLI's exit code must say whether the sweep measured anything.
+
+    A sweep in which every grounded query was refused by the platform (quota, 5xx,
+    network) used to return 0, so the daily runner counted a blocked AI surface as
+    a clean pass and the day recorded no AI visibility at all. The rows stay
+    `inconclusive` (a failed test is not zero), but the exit code is now 3 for a
+    platform block and 2 for other total failures. A labelled Gemma fallback
+    answer is a real measurement, so it keeps exit 0.
+    """
+
+    def _run_cli(self, side_effect):
+        import contextlib
+        from unittest import mock
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with mock.patch.object(G, "GeminiClient") as client_cls, \
+                mock.patch.dict(os.environ, {"GEMINI_API_KEY": "k"}):
+            client_cls.return_value.ask_with_fallback.side_effect = side_effect
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                code = G.main(["--run", "--queries-file", self._qfile,
+                               "--limit", "3"])
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def setUp(self):
+        import tempfile
+        self._tmp = tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False)
+        self._tmp.write("q1\nq2\nq3\n")
+        self._tmp.close()
+        self._qfile = self._tmp.name
+
+    def tearDown(self):
+        os.unlink(self._qfile)
+
+    @staticmethod
+    def _err(error_type, status_code):
+        return G.GeminiError("boom", error_type=error_type, status_code=status_code)
+
+    def test_all_rate_limited_is_blocked_exit_3(self):
+        code, out, err = self._run_cli(self._err("rate_limited", 429))
+        self.assertEqual(code, 3)
+        self.assertIn("BLOCKED", err)
+        self.assertIn('"succeeded": 0', out)
+
+    def test_all_server_error_is_blocked_exit_3(self):
+        code, _out, _err = self._run_cli(self._err("server_error", 500))
+        self.assertEqual(code, 3)
+
+    def test_mixed_error_types_still_blocked_exit_3(self):
+        side = [self._err("rate_limited", 429), self._err("timeout", None),
+                self._err("connection_error", None)]
+        code, _out, _err = self._run_cli(side)
+        self.assertEqual(code, 3)
+
+    def test_all_auth_failed_is_failure_exit_2(self):
+        """A bad key is a real failure to investigate, not a platform block."""
+        code, _out, err = self._run_cli(self._err("authentication_failed", 403))
+        self.assertEqual(code, 2)
+        self.assertNotIn("BLOCKED", err)
+
+    def test_one_success_keeps_exit_0(self):
+        good = {"ok": True, "model": "m", "answer": "Straight Flush Plumbing",
+                "sources": [], "citations": [], "domains": [],
+                "search_queries": [], "usage": {}}
+        side = [self._err("rate_limited", 429), good, self._err("rate_limited", 429)]
+        code, out, _err = self._run_cli(side)
+        self.assertEqual(code, 0)
+        self.assertIn('"succeeded": 1', out)
+
+    def test_empty_query_list_is_not_a_failure(self):
+        """No queries measured nothing, but must not read as "every query failed"."""
+        import tempfile
+        empty = tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False)
+        empty.close()
+        try:
+            import contextlib
+            from unittest import mock
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with mock.patch.dict(os.environ, {"GEMINI_API_KEY": "k"}):
+                with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                    code = G.main(["--run", "--queries-file", empty.name, "--limit", "3"])
+        finally:
+            os.unlink(empty.name)
+        self.assertEqual(code, 0)
+        self.assertNotIn("failed", stderr.getvalue())
+
+
+class CliNoKeyTests(unittest.TestCase):
+    def test_missing_key_exits_1_without_recording(self):
+        import contextlib
+        from unittest import mock
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                code = G.main(["--run", "--queries-file", "/dev/null"])
+        self.assertEqual(code, 1)
+        self.assertIn("not zero visibility", stderr.getvalue())
+
+    def test_dry_run_needs_no_key(self):
+        import contextlib
+        from unittest import mock
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                code = G.main(["--run", "--dry-run"])
+        self.assertEqual(code, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

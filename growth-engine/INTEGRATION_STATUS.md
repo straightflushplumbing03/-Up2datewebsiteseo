@@ -57,10 +57,14 @@ call. Prior verification 2026-10-09.
 
 ## Highest-value integrations to unlock
 
-1. **Gemini API key** (free tier) — a *real* AI-answer-engine visibility signal
-   in-automation at no cost. Register `GEMINI_API_KEY` and the daily run measures
-   AI-platform visibility via `scripts/gemini_visibility.py`. (Perplexity is a
-   paid second engine, optional.)
+1. **Gemini API key** — a *real* AI-answer-engine visibility signal
+   in-automation. `GEMINI_API_KEY` is now set and the daily run measures
+   AI-platform visibility via `scripts/gemini_visibility.py`. **Caveat
+   (ISSUE-032):** grounding is **not** on the Gemini 3.x free tier, so grounded
+   Gemini calls return HTTP 429; the client falls back to a free
+   Google-Search-grounded **Gemma** model and labels the row `engine: gemma`. To
+   measure the true Gemini surface, enable billing (Tier 1 = 5,000 free grounded
+   requests/month). Perplexity remains a paid second engine, optional.
 2. **Google Search Console** — the only reliable source for organic impressions,
    clicks, query, and indexing/coverage data.
 3. **Google Business Profile** — local pack visibility is a primary channel for
@@ -77,7 +81,7 @@ call. Prior verification 2026-10-09.
 | ChatGPT Search | **not testable** | chatgpt.com 403 to non-browser clients |
 | Claude web search | **not testable** | not scriptable in this environment |
 | Gemini web search (consumer app) | **not testable** | gemini.google.com not scriptable |
-| Gemini Search API | **free tier — code ready, key not set** | `GEMINI_API_KEY` missing. Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`); enable by exporting the key. Free tier (~500 grounded requests/day on Flash). |
+| Gemini Search API | **free, with Gemma fallback** | `GEMINI_API_KEY` is set. Grounding is **not** on the Gemini 3.x free tier (HTTP 429), so the client falls back to a free Google-Search-grounded **Gemma** model and labels the row `engine: gemma` (ISSUE-032). Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Enable the true Gemini surface with billing (Tier 1 = 5,000 free grounded requests/month). |
 | Microsoft Copilot | **not testable** | — |
 | Grok | **not testable** | — |
 | Perplexity Agent API | **optional — key not set** | `PERPLEXITY_API_KEY` missing. Metered, no free tier; a paid second engine. Client + CLI committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`). |

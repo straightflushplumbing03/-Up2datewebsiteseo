@@ -38,7 +38,8 @@ into one score.
 | Gemini | gemini.google.com | **No** — not scriptable here | Test manually |
 | Microsoft Copilot | copilot.microsoft.com | **No** — not scriptable here | Test manually |
 | Grok | grok.com / x.ai | **No** — not scriptable here | Test manually |
-| **Gemini Search API** | `POST …/v1beta/models/{model}:generateContent` with `google_search` grounding | **Yes** — documented JSON API, free tier | **Primary AI-answer-engine measurement.** A genuine web-grounded answer + citations, at no cost on the Flash free tier (~500 grounded requests/day). Client: `growth-engine/gemini_search_client.py`; CLI: `python3 scripts/gemini_visibility.py --smoke`. Recorded `test_type: ai_platform`, `platform: gemini_search`. |
+| **Gemini Search API** | `POST …/v1beta/models/{model}:generateContent` with `google_search` grounding | **Yes** — documented JSON API, free tier | **Primary AI-answer-engine measurement.** A genuine web-grounded answer + citations. Client: `growth-engine/gemini_search_client.py`; CLI: `python3 scripts/gemini_visibility.py --smoke`. Recorded `test_type: ai_platform`, `platform: gemini_search`. |
+| **Gemma Search API (labelled fallback)** | same endpoint, a `gemma-*` model slug | **Yes** — free on the same key | **Only used when every Gemini model refuses grounding** (see below). Same Google Search index, so it is still a real web-grounded answer engine — but it is *not* the Gemini/AI-Overviews surface. Rows carry `engine: gemma` and `fallback_from`, so it is never mistaken for a Gemini result. Disable with `--no-fallback`. |
 | Perplexity Agent API | `POST https://api.perplexity.ai/v1/agent` | **Optional** — metered, no free tier | Second AI-answer engine when its key is set. Client: `growth-engine/ai_agent_client.py`; CLI: `python3 scripts/perplexity_agent.py --smoke`. Prefer the free Gemini path unless Perplexity is deliberately budgeted. |
 | **Tavily Search API** | `POST api.tavily.com/search` | **Yes** — documented JSON API | **Primary** conventional-search proxy. Structured results, no scraping, no IP rate-limit. Client: `growth-engine/tavily_search.py`; CLI: `python3 scripts/tavily_search.py --smoke`. |
 | Brave Search (superseded) | `search.brave.com/search?q=` | HTML scraping; **HTTP 429** after ~7-8 rapid queries | Replaced by Tavily. Retained only as a fallback. |
@@ -50,6 +51,17 @@ any AI answer engine and no SERP API keys. AI-platform visibility is therefore
 **unverified**, and the automations must say so rather than fabricate it. The
 highest-value next step is to schedule a manual AI-visibility sweep (owner, in a
 logged-in browser) or provision a Perplexity/SerpAPI key.
+
+**Grounding availability (2026-10-19):** Google's pricing page lists grounding on
+the **Gemini 3.x family as not available on the free tier**. A key created after
+`gemini-2.5-flash` was retired can only reach 3.x models (`gemini-2.5-flash`
+answers 404), so *every* grounded Gemini call returns HTTP 429
+`RESOURCE_EXHAUSTED` even while the model quota is nearly unused. When that
+happens the client falls back to a Google-Search-grounded **Gemma** model on the
+same key and records `engine: gemma` + `fallback_from`. This keeps the AI surface
+measured, free, and honestly labelled. The true fix remains either a paid Gemini
+tier (Tier 1 gives 5,000 free grounded requests/month) or a key whose project can
+reach a grounding-eligible Gemini model.
 
 ## Query universe
 
