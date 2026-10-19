@@ -33,10 +33,11 @@ daily content job runs Mon/Wed/Fri at 06:00, supervision lands the **next
 morning** and reviews what those runs actually produced. It runs
 `scripts/system_supervisor.py`, a deterministic drift detector (no LLM until the
 report), which checks that exactly one content automation is enabled, the schedule
-is intact, the live prompt matches the repo, no PR was self-merged, the open-PR
-backlog is bounded, change volume is within budget, and no unexplained branch
-appeared. It writes `growth-engine/reports/supervisor/<date>.md` and opens a PR —
-never merges. History: `growth-engine/data/supervisor_history.jsonl`.
+is intact, the live prompt matches the repo, the AI surface is measured (not just
+a conventional-search proxy), no PR was self-merged, the open-PR backlog is
+bounded, change volume is within budget, and no unexplained branch appeared. It
+writes `growth-engine/reports/supervisor/<date>.md` and opens a PR — never merges.
+History: `growth-engine/data/supervisor_history.jsonl`.
 
 ## Reliability — runs that overrun the wall-clock ceiling (ISSUE-009)
 

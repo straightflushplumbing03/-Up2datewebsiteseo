@@ -140,3 +140,23 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   rotate it.
 - Merge/conflict-marker hazards (a check that passes when it should fail; `^` regex without
   `re.M`; append-only union is wrong for `MEMORY.md`) — detail in `2026-10-15-detail.md`.
+
+## System supervisor (HQ-S) — measurement defects (ISSUE-031, fixed 2026-10-19)
+- `scripts/system_supervisor.py` had two false FAILs, one blind PASS, one missing check:
+  - **`self_merges` was blind**: GitHub's PR *list* endpoint omits `merged_by` (0 of 40).
+    Read it from the single-PR endpoint (`GET /pulls/{n}`). With **one collaborator** every
+    merge is by that account (agent == owner), so the check now reports **UNMEASURED/BLOCKED**,
+    not a PASS — the review gate is unenforceable until a 2nd collaborator exists.
+  - **`change_volume` counted numstat ROWS not unique paths** (292 vs 148) and scored a one-line
+    `.html` edit as a new page (268 vs 0 real). Count `len(set(paths))`; count new pages via
+    `--diff-filter=A`. `MAX_CHANGED_FILES` 120 -> 200 (a legit metadata pass reaches ~148).
+  - **`unexpected_branches`** false-flagged branches that are merged-PR heads; a branch is
+    explained if it is (or was) any PR's head (`?state=all`).
+  - **`ai_visibility_blind`** was in the LIVE prompt but absent from the repo prompt and script.
+    Added it: FAIL when 0 `test_type: ai_platform` rows exist or newest is >14 d old.
+- `git log --numstat` counts a path once per commit — merges double it. De-dup by path.
+- **Verify a check against real data, not the code's intent**: the 2026-10-17 report "passed"
+  self_merges while every merge was a self-merge. A check that cannot fail is worse than none.
+- Remaining owner-level FAILs (not code): daily job **disabled** (`source: user`,
+  2026-10-16T06:25Z); **GEMINI_API_KEY returns HTTP 429** (grounding quota) so AI surface is
+  UNMEASURED. The `ai_visibility_sweep` false-pass exit code is fixed by open PR #64 (don't dup).

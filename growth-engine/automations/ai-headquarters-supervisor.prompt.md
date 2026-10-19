@@ -58,10 +58,15 @@ FAILS. It checks, without spending tokens on deciding what to check:
 | `automations_enabled` | Not exactly one enabled content automation (a duplicate appeared, or the daily job vanished). |
 | `schedule_intact` | The live daily cron is no longer Mon/Wed/Fri 06:00 PT. |
 | `prompt_matches_repo` | The live prompt differs from `01-MASTER-AGENT-PROMPT.md` — the running instructions drifted from the reviewed ones. |
+| `ai_visibility_blind` | **The business goal is unmeasured**: no AI-platform rows exist (or they are stale). Everything so far is a conventional-search proxy, which says nothing about AI recommendation. This FAIL is the most important one to escalate. |
 | `self_merges` | A PR was merged by the account that opened it — the review gate was bypassed. |
 | `open_pr_backlog` | More open PRs than the threshold — the owner has a backlog to clear. |
 | `change_volume` | Files or HTML pages changed since the last check exceed the budget. |
 | `unexpected_branches` | A remote branch appeared that no known automation pattern explains. |
+
+When `ai_visibility_blind` FAILs, the report's top recommendation must be the owner action:
+provision a free `GEMINI_API_KEY` (https://aistudio.google.com/apikey) so the AI surface can be
+measured. This is Level 3 — report it, never attempt it.
 
 ## Then interpret, do not just relay
 
@@ -93,7 +98,7 @@ number that did not move is one line, not a table.
 Write `growth-engine/reports/supervisor/<YYYY-MM-DD>.md`:
 
 1. **Verdict** — one line: `ON TRACK`, `DRIFT DETECTED`, or `NEEDS ATTENTION`, with counts.
-2. **Check results** — the seven checks, PASS/FAIL, one line each with the number.
+2. **Check results** — the eight checks, PASS/FAIL, one line each with the number.
 3. **What changed since the last supervision** — the delta, not the absolute state.
 4. **Findings** — for each FAIL: what, evidence, classification, exact fix. For
    PASS checks that nearly tripped, say so.
