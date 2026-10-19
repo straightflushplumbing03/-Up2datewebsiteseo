@@ -844,13 +844,20 @@ duplicate, so the duplicates are not disavowed from the real side either.
 - **Verified live:** `python3 scripts/gemini_visibility.py --smoke` →
   `engine=gemma model=gemma-4-26b-a4b-it fallback_from=gemini-flash-latest`, 12
   sources, 3 real Search queries. `--no-fallback` still returns `rate_limited`.
+- **Exit-code fix folded in (supersedes PR #64's code change):** the same
+  `main()` also gained the sweep-outcome exit code — **3** = the platform refused
+  every grounded query (BLOCKED), **2** = some other total failure, **0** =
+  something was measured — and `scripts/daily_measure.py` maps 3 → BLOCKED, 2 →
+  failure, so a blocked AI surface is no longer counted as a clean pass. This was
+  PR #64's change, which touched the same function and would have been reverted by
+  this PR's context; folding it in keeps one coherent, conflict-free change. A
+  labelled Gemma answer counts as a real measurement, so it keeps exit 0.
 - **Owner options (not applied):** enable billing on the key's project (Tier 1 =
   **5,000 free grounded Gemini requests/month**, then $14/1,000) to measure the
   true Gemini surface; or provision a key whose project can reach a
   grounding-eligible Gemini model. Level 3 (spend decision).
-- **Verification:** 12 new tests in `test_gemini_search_client.py` (engine
-  classification, labelled fallback, disabled/explicit-model/bad-request/fallback-
-  failure paths, record labelling). Full suite **333 tests OK**;
-  `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
-- **Approval:** Level 2 (client tooling + methodology doc).
+- **Verification:** 12 new fallback tests in `test_gemini_search_client.py` plus
+  the folded exit-code tests there and in `test_daily_measure.py`. Full suite
+  **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
+- **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 

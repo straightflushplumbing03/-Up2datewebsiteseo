@@ -573,12 +573,36 @@ def main(argv=None):
                             "domains": (record.get("top_results") or [])[:5],
                             "error_type": record.get("error_type")})
             print(f"  [{record['straight_flush']:>13}] {query}", file=sys.stderr)
-        print(json.dumps({"queries": len(queries), "results": summary},
-                         indent=2, ensure_ascii=False))
+        print(json.dumps({
+            "queries": len(queries),
+            "succeeded": sum(1 for r in records
+                             if r["straight_flush"] != "inconclusive"),
+            "results": summary,
+        }, indent=2, ensure_ascii=False))
         if args.append:
             n = append_records(history, records)
             print(f"\nAppended {n} record(s) to "
                   f"{os.path.relpath(history, root)}", file=sys.stderr)
+
+        # The exit code must say whether the sweep measured anything. A sweep in
+        # which every query errored measured nothing, yet used to return 0, so
+        # `daily_measure` counted a blocked AI platform as a clean pass. The
+        # inconclusive rows are kept (a failed test is not zero) but the outcome
+        # is signalled: 3 = the platform refused every query (BLOCKED), 2 = some
+        # other total failure (investigate). A Gemma fallback answer is a real
+        # measurement, so it counts as `succeeded` and keeps exit 0.
+        if all(r["straight_flush"] == "inconclusive" for r in records):
+            platform_errors = {"rate_limited", "server_error",
+                               "timeout", "connection_error"}
+            error_types = {r.get("error_type") for r in records}
+            if error_types and error_types <= platform_errors:
+                print("Every grounded query was refused by the platform "
+                      f"({', '.join(sorted(error_types))}) — recorded BLOCKED, "
+                      "never zero.", file=sys.stderr)
+                return 3
+            print("Every grounded query failed — recorded inconclusive, not zero.",
+                  file=sys.stderr)
+            return 2
         return 0
 
     ap.print_help()

@@ -464,5 +464,95 @@ class TestFallbackRecordLabel(unittest.TestCase):
         self.assertNotIn("Gemma fallback", rec["note"])
 
 
+class CliRunExitTests(unittest.TestCase):
+    """The CLI's exit code must say whether the sweep measured anything.
+
+    A sweep in which every grounded query was refused by the platform (quota, 5xx,
+    network) used to return 0, so the daily runner counted a blocked AI surface as
+    a clean pass and the day recorded no AI visibility at all. The rows stay
+    `inconclusive` (a failed test is not zero), but the exit code is now 3 for a
+    platform block and 2 for other total failures. A labelled Gemma fallback
+    answer is a real measurement, so it keeps exit 0.
+    """
+
+    def _run_cli(self, side_effect):
+        import contextlib
+        from unittest import mock
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with mock.patch.object(G, "GeminiClient") as client_cls, \
+                mock.patch.dict(os.environ, {"GEMINI_API_KEY": "k"}):
+            client_cls.return_value.ask_with_fallback.side_effect = side_effect
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                code = G.main(["--run", "--queries-file", self._qfile,
+                               "--limit", "3"])
+        return code, stdout.getvalue(), stderr.getvalue()
+
+    def setUp(self):
+        import tempfile
+        self._tmp = tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False)
+        self._tmp.write("q1\nq2\nq3\n")
+        self._tmp.close()
+        self._qfile = self._tmp.name
+
+    def tearDown(self):
+        os.unlink(self._qfile)
+
+    @staticmethod
+    def _err(error_type, status_code):
+        return G.GeminiError("boom", error_type=error_type, status_code=status_code)
+
+    def test_all_rate_limited_is_blocked_exit_3(self):
+        code, out, err = self._run_cli(self._err("rate_limited", 429))
+        self.assertEqual(code, 3)
+        self.assertIn("BLOCKED", err)
+        self.assertIn('"succeeded": 0', out)
+
+    def test_all_server_error_is_blocked_exit_3(self):
+        code, _out, _err = self._run_cli(self._err("server_error", 500))
+        self.assertEqual(code, 3)
+
+    def test_mixed_error_types_still_blocked_exit_3(self):
+        side = [self._err("rate_limited", 429), self._err("timeout", None),
+                self._err("connection_error", None)]
+        code, _out, _err = self._run_cli(side)
+        self.assertEqual(code, 3)
+
+    def test_all_auth_failed_is_failure_exit_2(self):
+        """A bad key is a real failure to investigate, not a platform block."""
+        code, _out, err = self._run_cli(self._err("authentication_failed", 403))
+        self.assertEqual(code, 2)
+        self.assertNotIn("BLOCKED", err)
+
+    def test_one_success_keeps_exit_0(self):
+        good = {"ok": True, "model": "m", "answer": "Straight Flush Plumbing",
+                "sources": [], "citations": [], "domains": [],
+                "search_queries": [], "usage": {}}
+        side = [self._err("rate_limited", 429), good, self._err("rate_limited", 429)]
+        code, out, _err = self._run_cli(side)
+        self.assertEqual(code, 0)
+        self.assertIn('"succeeded": 1', out)
+
+
+class CliNoKeyTests(unittest.TestCase):
+    def test_missing_key_exits_1_without_recording(self):
+        import contextlib
+        from unittest import mock
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                code = G.main(["--run", "--queries-file", "/dev/null"])
+        self.assertEqual(code, 1)
+        self.assertIn("not zero visibility", stderr.getvalue())
+
+    def test_dry_run_needs_no_key(self):
+        import contextlib
+        from unittest import mock
+        stdout, stderr = io.StringIO(), io.StringIO()
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                code = G.main(["--run", "--dry-run"])
+        self.assertEqual(code, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

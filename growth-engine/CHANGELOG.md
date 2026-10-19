@@ -26,8 +26,15 @@ refuses grounding**, to a Google-Search-grounded **Gemma** model on the same key
 
 Verified live: `scripts/gemini_visibility.py --smoke` → `engine=gemma
 model=gemma-4-26b-a4b-it fallback_from=gemini-flash-latest`, 12 sources, 3 real
-Search queries; `--no-fallback` still returns `rate_limited`. 12 new tests;
-suite **333 tests OK**. The true fix (billing → 5,000 free grounded Gemini
+Search queries; `--no-fallback` still returns `rate_limited`.
+
+The same `main()` also gains the sweep-outcome exit code (folded in from PR #64,
+which touched the same function): **3** = the platform refused every grounded
+query (BLOCKED), **2** = other total failure, **0** = something was measured;
+`scripts/daily_measure.py` maps 3 → BLOCKED and 2 → failure, so a blocked AI
+surface is never counted as a clean pass. A labelled Gemma answer is a real
+measurement and keeps exit 0. 24 new tests across the client and daily runner;
+suite **343 tests OK**. The true fix (billing → 5,000 free grounded Gemini
 requests/month, or a grounding-eligible key) is an owner spend decision.
 
 ## 2026-10-19 — System supervisor: fix two false FAILs, one blind PASS, one missing check (ISSUE-031)
