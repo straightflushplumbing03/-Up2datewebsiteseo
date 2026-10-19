@@ -46,11 +46,17 @@ into one score.
 | Bing | `bing.com/search` | Partial — HTML returned but result anchors not reliably parseable in this environment | Retry with dedicated parsing |
 | DuckDuckGo HTML | `html.duckduckgo.com/html` | Intermittent — 202 (rate-limit/anti-bot) | Retry later |
 
-**Honest limitation:** as of 2026-10-09 the environment has no credentials for
-any AI answer engine and no SERP API keys. AI-platform visibility is therefore
-**unverified**, and the automations must say so rather than fabricate it. The
-highest-value next step is to schedule a manual AI-visibility sweep (owner, in a
-logged-in browser) or provision a Perplexity/SerpAPI key.
+**Honest limitation (re-verified 2026-10-19):** `GEMINI_API_KEY` **is** set, so the
+**Gemini Search API** surface is measurable and was measured today (5 grounded
+queries, `absent` 5/5, all `engine: gemma` fallback rows). The **true Gemini /
+AI-Overviews surface remains `unverified`** because Gemini 3.x grounding is not on
+the free tier. ChatGPT/OpenAI, Perplexity, Claude, Copilot, Grok and Google AI
+Overviews have **no working key** in this environment and stay `unverified` — never
+0%. Note that a `CHATGPT_API_KEY` registered in OpenHands Settings is **absent**
+from this sandbox (the accepted name is `OPENAI_API_KEY`, per
+`ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md`), so no ChatGPT adapter run
+occurred; see ISSUE-033 / P-008. The highest-value next step remains provisioning
+`OPENAI_API_KEY`/`PERPLEXITY_API_KEY` or an owner manual sweep in a logged-in browser.
 
 **Grounding availability (2026-10-19):** Google's pricing page lists grounding on
 the **Gemini 3.x family as not available on the free tier**. A key created after

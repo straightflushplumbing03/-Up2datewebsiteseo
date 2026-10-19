@@ -144,3 +144,38 @@ errors).
 **Why:** `INTEGRATION_STATUS.md` shows no channel configured; urgent issues
 currently cannot be pushed to the owner. Until then the daily report and PR are
 the only channel, and a critical issue found at 06:00 PT may not be seen for hours.
+
+---
+
+## P-008 — Re-register the ChatGPT key under the name the adapter reads  [LEVEL 3 · MEDIUM]
+
+**Status (2026-10-19):** open — owner added a secret named `CHATGPT_API_KEY`; it
+does not reach the automation (ISSUE-033).
+
+**Ask:** In OpenHands Settings → Secrets, store the OpenAI key under the exact name
+**`OPENAI_API_KEY`** (the name `ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md`
+§3 documents for the ChatGPT adapter). Keeping or removing the existing
+`CHATGPT_API_KEY` entry is fine — nothing reads it. Optionally add
+`PERPLEXITY_API_KEY` for a second AI answer engine.
+
+**Why:** With the key undelivered, the ChatGPT/OpenAI surface is `unverified` and
+`system_supervisor.py` keeps reporting `ai_visibility_blind`. Re-registering the
+name is what flips that engine from `unverified` to measurable — no code change is
+needed. The blueprint states this explicitly.
+
+**Why not autonomous:** registering credentials is a Level 3 owner action.
+
+**Evidence:** `CHATGPT_API_KEY` is **absent** from the process environment
+(`os.environ.get(...) is None`) across 14 spelling variants; `curl
+https://api.openai.com/v1/models` with that unset bearer → HTTP 401
+`"Incorrect API key provided: ''"` (the variable expanded to empty, so the failure
+is delivery, not a rejected credential). Re-verified 2026-10-19.
+
+**Verification after fix:** a smoke call to the OpenAI models endpoint returns HTTP
+200, and one `test_type: ai_platform` ChatGPT row appears in
+`growth-engine/data/ai_visibility_history.jsonl`.
+
+**Scope note:** the OpenAI API models the model; it is not the consumer
+`chatgpt.com` Search UI (which 403s to non-browser clients). No scraping of that UI
+is done or implied.
+

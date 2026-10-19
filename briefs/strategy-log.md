@@ -32,6 +32,35 @@ Branch `intelligence-hq/daily-2026-10-19`.
   `seo_audit.py` OK (134 HTML files). No HTML change, so no regression surface.
 - **Keep/modify/revert:** **Keep.**
 
+### 2026-10-19 (addendum) — Report-integrity correction + credential-blocker recorded
+
+**Status:** Knowledge-base + report only. **No website page, schema, claim or copy changed.**
+Same branch `intelligence-hq/daily-2026-10-19`.
+
+- **Change:** Reconciled `reports/daily/2026-10-19.md` with the data committed in the
+  same run. The report claimed ChatGPT / Perplexity / Claude / **Gemini** were "not
+  tested", but 5 `test_type: ai_platform` rows (`platform: gemini_search`, `engine:
+  gemma`, all `absent`) were already committed — so the Gemini Search API surface *was*
+  tested. Fixed the summary, the AI-visibility table, and the limitations section.
+  Added **ISSUE-033** (a registered `CHATGPT_API_KEY` is not the name any adapter
+  reads) and **P-008** (owner re-registers it as `OPENAI_API_KEY`). Updated
+  `AI_VISIBILITY_METHODOLOGY.md` and `INTEGRATION_STATUS.md`.
+- **Reason:** A report that contradicts its own committed evidence is worse than a
+  short one; it would have re-introduced a false "we tested nothing" claim into
+  durable memory. Evidence-before-conclusions requires the narrative to match the rows.
+- **Evidence:** `os.environ.get("CHATGPT_API_KEY") is None` across 14 spelling variants;
+  `GET https://api.openai.com/v1/models` → HTTP 401 `"Incorrect API key provided: ''"`
+  (empty bearer, so delivery failure, not a rejected key). Adapters read
+  `OPENAI_API_KEY` per `ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md` §3.
+- **Also fixed:** `INTEGRATION_STATUS.md` had been written through a non-UTF-8 codec
+  (mojibake `ÔÇö`/`Ôťů`/`ÔŁî` + one invalid byte). Restored from HEAD and re-applied the
+  single intended row byte-safely; file is valid UTF-8 again.
+- **Result:** 344 unit tests OK; `validate_knowledge_base.py` OK (134 HTML files). No
+  metric was altered — only narrative, and one repaired file.
+- **Keep/modify/revert:** **Keep.** Add a lint idea: assert the daily report's
+  AI-visibility table row count equals the `test_type: ai_platform` row count for the
+  date (guards this class of contradiction).
+
 ---
 
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
