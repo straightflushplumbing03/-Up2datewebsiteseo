@@ -5,6 +5,35 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-19 — Primary-source correction: llms.txt is not a Google visibility lever; measurement integrity tightened
+
+**Status:** Knowledge-base + report only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-19`.
+
+- **Change:** Filed three dated `INDUSTRY_WATCH.md` entries from primary sources
+  fetched this run; added six candidate ideas (`idea-2026-10-19-01` … `-06`) with a
+  prioritization table; re-baselined `COMPETITOR_DIRECTORY.md` on an 18-query sweep;
+  re-verified `INTEGRATION_STATUS.md`; appended rows to
+  `data/ai_visibility_history.jsonl`, `data/competitor_observations.jsonl`, and
+  `data/technical_health_history.jsonl`.
+- **Reason:** Google Search Central's AI-optimization guide states plainly that
+  Google Search **does not use** `llms.txt` and that such files "will neither harm
+  nor help your site's visibility or rankings in Google Search". We were citing
+  llms.txt as an AI-visibility asset; that justification is wrong and must not
+  persist in the knowledge base.
+- **Target:** Reporting accuracy; search-console measurement planning.
+- **Competitor insight:** `efficientplumbing.com` led this sweep (9/18 queries) and
+  ships `LocalBusiness` + `OpeningHoursSpecification` + `Person` + review markup;
+  `yelp.com` appeared in 18/18 queries — aggregator surfaces, not content alone,
+  dominate these intents (feature verified; causation = hypothesis).
+- **Expected outcome:** The next knowledge-base reader will not repeat the llms.txt
+  claim; the P-002 unblock request now names the Generative AI performance report.
+- **Result:** Tests green — 344 unit tests OK, `validate_knowledge_base.py` OK,
+  `seo_audit.py` OK (134 HTML files). No HTML change, so no regression surface.
+- **Keep/modify/revert:** **Keep.**
+
+---
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**

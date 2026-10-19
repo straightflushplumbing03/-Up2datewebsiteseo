@@ -112,5 +112,22 @@ are redacted.
 | GitHub Pages deployment | Pages API: `status: built`, CNAME set | legacy build from `main` `/` |
 | Site crawler access | `crawler_access_check.sh` exit 0; all UAs 200 (2026-10-12) | ISSUE-001 **resolved** â€” no `cf-mitigated` |
 | DuckDuckGo Lite (conventional proxy) | 36/36 queries HTTP 200 with parseable results (2026-10-12) | Used for the 2026-10-12 visibility sweep |
+| Tavily Search API (conventional proxy) | 18/18 queries returned 10/10 results (2026-10-19) | **Current default** conventional-search proxy; recorded as `test_type: conventional_proxy`, never as an AI-answer-engine result |
 | Bun/curl/dns/TLS checks | see `data/technical_health_history.jsonl` | |
+
+## Re-verified 2026-10-19
+
+- **Crawler access:** all bot UAs and `curl` paths 200; ISSUE-001 still resolved.
+- **Search providers:** Brave returns **HTTP 429** to this egress IP; DuckDuckGo HTML
+  unavailable; the Bing fallback probe returned partially degraded (definitional)
+  SERPs and 429s, so no rows were recorded from it. **Tavily** is the working
+  conventional-search proxy. Single-provider results are a known limitation.
+- **Measurement (still blocked, P-002):** `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*` /
+  `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **empty** Ñ GSC, GA4, and
+  GBP remain unconnected. All impression/click/traffic/review metrics stay
+  `unverified` (never `0`). Google's **Generative AI performance report** in Search
+  Console is now named by Google as the first-party surface for generative-AI
+  visibility; it is gated by the same P-002 access (source:
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide,
+  fetched 2026-10-19).
 
