@@ -3,6 +3,45 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-19 — Intelligence HQ re-created (daily incl. weekends) + reproducible deploy script
+
+The owner asked for the **Straight Flush Plumbing Intelligence HQ** to be present
+and running as a named, persistent OpenHands Cloud system on a **daily 6:00 AM
+America/Los_Angeles** schedule including weekends.
+
+**Finding.** `GET /api/automation/v1` returned 6 automations. Neither
+`SFPL Intelligence HQ Daily 6 AM` nor `SFPL Intelligence HQ Weekly Review` existed
+(the generation-1 ids `5dc89b41…` / `0582d219…` are gone — 404). The 2026-10-15
+redeploy had shipped under a different name (`SFPL AI Headquarters Daily`,
+Mon/Wed/Fri) and was INACTIVE, so no daily content job was enabled.
+
+**Added:**
+- `growth-engine/automations/deploy_intelligence_hq.py` — reproducible deployment
+  of both HQ automations from the canonical `*.prompt.md` files. Reads the prompt
+  file (single source of truth), builds the payload, and applies it only with
+  `--deploy` (dry-run by default). Deploys by name: an existing automation of the
+  same name is PATCHed in place (stable id), otherwise it is created via the
+  prompt preset.
+
+**Created (live, HTTP 201):**
+- `SFPL Intelligence HQ Daily 6 AM` — id `df8e3c2d-1fac-47fb-9af2-38d59c8239c5`,
+  cron `0 6 * * *`, timezone `America/Los_Angeles`, timeout 1800 s, ACTIVE,
+  `repos` = this repo (`main`), prompt 11,467 chars.
+- `SFPL Intelligence HQ Weekly Review` — id `d948c2e2-e4a4-49f1-a2e4-40fdf815faea`,
+  cron `0 6 * * 1`, timezone `America/Los_Angeles`, timeout 1800 s, ACTIVE,
+  `repos` = this repo (`main`), prompt 3,167 chars.
+
+Both read the latest committed knowledge base at the start of each run (fresh
+sandbox per run; no reliance on local files), append dated findings without
+deleting history, and persist back to a dated `intelligence-hq/…` branch with a PR.
+Neither commits to `main` or deploys website changes.
+
+**Updated:** `automations/README.md` (HQ table + re-creation section),
+`INTEGRATION_STATUS.md` (2026-10-19 verification).
+
+**Not changed:** no website page, schema, title, description, or copy; no change to
+the production branch.
+
 ## 2026-10-19 — Gemini grounding unavailable on the free tier: labelled Gemma fallback (ISSUE-032)
 
 Grounding with Google Search is **not on the Gemini 3.x free tier** (Google

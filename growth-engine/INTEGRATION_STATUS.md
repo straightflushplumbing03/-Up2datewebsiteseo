@@ -4,6 +4,20 @@ Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
 OpenHands Cloud environment; a check is only marked ✅ after an actual successful
 call. Prior verification 2026-10-09.
 
+> **Re-verified 2026-10-19 (Intelligence HQ re-creation).** `GET /api/automation/v1`
+> returned 6 automations. The generation-1 HQ pair no longer exists, so both were
+> re-created from the canonical prompts via
+> `growth-engine/automations/deploy_intelligence_hq.py --deploy` (HTTP 201 each):
+> `SFPL Intelligence HQ Daily 6 AM` (`df8e3c2d-1fac-47fb-9af2-38d59c8239c5`,
+> `0 6 * * *` America/Los_Angeles) and `SFPL Intelligence HQ Weekly Review`
+> (`d948c2e2-e4a4-49f1-a2e4-40fdf815faea`, `0 6 * * 1` America/Los_Angeles).
+> Both `enabled: True`, `state: ACTIVE`, `repos` = this repo (`main`), `timeout` 1800 s.
+> The 2026-10-15 `SFPL AI Headquarters Daily` (`1485d659-8663-4776-a507-db0fefed8483`,
+> Mon/Wed/Fri) and the retry watchdog (`b946624c-79c2-40a6-be1b-258388a15fb4`) are now
+> **INACTIVE**, leaving exactly one enabled daily content job. GitHub OK, GitHub Pages
+> OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
+> GBP remain **not connected** (blocker unchanged - see P-002).
+
 > **Re-verified 2026-10-13 (second pass):** search-provider resilience tested
 > with a **different query set**. Brave returned **8 parseable pages, then an
 > anti-bot challenge page** for every later query (a *more specific* mode than the
