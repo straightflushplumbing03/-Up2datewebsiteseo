@@ -747,3 +747,64 @@ duplicate, so the duplicates are not disavowed from the real side either.
   back-fill happens automatically; the site now reports to `G-DFS6B1LV4P` only.
   Owner should confirm data appears in the new property after the Pages deploy.
 - **Approval:** Level 2 (analytics plumbing), same class as ISSUE-028.
+
+---
+
+## ISSUE-031 — System supervisor reported three FAILs for the wrong reasons and missed one check  [MEDIUM · FIXED 2026-10-19]
+
+- **Evidence (supervisor run 2026-10-17T14:04Z, PR #65):** the supervisor reported
+  `4/7 checks passed` with three FAILs, but only one was real. Diagnosis of each:
+  - `change_volume` **FAIL (false positive).** The check counted `git log --numstat`
+    *rows*, so a merge commit's repeated path was counted again — 292 rows vs **148
+    unique paths**. It also scored *any* `.html` row with `added > 0` as an "HTML
+    addition", so a one-line edit (the GA4 ID swap, PR #63, touched ~141 files by one
+    line each) read as 268 new pages when `--diff-filter=A` shows **0** genuinely new
+    pages.
+  - `unexpected_branches` **FAIL (false positive).** `analytics/ga4-tag`,
+    `ci/verify-gate`, `docs/issue-029-cf-nonce` were flagged as "new unexplained", but
+    each is the head branch of an already-merged PR (#61, #59, #62). The hardcoded
+    `KNOWN_BRANCH_PREFIXES` list predates the automation's current naming.
+  - `self_merges` **PASS (unsound).** The check read `merged_by.login` from the GitHub
+    *list* endpoint, which omits it (0 of 40 closed PRs). The guard `if author and
+    merger` therefore never fired and the check reported "no self-merged PRs"
+    unconditionally. The single-PR endpoint *does* return it, and every recent merge is
+    by `straightflushplumbing03` — the same account that opened the PR.
+  - `ai_visibility_blind` **missing (real drift).** The **live** supervisor prompt lists
+    eight checks including `ai_visibility_blind`; the repo prompt and
+    `scripts/system_supervisor.py` implemented only seven. The AI surface is
+    **UNMEASURED**: `ai_visibility_history.jsonl` has **0** `test_type: ai_platform`
+    rows; every visibility number is a conventional-search proxy (Tavily).
+- **Impact:** two false FAILs (noise that hides real drift), one blind PASS (the review
+  gate the prompt added could be bypassed invisibly), and one silently unmeasured
+  business goal.
+- **Fix applied 2026-10-19 (`scripts/system_supervisor.py`):**
+  - `_parse_numstat` now counts **unique** paths; `check_change_volume` counts new pages
+    via `--diff-filter=A` and reports `files` (unique) separately from `html_touched`
+    (edited) and `new_pages`. Budget raised `MAX_CHANGED_FILES` 120 -> 200: with
+    de-duplication a legitimate multi-file metadata pass reaches ~148, and the old 120
+    still failed it.
+  - `check_unexpected_branches` treats a branch as explained when it is (or was) a PR
+    head (`_pr_head_refs`, all PR states), so merged work no longer reads as new.
+  - `check_self_merges` reads `merged_by` via the single-PR endpoint when the list
+    omits it, and — with only one collaborator — reports **UNMEASURED (BLOCKED)**
+    instead of a blind PASS, because the "a different account approved" rule is
+    unenforceable until a second collaborator exists.
+  - Added the missing `check_ai_visibility_blind`: FAIL when there are no `ai_platform`
+    rows or the newest is older than 14 days; the AI surface is a genuine AI-answer
+    engine, never the conventional-search proxy.
+  - Reconciled `growth-engine/automations/ai-headquarters-supervisor.prompt.md` with
+    the live prompt (added the 8th check row, corrected "seven" -> "eight").
+- **Result:** `python3 scripts/system_supervisor.py` now reports **5/8**, with the two
+  remaining FAILs real and owner-level: `automations_enabled` (the daily job is
+  disabled, `disabled_reason: manual`, `source: user`, 2026-10-16T06:25Z) and
+  `ai_visibility_blind` (Gemini grounding quota returns HTTP 429).
+- **Not fixed here (separate open PR):** the `ai_visibility_sweep` false-pass exit code
+  in `daily_measure`/`gemini_search_client.py` is already fixed by **PR #64**
+  (exit 3 = platform refused every query -> BLOCKED). Not duplicated to avoid a
+  conflicting PR.
+- **Verification:** `test_system_supervisor.py` extended 10 -> 22 tests (unique-path
+  counting, `merged_by` fallback, `ai_visibility_blind` fresh/stale/absent, prompt ==
+  script check list). Full suite **321 tests OK**; `validate_knowledge_base.py` OK;
+  `seo_audit.py` exit 0; sitemap `missing: [] extra: []`.
+- **Approval:** Level 2 (tooling / supervision script + prompt reconciliation).
+

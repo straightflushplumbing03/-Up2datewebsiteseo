@@ -3,6 +3,30 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-19 — System supervisor: fix two false FAILs, one blind PASS, one missing check (ISSUE-031)
+
+The 2026-10-17 supervisor run (PR #65) reported `4/7` with three FAILs, but only one
+was real. All four defects are in `scripts/system_supervisor.py`:
+
+- `change_volume` counted `git log --numstat` **rows** (292) instead of **unique
+  paths** (148), and scored a one-line `.html` edit as a new page (268 "additions" vs
+  **0** via `--diff-filter=A`). Now counts unique paths and genuine new pages;
+  `MAX_CHANGED_FILES` 120 -> 200 (a legitimate multi-file metadata pass reaches ~148).
+- `unexpected_branches` flagged three branches that are the heads of merged PRs
+  (#59/#61/#62). Now a branch is explained when it is (or was) a PR head.
+- `self_merges` read `merged_by` from the GitHub *list* endpoint, which omits it, so it
+  always PASSed. Now falls back to the single-PR endpoint, and with one collaborator
+  reports **UNMEASURED (BLOCKED)** rather than a blind PASS.
+- Added the missing `ai_visibility_blind` check (present in the live prompt, absent
+  from the repo prompt and script). It FAILs when no `ai_platform` row exists or the
+  newest is stale, so a conventional-search proxy is never mistaken for AI visibility.
+
+`growth-engine/automations/ai-headquarters-supervisor.prompt.md` reconciled with the
+live prompt. `test_system_supervisor.py` 10 -> 22 tests. Suite **321 tests OK**.
+
+The two remaining FAILs are real owner-level items: the daily job is disabled
+(`source: user`) and the Gemini grounding quota returns HTTP 429.
+
 ## 2026-10-15 — ISSUE-009 root cause corrected: runs die at the ceiling, not for lack of a sandbox
 
 **Correction.** The earlier diagnosis on this branch read the platform error
