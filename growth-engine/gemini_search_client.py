@@ -67,6 +67,10 @@ MODEL_FALLBACKS = ("gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash")
 # model quota is fine. This Gemma slug grounds on the free tier with the same
 # Search index; it is used only as a labelled last resort. See GeminiClient.ask.
 DEFAULT_FALLBACK_MODEL = "gemma-4-26b-a4b-it"
+# Gemma grounding is free but flaky: `gemma-4-26b-a4b-it` intermittently answers
+# HTTP 500 INTERNAL and `gemma-4-31b-it` HTTP 503 UNAVAILABLE under load. The
+# chain is tried in order so one spike does not cost the day's AI sweep.
+FALLBACK_MODEL_CHAIN = ("gemma-4-26b-a4b-it", "gemma-4-31b-it")
 DEFAULT_TIMEOUT_S = 60
 MAX_RETRIES = 3
 
@@ -241,9 +245,16 @@ class GeminiClient:
         if allow_fallback is None:
             allow_fallback = not (model or os.environ.get("GEMINI_MODEL"))
         self._allow_fallback = bool(allow_fallback)
-        self.fallback_model = (
-            fallback_model or os.environ.get("GEMINI_FALLBACK_MODEL")
-            or DEFAULT_FALLBACK_MODEL).strip()
+        # An explicit GEMINI_FALLBACK_MODEL pins one slug; otherwise the whole
+        # Gemma chain is tried, because the models spike independently.
+        fb_override = (fallback_model or os.environ.get("GEMINI_FALLBACK_MODEL")
+                       or "").strip()
+        if fb_override:
+            self.fallback_model = fb_override
+            self._fallback_models = [fb_override]
+        else:
+            self.fallback_model = DEFAULT_FALLBACK_MODEL
+            self._fallback_models = list(FALLBACK_MODEL_CHAIN)
         self.timeout = timeout
         self.max_retries = max_retries
         self._sleep = sleep
@@ -301,6 +312,8 @@ class GeminiClient:
 
         Only a quota/server refusal triggers it — a bad request or an auth error
         is a real failure and is raised so the caller records `inconclusive`.
+        The Gemma chain is tried in order because those models spike
+        independently (500/503); the last error is raised if all refuse.
         """
         try:
             return self.ask(query)
@@ -308,10 +321,20 @@ class GeminiClient:
             if not (self._allow_fallback
                     and err.error_type in GROUNDING_REFUSAL_TYPES):
                 raise
-            result = self._ask_once(query, self.fallback_model)
-            result["engine"] = _engine_of(self.fallback_model)
-            result["fallback_from"] = self.model
-            return result
+            last_err = err
+            for idx, model in enumerate(self._fallback_models):
+                try:
+                    result = self._ask_once(query, model)
+                except GeminiError as fb_err:
+                    last_err = fb_err
+                    if fb_err.error_type in GROUNDING_REFUSAL_TYPES \
+                            and idx < len(self._fallback_models) - 1:
+                        continue
+                    raise
+                result["engine"] = _engine_of(model)
+                result["fallback_from"] = self.model
+                return result
+            raise last_err
 
     def _ask_once(self, query, model):
         attempt = 0
@@ -380,6 +403,10 @@ class GeminiClient:
             "citations": citations,
             "domains": domains,
             "search_queries": meta.get("webSearchQueries") or [],
+            # A 200 with empty groundingMetadata means the model answered from
+            # memory — no web search ran. Recording that as `web_search: "yes"`
+            # would be a false claim, so surface it for `build_record`.
+            "grounded": bool(sources or meta.get("webSearchQueries")),
             "usage": body.get("usageMetadata") or {},
         }
 
@@ -396,6 +423,13 @@ def build_record(query, city, result, *, platform="gemini_search",
             answer, result.get("sources") or [], result.get("citations") or [])
         engine = result.get("engine") or _engine_of(result.get("model"))
         fallback_from = result.get("fallback_from")
+        # A 200 with no grounding metadata answered from memory, not the web.
+        # Say so rather than claiming a search ran.
+        grounded = result.get("grounded")
+        if grounded is None:
+            grounded = bool(result.get("sources") or result.get("search_queries"))
+        if not grounded:
+            web_search = "no"
         default_note = (
             "Gemini API with Google Search grounding (free tier); "
             f"engine={engine}; model={result.get('model')}; "
@@ -404,6 +438,12 @@ def build_record(query, city, result, *, platform="gemini_search",
             "This IS an AI-platform result (the answer engine ran), unlike the "
             "conventional_proxy rows."
         )
+        if not grounded:
+            default_note += (
+                " WARNING: the model returned no grounding metadata, so no web "
+                "search ran — this answer is from the model's own knowledge, not "
+                "live sources; recorded web_search=no."
+            )
         if engine == "gemma":
             default_note += (
                 f" Grounding on the Gemini 3.x family is not on the free tier, so "

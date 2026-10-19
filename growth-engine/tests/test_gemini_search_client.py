@@ -439,6 +439,72 @@ class TestGroundingFallback(unittest.TestCase):
             client.ask("q")
         self.assertEqual(len(opener.calls), 1)
 
+    def test_fallback_walks_the_gemma_chain_on_a_spike(self):
+        """Gemma models spike independently, so a 500 on the first must not fail."""
+        opener = FakeOpener([_rate_limited(),
+                             _http_error(500, {"error": {"status": "INTERNAL"}}),
+                             _body("gemma answer")])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1)
+        result = client.ask_with_fallback("q")
+        self.assertEqual(result["engine"], "gemma")
+        self.assertEqual(result["model"], G.FALLBACK_MODEL_CHAIN[1])
+        self.assertIn(G.FALLBACK_MODEL_CHAIN[1], opener.calls[2].full_url)
+
+    def test_explicit_fallback_model_pins_one_slug(self):
+        client = G.GeminiClient(api_key="k", opener=FakeOpener([]),
+                                sleep=lambda s: None, model_fallbacks=[],
+                                fallback_model="gemma-4-31b-it")
+        self.assertEqual(client._fallback_models, ["gemma-4-31b-it"])
+
+    def test_default_fallback_uses_the_chain(self):
+        client = G.GeminiClient(api_key="k", opener=FakeOpener([]),
+                                sleep=lambda s: None, model_fallbacks=[])
+        self.assertEqual(client._fallback_models, list(G.FALLBACK_MODEL_CHAIN))
+
+
+class TestUngroundedResponseHonesty(unittest.TestCase):
+    """A 200 with no grounding metadata ran no web search; do not claim it did."""
+
+    def test_no_grounding_metadata_is_not_marked_grounded(self):
+        body = {"candidates": [{"content": {"parts": [{"text": "hi"}]}}]}
+        result = G.GeminiClient(api_key="k", opener=FakeOpener([body]),
+                                sleep=lambda s: None, model_fallbacks=[],
+                                max_retries=1).ask("q")
+        self.assertFalse(result["grounded"])
+        self.assertEqual(result["search_queries"], [])
+
+    def test_grounded_response_is_marked_grounded(self):
+        body = {"candidates": [{
+            "content": {"parts": [{"text": "hi"}]},
+            "groundingMetadata": {
+                "webSearchQueries": ["q"],
+                "groundingChunks": [{"web": {"uri": "https://x.com/a",
+                                             "title": "A"}}],
+            },
+        }]}
+        result = G.GeminiClient(api_key="k", opener=FakeOpener([body]),
+                                sleep=lambda s: None, model_fallbacks=[],
+                                max_retries=1).ask("q")
+        self.assertTrue(result["grounded"])
+
+    def test_ungrounded_record_says_web_search_no(self):
+        result = {"ok": True, "answer": "no web search ran", "model": "gemma-4-26b-a4b-it",
+                  "engine": "gemma", "sources": [], "citations": [], "domains": [],
+                  "search_queries": [], "grounded": False, "usage": {}}
+        rec = G.build_record("q", "c", result)
+        self.assertEqual(rec["web_search"], "no")
+        self.assertIn("no grounding metadata", rec["note"])
+
+    def test_grounded_record_says_web_search_yes(self):
+        result = {"ok": True, "answer": "x", "model": "gemini-flash-latest",
+                  "sources": [{"url": "https://x.com/a"}], "citations": [],
+                  "domains": ["x.com"], "search_queries": ["q"], "grounded": True,
+                  "usage": {}}
+        rec = G.build_record("q", "c", result)
+        self.assertEqual(rec["web_search"], "yes")
+        self.assertNotIn("no grounding metadata", rec["note"])
+
 
 class TestFallbackRecordLabel(unittest.TestCase):
     def test_gemma_record_carries_engine_and_fallback_from(self):
