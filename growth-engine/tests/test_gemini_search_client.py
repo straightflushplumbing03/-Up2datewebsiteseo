@@ -532,6 +532,23 @@ class CliRunExitTests(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertIn('"succeeded": 1', out)
 
+    def test_empty_query_list_is_not_a_failure(self):
+        """No queries measured nothing, but must not read as "every query failed"."""
+        import tempfile
+        empty = tempfile.NamedTemporaryFile("w", suffix=".txt", delete=False)
+        empty.close()
+        try:
+            import contextlib
+            from unittest import mock
+            stdout, stderr = io.StringIO(), io.StringIO()
+            with mock.patch.dict(os.environ, {"GEMINI_API_KEY": "k"}):
+                with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
+                    code = G.main(["--run", "--queries-file", empty.name, "--limit", "3"])
+        finally:
+            os.unlink(empty.name)
+        self.assertEqual(code, 0)
+        self.assertNotIn("failed", stderr.getvalue())
+
 
 class CliNoKeyTests(unittest.TestCase):
     def test_missing_key_exits_1_without_recording(self):

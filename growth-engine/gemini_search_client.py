@@ -590,8 +590,9 @@ def main(argv=None):
         # inconclusive rows are kept (a failed test is not zero) but the outcome
         # is signalled: 3 = the platform refused every query (BLOCKED), 2 = some
         # other total failure (investigate). A Gemma fallback answer is a real
-        # measurement, so it counts as `succeeded` and keeps exit 0.
-        if all(r["straight_flush"] == "inconclusive" for r in records):
+        # measurement, so it counts as `succeeded` and keeps exit 0. Guard on
+        # `records`: an empty query list measured nothing and is not a failure.
+        if records and all(r["straight_flush"] == "inconclusive" for r in records):
             platform_errors = {"rate_limited", "server_error",
                                "timeout", "connection_error"}
             error_types = {r.get("error_type") for r in records}

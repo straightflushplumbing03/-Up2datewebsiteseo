@@ -81,7 +81,19 @@ Never print or commit the token. If the clone fails, report it and stop.
      and replaces the old Brave/DuckDuckGo-HTML scraping, which rate-limited our
      egress IP (Brave HTTP 429 after ~7-8 queries). Record rows with
      `test_type: conventional_proxy`.
-   - **AI answer engines:** use the Perplexity Agent API via
+   - **AI answer engines (free primary):** the Gemini Search API via
+     `python3 scripts/gemini_visibility.py --run --append`. It uses
+     `google_search` grounding for a real web-grounded answer + citations; record
+     `test_type: ai_platform`, `platform: gemini_search`. Grounding on the
+     Gemini 3.x free tier is **not available**, so when every Gemini model
+     refuses with HTTP 429 the client falls back to a Google-Search-grounded
+     **Gemma** model on the same key. That row is labelled `engine: gemma` +
+     `fallback_from` and its `note` says plainly it is **not** the Gemini /
+     AI-Overviews surface — a close, free proxy, never to be read as Gemini. Do
+     not remove that label. `--no-fallback` forces a refusal (exit 3 = BLOCKED,
+     never zero). If the sweep exits 3, record the AI platform **BLOCKED** and
+     say why; do not record a zero.
+   - **AI answer engines (optional, paid):** the Perplexity Agent API via
      `python3 scripts/perplexity_agent.py --run --append` when
      `PERPLEXITY_API_KEY` is set. This is a genuine AI-platform result — record
      `test_type: ai_platform`. If the key is absent, mark the platform
