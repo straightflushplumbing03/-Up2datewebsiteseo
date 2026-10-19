@@ -351,5 +351,118 @@ class ModelChainTests(unittest.TestCase):
         self.assertEqual(ctx.exception.error_type, "rate_limited")
 
 
+def _rate_limited():
+    return _http_error(429, {"error": {"status": "RESOURCE_EXHAUSTED",
+                                       "message": "You exceeded your current quota"}})
+
+
+class TestEngineClassification(unittest.TestCase):
+    def test_gemma_slug_is_gemma(self):
+        self.assertEqual(G._engine_of("gemma-4-26b-a4b-it"), "gemma")
+
+    def test_gemini_slugs_are_gemini(self):
+        for m in ("gemini-flash-latest", "gemini-3.8-flash", "gemini-2.5-flash"):
+            self.assertEqual(G._engine_of(m), "gemini")
+
+    def test_missing_model_defaults_to_gemini(self):
+        self.assertEqual(G._engine_of(None), "gemini")
+
+
+class TestGroundingFallback(unittest.TestCase):
+    """When Gemini refuses grounding, a labelled Gemma answer stands in."""
+
+    def _client(self, responses, **kw):
+        return G.GeminiClient(api_key="k", opener=FakeOpener(responses),
+                              sleep=lambda s: None, model_fallbacks=[],
+                              max_retries=1, **kw)
+
+    def test_gemini_success_does_not_fall_back(self):
+        opener = FakeOpener([_body("gemini answer")])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1)
+        result = client.ask_with_fallback("q")
+        self.assertEqual(result["engine"], "gemini")
+        self.assertNotIn("fallback_from", result)
+        self.assertEqual(len(opener.calls), 1)
+
+    def test_refused_grounding_falls_back_to_gemma_labelled(self):
+        opener = FakeOpener([_rate_limited(), _body("gemma answer")])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        result = client.ask_with_fallback("q")
+        self.assertTrue(result["ok"])
+        self.assertEqual(result["engine"], "gemma")
+        self.assertEqual(result["model"], "gemma-4-26b-a4b-it")
+        self.assertEqual(result["fallback_from"], G.DEFAULT_MODEL)
+        self.assertIn("gemma-4-26b-a4b-it", opener.calls[1].full_url)
+
+    def test_fallback_disabled_raises(self):
+        client = self._client([_rate_limited()], allow_fallback=False)
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+
+    def test_explicit_model_disables_fallback_by_default(self):
+        # A pinned model means "test that model"; substituting would be a lie.
+        client = G.GeminiClient(api_key="k", model="gemini-flash-latest",
+                                opener=FakeOpener([_rate_limited()]),
+                                sleep=lambda s: None, max_retries=1)
+        self.assertFalse(client._allow_fallback)
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+
+    def test_bad_request_does_not_fall_back(self):
+        # A 400 is a real failure, not a quota refusal; no substitution.
+        opener = FakeOpener([_http_error(400, {"error": {"status": "INVALID_ARGUMENT"}})])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+        self.assertEqual(len(opener.calls), 1)
+
+    def test_fallback_failure_is_raised_not_swallowed(self):
+        opener = FakeOpener([_rate_limited(),
+                             _http_error(503, {"error": {"status": "UNAVAILABLE"}})])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        with self.assertRaises(G.GeminiError):
+            client.ask_with_fallback("q")
+
+    def test_plain_ask_never_falls_back(self):
+        opener = FakeOpener([_rate_limited()])
+        client = G.GeminiClient(api_key="k", opener=opener, sleep=lambda s: None,
+                                model_fallbacks=[], max_retries=1,
+                                fallback_model="gemma-4-26b-a4b-it")
+        with self.assertRaises(G.GeminiError):
+            client.ask("q")
+        self.assertEqual(len(opener.calls), 1)
+
+
+class TestFallbackRecordLabel(unittest.TestCase):
+    def test_gemma_record_carries_engine_and_fallback_from(self):
+        result = {"ok": True, "answer": "call Straight Flush Plumbing",
+                  "model": "gemma-4-26b-a4b-it", "engine": "gemma",
+                  "fallback_from": "gemini-flash-latest", "sources": [], "citations": [],
+                  "domains": [], "search_queries": ["q"], "usage": {}}
+        rec = G.build_record("q", "Laguna Niguel", result)
+        self.assertEqual(rec["engine"], "gemma")
+        self.assertEqual(rec["fallback_from"], "gemini-flash-latest")
+        self.assertIn("Gemma fallback", rec["note"])
+        self.assertIn("not the Gemini/AI-Overviews surface", rec["note"])
+        # still an AI-platform row — the answer engine ran
+        self.assertEqual(rec["test_type"], "ai_platform")
+
+    def test_gemini_record_has_no_fallback_marker(self):
+        result = {"ok": True, "answer": "x", "model": "gemini-flash-latest",
+                  "sources": [], "citations": [], "domains": [],
+                  "search_queries": [], "usage": {}}
+        rec = G.build_record("q", "c", result)
+        self.assertEqual(rec["engine"], "gemini")
+        self.assertIsNone(rec["fallback_from"])
+        self.assertNotIn("Gemma fallback", rec["note"])
+
+
 if __name__ == "__main__":
     unittest.main()

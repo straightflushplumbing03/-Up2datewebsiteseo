@@ -13,11 +13,22 @@ citations. Google bills grounding on the Gemini API free tier (up to ~500
 grounded requests/day on Flash), and the token cost for Flash on the free tier is
 zero, so a rotating sample of a few queries a day costs nothing.
 
+FALLBACK — when Gemini refuses grounding, still measure (labelled). Google's
+pricing page lists grounding on the Gemini 3.x family as **not available on the
+free tier**, and a key created after 2.5 Flash was retired can only reach 3.x, so
+every grounded Gemini call answers HTTP 429 `RESOURCE_EXHAUSTED` while the model
+quota itself is barely touched. Rather than record the AI surface as UNMEASURED, a
+Google-Search-grounded **Gemma** model (free on the same key, same Search index)
+stands in — but the record always carries `engine` (`gemini` / `gemma`) and
+`fallback_from`, so a Gemma answer is never mistaken for a Gemini one. Disable it
+with `--no-fallback`.
+
 HONESTY — this IS an AI-platform result.
 Unlike Tavily (a ranked list of links, recorded `conventional_proxy`), Gemini
 returns a synthesised answer *and* the grounding chunks it cited, so records are
 written with `test_type: "ai_platform"` and `platform: "gemini_search"`, exactly
-as the Perplexity rows are.
+as the Perplexity rows are. The `engine` field names the model family that
+actually answered.
 
 Rules enforced here (see growth-engine/AI_VISIBILITY_METHODOLOGY.md):
   * A failed call is recorded `inconclusive` — never "absent" or 0%.
@@ -51,8 +62,17 @@ API_ROOT = "https://generativelanguage.googleapis.com/v1beta/models"
 # unavailable. See MODEL_FALLBACKS and GeminiClient._model_chain.
 DEFAULT_MODEL = "gemini-flash-latest"
 MODEL_FALLBACKS = ("gemini-3.8-flash", "gemini-3.5-flash", "gemini-2.5-flash")
+# Grounding on the Gemini 3.x family is not on the free tier (Google pricing), and
+# a post-2.5 key can only reach 3.x, so a grounded Gemini call 429s while the
+# model quota is fine. This Gemma slug grounds on the free tier with the same
+# Search index; it is used only as a labelled last resort. See GeminiClient.ask.
+DEFAULT_FALLBACK_MODEL = "gemma-4-26b-a4b-it"
 DEFAULT_TIMEOUT_S = 60
 MAX_RETRIES = 3
+
+# Quota refusals that mean "this model will not ground right now" — the cases the
+# Gemma fallback exists for. A model-quota or billing 429 is the same signal.
+GROUNDING_REFUSAL_TYPES = ("rate_limited", "server_error")
 
 ERROR_TYPES = (
     "authentication_failed",
@@ -190,12 +210,21 @@ def classify_visibility(answer, sources, citations):
     return "mentioned"
 
 
+def _engine_of(model):
+    """The model family that produced a result — `gemma` or `gemini`.
+
+    Recorded per row so a Gemma fallback answer is never read as a Gemini one.
+    """
+    return "gemma" if (model or "").lower().startswith("gemma") else "gemini"
+
+
 class GeminiClient:
     """Stdlib wrapper over `models/{model}:generateContent` with Search grounding."""
 
     def __init__(self, api_key=None, model=None, timeout=DEFAULT_TIMEOUT_S,
                  max_retries=MAX_RETRIES, sleep=time.sleep, opener=None,
-                 model_fallbacks=None):
+                 model_fallbacks=None, allow_fallback=None,
+                 fallback_model=None):
         self._api_key = (api_key or _env_api_key()).strip()
         self.model = (model or os.environ.get("GEMINI_MODEL") or DEFAULT_MODEL).strip()
         # An explicit `model` or GEMINI_MODEL pins exactly one slug (so a bad
@@ -206,6 +235,15 @@ class GeminiClient:
         else:
             chain = model_fallbacks if model_fallbacks is not None else MODEL_FALLBACKS
             self._models = [self.model] + [m for m in chain if m != self.model]
+        # Opt-in, and never when a model was pinned explicitly: an explicit model
+        # is a request to test *that* model, so silently answering from another
+        # engine would be a lie. Only the default chain falls back.
+        if allow_fallback is None:
+            allow_fallback = not (model or os.environ.get("GEMINI_MODEL"))
+        self._allow_fallback = bool(allow_fallback)
+        self.fallback_model = (
+            fallback_model or os.environ.get("GEMINI_FALLBACK_MODEL")
+            or DEFAULT_FALLBACK_MODEL).strip()
         self.timeout = timeout
         self.max_retries = max_retries
         self._sleep = sleep
@@ -243,6 +281,8 @@ class GeminiClient:
         Retries 429/5xx/connection errors up to max_retries. A 404 for a slug
         Google has retired moves to the next model in the chain rather than
         failing the whole sweep.
+
+        This never substitutes another engine; use `ask_with_fallback` for that.
         """
         _require_key()
         last_err = None
@@ -256,6 +296,23 @@ class GeminiClient:
                 self.model = self._models[idx + 1]
         raise last_err
 
+    def ask_with_fallback(self, query):
+        """`ask`, then a labelled Gemma fallback when Gemini refuses grounding.
+
+        Only a quota/server refusal triggers it — a bad request or an auth error
+        is a real failure and is raised so the caller records `inconclusive`.
+        """
+        try:
+            return self.ask(query)
+        except GeminiError as err:
+            if not (self._allow_fallback
+                    and err.error_type in GROUNDING_REFUSAL_TYPES):
+                raise
+            result = self._ask_once(query, self.fallback_model)
+            result["engine"] = _engine_of(self.fallback_model)
+            result["fallback_from"] = self.model
+            return result
+
     def _ask_once(self, query, model):
         attempt = 0
         while True:
@@ -263,7 +320,7 @@ class GeminiClient:
             try:
                 with self._request(query, model) as resp:
                     body = json.loads(resp.read().decode("utf-8"))
-                return self._normalise(body, query)
+                return self._normalise(body, query, model)
             except urllib.error.HTTPError as exc:
                 raw = exc.read().decode("utf-8", "replace") if exc.fp else ""
                 provider_status = None
@@ -288,7 +345,7 @@ class GeminiClient:
             delay = err.retry_after if err.retry_after is not None else 2 ** attempt
             self._sleep(min(delay, 60))
 
-    def _normalise(self, body, query):
+    def _normalise(self, body, query, model):
         cand = (body.get("candidates") or [{}])[0]
         answer_parts = [p.get("text", "") for p in
                         ((cand.get("content") or {}).get("parts") or [])
@@ -315,7 +372,8 @@ class GeminiClient:
         return {
             "ok": True,
             "query": query,
-            "model": self.model,
+            "model": model,
+            "engine": _engine_of(model),
             "status": cand.get("finishReason"),
             "answer": answer,
             "sources": sources,
@@ -336,14 +394,23 @@ def build_record(query, city, result, *, platform="gemini_search",
         answer = result.get("answer") or ""
         classification = classify_visibility(
             answer, result.get("sources") or [], result.get("citations") or [])
+        engine = result.get("engine") or _engine_of(result.get("model"))
+        fallback_from = result.get("fallback_from")
         default_note = (
             "Gemini API with Google Search grounding (free tier); "
-            f"model={result.get('model')}; "
+            f"engine={engine}; model={result.get('model')}; "
             f"{len(result.get('sources') or [])} source(s), "
             f"{len(result.get('search_queries') or [])} search quer(ies). "
             "This IS an AI-platform result (the answer engine ran), unlike the "
             "conventional_proxy rows."
         )
+        if engine == "gemma":
+            default_note += (
+                f" Grounding on the Gemini 3.x family is not on the free tier, so "
+                f"this row came from the labelled Gemma fallback (from "
+                f"{fallback_from}); a Google-Search-grounded answer on the same "
+                "index, but not the Gemini/AI-Overviews surface."
+            )
         return {
             "ts": ts,
             "platform": platform,
@@ -355,7 +422,9 @@ def build_record(query, city, result, *, platform="gemini_search",
             "top_results": result.get("domains") or [],
             "confidence": confidence,
             "note": note or default_note,
+            "engine": engine,
             "model": result.get("model"),
+            "fallback_from": fallback_from,
             "response_id": None,
             "citations": [c.get("url") for c in (result.get("citations") or [])],
             "sources": [s.get("url") for s in (result.get("sources") or [])],
@@ -407,7 +476,8 @@ def _shape(result):
                 "status_code": result.get("status_code"),
                 "message": (result.get("message") or "")[:200]}
     return {
-        "ok": True, "model": result.get("model"), "status": result.get("status"),
+        "ok": True, "model": result.get("model"), "engine": result.get("engine"),
+        "fallback_from": result.get("fallback_from"), "status": result.get("status"),
         "answer_chars": len(result.get("answer") or ""),
         "answer_head": (result.get("answer") or "")[:160].replace("\n", " "),
         "sources": len(result.get("sources") or []),
@@ -433,6 +503,9 @@ def main(argv=None):
     ap.add_argument("--dry-run", action="store_true",
                     help="print the plan without any network call")
     ap.add_argument("--model", default=None, help="override the model slug")
+    ap.add_argument("--no-fallback", action="store_true",
+                    help="never substitute a grounding-capable model; a refused "
+                         "Gemini call is then recorded inconclusive")
     ap.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_S)
     ap.add_argument("--max-retries", type=int, default=MAX_RETRIES)
     args = ap.parse_args(argv)
@@ -453,9 +526,11 @@ def main(argv=None):
                   file=sys.stderr)
             return 1
         client = GeminiClient(model=args.model, timeout=args.timeout,
-                              max_retries=args.max_retries)
+                              max_retries=args.max_retries,
+                              allow_fallback=(not args.no_fallback))
         try:
-            print(json.dumps(_shape(client.ask(args.query)), indent=2, ensure_ascii=False))
+            print(json.dumps(_shape(client.ask_with_fallback(args.query)),
+                             indent=2, ensure_ascii=False))
             return 0
         except GeminiError as exc:
             print(json.dumps(exc.as_dict(), indent=2, ensure_ascii=False))
@@ -481,17 +556,20 @@ def main(argv=None):
             return 1
 
         client = GeminiClient(model=args.model, timeout=args.timeout,
-                              max_retries=args.max_retries)
+                              max_retries=args.max_retries,
+                              allow_fallback=(not args.no_fallback))
         records, summary = [], []
         for query, city in queries:
             try:
-                result = client.ask(query)
+                result = client.ask_with_fallback(query)
             except GeminiError as exc:
                 result = exc.as_dict()
             record = build_record(query, city, result)
             records.append(record)
             summary.append({"query": query, "city": city,
                             "straight_flush": record["straight_flush"],
+                            "engine": record.get("engine"),
+                            "model": record.get("model"),
                             "domains": (record.get("top_results") or [])[:5],
                             "error_type": record.get("error_type")})
             print(f"  [{record['straight_flush']:>13}] {query}", file=sys.stderr)

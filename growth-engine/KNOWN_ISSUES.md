@@ -808,3 +808,49 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `seo_audit.py` exit 0; sitemap `missing: [] extra: []`.
 - **Approval:** Level 2 (tooling / supervision script + prompt reconciliation).
 
+---
+
+## ISSUE-032 — Gemini grounding unavailable on the free tier; AI surface recorded UNMEASURED  [HIGH · MITIGATED 2026-10-19]
+
+- **Evidence:** every grounded Gemini call (`POST …/models/{model}:generateContent`
+  with `tools:[{"google_search":{}}]`) returns **HTTP 429 `RESOURCE_EXHAUSTED`**,
+  while the same key's *model* quota is barely used (AI Studio showed **3/20**),
+  `models.list` is 200, and an ungrounded `generateContent` is 200. Reproduced on
+  every reachable Gemini model (`gemini-flash-latest`, `gemini-3.8-flash`,
+  `gemini-3.5-flash`, …), on both `v1beta` and `v1alpha`, and with both
+  `google_search` and `google_search_retrieval`. Spacing calls >60 s apart did not
+  clear it, so it is not a per-minute throttle.
+- **Root cause:** Google's pricing page lists **Grounding with Google Search as
+  "Not available" on the free tier for the Gemini 3.x family**. `gemini-2.5-flash`
+  (the last free-grounding Flash) is retired for new keys and answers 404, so this
+  key can only reach 3.x — where grounding is paid-only. The client's fallback
+  chain was all-Gemini, so it could not escape the refusal and the whole
+  AI-visibility sweep degraded to `inconclusive` rows. (The sweep had already been
+  returning `rate_limited` on 2026-10-16, before any 2026-10-19 testing.)
+- **Impact:** the business goal is *AI recommendation*; with no `ai_platform` rows
+  the AI surface was **UNMEASURED**, and `system_supervisor.py` reported
+  `ai_visibility_blind` FAIL for a reason outside the repo's control.
+- **Fix applied 2026-10-19 (`growth-engine/gemini_search_client.py`):** a labelled
+  **Gemma** fallback. When every Gemini model refuses grounding with a quota/server
+  error, a Google-Search-grounded `gemma-*` model (free on the same key, same
+  Search index) answers instead. Honesty guards:
+  - rows carry `engine` (`gemini`/`gemma`) and `fallback_from`, and the `note`
+    states plainly that a Gemma row is *not* the Gemini/AI-Overviews surface;
+  - a pinned model (`--model` / `GEMINI_MODEL`) **disables** the fallback — an
+    explicit model means "test that model", so substituting would be a lie;
+  - only quota/server refusals fall back; a 400/auth error still raises and is
+    recorded `inconclusive`;
+  - `--no-fallback` turns it off entirely.
+- **Verified live:** `python3 scripts/gemini_visibility.py --smoke` →
+  `engine=gemma model=gemma-4-26b-a4b-it fallback_from=gemini-flash-latest`, 12
+  sources, 3 real Search queries. `--no-fallback` still returns `rate_limited`.
+- **Owner options (not applied):** enable billing on the key's project (Tier 1 =
+  **5,000 free grounded Gemini requests/month**, then $14/1,000) to measure the
+  true Gemini surface; or provision a key whose project can reach a
+  grounding-eligible Gemini model. Level 3 (spend decision).
+- **Verification:** 12 new tests in `test_gemini_search_client.py` (engine
+  classification, labelled fallback, disabled/explicit-model/bad-request/fallback-
+  failure paths, record labelling). Full suite **333 tests OK**;
+  `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
+- **Approval:** Level 2 (client tooling + methodology doc).
+
