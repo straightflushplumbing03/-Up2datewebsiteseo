@@ -115,6 +115,46 @@ class TestSitemapIdempotency(unittest.TestCase):
         self.assertEqual(result["lastmod_refreshed"], 74)
 
 
+class TestAiVisibilityExitMeaning(unittest.TestCase):
+    """A fully-failed AI sweep must not read as a clean pass.
+
+    `gemini_visibility.py --run` used to return 0 even when every query errored,
+    so `check_ai_visibility` counted a blocked Gemini surface as `ok=True`. Exit 3
+    (platform refused every query) is BLOCKED; exit 2 (other total failure) is a
+    plain failure. Both keep the inconclusive rows.
+    """
+
+    def _with_key(self):
+        return mock.patch.dict(os.environ, {"GEMINI_API_KEY": "x"}, clear=True)
+
+    def test_all_queries_refused_is_blocked_not_ok(self):
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(False, 3, "rate_limited BLOCKED")
+        ):
+            result = daily_measure.check_ai_visibility(3)
+        self.assertTrue(result["blocked"])
+        self.assertFalse(result["ok"])
+        self.assertIn("BLOCKED", result["note"])
+        self.assertIn("never zero", result["note"])
+
+    def test_other_total_failure_is_failure_not_blocked(self):
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(False, 2, "boom")
+        ):
+            result = daily_measure.check_ai_visibility(3)
+        self.assertFalse(result["ok"])
+        self.assertFalse(result.get("blocked", False))
+        self.assertIn("inconclusive", result["note"])
+
+    def test_partial_success_is_ok(self):
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(True, 0, "ok")
+        ):
+            result = daily_measure.check_ai_visibility(3)
+        self.assertTrue(result["ok"])
+        self.assertFalse(result.get("blocked", False))
+
+
 class TestHistorySummary(unittest.TestCase):
     def test_counts_rows_and_picks_latest_per_platform(self):
         with tempfile.TemporaryDirectory() as tmp:
