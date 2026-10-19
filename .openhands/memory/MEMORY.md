@@ -124,6 +124,16 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
 ## Conventions that matter
+- **GitHub token in this environment is scoped to git push + PR create only.**
+  `PATCH /pulls/{n}` (edit body/title) and `POST /issues/{n}/comments` return
+  `403 Resource not accessible by personal access token`; the secondary
+  `GITHUB_PERSONAL_ACCESS_TOKEN` returns `401 Bad credentials`. So an agent can
+  push a branch and open a PR but **cannot edit the PR description or comment**.
+  Put everything needed in the initial PR body; if a change needs an explanation
+  the owner must be told in chat. **Draft gotcha:** a PR opened via the tool can
+  land as a **draft** (unmergeable). Flip it with GraphQL
+  `markPullRequestReadyForReview(pullRequestId: <node_id>)`; the REST
+  `PATCH {"draft": false}` returns 200 but silently does nothing.
 - **Google tag/analytics:** the site's single Google tag lives once in
   `scripts/csp_policy.py` (`MEASUREMENT_ID`); pages bake a copy into markup and the
   meta CSP allows the inline `gtag()` bootstrap by **SHA-256 hash derived from the
