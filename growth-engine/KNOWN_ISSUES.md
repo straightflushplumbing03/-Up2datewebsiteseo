@@ -879,3 +879,38 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+
+---
+
+## ISSUE-033 — `daily_measure.py` defaults could consume the whole daily wall-clock  [HIGH · FIXED 2026-10-20]
+
+- **Evidence:** three consecutive daily runs died at the ~1920s ceiling without
+  producing a report — run `c1ad98cd` (manual, 2026-10-20T17:28:50Z →
+  18:00:52Z = 1922s) was stuck in phase "Read daily measurement context"
+  (step 0b) and never reached research; scheduled run `b6ac6a4e` (1968s) died in
+  "Push daily branch to origin"; manual run `052fadaa` (1924s) died in "Verify
+  remote branches and PR head SHA". All three recorded "Timed out: command timed
+  out or was killed". The pre-stage was the bottleneck, not the research.
+- **Root cause:** the pre-stage defaulted to **40 Tavily queries + 5 Gemini
+  queries**. Measured cost: Gemini grounding ≈ 36 s/query, and each sweep runs
+  under a 900 s / 600 s timeout with up to 3 retries. A bounded 6-query run took
+  **83 s**; the 45-query default is far larger and, when Tavily rate-limits
+  (429 + Retry-After), the retry loop can spend the entire budget before research
+  begins. Nothing capped the two sweeps combined, so a slow platform starved
+  every later phase.
+- **Fix:** `scripts/daily_measure.py` now bounds both sweeps together with a hard
+  `--network-budget` (default **600 s**; Tavily 60% / Gemini 40%). Defaults
+  reduced to **12 Tavily + 3 Gemini** queries. A sweep stopped by the budget is
+  recorded **BLOCKED (partial)** — never zero — via `_run` exit code −1, matching
+  the existing BLOCKED-not-zero contract for missing keys and refused grounding.
+  The budget is recorded in `daily_context.json` as `network_budget_s` so a report
+  can cite the ceiling it ran under.
+- **Impact:** the pre-stage now takes ~145 s with defaults (measured), leaving
+  ~1700 s of the ~1920 s budget for research, report writing, and the commit/push
+  phases that previously timed out.
+- **Verification:** 355 tests OK (3 new: budget-exhaustion → BLOCKED for each
+  sweep, plus a guard that the default budget stays under the automation
+  wall-clock). Default run measured at 145 s, both sweeps `[OK]`.
+- **Approval:** Level 2 (intelligence tooling; no website page, schema, or copy
+  change).
+

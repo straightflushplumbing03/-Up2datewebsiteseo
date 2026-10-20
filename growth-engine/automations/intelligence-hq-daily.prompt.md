@@ -70,6 +70,17 @@ export Tavily_api_key="${Tavily_api_key}"
 python3 scripts/daily_measure.py            # writes growth-engine/data/daily_context.json
 ```
 
+The pre-stage is **bounded on purpose**: it caps both network sweeps together at
+`--network-budget` seconds (default **600 s**, Tavily 60% / Gemini 40%) and runs
+**12 Tavily + 3 Gemini** queries by default — measured at ~145 s. This is what
+keeps step 0b inside the 0–3 min window; the earlier unbounded defaults
+(40 + 5 queries) consumed the entire ~1920 s wall-clock and killed three runs
+before research began (ISSUE-033). **Do not raise the defaults to "get more
+data"** — a truncated day recorded as BLOCKED is worth more than a run that never
+commits. A sweep stopped by the budget is recorded `BLOCKED (partial)`, never
+zero; `daily_context.json` carries `network_budget_s` so the report can cite the
+ceiling it ran under.
+
 `scripts/daily_measure.py` appends `test_type: "ai_platform"` rows to
 `growth-engine/data/ai_visibility_history.jsonl` and conventional-proxy rows to the
 same file, plus `technical_health_history.jsonl` and
