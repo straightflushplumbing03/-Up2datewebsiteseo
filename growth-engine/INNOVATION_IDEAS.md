@@ -354,12 +354,96 @@ to HQ-D only for now.
 
 ---
 
+### 2026-10-20 daily run — new candidate ideas (evidence-backed)
+
+Every idea below cites a fetched observation from this run. Feature presence in a
+competitor is **verified**; that it *caused* a ranking remains a **hypothesis**.
+
+| ID | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-20-01 | Add a "repipe" section + service link to Tier-1 city pages (Laguna Hills, Laguna Niguel first) | Website | 4 | 4 | 4 | 5 | L2 | candidate | `cities/laguna-hills.html` contains **no** repipe content (verified 2026-10-20: `has repipe section: False`, 1,154 words), while `repipe-laguna-hills.com` ranks with an exact city+service `<title>` and 225 "Laguna" mentions. Source: fetched 2026-10-20. |
+| idea-2026-10-20-02 | Add `HowTo` / `HowToStep` JSON-LD to the PEX-repiping and leak-detection method pages | Website | 3 | 4 | 4 | 5 | L2 | candidate | `repipe-laguna-hills.com` emits FAQPage **and** HowTo/HowToStep/HowToSupply/HowToTool (verified 2026-10-20). Our `services/pex-repiping.html` emits Service/FAQPage/Answer but **no** HowTo (verified 2026-10-20). |
+| idea-2026-10-20-03 | "Non-commodity content" differentiation pass on city pages (unique local detail, not template permutation) | Website | 5 | 5 | 2 | 5 | L2 | candidate | Google's official AI-optimization guide states unique/compelling content "will likely influence your website's presence in generative AI search ... more than any of the other suggestions" (fetched 2026-10-20, HTTP 200). |
+| idea-2026-10-20-04 | Agent-readability pass: ensure critical content is in the DOM/semantic HTML and labelled for the accessibility tree | Website | 3 | 4 | 3 | 5 | L2 | candidate | Google's guide's agentic-experiences section says browser agents read "screenshots, the DOM structure, and the accessibility tree" (fetched 2026-10-20). |
+| idea-2026-10-20-05 | Stop describing FAQ/answer content as an AEO "hack"; record the Google mythbusting statement as the framing rule | Knowledge-base / docs | 3 | 5 | 5 | 5 | L1 | candidate | Google's guide "Mythbusting generative AI search" says many AEO/GEO "hacks" "aren't effective or supported by how Google Search actually works" (fetched 2026-10-20). |
+| idea-2026-10-20-06 | Owner proposal: complete/verify the Google Business Profile (categories, services, hours, photos) | Business (Level 3 — propose only) | 5 | 5 | 2 | 3 | ⛔ L3 | proposed | Google's guide: using Google Business Profiles "can help your products and services to be visible in both AI responses and other Google Search results" (fetched 2026-10-20). We cannot edit the profile. |
+| idea-2026-10-20-07 | Page-weight / performance budget on heavy pages | Website | 2 | 3 | 4 | 5 | L2 | candidate | `creativerepipe.com` homepage is 325 KB of HTML and `sjplumbingoc.com` 197 KB (verified 2026-10-20). Not proven to matter for ranking — recorded as a hygiene candidate, low impact. |
+| idea-2026-10-20-08 | Directory/citation presence review (Yelp dominates conventional results) | Business (Level 3 — propose only) | 4 | 4 | 3 | 3 | ⛔ L3 | candidate | yelp.com appeared in **33** of 30 tracked rows' `top_results` today, by far the most frequent domain (computed from `data/ai_visibility_history.jsonl`, 2026-10-20). Reviews/profiles are owner-controlled. |
+
+#### Prioritization (2026-10-20)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-20-03 non-commodity content pass | 5 | 5 | 2→High | Yes | ✅ L2 | prioritized — best evidence-to-impact, but slow |
+| 2 | idea-2026-10-20-01 repipe section on Tier-1 city pages | 4 | 4 | 4→High | Yes | ✅ L2 | prioritized — clearest demonstrated gap |
+| 3 | idea-2026-10-20-02 HowTo schema on method pages | 3 | 4 | 4→Med | Yes | ✅ L2 | prioritized — cheap, mirrors a verified competitor feature |
+| 4 | idea-2026-10-20-05 AEO-hack framing rule (docs) | 3 | 5 | 5→Med | Yes | ✅ L1 | prioritized — zero-risk documentation correctness |
+| 5 | idea-2026-10-20-04 agent-readability pass | 3 | 4 | 3→Med | Yes | ✅ L2 | candidate |
+| 6 | idea-2026-10-20-06 Google Business Profile completeness | 5 | 5 | 2→High | No | ⛔ L3 | proposed to owner (cannot execute) |
+| 7 | idea-2026-10-20-08 directory/citation review | 4 | 4 | 3→Med | No | ⛔ L3 | candidate — needs owner |
+| 8 | idea-2026-10-20-07 page-weight budget | 2 | 3 | 4→Low | Yes | ✅ L2 | candidate — no evidence it affects ranking |
+
+**Selection rule applied:** ranked by evidence strength first, then impact, then
+effort-to-value — not by ease of generation. Ideas 1–4 are L1/L2 and would clear the
+risk gate, but **none was actioned this run** because the run budget went to
+measurement and reconciliation; they are queued for the next run with the tests
+already named. Ideas 6 and 8 are Level 3 and are **proposal-only**.
+
+---
+
+### 2026-10-20 daily run #2 (OpenHands HQ) — new candidate ideas + primary-source correction
+
+**Primary-source correction (high confidence, fetched 2026-10-20, HTTP 200).** Two
+prioritized ideas from the earlier 2026-10-20 run rested on rich-result premises that
+Google has since retired:
+
+- **idea-2026-10-20-02 (`HowTo` schema)** — invalidated as a rich-result play. Google
+  removed the How-to structured-data documentation "as this rich result is no longer
+  shown in search results, on both desktop and mobile devices."
+  Source: https://developers.google.com/search/updates (final URL; the old
+  `.../structured-data/how-to` URL now redirects to `#how-to-deprecation`), fetched
+  2026-10-20, HTTP 200.
+- **IDEA-03 (`FAQPage` schema on method pages)** — same class of error: the FAQ rich
+  result "will no longer appear in Google Search starting May 7, 2026" and its
+  documentation was removed. Source:
+  https://developers.google.com/search/updates#removing-faq-rich-result, fetched
+  2026-10-20, HTTP 200.
+
+Neither is *harmful* (Google states such files "won't negatively or positively impact
+your visibility or rankings"), but neither should consume a change window as a
+rich-result win. Both are re-scoped to **machine-readable answer clarity only**.
+
+| ID | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-20-09 | Retire rich-result justification for `FAQPage`/`HowTo` in the KB and re-label them "AI-surface answer clarity only" | Knowledge-base / docs | 3 | 5 | 5 | 5 | L1 | candidate | Google removed both features' docs (fetched 2026-10-20, HTTP 200): https://developers.google.com/search/updates |
+| idea-2026-10-20-10 | Structured-data eligibility matrix: map every JSON-LD `@type` we ship to whether Google still supports a rich result for it | Website / docs | 3 | 5 | 4 | 5 | L1 | candidate | Two of the types we ship (`FAQPage`, `HowTo`) lost their rich results in 2026; no inventory exists to catch the next one (observed 2026-10-20). |
+| idea-2026-10-20-11 | Entity-consolidation follow-through for ISSUE-014: make the owner-controlled `base44` and Wix "Straight Flush" properties point to the canonical site | Business (owner-controlled) | 5 | 5 | 2 | 3 | ⛔ L3 | proposed | Two live duplicate entities verified 2026-10-20: `straight-flush-plumbing-7fb7cf71.base44.app` and `straightflushplumb8.wixsite.com`; owner confirmed ownership 2026-10-15. Plan: `ENTITY_CONSOLIDATION_PLAN.md`. |
+| idea-2026-10-20-12 | Keep FAQ *visible content* (not markup) on method/service pages, since AI answer engines read page text even though the Google rich result is gone | Website | 4 | 4 | 4 | 5 | L2 | candidate | Google's FAQ rich result is retired, but the deprecation concerns the *rich result*, not page content; AI surfaces read text (Google AI-features doc, verified 2026-10-11). |
+| idea-2026-10-20-13 | Competitor structured-data drift monitor: track which repeat competitors still ship now-deprecated types | Knowledge-base / docs | 2 | 4 | 4 | 5 | L1 | candidate | Evans Leak Detection still ships `FAQPage`+`Question`+`Answer` (https://evansleakdetection.com/, HTTP 200, 3 `ld+json` blocks, fetched 2026-10-20) — evidence of post-deprecation drift worth tracking, not copying. |
+
+#### Prioritization (2026-10-20 run #2)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-20-11 entity consolidation (ISSUE-014) | 5 | 5 | 2→High | No | ⛔ L3 | **proposed to owner** — highest impact, cannot self-execute |
+| 2 | idea-2026-10-20-09 retire dead rich-result justification | 3 | 5 | 5→Med | Yes | ✅ L1 | prioritized — zero-risk correctness |
+| 3 | idea-2026-10-20-10 schema eligibility matrix | 3 | 5 | 4→Med | Yes | ✅ L1 | prioritized — prevents repeating this error |
+| 4 | idea-2026-10-20-12 keep FAQ visible content | 4 | 4 | 4→Med | Yes | ✅ L2 | candidate |
+| 5 | idea-2026-10-20-13 competitor schema drift monitor | 2 | 4 | 4→Low | Yes | ✅ L1 | candidate — hygiene |
+
+**Corrections applied to earlier ranking (same day):** idea-2026-10-20-02 (`HowTo`)
+moves from *prioritized* to **deprioritized**; IDEA-03 (`FAQPage`) moves from rank 2
+to **deprioritized**. Idea 1 in the earlier table (non-commodity content pass) is
+unaffected and remains the top evidence-backed website action.
+
+---
+
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)
 
 | Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
 |---|---|---|---|---|---|---|---|
 | 1 | IDEA-01 leak-or-no-leak tool | High | Medium | Medium→High | Yes | ✅ L2 | prioritized |
-| 2 | IDEA-03 FAQPage schema on method pages | Medium | Medium-High | Low→High | Yes | ✅ L2 | prioritized |
+| 2 | IDEA-03 FAQPage schema on method pages | Medium | **Low** (rich result retired 2026-05-07) | Low→Low | Yes | ✅ L2 | **deprioritized 2026-10-20** |
 | 3 | IDEA-02 repipe decision page | Med-High | Medium | Medium→Med | Yes | ✅ L2 | prioritized |
 | 4 | IDEA-04 insurance walkthrough | Medium | Medium | Low-Med→Med | Yes | ✅ L2 (no promises) | candidate |
 | 5 | IDEA-05 cost-driver tool | Medium | Low-Med | Med→Med | Yes | ⛔ if priced | candidate |
@@ -374,6 +458,13 @@ No idea is actioned until it survives the risk gate and (for any HTML change) th
 ---
 
 ## Parked / rejected log
+
+### 2026-10-20
+
+- **idea-2026-10-20-07 page-weight budget** — kept `candidate`, not actioned: no
+  fetched evidence that page weight affects ranking for these queries. Recorded as
+  hygiene only, deliberately low impact.
+- No idea rejected this run.
 
 - **IDEA-06 owner-voice video** — parked 2026-10-12: blocked on owner-produced media.
 - No idea rejected this run.

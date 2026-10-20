@@ -5,6 +5,85 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-20 (OpenHands HQ, run #2) — Google retired the FAQ and HowTo rich results; two prioritized ideas corrected
+
+**Status:** Knowledge-base only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-20-openhands-hq` (additive to PR #73).
+
+**Change (Low risk, docs).** Fetched Google Search Central's structured-data
+changelog (https://developers.google.com/search/updates, HTTP 200) and confirmed two
+retirements that invalidate premises recorded earlier the same day:
+
+- FAQ rich result: "will no longer appear in Google Search starting May 7, 2026";
+  documentation removed.
+- How-to rich result: documentation removed "as this rich result is no longer shown
+  in search results, on both desktop and mobile devices." The old
+  `.../structured-data/how-to` URL now 302s to `#how-to-deprecation`.
+
+**Reason.** Two ideas prioritized this morning (`IDEA-03` FAQPage schema;
+`idea-2026-10-20-02` HowTo schema) were justified as rich-result wins. That
+justification is now false. Leaving it in place would send a future run to spend a
+change window on a retired feature.
+
+**Target.** `INNOVATION_IDEAS.md` (rankings corrected, 5 new ideas added) and
+`INDUSTRY_WATCH.md` (two dated primary-source entries).
+
+**Competitor insight.** Evans Leak Detection still ships `FAQPage`+`Question`+`Answer`
+(verified, HTTP 200, 3 `ld+json` blocks) — post-deprecation drift, worth monitoring,
+not worth copying.
+
+**Expected outcome.** No ranking change is expected from the markup itself. The gain
+is *decision quality*: the engine stops spending windows on dead rich results and
+re-aims at content differentiation.
+
+**Result.** Corrections applied; ideas re-ranked; `idea-2026-10-20-09` and
+`idea-2026-10-20-10` prioritized as zero-risk correctness work.
+
+**Keep/modify/revert:** **keep.**
+
+---
+
+## 2026-10-20 (OpenHands HQ) — sitemap ordering restored; competitor + official-guidance evidence captured
+
+**Status:** Generated metadata only (`sitemap.xml` ordering). **No website page,
+schema, claim or copy changed.** Branch `intelligence-hq/site-2026-10-20-sitemap-order`.
+
+**Change — sitemap ordering (Medium).** `check_sitemap_idempotent` was red at run
+start (`sitemap_dirty: true`). Root cause: the Dana Point case study had been
+hand-inserted out of the generator's canonical order, so `refresh_sitemap.py`
+rewrote the file on every clean tree — the same failure mode fixed on 2026-10-16.
+Proven to be ordering-only before changing anything: committed vs generated gave
+76 URLs both sides, `set` equal `True`, `order` equal `False`, nothing added or
+removed. Committed the generator's own output; a second refresh is byte-identical.
+A permanently-dirty sitemap is dangerous because it masks a genuine ISSUE-016
+lastmod regression.
+
+**Research.** 30 visibility rows (25 Tavily conventional-proxy, 5 AI-surface on the
+labelled Gemma fallback): **0 recommended / 0 mentioned / 0 cited / 30 absent**.
+Four competitor homepages verified by direct fetch (Repipe OC, Creative Repipe,
+Saddleback Plumbing, SJ Plumbing) — the standout finding is that
+`cities/laguna-hills.html` has **no repipe content** while `repipe-laguna-hills.com`
+ranks on an exact city+service title with HowTo schema. Captured Google's official
+AI-optimization guide, which states AI-feature visibility rests on ordinary Search
+fundamentals and explicitly calls AEO/GEO "hacks" ineffective.
+
+**Verification.** Full suite **352 tests OK**. `validate_knowledge_base.py` OK
+(135 HTML, sitemap 76 URLs, 0 missing / 0 extra). Double refresh byte-identical.
+
+**Target:** `sitemap.xml`; `growth-engine/INDUSTRY_WATCH.md`;
+`growth-engine/INNOVATION_IDEAS.md`; `growth-engine/data/*.jsonl`.
+
+**Competitor insight:** city+service exact-match titles with `HowTo` + `FAQPage`
+schema and heavy on-page city repetition are present on the repipe competitor; our
+Tier-1 city pages carry no repipe content at all.
+
+**Expected outcome:** `sitemap_idempotent` returns green from the next run, so a real
+lastmod regression becomes visible instead of hiding behind a permanently dirty file.
+
+**Result:** sitemap fix verified locally. Visibility flat (no movement).
+
+**Keep/modify/revert:** **keep.**
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**
