@@ -36,6 +36,7 @@ existing repository (an established static HTML site) rather than duplicating it
 | `EXPERIMENT_LOG.md` | Experiment records and outcomes |
 | `CHANGELOG.md` | Changes to this knowledge base |
 | `data/*.jsonl` | Raw observations (append-only) |
+| `citation_engine.py` | AI citation sweep planner, recorder and gap analyzer |
 | `reports/` | baseline / daily / weekly / monthly reports |
 | `proposals/` | Items needing owner approval |
 | `tests/` | Validation helpers |
@@ -50,14 +51,29 @@ existing repository (an established static HTML site) rather than duplicating it
 - Production changes go through branches/PRs; identity/pricing/contact/claims
   changes require explicit owner approval (Level 3).
 
-## Automation schedule (live — verified 2026-10-12/13)
+## Automation schedule (Claude — from 2026-10-20)
 
-`SFPL Intelligence HQ Daily 6 AM` — `0 6 * * *` (daily incl. weekends) ·
-`SFPL Intelligence HQ Weekly Review` — `0 6 * * 1` (Mondays). Both
-**America/Los_Angeles**, both ACTIVE, both connected to this repo. The legacy
-overlapping agents (Growth Engine A, Scout, Strategist, Sentinel) are **disabled**;
-the earlier A–E schedule in `proposals/2026-10-09-priority-actions.md` is
-superseded by HQ-D/HQ-W. Prompts live in `automations/`.
+Runs moved from OpenHands to **Claude scheduled tasks** on 2026-10-19 (owner
+decision; the OpenHands daily reported success while its AI tests failed):
+
+- `SFPL Claude Daily 6 AM` — every day 6 AM America/Los_Angeles → `automations/claude-daily.prompt.md`
+- `SFPL Claude Weekly Review` — Mondays 7 AM America/Los_Angeles → `automations/claude-weekly.prompt.md`
+- GitHub Action `Weekly site audits` — Mondays: Lighthouse CI + lychee broken links (`.github/workflows/site-audits.yml`)
+
+A run only counts as successful when its commit is confirmed on `origin/main`.
+The OpenHands prompts (`intelligence-hq-*.prompt.md`) are kept for history;
+**pause the OpenHands automations** so two agents don't write at once.
+
+### AI Citation Engine (`citation_engine.py`)
+
+AI assistants recommend local plumbers by copying from a small set of trusted
+sources. The engine records, per query × engine, whether Straight Flush was
+recommended and **which URLs the answer relied on**, then ranks every source that
+was cited when we lost into an owner/agent action (claim listing, get onto a
+listicle, answer a forum thread, out-answer a competitor or lead-gen page).
+Data: `data/citation_observations.jsonl` · actions: `data/citation_actions.json`
+(owner sets `"status": "done"`) · reports: `reports/citation-gaps/`. Owner's manual
+ChatGPT / Google AI / Copilot tests: drop the tracker CSV in `data/manual/`.
 
 ## Deployment (verified 2026-10-13)
 

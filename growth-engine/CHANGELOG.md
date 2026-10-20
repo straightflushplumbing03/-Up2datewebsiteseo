@@ -3,6 +3,18 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-19 — Claude takeover + AI Citation Engine
+
+- Added `citation_engine.py` (+ 9 unit tests): plans rotating service × city
+  recommendation queries, records AI answers with their cited sources, and ranks
+  every source cited when Straight Flush lost into an action.
+- First sweep (6 queries, `claude_web_search`): Straight Flush absent in 6/6; a
+  lead-gen network (`homeservice.ignitionlabs.com`) was cited in all 6.
+- Moved scheduled runs to Claude (`automations/claude-daily.prompt.md`,
+  `claude-weekly.prompt.md`); owner chose direct commits to `main` behind the test gate.
+- Added `.github/workflows/site-audits.yml` (Lighthouse CI + lychee, weekly).
+- Cloudflare managed robots.txt AI-bot block removed by the owner (verified live 2026-10-19).
+
 ## 2026-10-19 — Intelligence HQ re-created (daily incl. weekends) + reproducible deploy script
 
 The owner asked for the **Straight Flush Plumbing Intelligence HQ** to be present

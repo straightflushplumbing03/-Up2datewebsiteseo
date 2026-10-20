@@ -1,0 +1,62 @@
+name: Weekly site audits (Lighthouse + broken links)
+
+# Two of the most-used free, open-source site auditors on GitHub:
+#   - Lighthouse CI (GoogleChrome/lighthouse-ci) — performance, SEO, accessibility, best practices
+#   - lychee (lycheeverse/lychee) — fast broken-link checker
+# Runs against the LIVE site every Monday (before the Claude weekly review reads
+# the results) and on demand. Informational only: it never blocks a push.
+
+on:
+  schedule:
+    - cron: "0 12 * * 1"   # Mondays 12:00 UTC = 4–5 AM Pacific
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lighthouse on key pages
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://straightflushplumbingoc.com/
+            https://straightflushplumbingoc.com/services/leak-detection
+            https://straightflushplumbingoc.com/services/slab-leak-detection
+            https://straightflushplumbingoc.com/services/pex-repiping
+            https://straightflushplumbingoc.com/cities/laguna-niguel
+            https://straightflushplumbingoc.com/cities/mission-viejo
+          runs: 2
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  broken-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check every link on every page
+        uses: lycheeverse/lychee-action@v2
+        with:
+          lycheeVersion: v0.18.1
+          # Root-relative links resolve against the live site, so extensionless
+          # URLs are checked the way visitors (and crawlers) actually reach them.
+          args: >-
+            --base https://straightflushplumbingoc.com
+            --exclude-path growth-engine
+            --exclude-path ai-headquarters-blueprint
+            --exclude-path briefs
+            --exclude '^tel:' --exclude '^mailto:' --exclude '^sms:'
+            --accept '200..=299,403,429'
+            --max-concurrency 8 --max-retries 2
+            --no-progress
+            './**/*.html'
+          output: lychee-report.md
+          jobSummary: true
+          fail: false
+      - uses: actions/upload-artifact@v4
+        with:
+          name: broken-links-report
+          path: lychee-report.md
