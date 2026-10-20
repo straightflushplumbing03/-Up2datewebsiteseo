@@ -56,8 +56,8 @@ FAILS. It checks, without spending tokens on deciding what to check:
 | Check | What a FAIL means |
 |---|---|
 | `automations_enabled` | Not exactly one enabled content automation (a duplicate appeared, or the daily job vanished). |
-| `schedule_intact` | The live daily cron is no longer Mon/Wed/Fri 06:00 PT. |
-| `prompt_matches_repo` | The live prompt differs from `01-MASTER-AGENT-PROMPT.md` — the running instructions drifted from the reviewed ones. |
+| `schedule_intact` | The live daily cron is no longer 06:00 PT every day. |
+| `prompt_matches_repo` | The live prompt differs from `intelligence-hq-daily.prompt.md` — the running instructions drifted from the reviewed ones. |
 | `ai_visibility_blind` | **The business goal is unmeasured**: no AI-platform rows exist (or they are stale). Everything so far is a conventional-search proxy, which says nothing about AI recommendation. This FAIL is the most important one to escalate. |
 | `self_merges` | A PR was merged by the account that opened it — the review gate was bypassed. |
 | `open_pr_backlog` | More open PRs than the threshold — the owner has a backlog to clear. |

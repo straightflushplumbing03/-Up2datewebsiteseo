@@ -17,10 +17,14 @@ Laguna Niguel, owner Lance Badgwell.
 ## Step 0 — load durable memory
 ```bash
 REPO=/workspace/project/-Up2datewebsiteseo
+export GITHUB_TOKEN="${GITHUB_TOKEN:-${github_token:-${GITHUB_PERSONAL_ACCESS_TOKEN}}}"
 [ -d "$REPO/.git" ] || \
   git clone "https://${GITHUB_TOKEN}@github.com/straightflushplumbing03/-Up2datewebsiteseo.git" "$REPO"
 cd "$REPO" && git fetch origin main && git checkout main && git reset --hard origin/main
 ```
+Never print or commit the token. The measurements the weekly review consumes were
+written by the daily run's `scripts/daily_measure.py` pre-stage — read
+`growth-engine/data/daily_context.json` rather than re-deriving them.
 Then read `growth-engine/README.md` and every file it lists, plus **all** daily
 reports since the last weekly review, `growth-engine/INNOVATION_IDEAS.md`,
 `EXPERIMENT_LOG.md`, `data/content_experiments.jsonl`, and

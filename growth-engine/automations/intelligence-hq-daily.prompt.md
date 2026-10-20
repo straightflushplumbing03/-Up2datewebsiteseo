@@ -29,6 +29,10 @@ your memory. Ensure it is present, then work inside it:
 
 ```bash
 REPO=/workspace/project/-Up2datewebsiteseo
+# GITHUB_TOKEN is the canonical name the rest of this repo uses. If the sandbox
+# only injected the GitHub provider secret under its own name, alias it — a
+# missing token is a BLOCKED run, never a silent skip.
+export GITHUB_TOKEN="${GITHUB_TOKEN:-${github_token:-${GITHUB_PERSONAL_ACCESS_TOKEN}}}"
 [ -d "$REPO/.git" ] || \
   git clone "https://${GITHUB_TOKEN}@github.com/straightflushplumbing03/-Up2datewebsiteseo.git" "$REPO"
 cd "$REPO"
@@ -38,6 +42,48 @@ git reset --hard origin/main   # always start from the latest committed knowledg
 ```
 
 Never print or commit the token. If the clone/fetch fails, report it clearly and stop.
+
+**Secret names matter.** OpenHands injects a registered secret only when the
+command text names it. Two names this engine depends on are non-standard, so
+always name them explicitly in the command that needs them:
+
+- Tavily (conventional-search proxy): **`Tavily_api_key`** — not `TAVILY_API_KEY`.
+- Gemini (AI-surface measurement): **`GEMINI_API_KEY`**.
+
+If a sweep reports BLOCKED, first re-run naming the secret (`export
+Tavily_api_key="${Tavily_api_key}"` / `export GEMINI_API_KEY="${GEMINI_API_KEY}"`)
+before recording it as unavailable. A registered secret that was not injected
+because the command did not name it is **not** a missing integration.
+
+## Step 0b — deterministic measurement pre-stage (run this before researching)
+
+The measurements the supervisor audits (`ai_platform` rows, the Tavily sweep,
+crawler access, entity consistency, sitemap idempotency, SEO audit) are produced
+by one deterministic script, **not** by hand. Run it first so the evidence exists
+before you write any prose. Name both non-standard secrets or the sweep reports
+BLOCKED for the wrong reason:
+
+```bash
+cd /workspace/project/-Up2datewebsiteseo
+export GEMINI_API_KEY="${GEMINI_API_KEY}"
+export Tavily_api_key="${Tavily_api_key}"
+python3 scripts/daily_measure.py            # writes growth-engine/data/daily_context.json
+```
+
+`scripts/daily_measure.py` appends `test_type: "ai_platform"` rows to
+`growth-engine/data/ai_visibility_history.jsonl` and conventional-proxy rows to the
+same file, plus `technical_health_history.jsonl` and
+`entity_consistency_history.jsonl`. **A check marked `BLOCKED` is a missing
+integration, never a zero** — copy the blocker verbatim into the report.
+
+Then read `growth-engine/data/daily_context.json`: its `checks[]` array is the
+authoritative result of step 1 (technical health) and step 5 (our own AI-surface
+and conventional-search measurement). Do not re-run those checks by hand, and do
+not restate a BLOCKED check as a pass.
+
+> The Gemini call is **Search-grounded**; a refused grounding call falls through to
+> the Gemma fallback (`engine: "gemma"`, `fallback_from` recorded). Both are genuine
+> AI-answer-engine observations. Only a total refusal (`exit 3`) is `inconclusive`.
 
 ## Ground rules (non-negotiable)
 
@@ -91,11 +137,13 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
 > the report's "platforms tested / not tested" line. A sweep that returns results
 > from any one provider is a success; the goal is *evidence*, not a specific engine.
 
-1. **Technical health.** Run `bash growth-engine/tests/crawler_access_check.sh`.
-   Append one JSON object to `growth-engine/data/technical_health_history.jsonl`
-   (`ts`, `check`, `target`, `result`, `detail`, `severity`). If the homepage or a
-   key path is not 200 or returns `cf-mitigated`, mark severity `critical`, put an
-   URGENT marker at the top of the report, and note ISSUE-001 regression.
+1. **Technical health.** Already measured by Step 0b — read the `crawler_access`
+   check in `growth-engine/data/daily_context.json` (the pre-stage runs
+   `crawler_access_check.sh` and appends to
+   `growth-engine/data/technical_health_history.jsonl`). Re-run the shell check by
+   hand **only** if Step 0b was BLOCKED. If the homepage or a key path is not 200
+   or returns `cf-mitigated`, mark severity `critical`, put an URGENT marker at the
+   top of the report, and note ISSUE-001 regression.
 
 2. **Competitor research (verified service areas only).** Select **15–25** queries
    from `KEYWORD_UNIVERSE.md`, weighted to commercially valuable, historically weak,
@@ -132,8 +180,12 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
    Never repeat a rejected/parked idea without new evidence. An idea with no fetched,
    cited observation stays `candidate` and is not actioned.
 
-5. **Measure our own performance.** Before searching for metrics, check whether
-   credentials exist: look for `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`,
+5. **Measure our own performance.** The **AI-surface and conventional-search**
+   sweep is already done by Step 0b — read the `ai_visibility_sweep` and
+   `visibility_sweep` entries in `growth-engine/data/daily_context.json` and their
+   rows in `ai_visibility_history.jsonl`. Do not re-run them by hand.
+   For **first-party** metrics, check whether credentials exist: look for
+   `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`,
    and `GOOGLE_BUSINESS_PROFILE_*` secrets in the environment, and read
    `INTEGRATION_STATUS.md`. If **Google Search Console** and/or **Google Analytics**
    access is connected, pull the relevant metrics (impressions, clicks, queries,
