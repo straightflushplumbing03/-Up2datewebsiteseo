@@ -39,10 +39,13 @@ request a review, and leave the merge to the owner).
 
 ## Steps
 
-> **Time budget (mandatory).** Hard wall-clock timeout. Budget ~40% on reading +
-> analysis and ~60% on writing and committing. Do not crawl long blog loops or
-> test multiple search engines. If you are near the budget, write the review with
-> the evidence you have and commit it — a committed short review beats a lost rich one.
+> **Time budget (mandatory).** The run is killed at a hard wall-clock ceiling of
+> roughly **1920 s (~32 min)**. Budget ~40% on reading + analysis and ~60% on
+> writing and committing. Do not crawl long blog loops or test multiple search
+> engines. **Commit and push a checkpoint early** (a skeleton review plus whatever
+> `.jsonl` rows exist) on the run branch, then keep working on the same branch —
+> a committed short review beats a lost rich one. Never end a run with uncommitted
+> work, and do not re-run the full test suite or re-derive numbers after the push.
 
 1. **Evaluate progress.** What shipped (PR refs), what was researched, what was
    measured — separated. Note where the daily loop is stalling.

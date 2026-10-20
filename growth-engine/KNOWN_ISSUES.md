@@ -117,6 +117,24 @@ Each issue: evidence, impact, fix, status, approval level.
 - **Follow-up:** confirm the hardened prompt completes within budget (second
   dispatch). If it still overruns, reduce the query sample further (10–15) and move
   industry research to a separate weekly job.
+- **Re-confirmed 2026-10-20 (still open):** the mitigation did **not** hold. The
+  scheduled run `b6ac6a4e` (2026-10-19T16:18:59Z → 16:51:47Z, **1968 s**) and the
+  manual run `052fadaa` (2026-10-20T16:42:33Z → 17:14:37Z, **1924 s**) both consumed
+  the whole ~1920 s ceiling and were classified `budget_overrun`. Unlike the original
+  2026-10-12 failure, both **did** push durable output before the kill (PR #73 daily
+  report + knowledge, PR #74 sitemap ordering), so the loss was the last few minutes
+  of verification rather than the whole run. The residual defect is that the agent
+  re-verified the push (full test suite, remote branch/PR head SHA checks) *after*
+  committing, which is unbounded.
+- **Fix applied 2026-10-20 (commit-early checkpointing — the already-approved
+  IDEA-2026-10-12-13, never previously implemented):** the daily prompt now carries
+  explicit wall-clock deadlines (checkpoint commit pushed by ~10 min; report +
+  knowledge committed by ~27 min; PR opened by ~30 min), a mandatory **checkpoint
+  commit** of a skeleton report + existing `.jsonl` rows by ~10 minutes with later
+  commits on the same branch, **bounded post-push verification** (branch existence +
+  PR head SHA only — no test re-run, no page re-fetch), and a reduced research scope
+  (**10–15** queries, ~20 fetches). The weekly prompt got the same ceiling,
+  checkpoint, and bounded-verification note.
 - **Approval:** Level 2 (automation prompt config).
 
 ---
