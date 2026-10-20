@@ -614,6 +614,6 @@ footer.site-footer{ background:var(--ink); color:var(--muted-on-ink); padding:64
 .health-back{ background:none; border:0; color:var(--muted); font-size:0.85rem; text-decoration:underline; cursor:pointer; margin-top:16px; }
 
 /* Footer: full 21-city service-area list, compact two-column grid */
-.footer-col ul.footer-cities, ul.footer-cities{ display:grid; grid-template-columns:1fr 1fr; gap:6px 14px; }
+.footer-col ul.footer-cities, ul.footer-cities{ display:grid; grid-template-columns:repeat(auto-fill,minmax(125px,1fr)); gap:6px 14px; }
 ul.footer-cities a{ font-size:0.84rem; }
 ul.footer-cities .footer-cities-all{ grid-column:1 / -1; margin-top:6px; }
