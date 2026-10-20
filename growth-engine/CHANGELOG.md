@@ -3,6 +3,29 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-20 — GSC measurement runbook; Generative AI performance report added to P-002
+
+**Added:**
+- `growth-engine/runbooks/gsc-measurement-runbook.md` — the day-one procedure to
+  execute the moment Google Search Console credentials exist (P-002), so the
+  first connected run measures instead of exploring: credential preconditions,
+  the ordered checklist, coverage/query/page joins against
+  `KEYWORD_UNIVERSE.md` and the 75-URL sitemap, and the recording rules
+  (`BLOCKED` vs `UNMEASURED`, 2-3 day data lag).
+- `growth-engine/runbooks/` registered in `growth-engine/README.md`.
+
+**Updated:**
+- `growth-engine/proposals/2026-10-09-priority-actions.md` — the P-002 ask now
+  names the **Generative AI performance report** in Search Console (Google's own
+  measurement surface for generative-AI features) and points at the new runbook.
+- `growth-engine/INDUSTRY_WATCH.md` — dated 2026-10-20 entry recording the
+  re-verified primary source (`ai-optimization-guide`, fetched, HTTP 200,
+  192,240 bytes): the in-console AI report, the third-party-tooling warning, and
+  the restated `llms.txt` no-op finding.
+
+**No website page, schema, claim, or copy changed.** Documentation and
+integration-request text only.
+
 ## 2026-10-19 — Intelligence HQ re-created (daily incl. weekends) + reproducible deploy script
 
 The owner asked for the **Straight Flush Plumbing Intelligence HQ** to be present

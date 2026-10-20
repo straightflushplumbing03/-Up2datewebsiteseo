@@ -90,7 +90,11 @@ OpenHands Cloud secret names (add via Settings → Secrets, then re-run the dail
 - `PERPLEXITY_API_KEY` (optional but the cheapest real AI-answer signal)
 
 **Ask:** Provide access (or exports) for:
-- **Google Search Console** (property verified for the domain).
+- **Google Search Console** (property verified for the domain) — including the
+  **Generative AI performance report**, Google's own measurement surface for how
+  content performs in generative AI features on Search and Discover
+  (`https://developers.google.com/search/docs/fundamentals/ai-optimization-guide`,
+  fetched 2026-10-20, HTTP 200).
 - **Google Analytics 4** (if present).
 - **Google Business Profile** performance.
 - Optionally a **Perplexity API key** for real AI-answer visibility in-automation.
@@ -98,6 +102,10 @@ OpenHands Cloud secret names (add via Settings → Secrets, then re-run the dail
 **Why:** Without these, organic/indexing/local-pack performance cannot be
 measured, and the growth loop cannot verify its own changes. Every daily run
 currently records these as `unverified` (never as zero).
+
+**Runbook:** `growth-engine/runbooks/gsc-measurement-runbook.md` — the day-one
+checklist to execute the moment credentials exist, so the first connected run
+measures instead of exploring.
 
 ---
 
