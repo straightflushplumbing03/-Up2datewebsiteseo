@@ -230,6 +230,95 @@ New entries are prepended directly under this line, newest first, using:
   **Confidence:** high (primary source).
 - **Proposed action:** none new; supports idea-2026-10-12-02 (rating hygiene).
 
+## 2026-10-20 — Google publishes an official "Optimizing for generative AI search" guide (primary source)
+
+- **What changed / observed:** Google Search Central now ships a first-party guide,
+  *"Optimizing your website for generative AI features on Google Search"*, at
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (fetched 2026-10-20, HTTP 200; `<title>` "Google's Guide to Optimizing for
+  Generative AI Features on Google Search"). Verbatim points captured this run:
+  - *"Is SEO still relevant for generative AI search? In short, yes! The best
+    practices for SEO continue to be relevant because our generative AI features on
+    Google Search are rooted in our core Search ranking and quality systems."*
+  - *"Create valuable, non-commodity content for your audience"* — *"Creating
+    content that people find unique, compelling, and useful will likely influence
+    your website's presence in generative AI search in the long run more than any of
+    the other suggestions in this guide."*
+  - *"Build and maintain a clear technical structure"* — existing technical SEO
+    best practices continue to be worthwhile.
+  - *"Optimize your local business and ecommerce details"* — *"Where appropriate,
+    generative AI responses can include ... information about local businesses.
+    Using products like Merchant Center ... and Google Business Profiles can help
+    your products and services to be visible in both AI responses and other Google
+    Search results."*
+  - A **"Mythbusting generative AI search: what you don't need to do"** section:
+    *"While terms like Answer Engine Optimization (AEO) or Generative Engine
+    Optimization (GEO) are common online, many suggested 'hacks' aren't effective or
+    supported by how Google Search actually works."*
+  - *"To measure how your content is performing in generative AI features on Google
+    Search and Discover, use the Generative AI performance report in Search
+    Console."*
+  - An **agentic experiences** section describing browser agents that *"may access
+    your website to gather the data they need to complete these tasks, such as
+    analyzing visual renderings (like screenshots), inspecting the DOM structure,
+    and interpreting the accessibility tree"*, pointing to
+    https://web.dev/articles/ai-agent-site-ux and mentioning *"Protocols like
+    Universal Commerce Protocol (UCP)"* as emerging.
+- **Why it matters to Straight Flush:** This is the first *official* Google statement
+  that AI-feature visibility is gated on ordinary Search fundamentals plus Google
+  Business Profile / local business details — i.e. it directly supports the repo's
+  diagnose-first, no-hack strategy and *argues against* buying AEO/GEO "hacks". It
+  also names the **Generative AI performance report in Search Console** as the
+  measurement surface, which is the same access blocked by P-002 (no GSC
+  connection) — so our AI-surface numbers stay `unverified` for first-party data.
+  The local-business sentence is additional evidence for prioritising Google
+  Business Profile completeness (a Level-3/owner action, so proposal-only).
+- **Source(s):** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (fetched 2026-10-20, HTTP 200) · https://developers.google.com/search/docs/appearance/establish-business-details
+  (fetched 2026-10-20, HTTP 200) · https://web.dev/articles/ai-agent-site-ux (cited by
+  the guide; **not** fetched this run) · **Confidence:** high (primary source, fetched;
+  quotes verbatim).
+- **Proposed action (if any):** (1) keep FAQ/answer content for humans and AI answers
+  but never describe it as an AEO "hack"; (2) add "GBP completeness" to the
+  proposal queue for owner action (Level 3 — we cannot edit the profile);
+  (3) treat the Generative AI performance report as the *first* thing to read when
+  P-002 is approved. No code change warranted this run.
+
+## 2026-10-20 — Google Search Central blog: curated "learning paths" (SEO fundamentals / technical SEO)
+
+- **What changed / observed:** The most recent Search Central blog post in the index
+  fetched this run (https://developers.google.com/search/blog, HTTP 200) is
+  *"New learning paths: curated YouTube playlists for Search fundamentals and
+  Technical SEO"* — https://developers.google.com/search/blog/2026/10/seo-learning-paths
+  (fetched 2026-10-20, HTTP 200). It is a **training-resource** announcement, not a
+  ranking or policy change.
+- **Why it matters to Straight Flush:** No ranking impact. Recorded so future runs do
+  not mistake it for a substantive algorithm/policy update. The genuinely relevant
+  recent items in the same index remain *"update-site-reputation-policy"* (2026-08)
+  and *"gen-ai-performance-reports"* (2026-06) — both already tracked.
+- **Source(s):** https://developers.google.com/search/blog/2026/10/seo-learning-paths
+  · https://developers.google.com/search/blog · **Confidence:** high (primary source,
+  fetched; classified as informational).
+
+## 2026-10-20 — Trade-press observation: tankless/heat-pump water-heater product flow continues
+
+- **What changed / observed:** The PHCPPros home page (https://www.phcppros.com/,
+  fetched 2026-10-20, HTTP 200) leads with product and technical items including a
+  condensing combi-boiler, an electric tankless water heater, a residential ducted
+  ventilation unit, and video explainers on domestic pressure boosting and
+  air-to-water heat-pump efficiency. Observed as **topic flow only** — no ranking
+  claim, no statistic taken from it.
+- **Why it matters to Straight Flush:** Consistent with the standing, evidence-backed
+  demand signal that Orange County homeowners ask about water-heater *type* choices
+  (tank vs tankless) and pressure issues — both already present in
+  `KEYWORD_UNIVERSE.md`. Supports keeping water-heater and water-pressure content
+  current; it does **not** justify any new product claim (that would be Level 3).
+- **Source(s):** https://www.phcppros.com/ (fetched 2026-10-20, HTTP 200).
+  **Confidence:** low (trade-press home page, editorial flow only — not a verified
+  demand measurement).
+
+---
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |

@@ -4,6 +4,23 @@ Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
 OpenHands Cloud environment; a check is only marked ✅ after an actual successful
 call. Prior verification 2026-10-09.
 
+> **Re-verified 2026-10-20 (OpenHands Intelligence HQ daily, 16:43Z).**
+> Crawler access ✅ **PASS** — `PerplexityBot /` 200, `Applebot /` 200,
+> `curl /robots.txt` 200, `curl /sitemap.xml` 200, `curl /llms.txt` 200
+> (`crawler_access_check.sh` exit 0). Knowledge base ✅ OK (135 HTML files);
+> `seo_audit.py` ✅ OK. Conventional-search proxy ✅ **Tavily** (25 rows) and
+> AI-surface ✅ **Gemini → Gemma fallback** (5 rows, labelled `engine: gemma`).
+> **Google Search Console, GA4, and GBP remain NOT CONNECTED** ❌ — no
+> `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`, or
+> `GOOGLE_BUSINESS_PROFILE_*` secret exists in this sandbox. Blocker unchanged:
+> **P-002**. Their metrics are `unverified` — never reported as 0.
+> `entity_consistency` ❌ exit 1 (two owned duplicate hosts still HTTP 200,
+> ISSUE-014/ISSUE-018 — external property, owner action). `sitemap_idempotent`
+> was ❌ `sitemap_dirty: true` at run start; **fixed this run** by committing the
+> generator's canonical ordering (URL/lastmod sets proven identical).
+> Note: Brave/DuckDuckGo were **not** exercised this run — the deterministic
+> pre-stage swept via Tavily, which per the search-provider policy is a success.
+
 > **Re-verified 2026-10-19 (Intelligence HQ re-creation).** `GET /api/automation/v1`
 > returned 6 automations. The generation-1 HQ pair no longer exists, so both were
 > re-created from the canonical prompts via

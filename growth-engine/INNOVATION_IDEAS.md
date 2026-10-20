@@ -354,6 +354,43 @@ to HQ-D only for now.
 
 ---
 
+### 2026-10-20 daily run — new candidate ideas (evidence-backed)
+
+Every idea below cites a fetched observation from this run. Feature presence in a
+competitor is **verified**; that it *caused* a ranking remains a **hypothesis**.
+
+| ID | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-20-01 | Add a "repipe" section + service link to Tier-1 city pages (Laguna Hills, Laguna Niguel first) | Website | 4 | 4 | 4 | 5 | L2 | candidate | `cities/laguna-hills.html` contains **no** repipe content (verified 2026-10-20: `has repipe section: False`, 1,154 words), while `repipe-laguna-hills.com` ranks with an exact city+service `<title>` and 225 "Laguna" mentions. Source: fetched 2026-10-20. |
+| idea-2026-10-20-02 | Add `HowTo` / `HowToStep` JSON-LD to the PEX-repiping and leak-detection method pages | Website | 3 | 4 | 4 | 5 | L2 | candidate | `repipe-laguna-hills.com` emits FAQPage **and** HowTo/HowToStep/HowToSupply/HowToTool (verified 2026-10-20). Our `services/pex-repiping.html` emits Service/FAQPage/Answer but **no** HowTo (verified 2026-10-20). |
+| idea-2026-10-20-03 | "Non-commodity content" differentiation pass on city pages (unique local detail, not template permutation) | Website | 5 | 5 | 2 | 5 | L2 | candidate | Google's official AI-optimization guide states unique/compelling content "will likely influence your website's presence in generative AI search ... more than any of the other suggestions" (fetched 2026-10-20, HTTP 200). |
+| idea-2026-10-20-04 | Agent-readability pass: ensure critical content is in the DOM/semantic HTML and labelled for the accessibility tree | Website | 3 | 4 | 3 | 5 | L2 | candidate | Google's guide's agentic-experiences section says browser agents read "screenshots, the DOM structure, and the accessibility tree" (fetched 2026-10-20). |
+| idea-2026-10-20-05 | Stop describing FAQ/answer content as an AEO "hack"; record the Google mythbusting statement as the framing rule | Knowledge-base / docs | 3 | 5 | 5 | 5 | L1 | candidate | Google's guide "Mythbusting generative AI search" says many AEO/GEO "hacks" "aren't effective or supported by how Google Search actually works" (fetched 2026-10-20). |
+| idea-2026-10-20-06 | Owner proposal: complete/verify the Google Business Profile (categories, services, hours, photos) | Business (Level 3 — propose only) | 5 | 5 | 2 | 3 | ⛔ L3 | proposed | Google's guide: using Google Business Profiles "can help your products and services to be visible in both AI responses and other Google Search results" (fetched 2026-10-20). We cannot edit the profile. |
+| idea-2026-10-20-07 | Page-weight / performance budget on heavy pages | Website | 2 | 3 | 4 | 5 | L2 | candidate | `creativerepipe.com` homepage is 325 KB of HTML and `sjplumbingoc.com` 197 KB (verified 2026-10-20). Not proven to matter for ranking — recorded as a hygiene candidate, low impact. |
+| idea-2026-10-20-08 | Directory/citation presence review (Yelp dominates conventional results) | Business (Level 3 — propose only) | 4 | 4 | 3 | 3 | ⛔ L3 | candidate | yelp.com appeared in **33** of 30 tracked rows' `top_results` today, by far the most frequent domain (computed from `data/ai_visibility_history.jsonl`, 2026-10-20). Reviews/profiles are owner-controlled. |
+
+#### Prioritization (2026-10-20)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-20-03 non-commodity content pass | 5 | 5 | 2→High | Yes | ✅ L2 | prioritized — best evidence-to-impact, but slow |
+| 2 | idea-2026-10-20-01 repipe section on Tier-1 city pages | 4 | 4 | 4→High | Yes | ✅ L2 | prioritized — clearest demonstrated gap |
+| 3 | idea-2026-10-20-02 HowTo schema on method pages | 3 | 4 | 4→Med | Yes | ✅ L2 | prioritized — cheap, mirrors a verified competitor feature |
+| 4 | idea-2026-10-20-05 AEO-hack framing rule (docs) | 3 | 5 | 5→Med | Yes | ✅ L1 | prioritized — zero-risk documentation correctness |
+| 5 | idea-2026-10-20-04 agent-readability pass | 3 | 4 | 3→Med | Yes | ✅ L2 | candidate |
+| 6 | idea-2026-10-20-06 Google Business Profile completeness | 5 | 5 | 2→High | No | ⛔ L3 | proposed to owner (cannot execute) |
+| 7 | idea-2026-10-20-08 directory/citation review | 4 | 4 | 3→Med | No | ⛔ L3 | candidate — needs owner |
+| 8 | idea-2026-10-20-07 page-weight budget | 2 | 3 | 4→Low | Yes | ✅ L2 | candidate — no evidence it affects ranking |
+
+**Selection rule applied:** ranked by evidence strength first, then impact, then
+effort-to-value — not by ease of generation. Ideas 1–4 are L1/L2 and would clear the
+risk gate, but **none was actioned this run** because the run budget went to
+measurement and reconciliation; they are queued for the next run with the tests
+already named. Ideas 6 and 8 are Level 3 and are **proposal-only**.
+
+---
+
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)
 
 | Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
@@ -374,6 +411,13 @@ No idea is actioned until it survives the risk gate and (for any HTML change) th
 ---
 
 ## Parked / rejected log
+
+### 2026-10-20
+
+- **idea-2026-10-20-07 page-weight budget** — kept `candidate`, not actioned: no
+  fetched evidence that page weight affects ranking for these queries. Recorded as
+  hygiene only, deliberately low impact.
+- No idea rejected this run.
 
 - **IDEA-06 owner-voice video** — parked 2026-10-12: blocked on owner-produced media.
 - No idea rejected this run.
