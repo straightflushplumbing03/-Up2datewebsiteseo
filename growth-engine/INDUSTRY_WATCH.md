@@ -29,7 +29,7 @@ cannot be traced to a fetched source, it is not written down.
   Google Search — "Doing so will neither harm nor help your site's visibility or
   rankings in Google Search, as Google Search ignores them."
 - **Source(s):** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
-  (fetched 2026-10-20, HTTP 200, 192,240 bytes).
+  (fetched 2026-10-20, HTTP 200, ~192 KB; all three quotes re-verified verbatim against the live page).
   **Confidence:** high (primary source, fetched).
 - **Proposed action:** the GSC ask in P-002 now names the Generative AI
   performance report; day-one procedure written to
