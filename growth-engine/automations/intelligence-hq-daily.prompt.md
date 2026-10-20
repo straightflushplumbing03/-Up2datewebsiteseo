@@ -29,6 +29,10 @@ your memory. Ensure it is present, then work inside it:
 
 ```bash
 REPO=/workspace/project/-Up2datewebsiteseo
+# GITHUB_TOKEN is the canonical name the rest of this repo uses. If the sandbox
+# only injected the GitHub provider secret under its own name, alias it — a
+# missing token is a BLOCKED run, never a silent skip.
+export GITHUB_TOKEN="${GITHUB_TOKEN:-${github_token:-${GITHUB_PERSONAL_ACCESS_TOKEN}}}"
 [ -d "$REPO/.git" ] || \
   git clone "https://${GITHUB_TOKEN}@github.com/straightflushplumbing03/-Up2datewebsiteseo.git" "$REPO"
 cd "$REPO"
@@ -38,6 +42,59 @@ git reset --hard origin/main   # always start from the latest committed knowledg
 ```
 
 Never print or commit the token. If the clone/fetch fails, report it clearly and stop.
+
+**Secret names matter.** OpenHands injects a registered secret only when the
+command text names it. Two names this engine depends on are non-standard, so
+always name them explicitly in the command that needs them:
+
+- Tavily (conventional-search proxy): **`Tavily_api_key`** — not `TAVILY_API_KEY`.
+- Gemini (AI-surface measurement): **`GEMINI_API_KEY`**.
+
+If a sweep reports BLOCKED, first re-run naming the secret (`export
+Tavily_api_key="${Tavily_api_key}"` / `export GEMINI_API_KEY="${GEMINI_API_KEY}"`)
+before recording it as unavailable. A registered secret that was not injected
+because the command did not name it is **not** a missing integration.
+
+## Step 0b — deterministic measurement pre-stage (run this before researching)
+
+The measurements the supervisor audits (`ai_platform` rows, the Tavily sweep,
+crawler access, entity consistency, sitemap idempotency, SEO audit) are produced
+by one deterministic script, **not** by hand. Run it first so the evidence exists
+before you write any prose. Name both non-standard secrets or the sweep reports
+BLOCKED for the wrong reason:
+
+```bash
+cd /workspace/project/-Up2datewebsiteseo
+export GEMINI_API_KEY="${GEMINI_API_KEY}"
+export Tavily_api_key="${Tavily_api_key}"
+python3 scripts/daily_measure.py            # writes growth-engine/data/daily_context.json
+```
+
+The pre-stage is **bounded on purpose**: it caps both network sweeps together at
+`--network-budget` seconds (default **600 s**, Tavily 60% / Gemini 40%) and runs
+**12 Tavily + 3 Gemini** queries by default — measured at ~145 s. This is what
+keeps step 0b inside the 0–3 min window; the earlier unbounded defaults
+(40 + 5 queries) consumed the entire ~1920 s wall-clock and killed three runs
+before research began (ISSUE-033). **Do not raise the defaults to "get more
+data"** — a truncated day recorded as BLOCKED is worth more than a run that never
+commits. A sweep stopped by the budget is recorded `BLOCKED (partial)`, never
+zero; `daily_context.json` carries `network_budget_s` so the report can cite the
+ceiling it ran under.
+
+`scripts/daily_measure.py` appends `test_type: "ai_platform"` rows to
+`growth-engine/data/ai_visibility_history.jsonl` and conventional-proxy rows to the
+same file, plus `technical_health_history.jsonl` and
+`entity_consistency_history.jsonl`. **A check marked `BLOCKED` is a missing
+integration, never a zero** — copy the blocker verbatim into the report.
+
+Then read `growth-engine/data/daily_context.json`: its `checks[]` array is the
+authoritative result of step 1 (technical health) and step 5 (our own AI-surface
+and conventional-search measurement). Do not re-run those checks by hand, and do
+not restate a BLOCKED check as a pass.
+
+> The Gemini call is **Search-grounded**; a refused grounding call falls through to
+> the Gemma fallback (`engine: "gemma"`, `fallback_from` recorded). Both are genuine
+> AI-answer-engine observations. Only a total refusal (`exit 3`) is `inconclusive`.
 
 ## Ground rules (non-negotiable)
 
@@ -70,13 +127,39 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
 
 ## Steps
 
-> **Time budget (mandatory).** The run has a hard wall-clock timeout. A run that
-> researches forever and never commits is a **failed run**. Budget roughly: 40% of
-> the time on research (steps 1–5), 60% on writing, committing, and opening the PR
-> (steps 6–8). Check elapsed time as you go. **As soon as you are near the budget,
-> stop researching, write the report with the evidence you have, and commit it.**
-> A short report that is durably committed is always better than a rich one that is
-> lost. Use **Brave only** as the primary search source; try at most **one**
+> **Time budget (mandatory — the run is killed at ~32 minutes).** OpenHands enforces
+> a hard wall-clock ceiling of roughly **1920 s (~32 min)**; a run killed at the
+> ceiling produces nothing durable and is recorded `budget_overrun`. A run that
+> researches forever and never commits is a **failed run**. Record the epoch time of
+> your first command (`date -u +%s`) and compare `date -u +%s` against it as you go.
+> Hold to these deadlines — they are the whole point of this section:
+>
+> | Elapsed | Deadline |
+> |---|---|
+> | 0–3 min | Step 0 (clone) + Step 0b (pre-stage measurement) |
+> | **≤ 10 min** | **Checkpoint commit pushed** — do not pass this uncommitted |
+> | ≤ 22 min | Research finished (steps 2–4); begin writing the report |
+> | ≤ 27 min | Report + knowledge committed; branch pushed |
+> | ≤ 30 min | PR opened; stop. Reserve the last minutes for nothing else |
+>
+> **Checkpoint early, amend later (mandatory).** By ~10 minutes, commit and push a
+> *minimal* report skeleton plus whatever `.jsonl` rows already exist, on the run
+> branch, even if research is unfinished. A partial commit is recoverable; a run
+> killed with an unpushed tree is not. Keep working on the **same** branch and
+> commit again as evidence lands — the final state is what the PR shows. Never end a
+> run with uncommitted work.
+>
+> **Bounded verification (this is what killed the previous two runs).** After the PR
+> is opened, verify **only** that the branch exists on the remote and the PR head SHA
+> equals your local `HEAD` (one `git ls-remote`, one `GET` on the PR). Do **not**
+> re-run the full test suite, re-fetch competitor pages, or re-derive numbers after
+> the push. One confirmation, then end the run.
+>
+> **Research scope (chosen to fit the budget).** Run **10–15** queries, not 15–25,
+> and cap total external page fetches at ~20. A short report that is durably
+> committed always beats a rich one that is lost.
+>
+> Use **Brave only** as the primary search source; try at most **one**
 > alternate (Bing *or* DuckDuckGo HTML). Do **not** use headless browsers, do not
 > test Yahoo/Marginalia/RSS/other engines, and do not crawl long blog loops — if
 > Brave rate-limits (HTTP 429), stop searching and proceed.
@@ -91,16 +174,19 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
 > the report's "platforms tested / not tested" line. A sweep that returns results
 > from any one provider is a success; the goal is *evidence*, not a specific engine.
 
-1. **Technical health.** Run `bash growth-engine/tests/crawler_access_check.sh`.
-   Append one JSON object to `growth-engine/data/technical_health_history.jsonl`
-   (`ts`, `check`, `target`, `result`, `detail`, `severity`). If the homepage or a
-   key path is not 200 or returns `cf-mitigated`, mark severity `critical`, put an
-   URGENT marker at the top of the report, and note ISSUE-001 regression.
+1. **Technical health.** Already measured by Step 0b — read the `crawler_access`
+   check in `growth-engine/data/daily_context.json` (the pre-stage runs
+   `crawler_access_check.sh` and appends to
+   `growth-engine/data/technical_health_history.jsonl`). Re-run the shell check by
+   hand **only** if Step 0b was BLOCKED. If the homepage or a key path is not 200
+   or returns `cf-mitigated`, mark severity `critical`, put an URGENT marker at the
+   top of the report, and note ISSUE-001 regression.
 
-2. **Competitor research (verified service areas only).** Select **15–25** queries
-   from `KEYWORD_UNIVERSE.md`, weighted to commercially valuable, historically weak,
-   and not-recently-tested queries; rotate so every core service and every Tier-1
-   city appears regularly. Do not permute everything daily. For each query:
+2. **Competitor research (verified service areas only).** Select **10–15** queries
+   (the time budget above caps this — do not expand it) from `KEYWORD_UNIVERSE.md`,
+   weighted to commercially valuable, historically weak, and not-recently-tested
+   queries; rotate so every core service and every Tier-1 city appears regularly.
+   Do not permute everything daily. For each query:
    - Fetch the primary provider with a normal browser User-Agent, per the
      **search-provider policy** above: try **Brave** first
      (`https://search.brave.com/search?q=<urlencoded>`); on 429/202 fall through
@@ -132,8 +218,12 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
    Never repeat a rejected/parked idea without new evidence. An idea with no fetched,
    cited observation stays `candidate` and is not actioned.
 
-5. **Measure our own performance.** Before searching for metrics, check whether
-   credentials exist: look for `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`,
+5. **Measure our own performance.** The **AI-surface and conventional-search**
+   sweep is already done by Step 0b — read the `ai_visibility_sweep` and
+   `visibility_sweep` entries in `growth-engine/data/daily_context.json` and their
+   rows in `ai_visibility_history.jsonl`. Do not re-run them by hand.
+   For **first-party** metrics, check whether credentials exist: look for
+   `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`,
    and `GOOGLE_BUSINESS_PROFILE_*` secrets in the environment, and read
    `INTEGRATION_STATUS.md`. If **Google Search Console** and/or **Google Analytics**
    access is connected, pull the relevant metrics (impressions, clicks, queries,
@@ -170,7 +260,8 @@ Never print or commit the token. If the clone/fetch fails, report it clearly and
    - Research + reports (this is the normal daily path): commit on branch
      `intelligence-hq/daily-<YYYY-MM-DD>`, message starting
      `intelligence-hq daily: <YYYY-MM-DD>`, and open a PR to `main` titled
-     `Intelligence HQ daily: <YYYY-MM-DD>`.
+     `Intelligence HQ daily: <YYYY-MM-DD>`. Push the **checkpoint** commit by ~10
+     minutes as the time budget requires; further commits go to the same branch.
    - Website code changes (only if step 6 produced one): use a **separate** branch
      `intelligence-hq/site-<YYYY-MM-DD>-<slug>` and a **separate** PR to `main`.
    - **Merge new findings; never delete historical records.** Append to `.jsonl`

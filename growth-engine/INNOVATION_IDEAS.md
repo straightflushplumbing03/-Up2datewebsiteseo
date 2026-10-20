@@ -345,7 +345,7 @@ to HQ-D only for now.
 
 | Idea | Previous | New (this week) | Reason |
 |---|---|---|---|
-| IDEA-2026-10-12-13 commit-early checkpointing | prioritized | **approved (Priority 3)** | Addresses ISSUE-006 (lost HQ-D run); prompt-text only, L2. |
+| IDEA-2026-10-12-13 commit-early checkpointing | approved (Priority 3) | **implemented 2026-10-20** | Applied to the daily + weekly prompts: explicit deadlines, ~10-min checkpoint commit, bounded post-push verification. Addresses ISSUE-006. |
 | IDEA-2026-10-12-12 Automation B (no-LLM health check) | prioritized | **approved (Priority 3)** | Platform caps timeout at 1800 s; deterministic task, zero tokens, L2. |
 | IDEA-2026-10-12-08 per-city slab-leak sections | candidate | **prioritized (Priority 2)** | Matches the demonstrated competitor gap (dedicated slab page per Tier-1 city). |
 | IDEA-2026-10-12-14 automation drift check | candidate | **prioritized** | Weekly live-vs-canonical diff is cheap and would have caught the HQ-D drift. |

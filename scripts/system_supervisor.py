@@ -19,7 +19,7 @@ owner) reads the report and decides.
 WHAT IT CHECKS (each is PASS / FAIL / BLOCKED, never a silent zero)
 -------------------------------------------------------------------
   automations_enabled   exactly one enabled *content* automation (the invariant)
-  schedule_intact       the live daily cron is still Mon/Wed/Fri 06:00 PT
+  schedule_intact       the live daily cron is still 06:00 PT, every day
   prompt_matches_repo   the live prompt equals the repo prompt (no silent drift)
   ai_visibility_blind   at least one *AI-platform* row exists and is fresh (not a
                         conventional-search proxy), so the business goal is measured
@@ -61,11 +61,15 @@ VISIBILITY_PATH = os.path.join(ROOT, "growth-engine", "data", "ai_visibility_his
 HOST = os.environ.get("OPENHANDS_HOST", "https://app.all-hands.dev")
 GH_API = "https://api.github.com"
 REPO = "straightflushplumbing03/-Up2datewebsiteseo"
-PROMPT_FILE = os.path.join(ROOT, "ai-headquarters-blueprint", "01-MASTER-AGENT-PROMPT.md")
 
-DAILY_AUTOMATION = "1485d659-8663-4776-a507-db0fefed8483"
-EXPECTED_SCHEDULE = "0 6 * * 1,3,5"
+DAILY_AUTOMATION = "df8e3c2d-1fac-47fb-9af2-38d59c8239c5"  # HQ-D
+EXPECTED_SCHEDULE = "0 6 * * *"          # every day, incl. weekends
 EXPECTED_CONTENT_AUTOMATIONS = 1
+# The live daily prompt is deployed from this canonical file (see
+# growth-engine/automations/deploy_intelligence_hq.py). Comparing it against
+# anything else reports false drift.
+PROMPT_FILE = os.path.join(ROOT, "growth-engine", "automations",
+                           "intelligence-hq-daily.prompt.md")
 
 MAX_OPEN_PRS = 5          # more than this is a backlog the owner has not cleared
 MAX_CHANGED_FILES = 200   # unique files changed between two supervisor runs
@@ -166,10 +170,12 @@ def check_prompt_matches_repo(by_id):
             text = fh.read()
     except OSError as e:
         return _check("prompt_matches_repo", False, f"cannot read prompt file: {e}")
-    m = re.search(r"^## THE PROMPT.*?\n(.*?)^## END OF PROMPT", text, re.S | re.M)
-    if not m:
-        return _check("prompt_matches_repo", False, "prompt markers not found in repo file")
-    want = m.group(1).strip()
+    # Same split the deploy script uses: everything after the first '---' rule is
+    # the prompt body sent to the platform.
+    parts = re.split(r"^---$", text, maxsplit=1, flags=re.M)
+    if len(parts) != 2:
+        return _check("prompt_matches_repo", False, "no '---' prompt separator in repo file")
+    want = parts[1].strip()
     ok = live == want
     return _check("prompt_matches_repo", ok,
                   "live prompt == repo prompt" if ok
@@ -235,7 +241,14 @@ def check_ai_visibility_blind(now=None):
 
 
 def _gh_token():
-    return os.environ.get("GITHUB_TOKEN") or os.environ.get("GITHUB_PERSONAL_ACCESS_TOKEN")
+    # The GitHub provider secret is not always injected under GITHUB_TOKEN; fall
+    # back to the other names the platform uses so a missing alias is not read as
+    # a missing integration.
+    for name in ("GITHUB_TOKEN", "github_token", "GITHUB_PERSONAL_ACCESS_TOKEN"):
+        val = os.environ.get(name)
+        if val:
+            return val
+    return None
 
 
 def _merged_by_login(pr, token):

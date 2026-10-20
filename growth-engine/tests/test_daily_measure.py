@@ -181,6 +181,47 @@ class TestAiVisibilityExitMeaning(unittest.TestCase):
         self.assertTrue(result["ok"])
         self.assertFalse(result.get("blocked", False))
 
+    def test_network_budget_exhaustion_is_blocked_not_zero(self):
+        """A sweep stopped by the network budget is BLOCKED (partial), never a zero.
+
+        `_run` returns exit code -1 when it hits its timeout. Before the budget
+        existed, the default 40-query Tavily plus 5-query Gemini sweep could
+        consume the whole automation wall-clock and the run died before writing
+        anything. A truncated day must still be recorded as blocked.
+        """
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(False, -1, "partial")
+        ):
+            result = daily_measure.check_ai_visibility(3, timeout=120.0)
+        self.assertTrue(result["blocked"])
+        self.assertFalse(result["ok"])
+        self.assertIn("network-budget", result["note"])
+        self.assertIn("never zero", result["note"])
+
+    def test_tavily_budget_exhaustion_is_blocked_not_zero(self):
+        with mock.patch.dict(os.environ, {"Tavily_api_key": "x"}, clear=True), \
+                mock.patch.object(daily_measure, "_run",
+                                  return_value=(False, -1, "partial")):
+            result = daily_measure.check_visibility(3, timeout=120.0)
+        self.assertTrue(result["blocked"])
+        self.assertFalse(result["ok"])
+        self.assertIn("network-budget", result["note"])
+
+    def test_budget_split_keeps_both_sweeps_bounded(self):
+        """The default pre-stage budget must leave wall-clock for the research phase.
+
+        The daily automation's wall-clock is roughly 1920s. If the pre-stage's own
+        defaults can consume all of it, research never starts — which is exactly
+        what killed three runs (ISSUE-033). Assert against the module's real
+        defaults, not literals, so raising them fails this test.
+        """
+        budget = daily_measure.DEFAULT_NETWORK_BUDGET
+        ceiling = daily_measure.AUTOMATION_WALL_CLOCK_S
+        # Both sweeps combined, at the documented 60/40 split, stay well clear.
+        self.assertLess(budget * 0.6 + budget * 0.4, ceiling * 0.5)
+        self.assertLess(daily_measure.DEFAULT_TAVILY_QUERIES, 20)
+        self.assertLess(daily_measure.DEFAULT_AI_QUERIES, 6)
+
 
 if __name__ == "__main__":
     unittest.main()
