@@ -30,12 +30,13 @@ impression/click/query baselines within its first 10 minutes.
 **Result:** runbook committed; suites green (344 unittest OK, KB OK, seo_audit
 AUDIT COMPLETE). **Keep.**
 
-**Also this run — entity check regressed to a named finding.** `entity_consistency_check.py
+**Also this run — entity check re-confirmed the standing finding.** `entity_consistency_check.py
 --run --append` returned **exit 1**: `straight-flush-plumbing-7fb7cf71.base44.app`
 and `straightflushplumb8.wixsite.com` both serve HTTP 200 indexable content,
-while `flush-pro-flow.base44.app` now returns 404. Reported as **high** severity
-(ISSUE-014) with an exact owner action — unpublish the two hosts. Not executed:
-editing an external owned property is a Level 3 owner action.
+while `flush-pro-flow.base44.app` returns 404. This is the state already recorded
+in ISSUE-014/ISSUE-018 since 2026-10-15, not a new regression — reported again as
+**high** severity with the exact owner action (unpublish the two hosts). Not
+executed: editing an external owned property is a Level 3 owner action.
 
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
