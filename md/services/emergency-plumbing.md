@@ -1,4 +1,4 @@
-# 24-Hour Emergency Plumber in Orange County | Straight Flush Plumbing
+# 24-Hour Emergency Plumber in Orange County, CA
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/emergency-plumbing.html
 > Section: Services

@@ -73,6 +73,65 @@ Most slab leaks in Orange County homes trace back to aging or corroded copper pi
 
 
 
+ Do this first
+
+
+## The 30-minute water meter test
+
+
+
+This is the most reliable check you can run yourself before calling anyone.
+
+
+
+
+- Turn off every fixture, appliance, irrigation zone, and pool fill valve.
+
+- Write down the meter reading, or take a photo of it.
+
+- Wait 20–30 minutes without using any water.
+
+- Check the meter again. Any change means water is leaving your system somewhere.
+
+- If it moved, close the supply valves to your toilets and irrigation and repeat. If the meter still moves, the leak is most likely in a supply line, which is where acoustic detection comes in.
+
+
+
+
+More detail: [what a moving water meter tells you](https://straightflushplumbingoc.com/academy/water-meter-still-moving-everything-off.html).
+
+
+
+ Right now
+
+
+## Should you shut off your water?
+
+
+
+It depends on how fast water is escaping.
+
+
+
+
+- **Shut off the main valve now** if water is coming up through the floor, the meter is spinning fast, or a warm spot is spreading.
+
+- **Suspect a hot water line?** Closing the cold-water valve on top of a tank water heater stops flow to the hot side while the rest of the house keeps water. Set the heater to vacation or pilot while it’s off.
+
+- **Meter only creeping?** You usually don’t need to go without water, but don’t wait long. A running leak keeps adding to your bill and to the damage.
+
+
+
+
+Not sure where your shutoff is? See our [emergency plumbing checklist](https://straightflushplumbingoc.com/academy/emergency-plumbing-checklist.html).
+
+
+
+
+
+
+
+
  How we find it
 
 
@@ -168,6 +227,47 @@ The right call when copper throughout the home is aging or leaks have repeated. 
 
 
 
+ Pricing
+
+
+## What slab leak detection and repair cost
+
+
+
+You get a specific number before any work starts, and no surprise charges. The repair path is the biggest factor: a spot repair costs least, a reroute sits in the middle, and a whole-house repipe is the larger investment that deals with aging copper once.
+
+
+
+We recommend the option that matches what we actually find, not the biggest invoice. See the [slab leak repair cost guide](https://straightflushplumbingoc.com/guides/slab-leak-repair-cost.html) and [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html).
+
+
+
+ What moves the price
+
+
+### Five things that change the number
+
+
+
+
+- Size of the home and how many areas are suspect
+
+- Hot or cold line, and whether more than one line is leaking
+
+- What sits on top of the leak: tile, hardwood, carpet, or cabinets
+
+- Repair path: spot repair, reroute, or repipe
+
+- Whether you need documentation for an insurance claim
+
+
+
+
+
+
+
+
+
 
  Slab leak FAQ
 
@@ -212,6 +312,38 @@ A slab leak is an underground leak, but not every underground leak sits under th
 
 
 Yes. Acoustic listening works through finished flooring because it tracks the sound of pressurized water escaping the pipe rather than looking at the surface. Thermal imaging is most useful on hot water leaks and can be limited by thick flooring, so acoustic detection usually leads. The goal is to narrow the leak to a small area before any flooring or concrete is opened.
+
+
+
+
+ How long does slab leak detection take? +
+
+
+Most detection visits take one to a few hours, depending on the size of the home and how quickly the source is isolated. We go over your options on the spot. A spot repair is often done the same day or the next, a reroute usually takes one to two days, and a whole-house repipe a few days. More in [how long slab leak repair takes](https://straightflushplumbingoc.com/academy/how-long-does-slab-leak-repair-take.html).
+
+
+
+
+ Will my flooring have to come up? +
+
+
+Not always. Acoustic detection narrows the leak to a small spot, so any opening is as small as possible. A reroute often avoids opening the floor at all by running a new line through the attic or walls. If a spot repair under tile or hardwood is the best option, you will know where the access point is and roughly how big it will be before you decide.
+
+
+
+
+ Should I shut off my water if I think I have a slab leak? +
+
+
+Shut off the main valve right away if water is coming up through the floor, the meter is spinning fast, or a warm spot is spreading. For a suspected hot water leak, closing the cold-water valve on top of a tank water heater stops flow to the hot side while the rest of the house keeps water. If the meter is only creeping, you usually do not need to go without water, but get it diagnosed soon. See [what to do first](#before-you-call).
+
+
+
+
+ Can a slab leak come back after it is repaired? +
+
+
+The repaired section itself should not be the problem. But copper tends to corrode throughout a system, so if one section of an older line has failed, other sections of the same age often are not far behind. Two or more leaks within a few years is a common point to consider a reroute or repipe. New PEX greatly lowers the risk, though no plumbing system is leak-proof forever. More in [why some homes get repeat slab leaks](https://straightflushplumbingoc.com/academy/multiple-slab-leaks-same-house.html).
 
 
 

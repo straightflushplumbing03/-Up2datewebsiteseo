@@ -1,8 +1,8 @@
-# Leak Detection & Plumbing in San Clemente, CA | Straight Flush Plumbing
+# Leak & Slab Detection in San Clemente, CA | Straight Flush
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/cities/san-clemente.html
 > Section: Service areas
-> Summary: Acoustic slab leak detection and plumbing services in San Clemente, CA. Local, family-owned, diagnose-first. Call (949) 374-6524.
+> Summary: From homes near the pier to Forster Ranch and Talega, San Clemente spans many home ages. Diagnose-first leak detection, no guesswork. Call (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Service Areas](https://straightflushplumbingoc.com/service-areas.html) › San Clemente
@@ -62,7 +62,7 @@ Whether it's an older home near the pier or a newer build in Forster Ranch or Ta
 
  [Dana Point →](https://straightflushplumbingoc.com/cities/dana-point.html)
  [Laguna Niguel →](https://straightflushplumbingoc.com/cities/laguna-niguel.html)
- [San Juan Capistrano →](https://straightflushplumbingoc.com/service-areas.html#san-juan-capistrano)
+ [San Juan Capistrano →](https://straightflushplumbingoc.com/cities/san-juan-capistrano.html)
  [Mission Viejo →](https://straightflushplumbingoc.com/cities/mission-viejo.html)
 
 

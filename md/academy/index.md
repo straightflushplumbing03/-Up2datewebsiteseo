@@ -1,4 +1,4 @@
-# Leak Detection Academy | Free Homeowner Education | Orange County
+# Leak Detection Academy | Free Homeowner Education
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/academy/
 > Section: Academy

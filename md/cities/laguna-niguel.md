@@ -1,8 +1,8 @@
-# Leak Detection & Plumbing in Laguna Niguel, CA | Straight Flush Plumbing
+# Plumber in Laguna Niguel, CA | Leak & Slab Detection
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/cities/laguna-niguel.html
 > Section: Service areas
-> Summary: Acoustic slab leak detection and plumbing services in Laguna Niguel, CA. Local, family-owned, diagnose-first. Call (949) 374-6524.
+> Summary: Laguna Niguel is our home base. 1970s–90s hillside homes with original copper plumbing — acoustic and thermal leak detection before any cut. (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Service Areas](https://straightflushplumbingoc.com/service-areas.html) › Laguna Niguel
@@ -28,7 +28,7 @@ Straight Flush Plumbing & Leak Detection is headquartered in Laguna Niguel — t
 
 
 
-Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit. Homes of that era, with aging copper lines and South OC's expansive clay soils, are exactly the situation our [South Orange County slab leak specialist service](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html) is built around.
+Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit. Homes of that era, with aging copper lines and South OC's expansive clay soils, are exactly the situation our [slab leak detection service](https://straightflushplumbingoc.com/services/slab-leak-detection.html) is built around (background: [why South OC copper homes get slab leaks](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html)).
 
 
 
@@ -63,7 +63,7 @@ Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of o
  [Dana Point →](https://straightflushplumbingoc.com/cities/dana-point.html)
  [San Clemente →](https://straightflushplumbingoc.com/cities/san-clemente.html)
  [Mission Viejo →](https://straightflushplumbingoc.com/cities/mission-viejo.html)
- [Aliso Viejo →](https://straightflushplumbingoc.com/service-areas.html#aliso-viejo)
+ [Aliso Viejo →](https://straightflushplumbingoc.com/cities/aliso-viejo.html)
 
 
 

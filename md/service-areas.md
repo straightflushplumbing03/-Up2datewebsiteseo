@@ -1,4 +1,4 @@
-# Service Areas | Leak Detection & Plumbing Across Orange County
+# Service Areas | Leak Detection Across Orange County
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/service-areas.html
 > Section: Service areas

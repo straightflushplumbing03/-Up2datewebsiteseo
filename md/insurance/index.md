@@ -1,4 +1,4 @@
-# Insurance Resource Center | Water & Slab Leak Claims | Orange County
+# Insurance Resource Center | Slab Leak Claims | OC
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/insurance/
 > Section: Insurance

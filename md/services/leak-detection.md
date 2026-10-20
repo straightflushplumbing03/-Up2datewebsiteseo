@@ -1,4 +1,4 @@
-# Leak Detection Services | Acoustic, Electronic & Thermal | Orange County
+# Leak Detection Services | Acoustic & Thermal Detection
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection.html
 > Section: Services

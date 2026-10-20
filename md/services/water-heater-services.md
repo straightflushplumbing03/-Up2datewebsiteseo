@@ -1,4 +1,4 @@
-# Water Heater Repair & Installation | Tankless & Traditional | Orange County
+# Water Heater Repair & Installation | Tankless & Standard
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/water-heater-services.html
 > Section: Services

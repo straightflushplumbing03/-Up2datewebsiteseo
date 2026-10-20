@@ -1,19 +1,19 @@
-# South OC Slab Leak Specialist | Straight Flush Plumbing
+# Why South OC Homes Get Slab Leaks | 1970s–90s Copper Guide
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html
 > Section: Specialty
 > Summary: Why 1970s–90s South OC homes get slab leaks: aging copper, expansive clay, hard water — and how acoustic and thermal detection finds them before demolition.
 
 ---
-[Home](https://straightflushplumbingoc.com//) › South OC Slab Leak Specialist
- Niche expertise
+[Home](https://straightflushplumbingoc.com//) › South OC Slab Leak Guide
+ Homeowner guide
 
 
-# South Orange County slab leaks: why 1970s–1990s copper homes need a specialist
+# Why 1970s–1990s South Orange County homes get slab leaks
 
 
 
-Straight Flush Plumbing & Leak Detection is the Laguna Niguel owner-operated company where **Lance answers the phone**. We focus on acoustic and thermal detection for copper-era homes on expansive clay soils — diagnose first, so you never pay for unnecessary demolition.
+Aging copper under the slab, expansive clay soil and hard water add up to more slab leaks in South OC homes of this era. This guide explains why, what to watch for, and how a leak gets found without breaking up your floor. Already think you have one? Go straight to [slab leak detection in South Orange County](https://straightflushplumbingoc.com//services/slab-leak-detection.html).
 
 
 
@@ -34,27 +34,31 @@ A generalist who defaults to large exploratory cuts can cost you far more than a
 
 
 
-## What makes Straight Flush different for this niche
+## How these leaks get found without demolition
+
+
+
+Finding a slab leak is a process of elimination, done before anyone opens concrete or tile:
 
 
 
 
-- **Owner answers the phone** — Lance, not a call center.
+- **Pressure testing** confirms which line is losing water, hot or cold, and which part of the house it runs through.
 
-- **Acoustic + electronic + thermal detection** before any concrete or tile is opened.
+- **Acoustic listening** picks up the sound of pressurized water escaping, and works through tile, hardwood and laminate.
 
-- **Local pattern recognition** for copper-era South OC construction and clay-soil movement.
+- **Thermal imaging** shows the warm footprint of a hot water leak on the floor above it.
 
-- **Honest recommendations** — including when you do not need major work.
-
-- **Insurance-friendly documentation** so you can take clear findings to your carrier.
-
-- **24/7 emergency availability** when a leak cannot wait.
+- **Electronic line locating** traces where the pipe actually runs under the slab.
 
 
 
 
-## When to call
+Used together, these narrow the leak to a small spot, so any opening is as small as possible. Often the floor never needs opening at all, because a reroute through the attic or walls bypasses the bad section. The full step-by-step is on our [slab leak detection page](https://straightflushplumbingoc.com//services/slab-leak-detection.html).
+
+
+
+## Warning signs to watch for
 
 
 
@@ -66,4 +70,4 @@ Warm or hot spots on the floor, a water meter that moves with everything off, un
 
 
 
-[Schedule detection](https://straightflushplumbingoc.com//contact.html) [Slab leak service details](https://straightflushplumbingoc.com//services/slab-leak-detection.html)
+[Book slab leak detection](https://straightflushplumbingoc.com//services/slab-leak-detection.html)

@@ -1,4 +1,4 @@
-# Whole-House PEX Repiping | Copper Line Elimination | Orange County
+# Whole-House PEX Repiping | Copper Line Removal
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/pex-repiping.html
 > Section: Services

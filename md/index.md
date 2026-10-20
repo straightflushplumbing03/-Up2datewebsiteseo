@@ -1,4 +1,4 @@
-# Straight Flush Plumbing | Leak Detection & Plumber in Orange County
+# Straight Flush Plumbing | Leak Detection in Orange County
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/
 > Section: Homepage
@@ -503,7 +503,7 @@ Best plumber I've ever used. Installed a tankless water heater for us — clean 
 
 
 
-Based in Laguna Niguel, we serve all of South Orange County. When you call, we're never far — and we're always on time.
+Based in Laguna Niguel, we serve South Orange County and nearby Central OC cities. When you call, we're never far — and we're always on time.
 
 
  [Laguna Niguel](https://straightflushplumbingoc.com//cities/laguna-niguel.html)
@@ -519,6 +519,14 @@ Based in Laguna Niguel, we serve all of South Orange County. When you call, we'r
  [Dove Canyon](https://straightflushplumbingoc.com//cities/dove-canyon.html)
  [Foothill Ranch](https://straightflushplumbingoc.com//cities/foothill-ranch.html)
  [Laguna Woods](https://straightflushplumbingoc.com//cities/laguna-woods.html)
+ [San Juan Capistrano](https://straightflushplumbingoc.com//cities/san-juan-capistrano.html)
+ [Ladera Ranch](https://straightflushplumbingoc.com//cities/ladera-ranch.html)
+ [Irvine](https://straightflushplumbingoc.com//cities/irvine.html)
+ [Newport Beach](https://straightflushplumbingoc.com//cities/newport-beach.html)
+ [Costa Mesa](https://straightflushplumbingoc.com//cities/costa-mesa.html)
+ [Huntington Beach](https://straightflushplumbingoc.com//cities/huntington-beach.html)
+ [Tustin](https://straightflushplumbingoc.com//cities/tustin.html)
+ [Orange](https://straightflushplumbingoc.com//cities/orange.html)
  [→ All Areas](https://straightflushplumbingoc.com//service-areas.html)
 
 

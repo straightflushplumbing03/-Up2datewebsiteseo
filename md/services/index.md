@@ -1,4 +1,4 @@
-# Plumbing Services | Leak Detection, Repiping & More | Straight Flush Plumbing
+# Plumbing Services | Leak Detection, Repiping & More
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/
 > Section: Services

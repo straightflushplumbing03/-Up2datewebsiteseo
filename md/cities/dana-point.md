@@ -1,8 +1,8 @@
-# Leak Detection & Plumbing in Dana Point, CA | Straight Flush Plumbing
+# Plumber in Dana Point, CA | Coastal Leak Detection
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/cities/dana-point.html
 > Section: Service areas
-> Summary: Acoustic slab leak detection and plumbing services in Dana Point, CA. Local, family-owned, diagnose-first. Call (949) 374-6524.
+> Summary: Salt air and older homes near the harbor make accurate diagnosis more valuable in Dana Point. Acoustic and thermal detection. Call (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Service Areas](https://straightflushplumbingoc.com/service-areas.html) › Dana Point
@@ -62,8 +62,8 @@ Salt air, coastal humidity, and a number of older homes near the harbor make acc
 
  [Laguna Niguel →](https://straightflushplumbingoc.com/cities/laguna-niguel.html)
  [San Clemente →](https://straightflushplumbingoc.com/cities/san-clemente.html)
- [Laguna Beach →](https://straightflushplumbingoc.com/service-areas.html#laguna-beach)
- [Newport Beach →](https://straightflushplumbingoc.com/service-areas.html#newport-beach)
+ [Laguna Beach →](https://straightflushplumbingoc.com/cities/laguna-beach.html)
+ [Newport Beach →](https://straightflushplumbingoc.com/cities/newport-beach.html)
 
 
 

@@ -1,8 +1,8 @@
-# Leak Detection & Plumbing in Ladera Ranch, CA | Straight Flush Plumbing
+# Leak Detection in Ladera Ranch, CA | Straight Flush Plumbing
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/cities/ladera-ranch.html
 > Section: Service areas
-> Summary: Acoustic slab leak detection and plumbing services in Ladera Ranch, CA. Local, family-owned, diagnose-first. Call (949) 374-6524.
+> Summary: Ladera Ranch is a younger South OC community, so leaks more often trace to installation quality or soil settling. Professional diagnosis. Call (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Service Areas](https://straightflushplumbingoc.com/service-areas.html) › Ladera Ranch

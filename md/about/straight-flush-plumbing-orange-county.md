@@ -95,7 +95,7 @@ Once we've pinpointed the leak, we walk you through the honest set of repair opt
 
 [Aliso Viejo →](https://straightflushplumbingoc.com/cities/aliso-viejo.html)
 [Costa Mesa →](https://straightflushplumbingoc.com/cities/costa-mesa.html)
-[Coto De Caza →](https://straightflushplumbingoc.com/cities/coto-de-caza.html)
+[Coto de Caza →](https://straightflushplumbingoc.com/cities/coto-de-caza.html)
 [Dana Point →](https://straightflushplumbingoc.com/cities/dana-point.html)
 [Dove Canyon →](https://straightflushplumbingoc.com/cities/dove-canyon.html)
 [Foothill Ranch →](https://straightflushplumbingoc.com/cities/foothill-ranch.html)
@@ -116,7 +116,7 @@ Once we've pinpointed the leak, we walk you through the honest set of repair opt
 [Tustin →](https://straightflushplumbingoc.com/cities/tustin.html)
 
 
-Not sure if we cover your neighborhood? " "Call [(949) 374-6524](tel:+19493746524) and ask — Lance answers the phone.
+Not sure if we cover your neighborhood? Call [(949) 374-6524](tel:+19493746524) and ask — Lance answers the phone.
 
 
 

@@ -1,8 +1,8 @@
-# Leak Detection & Plumbing in Laguna Hills, CA | Straight Flush Plumbing
+# Plumber in Laguna Hills, CA | Leak Detection & Repair
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/cities/laguna-hills.html
 > Section: Service areas
-> Summary: Acoustic slab leak detection and plumbing services in Laguna Hills, CA. Local, family-owned, diagnose-first. Call (949) 374-6524.
+> Summary: Many Laguna Hills homes date to the 1970s–80s, putting original copper in the age range where slab leaks appear. Acoustic diagnosis first. Call (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Service Areas](https://straightflushplumbingoc.com/service-areas.html) › Laguna Hills

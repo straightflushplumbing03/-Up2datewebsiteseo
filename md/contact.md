@@ -1,4 +1,4 @@
-# Contact Straight Flush Plumbing & Leak Detection | Schedule Service
+# Contact Straight Flush Plumbing | Schedule Service
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/contact.html
 > Section: Company
