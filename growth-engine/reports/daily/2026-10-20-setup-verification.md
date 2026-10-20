@@ -171,3 +171,46 @@ Level 1 (research/read-only) + Level 2 (branches/PRs only). **No Level 3 action*
 was taken: identity, phone, email, prices, legal/warranty claims, service-area
 commitments, DNS, and hosting were untouched. No website change was deployed;
 this report and the infrastructure fixes land on a branch for review.
+
+---
+
+## Persistence test (verified against a fresh clone)
+
+This run's durable record is commit **`086eab1`** on
+`intelligence-hq/setup-verify-2026-10-20` (PR #72). Verified by cloning the
+branch fresh from GitHub, not by trusting the local working tree:
+
+| Check | Result |
+|---|---|
+| Fresh-clone HEAD | `086eab1` (matches pushed commit) |
+| `DEFAULT_NETWORK_BUDGET` present in clone | yes (3 references) |
+| `ISSUE-033` present in clone | yes |
+| Live daily prompt vs. canonical file | in sync (header stripped by design) |
+| Live weekly prompt vs. canonical file | in sync (header stripped by design) |
+
+### Why the previous three runs failed, and what changed
+
+Run history for `df8e3c2d` shows the failure mode plainly:
+
+| Run | Started | Ended | Outcome |
+|---|---|---|---|
+| manual | 2026-10-19T16:18:58Z | 16:51:47Z | FAILED — timed out while pushing |
+| cron | 2026-10-20T16:42:33Z | 17:14:37Z | FAILED — timed out verifying branches |
+| manual | 2026-10-20T17:28:48Z | — | this run |
+
+Every failure was a wall-clock kill **before the commit was pushed**, so nothing
+was durable. Three guards now exist against that:
+
+1. `daily_measure.py` bounds its own network sweeps (600 s combined, 60/40 split)
+   and records a truncated sweep as `BLOCKED`, never as a zero.
+2. The canonical daily prompt carries a mandatory time budget with a
+   **checkpoint commit by ~10 minutes** — commit early, amend later.
+3. The budget defaults are module constants, so the regression test reads real
+   values and fails if they are raised past the automation ceiling.
+
+### Fix applied this run
+
+The `test_budget_split_keeps_both_sweeps_bounded` test asserted the literals
+`600` and `1920` against themselves — it could never fail. It now reads
+`daily_measure.DEFAULT_NETWORK_BUDGET` and `AUTOMATION_WALL_CLOCK_S`, and was
+confirmed to fail when the budget is raised past half the ceiling.
