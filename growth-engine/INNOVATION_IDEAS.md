@@ -391,12 +391,59 @@ already named. Ideas 6 and 8 are Level 3 and are **proposal-only**.
 
 ---
 
+### 2026-10-20 daily run #2 (OpenHands HQ) — new candidate ideas + primary-source correction
+
+**Primary-source correction (high confidence, fetched 2026-10-20, HTTP 200).** Two
+prioritized ideas from the earlier 2026-10-20 run rested on rich-result premises that
+Google has since retired:
+
+- **idea-2026-10-20-02 (`HowTo` schema)** — invalidated as a rich-result play. Google
+  removed the How-to structured-data documentation "as this rich result is no longer
+  shown in search results, on both desktop and mobile devices."
+  Source: https://developers.google.com/search/updates (final URL; the old
+  `.../structured-data/how-to` URL now redirects to `#how-to-deprecation`), fetched
+  2026-10-20, HTTP 200.
+- **IDEA-03 (`FAQPage` schema on method pages)** — same class of error: the FAQ rich
+  result "will no longer appear in Google Search starting May 7, 2026" and its
+  documentation was removed. Source:
+  https://developers.google.com/search/updates#removing-faq-rich-result, fetched
+  2026-10-20, HTTP 200.
+
+Neither is *harmful* (Google states such files "won't negatively or positively impact
+your visibility or rankings"), but neither should consume a change window as a
+rich-result win. Both are re-scoped to **machine-readable answer clarity only**.
+
+| ID | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-20-09 | Retire rich-result justification for `FAQPage`/`HowTo` in the KB and re-label them "AI-surface answer clarity only" | Knowledge-base / docs | 3 | 5 | 5 | 5 | L1 | candidate | Google removed both features' docs (fetched 2026-10-20, HTTP 200): https://developers.google.com/search/updates |
+| idea-2026-10-20-10 | Structured-data eligibility matrix: map every JSON-LD `@type` we ship to whether Google still supports a rich result for it | Website / docs | 3 | 5 | 4 | 5 | L1 | candidate | Two of the types we ship (`FAQPage`, `HowTo`) lost their rich results in 2026; no inventory exists to catch the next one (observed 2026-10-20). |
+| idea-2026-10-20-11 | Entity-consolidation follow-through for ISSUE-014: make the owner-controlled `base44` and Wix "Straight Flush" properties point to the canonical site | Business (owner-controlled) | 5 | 5 | 2 | 3 | ⛔ L3 | proposed | Two live duplicate entities verified 2026-10-20: `straight-flush-plumbing-7fb7cf71.base44.app` and `straightflushplumb8.wixsite.com`; owner confirmed ownership 2026-10-15. Plan: `ENTITY_CONSOLIDATION_PLAN.md`. |
+| idea-2026-10-20-12 | Keep FAQ *visible content* (not markup) on method/service pages, since AI answer engines read page text even though the Google rich result is gone | Website | 4 | 4 | 4 | 5 | L2 | candidate | Google's FAQ rich result is retired, but the deprecation concerns the *rich result*, not page content; AI surfaces read text (Google AI-features doc, verified 2026-10-11). |
+| idea-2026-10-20-13 | Competitor structured-data drift monitor: track which repeat competitors still ship now-deprecated types | Knowledge-base / docs | 2 | 4 | 4 | 5 | L1 | candidate | Evans Leak Detection still ships `FAQPage`+`Question`+`Answer` (https://evansleakdetection.com/, HTTP 200, 3 `ld+json` blocks, fetched 2026-10-20) — evidence of post-deprecation drift worth tracking, not copying. |
+
+#### Prioritization (2026-10-20 run #2)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-20-11 entity consolidation (ISSUE-014) | 5 | 5 | 2→High | No | ⛔ L3 | **proposed to owner** — highest impact, cannot self-execute |
+| 2 | idea-2026-10-20-09 retire dead rich-result justification | 3 | 5 | 5→Med | Yes | ✅ L1 | prioritized — zero-risk correctness |
+| 3 | idea-2026-10-20-10 schema eligibility matrix | 3 | 5 | 4→Med | Yes | ✅ L1 | prioritized — prevents repeating this error |
+| 4 | idea-2026-10-20-12 keep FAQ visible content | 4 | 4 | 4→Med | Yes | ✅ L2 | candidate |
+| 5 | idea-2026-10-20-13 competitor schema drift monitor | 2 | 4 | 4→Low | Yes | ✅ L1 | candidate — hygiene |
+
+**Corrections applied to earlier ranking (same day):** idea-2026-10-20-02 (`HowTo`)
+moves from *prioritized* to **deprioritized**; IDEA-03 (`FAQPage`) moves from rank 2
+to **deprioritized**. Idea 1 in the earlier table (non-commodity content pass) is
+unaffected and remains the top evidence-backed website action.
+
+---
+
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)
 
 | Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
 |---|---|---|---|---|---|---|---|
 | 1 | IDEA-01 leak-or-no-leak tool | High | Medium | Medium→High | Yes | ✅ L2 | prioritized |
-| 2 | IDEA-03 FAQPage schema on method pages | Medium | Medium-High | Low→High | Yes | ✅ L2 | prioritized |
+| 2 | IDEA-03 FAQPage schema on method pages | Medium | **Low** (rich result retired 2026-05-07) | Low→Low | Yes | ✅ L2 | **deprioritized 2026-10-20** |
 | 3 | IDEA-02 repipe decision page | Med-High | Medium | Medium→Med | Yes | ✅ L2 | prioritized |
 | 4 | IDEA-04 insurance walkthrough | Medium | Medium | Low-Med→Med | Yes | ✅ L2 (no promises) | candidate |
 | 5 | IDEA-05 cost-driver tool | Medium | Low-Med | Med→Med | Yes | ⛔ if priced | candidate |

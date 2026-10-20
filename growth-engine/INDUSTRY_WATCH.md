@@ -317,6 +317,50 @@ New entries are prepended directly under this line, newest first, using:
   **Confidence:** low (trade-press home page, editorial flow only — not a verified
   demand measurement).
 
+## 2026-10-20 — Google has fully retired the FAQ rich result (primary source, high confidence)
+
+- **What changed / observed:** Google's own structured-data changelog states that the
+  FAQ rich result was deprecated (changelog entry dated **May 8**, "This feature will
+  no longer appear in Google Search starting **May 7, 2026**"), and that documentation
+  for the feature was **removed** ("Removed documentation for the FAQ rich result
+  feature … The FAQ rich result feature is no longer shown in Google Search results").
+  A prior change (September) had already restricted the feature to "well-known,
+  authoritative government and health websites." Verbatim from
+  https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200).
+- **Why it matters to Straight Flush:** It **changes the evidence for IDEA-03**
+  (FAQPage schema on method pages). FAQPage markup no longer produces a Google rich
+  result for a local plumbing business, so it must **not** be justified as a rich-result
+  play. It remains defensible only as machine-readable entity/answer clarity for
+  AI answer engines and non-Google consumers — which is a *different, weaker* claim
+  than the one originally recorded. IDEA-03 is therefore re-scoped and its rank
+  lowered; see `INNOVATION_IDEAS.md`.
+- **Counter-observation (verified, same day):** repeat competitor Evans Leak Detection
+  still ships `FAQPage`+`Question`+`Answer` markup (https://evansleakdetection.com/,
+  HTTP 200, 3 `ld+json` blocks). Presence is verified; that it *causes* ranking is a
+  hypothesis and the deprecation argues against it.
+- **Source(s):** https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200). **Confidence:** high (primary source, verbatim).
+- **What we should do:** keep FAQ *content* for users and AI surfaces; stop treating
+  `FAQPage` as a Google rich-result win, and do not spend a change window on it.
+
+---
+
+## 2026-10-20 — Google states its spam policies apply to generative-AI answers (primary source)
+
+- **What changed / observed:** Google's structured-data changelog records a change
+  "Clarifying that spam policies apply to generative AI responses in Google Search …
+  To make it clear that the spam policies apply to all of Google Search, including
+  generative AI responses." Verbatim from
+  https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200).
+- **Why it matters to Straight Flush:** Reinforces existing policy — no fabricated
+  reviews, no doorway city pages, no invented claims — now explicitly extending to AI
+  answers. It validates the engine's existing no-manipulation rule (ground rule 8)
+  as an *official* requirement, not just our ethics.
+- **Source(s):** https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200). **Confidence:** high (primary source, verbatim).
+
 ---
 
 ## Standing official references (stable primary sources)

@@ -5,6 +5,44 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-20 (OpenHands HQ, run #2) — Google retired the FAQ and HowTo rich results; two prioritized ideas corrected
+
+**Status:** Knowledge-base only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-20-openhands-hq` (additive to PR #73).
+
+**Change (Low risk, docs).** Fetched Google Search Central's structured-data
+changelog (https://developers.google.com/search/updates, HTTP 200) and confirmed two
+retirements that invalidate premises recorded earlier the same day:
+
+- FAQ rich result: "will no longer appear in Google Search starting May 7, 2026";
+  documentation removed.
+- How-to rich result: documentation removed "as this rich result is no longer shown
+  in search results, on both desktop and mobile devices." The old
+  `.../structured-data/how-to` URL now 302s to `#how-to-deprecation`.
+
+**Reason.** Two ideas prioritized this morning (`IDEA-03` FAQPage schema;
+`idea-2026-10-20-02` HowTo schema) were justified as rich-result wins. That
+justification is now false. Leaving it in place would send a future run to spend a
+change window on a retired feature.
+
+**Target.** `INNOVATION_IDEAS.md` (rankings corrected, 5 new ideas added) and
+`INDUSTRY_WATCH.md` (two dated primary-source entries).
+
+**Competitor insight.** Evans Leak Detection still ships `FAQPage`+`Question`+`Answer`
+(verified, HTTP 200, 3 `ld+json` blocks) — post-deprecation drift, worth monitoring,
+not worth copying.
+
+**Expected outcome.** No ranking change is expected from the markup itself. The gain
+is *decision quality*: the engine stops spending windows on dead rich results and
+re-aims at content differentiation.
+
+**Result.** Corrections applied; ideas re-ranked; `idea-2026-10-20-09` and
+`idea-2026-10-20-10` prioritized as zero-risk correctness work.
+
+**Keep/modify/revert:** **keep.**
+
+---
+
 ## 2026-10-20 (OpenHands HQ) — sitemap ordering restored; competitor + official-guidance evidence captured
 
 **Status:** Generated metadata only (`sitemap.xml` ordering). **No website page,
