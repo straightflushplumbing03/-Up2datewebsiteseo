@@ -5,6 +5,38 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-20 — GSC measurement runbook written; entity split confirmed on two hosts
+
+**Status:** Documentation only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-20`. Report: `reports/daily/2026-10-20.md`.
+
+**Change.** Wrote `growth-engine/runbooks/gsc-measurement-runbook.md` — the
+day-one procedure for the moment Google Search Console credentials exist
+(P-002), so the first connected run measures instead of exploring. Registered
+`runbooks/` in `growth-engine/README.md`, added the Search Console **Generative
+AI performance report** to the P-002 ask, and logged a 2026-10-20 primary-source
+entry in `INDUSTRY_WATCH.md`.
+
+**Reason.** P-002 has been open across five runs; the failure mode is not the
+missing key, it is that a connected run would spend its whole budget deciding
+what to query. The runbook removes that decision.
+
+**Target:** `growth-engine/` knowledge base. **Competitor insight:** none new —
+the tracked top-4 competitor domains were unchanged this run.
+
+**Expected outcome:** the first run with GSC access produces recorded
+impression/click/query baselines within its first 10 minutes.
+
+**Result:** runbook committed; suites green (344 unittest OK, KB OK, seo_audit
+AUDIT COMPLETE). **Keep.**
+
+**Also this run — entity check regressed to a named finding.** `entity_consistency_check.py
+--run --append` returned **exit 1**: `straight-flush-plumbing-7fb7cf71.base44.app`
+and `straightflushplumb8.wixsite.com` both serve HTTP 200 indexable content,
+while `flush-pro-flow.base44.app` now returns 404. Reported as **high** severity
+(ISSUE-014) with an exact owner action — unpublish the two hosts. Not executed:
+editing an external owned property is a Level 3 owner action.
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**
