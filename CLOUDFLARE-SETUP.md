@@ -110,6 +110,29 @@ It rewrites script loading order and conflicts with the strict
 - Do **not** enable "Always Online" (it can serve stale cached pages that
   diverge from the repo).
 
+### 3a. Cache the HTML at the edge (fixes the ~1.7s server response)
+
+Measured 2026-10-19: HTML returns `cf-cache-status: DYNAMIC`, so every page view
+goes back to GitHub Pages (~1.7s time-to-first-byte). Cloudflare only caches
+static assets by default.
+
+**Where:** Caching → Cache Rules → Create rule
+
+- Rule name: `cache-html`
+- When incoming requests match: **Hostname equals `straightflushplumbingoc.com`**
+- Then: **Eligible for cache**
+  - Edge TTL: **Ignore cache-control header and use this TTL → 4 hours**
+  - Browser TTL: **Respect origin** (GitHub Pages sends `max-age=600`)
+- Deploy.
+
+Freshness: `.github/workflows/purge-cloudflare-cache.yml` purges the cache after
+every GitHub Pages build once two repo secrets exist: `CLOUDFLARE_API_TOKEN`
+(token with **Zone → Cache Purge** on this zone) and `CLOUDFLARE_ZONE_ID`. Until
+then, purge manually after deploys (Caching → Configuration → Purge Everything).
+
+Verify: `curl -sI https://straightflushplumbingoc.com/ | grep -i cf-cache-status`
+should show `HIT` on the second request.
+
 ---
 
 ## 4. One-time verification (after applying the above)
