@@ -214,3 +214,18 @@ The `test_budget_split_keeps_both_sweeps_bounded` test asserted the literals
 `600` and `1920` against themselves — it could never fail. It now reads
 `daily_measure.DEFAULT_NETWORK_BUDGET` and `AUTOMATION_WALL_CLOCK_S`, and was
 confirmed to fail when the budget is raised past half the ceiling.
+
+### Correction: CI does exist
+
+AGENTS.md states "There is **no CI** on this repository." That is out of date.
+`.github/workflows/` contains three workflows:
+
+| Workflow | Trigger |
+|---|---|
+| `verify.yml` | `pull_request` |
+| `site-audits.yml` (Lighthouse + broken links) | weekly schedule |
+| `purge-cloudflare-cache.yml` | `workflow_dispatch` |
+
+The `Verify` check ran and passed on each push to this branch (PR #72).
+Deployment itself is GitHub Pages from `main` (CNAME `straightflushplumbingoc.com`);
+nothing in this run touched `main`.
