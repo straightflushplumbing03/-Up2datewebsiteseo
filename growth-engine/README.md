@@ -37,6 +37,7 @@ existing repository (an established static HTML site) rather than duplicating it
 | `CHANGELOG.md` | Changes to this knowledge base |
 | `data/*.jsonl` | Raw observations (append-only) |
 | `reports/` | baseline / daily / weekly / monthly reports |
+| `runbooks/` | Step-by-step procedures to run the day a blocked integration unblocks |
 | `proposals/` | Items needing owner approval |
 | `tests/` | Validation helpers |
 

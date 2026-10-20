@@ -15,6 +15,29 @@ cannot be traced to a fetched source, it is not written down.
 
 ---
 
+## 2026-10-20 — Search Console exposes a Generative AI performance report (re-verified primary source)
+
+- **What changed / observed:** Google Search Central's *Optimizing for generative
+  AI search* page directs site owners to measure AI-feature performance **inside
+  Search Console**, not through third-party tooling. Verbatim: "To measure how
+  your content is performing in generative AI features on Google Search and
+  Discover, use the Generative AI performance report in Search Console." The same
+  page warns: "Be wary of third-party tools that promise ranking success or claim
+  to use 'internal' Google metrics. No third-party tool has access to our
+  internal ranking or AI systems."
+- **Also re-confirmed on the same fetch:** `llms.txt` is explicitly a no-op for
+  Google Search — "Doing so will neither harm nor help your site's visibility or
+  rankings in Google Search, as Google Search ignores them."
+- **Source(s):** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (fetched 2026-10-20, HTTP 200, 192,240 bytes).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action:** the GSC ask in P-002 now names the Generative AI
+  performance report; day-one procedure written to
+  `growth-engine/runbooks/gsc-measurement-runbook.md`. No HTML change; the
+  `/llms.txt` copy re-frame remains a documentation item (idea-2026-10-13-18).
+
+---
+
 ## 2026-10-13 — Google Search Central deprecates the FAQ rich result
 
 - **What changed / observed:** Google Search Central removed the FAQ rich-result
