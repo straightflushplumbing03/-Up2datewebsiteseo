@@ -1,15 +1,15 @@
-# Slab Leak Detection | Acoustic Diagnosis Before Demolition | Orange County
+# Slab Leak Detection in South Orange County | Straight Flush
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/slab-leak-detection.html
 > Section: Services
-> Summary: Slab leak detection in Laguna Niguel and South OC. Acoustic and thermal imaging for 1970s–90s copper homes. Diagnose before any concrete is cut. (949) 374-6524.
+> Summary: Find your slab leak before anyone cuts concrete. Acoustic + thermal detection for South OC homes, Laguna Niguel to San Clemente. Call (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › Slab Leaks
  Our core specialty
 
 
-# Slab leak detection, done the way it should be everywhere.
+# Slab leak detection in South Orange County, CA
 
 
 

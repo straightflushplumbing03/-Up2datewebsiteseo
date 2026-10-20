@@ -10,7 +10,7 @@ FIXES = {
     "insurance/dos-and-donts-talking-to-insurance.html":
         "What to say — and not say — to your insurer after a slab leak, and why the plumber's written report matters for Orange County claims.",
     "services/slab-leak-detection.html":
-        "Slab leak detection in Laguna Niguel and South OC. Acoustic and thermal imaging for 1970s–90s copper homes. Diagnose before any concrete is cut. (949) 374-6524.",
+        "Find your slab leak before anyone cuts concrete. Acoustic + thermal detection for South OC homes, Laguna Niguel to San Clemente. Call (949) 374-6524.",
     "south-oc-slab-leak-specialist.html":
         "Why 1970s–90s South OC homes get slab leaks: aging copper, expansive clay, hard water — and how acoustic and thermal detection finds them before demolition.",
     "services/leak-detection.html":
