@@ -373,6 +373,43 @@ No idea is actioned until it survives the risk gate and (for any HTML change) th
 
 ---
 
+## 2026-10-21 — new candidates (daily run)
+
+Evidence gathered this run: Tavily conventional sweep (13 queries, SF absent 13/13) and
+Gemini/Gemma grounded sweep (5 queries, SF `recommended` 1/5) — see
+`growth-engine/data/ai_visibility_history.jsonl` (ts 2026-10-21); competitor pages fetched
+2026-10-21 (efficientplumbing.com, evansleakdetection.com, HTTP 200); Google Search
+Central `ai-features` + `establish-business-details` (fetched 2026-10-21).
+
+| ID | Date | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-21-01 | 2026-10-21 | Add an explicit "serving Laguna Niguel & South Orange County" service line to the H1/near-H1 region of the leak-detection page | Website | 4 | 4 | 5 | 5 | L2 | scored | evansleakdetection.com H1 fetched 2026-10-21 reads "…\| Orange County CA" + explicit "Servicing Orange County, Riverside, and South LA Counties" line; SF was `recommended` only for the home-city leak query | Cheapest measurable copy change; matches the one query SF already wins. Feature-presence ≠ cause — hypothesis, hence scored not shipped. |
+| idea-2026-10-21-02 | 2026-10-21 | Publish an answer-first "hidden water leak: 5 things you can check before calling" guide, one Q per heading | Website | 4 | 4 | 4 | 5 | L2 | scored | Google `ai-features` (fetched 2026-10-21): AI features "may use a query fan-out technique — issuing multiple related searches across subtopics"; two conventional queries this run were literal homeowner questions ("who can locate a hidden water leak in Laguna Niguel?") | Query fan-out rewards several answerable sub-questions on one page. No new claims; diagnostic only. |
+| idea-2026-10-21-03 | 2026-10-21 | Ship a free "repipe vs. spot-repair" decision tool (no pricing) | Website | 4 | 3 | 3 | 5 | L2 if unpriced | candidate | No competitor fetched this run offers an interactive tool on leak/slab pages (efficientplumbing.com, evansleakdetection.com inspected 2026-10-21: forms only); reinforces earlier IDEA-2026-10-12-01 | Must not quote prices (Level 3). Blocked on a decision-tree content review by the owner. |
+| idea-2026-10-21-04 | 2026-10-21 | Out-answer the exact-match city domain `lagunaniguelcaplumbingpros.com` with a genuinely deeper Laguna Niguel leak-detection page | Website | 4 | 3 | 4 | 5 | L2 | candidate | Domain surfaced for 2 leak queries this run (`water leak detection Laguna Niguel`, `who can locate a hidden water leak in Laguna Niguel?`) | Must be depth/evidence, **not** a thin doorway page — explicitly forbidden by the ground rules. Needs a real differentiator (local case detail, method photos) before action. |
+| idea-2026-10-21-05 | 2026-10-21 | Add `Organization` structured data with the site logo (Google names it a "features all websites can benefit from") | Website | 3 | 4 | 4 | 5 | L2 | scored | Google `establish-business-details` (fetched 2026-10-21) explicitly lists Site logo via `Organization` and `Breadcrumbs` as universally beneficial | Entity hygiene supports ISSUE-014/018 remediation. Needs a check against existing Organization/LocalBusiness nodes first to avoid duplicate entities. |
+| idea-2026-10-21-06 | 2026-10-21 | Track the two live duplicate hosts as a weekly entity-health trend (not a daily re-alert) | Business | 4 | 4 | 5 | 5 | L2 | scored | `entity_consistency_history.jsonl` FAILs on 2026-10-15/16/21 with identical duplicate-host findings; `establish-business-details` says only a **verified owner** can override what Google finds automatically | Converts a recurring daily FAIL into a trend + one owner ask, instead of re-reporting the same known blocker. |
+| idea-2026-10-21-07 | 2026-10-21 | Publish an `/academy/` entry explaining *how* acoustic + thermal leak detection works, with method photos | Website | 3 | 3 | 3 | 5 | L2 (no media yet) | candidate | AI-features guidance (fetched 2026-10-21) rewards "helpful, reliable, people-first content"; diagnostic technology is a standing INDUSTRY_WATCH theme | Parked until owner supplies real method photos — no stock imagery. |
+
+**Prioritization (this run).** Scoring is Impact / Evidence / Effort-to-value /
+Reversibility; risk gate applied separately.
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-21-02 answer-first fan-out guide | High | Med-High | Med→High | Yes | ✅ L2 | prioritized |
+| 2 | idea-2026-10-21-06 weekly entity-health trend | Med-High | High | Low→High | Yes | ✅ L2 | prioritized |
+| 3 | idea-2026-10-21-05 Organization + logo schema | Medium | High | Low→Med | Yes | ✅ L2 | scored |
+| 4 | idea-2026-10-21-01 explicit service-area line | Med-High | Med-High | Low→Med | Yes | ✅ L2 | scored |
+| 5 | idea-2026-10-21-04 out-answer exact-match city domain | High | Medium | Med→Med | Yes | ✅ L2 (depth required) | candidate |
+| 6 | idea-2026-10-21-03 repipe decision tool | Med-High | Med | Med→Med | Yes | ✅ L2 if unpriced | candidate |
+| 7 | idea-2026-10-21-07 method-explainer academy page | Medium | Med | Med→Med | Yes | ⛔ owner media | parked |
+
+**Selection rule applied:** #1 and #2 have the best evidence-to-effort ratio and are
+**knowledge/reporting** work, not new claims — nothing was actioned as an HTML change
+this run (no change cleared the evidence bar for a website edit without owner input).
+
+---
+
 ## Parked / rejected log
 
 - **IDEA-06 owner-voice video** — parked 2026-10-12: blocked on owner-produced media.
