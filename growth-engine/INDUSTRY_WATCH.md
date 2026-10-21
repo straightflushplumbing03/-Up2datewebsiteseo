@@ -230,6 +230,55 @@ New entries are prepended directly under this line, newest first, using:
   **Confidence:** high (primary source).
 - **Proposed action:** none new; supports idea-2026-10-12-02 (rating hygiene).
 
+## 2026-10-21 — Google Search Central: "AI features and your website" (primary source, fetched)
+
+- **What changed / observed:** Google Search Central now carries a dedicated guide
+  *AI features and your website* covering how **AI Overviews** and **AI Mode** work
+  from a site owner's perspective. Key statements fetched verbatim: both features
+  "may use a **query fan-out** technique — issuing multiple related searches across
+  subtopics and data sources"; AI features "surface relevant links"; and to be
+  eligible "a page must be **indexed and eligible to be shown in Google Search**"
+  and follow the same foundations — technical requirements, Search policies, and
+  "creating helpful, reliable, people-first content". A companion navigation entry
+  *Optimizing for generative AI search* now appears in the Search Essentials section
+  (its deep-link 404s at the time of fetch; the AI-features page is the live one).
+- **Why it matters to Straight Flush:** This is the **primary-source** confirmation of
+  the AEO premise the Growth Engine has been acting on: there is no separate
+  AI-only ranking trick — eligibility is inherited from being indexed and helpful.
+  It also explains *why* query fan-out rewards **breadth of specific, answerable
+  service/city content**: one homeowner question fans out into several sub-queries,
+  and each page that can answer a sub-query is a candidate supporting link. This
+  supports the existing per-service and per-city page strategy (and the FAQ *content*
+  for AEO) while confirming there is nothing to game.
+- **Source(s):** https://developers.google.com/search/docs/appearance/ai-features
+  (fetched 2026-10-21, HTTP 200) · https://developers.google.com/search/blog
+  (Search Central changelog index, fetched 2026-10-21, HTTP 200).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** none required. Reinforces existing strategy; no
+  website change warranted by this entry alone.
+
+## 2026-10-21 — Google Search Central: "Establish your business details with Google" (primary source, fetched)
+
+- **What changed / observed:** Google publishes a consolidated guide on establishing
+  official business details: **claim your Business Profile** (address, contact info,
+  business type, photos → Google Maps + knowledge panel), **register the website in
+  Search Console** to "verify website ownership", **update the Google knowledge panel**
+  as a verified representative, and add **structured data** — explicitly naming
+  `Organization` (site logo) and `Breadcrumbs` as features "all websites can benefit
+  from".
+- **Why it matters to Straight Flush:** The guide names the exact levers the entity
+  work depends on. Two are already done (BreadcrumbList JSON-LD; Search Console
+  verification is *blocked* on owner credentials, P-002). The **Business Profile
+  claim** and **knowledge-panel ownership** are the unblocked-but-owner-gated items
+  that ISSUE-014/ISSUE-018 (duplicate base44/wix hosts splitting the entity) make
+  urgent: Google can only let a verified owner override what it finds automatically.
+- **Source(s):** https://developers.google.com/search/docs/appearance/establish-business-details
+  (fetched 2026-10-21, HTTP 200). **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** propose (owner action) — claim Business Profile and
+  knowledge panel; no website change.
+
+---
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |

@@ -5,6 +5,41 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-21 (daily) — First non-absent AI answer; sitemap idempotency restored
+
+**Status:** Knowledge base + data + `sitemap.xml` ordering only. **No website page,
+copy, schema or claim changed.** Branch `intelligence-hq/daily-2026-10-21`.
+
+**Finding 1 — first-ever non-absent AI-platform result (High signal).** The grounded
+AI sweep returned **`recommended`** for *"best leak detection company in Laguna
+Niguel"* (2026-10-21T13:04:43Z) — the first non-`absent` AI row in 367 recorded rows.
+It is the home-city / home-service query, which is where the entity is already
+resolvable. Conventional proxy still **0/13**. **Hypothesis (not conclusion):** our
+strength is narrow and local; the leak-detection service page is the asset to deepen.
+
+**Finding 2 — `check_sitemap_idempotent` had regressed again (Medium).** The committed
+`sitemap.xml` carried the `case-studies` block non-canonically ordered, so
+`refresh_sitemap.py` rewrote it every run (`sitemap_dirty: true`) — the same class of
+failure fixed on 2026-10-16, re-introduced by a later direct edit. Committed the
+generator's own output: **pure reordering**, 76 URLs, identical set, unchanged
+lastmod/changefreq/priority, second refresh byte-identical.
+
+**Finding 3 — entity FAIL is stable, not new.** `entity_consistency` failed
+identically on 10-15, 10-16 and 10-21. Reclassified from "daily incident" to
+**owner-gated standing condition**; tracked as idea-2026-10-21-06.
+
+**Research:** 18 queries (13 Tavily conventional + 5 grounded AI), 2 competitor pages
+fetched, 2 Google Search Central primary docs fetched. 7 competitor rows and 2 dated
+`INDUSTRY_WATCH.md` entries appended; 7 new ideas scored.
+**Target:** AI-answer surfaces (AEO) and entity hygiene.
+**Competitor insight:** `efficientplumbing.com` appeared for **7 of 18** queries;
+`lagunaniguelcaplumbingpros.com` — an exact-match city domain — contests our home city.
+**Expected outcome:** sitemap check green; next run's AI sweep tests whether the
+`recommended` result is stable or a one-off.
+**Result:** gates green — `validate_knowledge_base.py` OK (135 files), **352 unit tests
+OK**, `seo_audit.py` complete.
+**Keep/modify/revert:** keep.
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**
