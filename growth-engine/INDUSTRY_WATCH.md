@@ -210,6 +210,43 @@ New entries are prepended directly under this line, newest first, using:
 -->
 ## Dated entries
 
+### 2026-10-22 — Google Search Console now reports web multimodal Search performance (primary source)
+- **What changed / observed:** Google Search Central announced Search Console
+  reporting for **web multimodal search**, live in both the *performance on Search
+  results* report and the *Generative AI features* report, rolling out globally
+  from 2026-09-24. It covers searches made with **Lens**, **Circle to Search**
+  (Android), image uploads to Google Search, and the Chrome right-click "Search
+  this image" action, exposed via a new *multimodal search* type filter in the
+  Performance report (with CSV export).
+- **Why it matters to Straight Flush:** two implications. (1) The report's
+  existence confirms Google now tracks and surfaces **Generative AI feature**
+  performance in Search Console — the first-party channel this repo has been
+  waiting on (P-002); when GSC access is granted, AI-feature impressions become
+  measurable rather than inferred. (2) Multimodal (camera/image) search is a
+  natural discovery path for plumbing symptoms — a homeowner photographing a
+  stained ceiling or a corroded pipe. Our pages carry real photographs and
+  descriptive `alt` text, which is the crawlable surface multimodal search reads.
+  No page change is justified by this alone (no first-party data yet), so it stays
+  an **observation**, not an action.
+- **Source(s):** https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc
+  (fetched 2026-10-22, HTTP 200); feed listing confirmed at
+  https://developers.google.com/search/blog/feed.xml (HTTP 200).
+  **Confidence:** high (primary source, official blog).
+- **Proposed action:** none today. Feeds idea-2026-10-22-04 (photo/alt-text
+  audit) and reinforces the existing P-002 GSC runbook (idea-2026-10-13-18).
+
+### 2026-10-22 — Official Search-fundamentals learning paths published (primary source)
+- **What changed / observed:** Google Search Central published curated YouTube
+  learning paths for **Search fundamentals** and **Technical SEO**
+  (dated 2026-10-06, fetched HTTP 200). It is training material, not a ranking
+  rule change — no documented ranking or policy effect.
+- **Why it matters to Straight Flush:** low direct impact. Recorded so the daily
+  log does not misattribute a ranking change to it, and so the standing
+  "official guidance" table can cite a current, verified primary source.
+- **Source(s):** https://developers.google.com/search/blog/2026/10/seo-learning-paths
+  (fetched 2026-10-22, HTTP 200). **Confidence:** high (primary source).
+- **Proposed action:** none.
+
 ### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
 - **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
   structure, and the Intelligence HQ automation. No external claims added.

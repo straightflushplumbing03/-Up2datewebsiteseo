@@ -53,9 +53,35 @@ the owner, never execute.
 | idea-2026-10-13-18 | 2026-10-13 | Write the **GSC measurement runbook** to execute on the day P-002 clears | Website/ops (docs) | 4 | 4 | 5 | 5 | L1/L2 | scored | GSC now surfaces generative-AI (2026-06), web-multimodal (2026-09), and social/video platform properties (2026-07) — primary sources; GSC still not connected (P-002). | Documentation only; makes the first connected run productive instead of exploratory. |
 | idea-2026-10-13-19 | 2026-10-13 | Publish a **"calling an emergency plumber: what to have ready"** prep checklist | Website | 3 | 3 | 3 | 5 | L2 | candidate | Both emergency queries today franchise-dominated (`rotorooter.com`, `mrrooter.com`, `emergencyresponseplumbers.com`); homeowner intent = "what do I do now". | **No** response-time or service-area commitment (Level 3). Reduces call friction only. |
 | idea-2026-10-13-20 | 2026-10-13 | Point a lightweight **`llms.txt` path-200 self-check** at every URL referenced in `llms.txt`/`llms-full.txt` | Website/ops | 3 | 4 | 5 | 5 | L2 | candidate | `/llms-full.txt` + `/md/**` are now live (200), but `/md/` root 404s — a referenced-but-broken path would silently starve an AI crawler. | Read-only check; fail loudly on drift. |
+| idea-2026-10-22-01 | 2026-10-22 | Extend the **P-002 GSC runbook** to cover the new *multimodal search* type filter and the *Generative AI features* report | Website/ops (docs) | 4 | 5 | 5 | 5 | L1/L2 | scored | Google Search Central Blog 2026-09-24 (fetched 2026-10-22, HTTP 200): multimodal search performance is now reported in **both** the Search-results report and the **Generative AI features** report. | Extends idea-2026-10-13-18. Documentation only; makes the first connected GSC run able to report AI-feature impressions instead of inferring them. |
+| idea-2026-10-22-02 | 2026-10-22 | Add a **"cities we actually serve" verification block** to the service-areas hub | Website | 3 | 4 | 2 | 5 | L2 | candidate | `drainandsewerpro.com` (fetched 2026-10-22) lists 7 visible service areas but ships **141 `areaServed` cities** including every SF Tier-1 city; non-local markup inflation is winning South-OC slots. | Differentiator is *genuine* local coverage (`SERVICE_AREAS.md`). On-page text only; no new area commitments (L3 boundary). |
+| idea-2026-10-22-03 | 2026-10-22 | Audit existing page images for **descriptive `alt` text and captions** (multimodal-search readiness) | Website | 3 | 3 | 2 | 5 | L2 | candidate | GSC multimodal reporting covers Lens / Circle to Search / image uploads (2026-09-24, fetched); SF pages carry real photographs, which is the crawlable surface these queries read. | Purely additive accessibility/SEO hygiene; no content invention. Cheap, deterministic. |
+| idea-2026-10-22-04 | 2026-10-22 | Publish a **"where is your main water shut-off?"** homeowner explainer (with photos) | Website | 4 | 3 | 2 | 5 | L2 | candidate | Emergency queries in today's sweep are franchise-dominated (`rotorooter.com` 3 slots); homeowner intent at that moment is "what do I do right now". | Universal, claim-free safety content. **No** response-time or service-area promise (L3). Ties to the leak-detection cluster. |
+| idea-2026-10-22-05 | 2026-10-22 | Record **which provider served each sweep query + HTTP status** in `ai_visibility_history.jsonl` | Website/ops | 3 | 5 | 3 | 5 | L2 | scored | Today Brave 429 / DuckDuckGo Lite 202 → Tavily carried the sweep; the row records `platform` but not the fallback chain or per-attempt status. | Extends idea-2026-10-13-17. Prevents a blocked provider being misread as "absent". Deterministic tooling. |
+| idea-2026-10-22-06 | 2026-10-22 | Run an **intent-coverage map** of existing pages against the tested query set (city × service × emergency × cost) | Website/ops | 3 | 3 | 2 | 5 | L2 | candidate | `efficientplumbing.com` took **8 of 15** slots today across three different intent classes — breadth of intent coverage, not page count. | Research only; output is a gap list, not new pages. Feeds the existing per-city idea cluster. |
 
 > The first daily run by the new automation appends its own ≥5 dated ideas and
 > re-scores this table. This seed set documents the format and the evidence bar.
+
+### Prioritization (2026-10-22)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-22-01 GSC runbook × multimodal + AI-features reports | 4 | 5 | Low→High | Yes | ✅ L1/L2 | scored |
+| 2 | idea-2026-10-22-05 provider + HTTP-status provenance in sweep rows | 3 | 5 | Low→High | Yes | ✅ L2 | scored |
+| 3 | idea-2026-10-22-03 image `alt`/caption audit (multimodal readiness) | 3 | 3 | Low→High | Yes | ✅ L2 | candidate |
+| 4 | idea-2026-10-22-02 "cities we actually serve" verification block | 3 | 4 | Low→Med | Yes | ✅ L2 | candidate |
+| 5 | idea-2026-10-22-04 main water shut-off explainer | 4 | 3 | Low→Med | Yes | ✅ L2 | candidate |
+| 6 | idea-2026-10-22-06 intent-coverage map (research only) | 3 | 3 | Low→Med | Yes | ✅ L2 | candidate |
+
+**Selection rule applied (2026-10-22):** the two **scored** items are the ones that
+convert a *blocked* channel (GSC/P-002) and a *noisy* channel (search-provider
+fallback) into reliable signal, at near-zero risk and near-zero effort. They are
+preferred over the content ideas, which remain `candidate` pending the risk gate and
+(for any HTML change) `validate_knowledge_base.py` + `scripts/seo_audit.py`.
+**No idea was actioned today** — every new observation is either documentation
+(not done in this run's remaining budget) or a page change that needs a separate
+site branch. Nothing here justifies a Level-3 change.
 
 ### Second-pass prioritization (2026-10-13)
 

@@ -5,6 +5,44 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-22 — Sitemap ordering normalised (again); AI visibility absent 14/14; new non-local competitor with 141-city markup
+
+**Status:** Tooling/generated metadata + knowledge-base records only. **No website
+page, schema, claim, price or copy changed.** Branch
+`intelligence-hq/daily-2026-10-22`.
+
+**Change (Medium).** Committed `sitemap.xml` was ordered differently from the
+generator's canonical order, so `check_sitemap_idempotent` reported
+`sitemap_dirty: true` on a clean checkout — the same class of defect as the
+2026-10-16 fix. Committed the generator's own output. Verified the URL set is
+**byte-identical** (76 URLs, 0 add/remove) and a second refresh is byte-identical.
+Rollback: `git revert`. Sitemap URL set, lastmods, changefreq and priority unchanged.
+
+**Measurement (Medium).** 15 queries (10 Tavily conventional proxy + 5 Gemini
+Search-grounded). Straight Flush **absent in 14/14 conclusive rows**; 1 row
+`inconclusive` (`test_failure`) recorded as a blocker, never as zero. Brave 429 /
+DuckDuckGo Lite 202 to this egress IP → Tavily carried the sweep. First-party
+metrics (GSC/GA4/GBP) remain **unverified** pending P-002/P-005.
+
+**Competitor insight (High).** New repeat domain **`drainandsewerpro.com`**
+(San Bernardino / Inland Empire — not a South-OC local) surfaced on three South-OC
+queries. Its visible Service Areas block lists 7 cities, but its JSON-LD carries
+**141 `areaServed` City entries** covering every SF Tier-1 city. Feature verified;
+causation is a **hypothesis**. Explicitly **not** a tactic to copy — service-area
+commitments are Level 3.
+
+**Industry (High, primary source).** Google Search Console now reports **web
+multimodal search** (Lens, Circle to Search, image uploads) in *both* the
+Search-results report and the **Generative AI features** report
+(https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc, fetched
+2026-10-22, HTTP 200). Feeds the P-002 runbook (idea-2026-10-22-01).
+
+**Expected outcome:** health checks stop reporting spurious `sitemap_dirty`; the
+knowledge base records an honest, evidence-bounded competitor observation and six
+new scored/candidate ideas. **Result:** pending next run. **Keep.**
+
+---
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**
