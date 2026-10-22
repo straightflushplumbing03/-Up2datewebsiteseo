@@ -16,6 +16,49 @@ real queries are listed. Correlation ≠ causation: a feature being present is
 
 ---
 
+## 2026-10-22 update — 15-query Tavily conventional proxy (10 Tavily + 5 Gemini)
+
+**Provider note:** Brave returned HTTP 429 and DuckDuckGo Lite returned 202 to this
+egress IP; **Tavily** was used as the conventional-search proxy (per the provider
+policy in `INTEGRATION_STATUS.md`), plus **Gemini** Search-grounded for the AI
+surface. Both are recorded in `data/ai_visibility_history.jsonl`. Straight Flush was
+**absent from all 14 conclusive rows** (1 `inconclusive`: `test_failure`).
+
+### Appeared repeatedly (2026-10-22)
+- **yelp.com** — present in **15 of 15** result sets. The single most consistent
+  visibility channel for local plumbing intent.
+- **efficientplumbing.com** — 8 slots across city, "best leak detection", and
+  emergency intents; the most frequent single *company* domain today.
+- **facebook.com** (6), **barkerandsonsplumbing.com** (4), **rotorooter.com** (3),
+  **scottenglishplumbing.net** (3), **evansleakdetection.com** (3),
+  **mapquest.com** (3), **leakstar.com** (3), **clearwaterplumbingoc.com** (3),
+  **drainandsewerpro.com** (3), **instagram.com** (3).
+
+### Newly observed 2026-10-22 — `drainandsewerpro.com` (Drain and Sewer Pro)
+First appearance in this directory. **San Bernardino / Inland Empire** plumbing and
+drain company — **not** a South-Orange-County local. Two distinct service-area
+signals disagree on the same page:
+- Visible "Service Areas" block lists **only** San Bernardino, Rialto, Redlands,
+  Highland, Colton, Loma Linda, Upland.
+- Its JSON-LD `areaServed` carries **141 `City` entries**, including every South-OC
+  Tier-1 city (Laguna Niguel, Mission Viejo, Dana Point, San Clemente, Aliso Viejo,
+  Laguna Hills, Laguna Beach, San Juan Capistrano, Lake Forest, Rancho Santa
+  Margarita, Newport Beach) and most of Los Angeles County.
+
+It surfaced on three separate South-OC queries today. **Observation (high
+confidence):** the markup claims a footprint the visible page does not. **Hypothesis
+(medium, not proven):** the broad `areaServed` list contributes to its South-OC
+visibility. This is a **cautionary pattern for us, not a tactic to copy** — the repo's
+standing rule is that service-area cities are `areaServed` only when genuinely
+served, and inventing coverage is a Level-3 identity/commitment change.
+
+### Pattern (hypothesis, medium)
+Non-local and programmatic/aggregator pages continue to surface for South-OC local
+intent (this run: `drainandsewerpro.com`; previously `los-angeles-plumbers.com`
+per-city subdomains). Local *visible* content is not by itself what wins these
+slots — corroborating the standing conclusion that the durable lever is
+first-party proof (GBP/reviews), not more pages.
+
 ## 2026-10-13 update — 9-query Brave sweep (conventional proxy; rate-limited)
 
 9 queries across 6 core services and 6 cities/county. Brave returned **HTTP 429**

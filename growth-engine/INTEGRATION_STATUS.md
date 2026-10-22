@@ -18,6 +18,18 @@ call. Prior verification 2026-10-09.
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
 
+## 2026-10-22 re-verification (Intelligence HQ daily)
+
+> **Re-verified 2026-10-22:** GitHub OK, GitHub Pages OK, crawler access OK
+> (`crawler_access_check.sh`: PerplexityBot 200, Applebot 200, `robots.txt` 200,
+> `sitemap.xml` 200, `llms.txt` 200; no `cf-mitigated`). **Tavily** carried the
+> conventional sweep (`Tavily_api_key` injected; Brave returned **429** and
+> DuckDuckGo Lite **202** to this egress IP). **Gemini** Search-grounded ran but
+> fell through to the **Gemma fallback** (`engine: gemma`, `fallback_from`
+> recorded) — a genuine AI-answer-engine observation. Google Search Console, GA4,
+> and GBP remain **not connected** ❌ (blocker unchanged — see P-002); their
+> metrics are `unverified`, never zero.
+
 > **Re-verified 2026-10-13 (second pass):** search-provider resilience tested
 > with a **different query set**. Brave returned **8 parseable pages, then an
 > anti-bot challenge page** for every later query (a *more specific* mode than the
