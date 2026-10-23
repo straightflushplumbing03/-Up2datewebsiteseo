@@ -84,9 +84,16 @@ class TestCspAllowsTag(unittest.TestCase):
         self.assertNotEqual(script.strip(), "'self'")
 
     def test_policy_is_not_weakened_to_unsafe_inline(self):
-        """The inline bootstrap is hash-allowed, so XSS protection stays."""
-        self.assertNotIn("'unsafe-inline'", csp_content())
-        self.assertIn("'sha256-", csp_content())
+        """The inline bootstrap is hash-allowed, so XSS protection stays.
+
+        Only `style-src-attr` (inline style="" attributes) may use
+        'unsafe-inline'; scripts and <style> elements never may.
+        """
+        csp = csp_content()
+        for directive in ("script-src", "style-src", "default-src"):
+            value = re.search(rf"(?:^|; ){directive} ([^;]*);", csp).group(1)
+            self.assertNotIn("'unsafe-inline'", value, directive)
+        self.assertIn("'sha256-", csp)
 
     def test_every_page_csp_matches_the_shared_policy(self):
         expected = csp_content()

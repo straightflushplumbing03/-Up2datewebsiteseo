@@ -29,7 +29,7 @@ then add these **Set static** header actions — values identical to the repo's
 
 | Header | Value |
 |---|---|
-| `Content-Security-Policy` | `default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests` |
+| `Content-Security-Policy` | `default-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests` |
 | `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` |
 | `X-Frame-Options` | `SAMEORIGIN` |
 | `X-Content-Type-Options` | `nosniff` |

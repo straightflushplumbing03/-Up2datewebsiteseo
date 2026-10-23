@@ -45,9 +45,17 @@ def inline_sha256():
 
 
 def csp_content():
-    """The one CSP string. Keep this the only definition in the repo."""
+    """The one CSP string. Keep this the only definition in the repo.
+
+    `style-src-attr 'unsafe-inline'` allows the site's many inline style=""
+    attributes (layout, form fields, the form honeypot's off-screen position).
+    Without it every one was blocked: the spam-trap field was visible to real
+    visitors and the contact form rendered cramped. It does not allow <style>
+    elements or any script.
+    """
     return (
         "default-src 'self'; style-src 'self' https://fonts.googleapis.com; "
+        "style-src-attr 'unsafe-inline'; "
         "font-src https://fonts.gstatic.com; img-src 'self' data: "
         "https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com "
         "https://www.googletagmanager.com https://*.google-analytics.com; "
