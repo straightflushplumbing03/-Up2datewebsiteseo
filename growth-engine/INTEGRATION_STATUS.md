@@ -17,6 +17,19 @@ call. Prior verification 2026-10-09.
 > **INACTIVE**, leaving exactly one enabled daily content job. GitHub OK, GitHub Pages
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
+>
+> **Re-verified 2026-10-23 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
+> (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
+> `cf-mitigated`; sitemap in sync (76 URLs). Search providers **worse** this run than
+> the 2026-10-13 note above: Brave **429**, DuckDuckGo HTML **202**, DuckDuckGo **Lite
+> 200 but zero parseable result anchors**, Bing **200 with redirect-wrapped
+> (`bing.com/ck/a?...&u=a1<base64>`) anchors that decode to no result list**. The
+> **Tavily Search API** was the only provider to return usable ranked URLs, so it is
+> now the practical primary for this engine. **Gemini grounded calls returned HTTP 429
+> (quota exhausted by the step-0b pre-stage on the same key)** — the AI surface was
+> therefore `inconclusive`, not zero. GSC/GA4/GBP remain **not connected** (P-002);
+> note the new Search Console *Search generative AI control* (Google docs updated
+> 2026-10-21) also sits behind that credential.
 
 > **Re-verified 2026-10-13 (second pass):** search-provider resilience tested
 > with a **different query set**. Brave returned **8 parseable pages, then an

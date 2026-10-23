@@ -5,6 +5,49 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim,
+copy, price, or sitemap entry changed.** Branch `intelligence-hq/daily-2026-10-23`.
+
+**Change:** none to the site. Added 12 visibility rows and 49 competitor rows
+(append-only), 6 new ideas, 2 dated industry-watch entries, the daily report, and
+this log entry.
+
+**Reason:** today's sweep produced an unusually large set of *absent* results, and
+the temptation is to read that as a content problem. The evidence points the other
+way. Brave returned **429**, DuckDuckGo HTML **202**, DuckDuckGo **Lite 200 but
+zero parseable anchors**, and Bing **200 with redirect-wrapped anchors** — four
+provider failures — while the Gemini AI-surface calls all returned **429** because
+the step-0b pre-stage had already spent the shared key's quota. Only Tavily returned
+usable ranked URLs. Recording those as "absent" would have encoded a measurement
+outage as a visibility decline.
+
+**Target:** measurement integrity first. The top three of today's six ideas are
+provider-fallback instrumentation (01), Gemini quota reservation (02), and a query
+fan-out coverage map (05) — chosen over the easiest content to generate.
+
+**Competitor insight:** the water-heater and whole-house-repipe intents are held by
+**single-service specialist domains** (`waterheatermaninc.com`,
+`waterheaterinstallrepair.com`, `repipe-newport-beach.com`) rather than general
+plumbers, while regional multi-city brands (`efficientplumbing.com` 4×,
+`evansleakdetection.com` 3×, `scottenglishplumbing.net` 3×,
+`barkerandsonsplumbing.com` 3×) recur across city × service pairs. Feature verified;
+causation remains a hypothesis.
+
+**Expected outcome:** next run measures the same AI surface with quota actually
+available, and a fan-out map tells us which existing pages already answer the
+subqueries before any new page is written.
+
+**Result:** pending. **Keep/modify/revert:** keep.
+
+**Also re-confirmed:** crawler access 5/5 at HTTP 200 (no ISSUE-001 regression) —
+the first *executed* live health check in three days, after 10-21 and 10-22 both
+recorded INCONCLUSIVE for lack of one. Entity duplicates (ISSUE-014) both still
+return 200; owner action, not auto-applied.
+
+---
+
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 
 **Status:** Tooling and generated metadata only. **No website page, schema, claim or copy changed.**

@@ -353,6 +353,40 @@ They surface for local intent despite being non-local. This is a directory/progr
 pattern, not a single competitor; treat as a visibility channel to monitor, not a
 company to out-content.
 
+## 2026-10-23 update — 8-query Tavily sweep (Brave/DDG/Bing blocked)
+
+Provider note: Brave **429**, DuckDuckGo HTML **202**, DuckDuckGo Lite **200 with zero
+parseable anchors**, Bing **200 with redirect-wrapped anchors**. Tavily Search API was
+the only provider to return ranked URLs, so this update is Tavily-only (lower breadth
+than the 2026-10-11 28-query Brave sweep; treat as directional).
+
+**Repeat competitors (distinct queries today):**
+- `efficientplumbing.com` (4) · `evansleakdetection.com` (3) ·
+  `scottenglishplumbing.net` (3) · `barkerandsonsplumbing.com` (3) ·
+  `clearwaterplumbingoc.com` (2) · `rotorooter.com` (2) · `ocrepipes.com` (2)
+
+**New this run (not previously recorded):**
+- `repipe-newport-beach.com` — **exact-match city+service domain** for whole-house
+  repipe in Newport Beach. `primewestplumbing.com`, `repipetopteam.com` also present.
+- `waterheatermaninc.com`, `waterheaterinstallrepair.com`, `usawaterheaters.us`,
+  `lagunaniguelplumber.org` — **single-service water-heater** domains holding
+  "water heater repair Laguna Niguel" (SF absent).
+- `pristineplumbinginc.com`, `partnersplumbingco.com`, `tritonair.com` (San Clemente);
+  `boothneyandsonsplumbing.com`, `drainandsewerpro.com`, `justrightservices.net`
+  (Laguna Hills drains); `hanahouhome.com`, `biardandcrockett.com`,
+  `americanleakdetection.com` (acoustic leak detection, OC); `leakstar.com`,
+  `streamlineplumbing.org` (slab leak, Laguna Niguel).
+
+**Gap confirmed (evidence):** the water-heater and repipe intents are served by
+**dedicated single-service domains**, not general plumbers, and SF holds neither a
+city × water-heater nor a city × repipe page. That these pages *cause* the ranking is
+a **hypothesis**; the pages' existence is a **verified fact**.
+
+**Directory/franchise channels (not competitors):** yelp.com, rotorooter.com,
+benjaminfranklinplumbing.com on emergency queries — reproduces the standing finding.
+
+---
+
 ## Next investigation queue
 
 For each Tier A competitor, when crawlers can reach us (post-Cloudflare fix):

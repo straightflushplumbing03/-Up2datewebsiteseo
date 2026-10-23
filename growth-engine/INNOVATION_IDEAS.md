@@ -54,6 +54,13 @@ the owner, never execute.
 | idea-2026-10-13-19 | 2026-10-13 | Publish a **"calling an emergency plumber: what to have ready"** prep checklist | Website | 3 | 3 | 3 | 5 | L2 | candidate | Both emergency queries today franchise-dominated (`rotorooter.com`, `mrrooter.com`, `emergencyresponseplumbers.com`); homeowner intent = "what do I do now". | **No** response-time or service-area commitment (Level 3). Reduces call friction only. |
 | idea-2026-10-13-20 | 2026-10-13 | Point a lightweight **`llms.txt` path-200 self-check** at every URL referenced in `llms.txt`/`llms-full.txt` | Website/ops | 3 | 4 | 5 | 5 | L2 | candidate | `/llms-full.txt` + `/md/**` are now live (200), but `/md/` root 404s — a referenced-but-broken path would silently starve an AI crawler. | Read-only check; fail loudly on drift. |
 
+| idea-2026-10-23-01 | 2026-10-23 | Add a **provider-fallback + HTTP-status recorder** to the daily sweep (Brave → DDG Lite → Bing → Tavily) so a blocked provider can never be written down as `absent` | Website/ops | 4 | 5 | 3 | 5 | L2 | scored | **Fetched this run:** Brave `https://search.brave.com/search?q=…` → HTTP **429**; DuckDuckGo HTML → **202** with no results; DuckDuckGo **Lite** → 200 but **0 parseable result anchors**; Bing → 200 with **redirect-wrapped** anchors (`bing.com/ck/a?...&u=a1<base64>`) that parse to nothing without decoding; Gemini grounded call → **429**. Only Tavily returned usable ranked URLs. | Extends idea-2026-10-13-17. Deterministic tooling; a provider that fails must be recorded `BLOCKED`, never `absent`. Add Bing `u=a1…` base64 unwrapping. |
+| idea-2026-10-23-02 | 2026-10-23 | Reserve **Gemini quota for the sweep** (pre-stage and sweep currently share one key, so the AI surface is measured with a spent quota) | Website/ops | 3 | 4 | 3 | 5 | L2 | scored | This run: the step-0b pre-stage consumed the Gemini quota; all 4 post-stage grounded calls returned **HTTP 429**, recorded `inconclusive`. `data/daily_context.json` `ai_visibility_sweep` shows 4/5 rows `inconclusive`. | Measurement-integrity fix, not a visibility claim. Options: separate key, smaller pre-stage Gemini budget, or retry-with-backoff after a cooldown. |
+| idea-2026-10-23-03 | 2026-10-23 | Add a **per-city water-heater page** for Laguna Niguel (and the other Tier-1 cities that lack one) | Website | 4 | 3 | 3 | 5 | L2 | candidate | Tavily "water heater repair Laguna Niguel" → SF **absent**; ranking set is single-service specialist domains (`waterheatermaninc.com`, `waterheaterinstallrepair.com`, `usawaterheaters.us`, `lagunaniguelplumber.org`) plus `scottenglishplumbing.net`. Feature verified (they hold a dedicated water-heater page); causation = hypothesis. | Extends the 13-01/13-08 city × service pattern to water heaters. Reuse existing service + city templates; no new claims, no prices (Level 3). |
+| idea-2026-10-23-04 | 2026-10-23 | Add a **Newport Beach whole-house repipe** framing page | Website | 4 | 3 | 3 | 5 | L2 | candidate | Tavily "whole house repipe Newport Beach" → SF **absent**; `repipe-newport-beach.com` is a **dedicated exact-match domain**, plus `repipetopteam.com`, `primewestplumbing.com`, `ocrepipes.com`. | Extends idea-2026-10-13-02 to a city where the repipe intent is served by specialist domains. Education/eligibility content, not a doorway page. |
+| idea-2026-10-23-05 | 2026-10-23 | Write an internal **query fan-out coverage map** (Google's fan-out subqueries × existing SF pages) to find answer gaps before writing new content | Website/ops (docs) | 4 | 4 | 2 | 5 | L1 | scored | Google Search Central, *Optimizing for generative AI search* (fetched 2026-10-23, HTTP 200): AI features use **RAG/grounding** and **query fan-out** ("concurrent, related queries … to fetch additional relevant search results"); the same page states AEO/GEO "is still SEO". | Docs-only, reversible. Prevents the pattern of writing pages that duplicate an existing answer. Feeds idea-2026-10-23-03/04 with evidence instead of guesswork. |
+| idea-2026-10-23-06 | 2026-10-23 | Publish an **owner field-notes** asset ("what we actually found on this slab leak") to supply the first-hand point of view Google now names as a differentiator | Website | 4 | 3 | 4 | 5 | L2/⛔ | candidate | Google Search Central, *Optimizing for generative AI search* (fetched 2026-10-23): "**Providing a unique point of view** … a first-hand review provides a unique perspective based on personal experience, whereas a summary of existing content simply restates information already available elsewhere." | Blocked on **owner-supplied** job detail/photos (same dependency as idea-2026-10-12-04). No fabricated cases — every note must be a real job. Do not publish until the owner provides it. |
+
 > The first daily run by the new automation appends its own ≥5 dated ideas and
 > re-scores this table. This seed set documents the format and the evidence bar.
 
@@ -376,4 +383,38 @@ No idea is actioned until it survives the risk gate and (for any HTML change) th
 ## Parked / rejected log
 
 - **IDEA-06 owner-voice video** — parked 2026-10-12: blocked on owner-produced media.
+- No idea rejected this run.
+
+---
+
+## 2026-10-23 (daily run) — 6 new ideas, prioritized
+
+Scored 1–5 (higher is better). Risk gate: **L1** read-only/docs · **L2** reversible
+on-page or tooling · **L3** identity/price/legal/area/profile (propose only).
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-23-01 sweep provider-fallback + HTTP-status recorder | 4 | 5 | 3 | 5 | ✅ L2 | **prioritized** |
+| 2 | idea-2026-10-23-02 reserve Gemini quota for the sweep | 3 | 4 | 3 | 5 | ✅ L2 | **prioritized** |
+| 3 | idea-2026-10-23-05 query fan-out coverage map (docs) | 4 | 4 | 2 | 5 | ✅ L1 | **prioritized** |
+| 4 | idea-2026-10-23-03 per-city water-heater page (Laguna Niguel) | 4 | 3 | 3 | 5 | ✅ L2 | candidate |
+| 5 | idea-2026-10-23-04 Newport Beach whole-house repipe page | 4 | 3 | 3 | 5 | ✅ L2 | candidate |
+| 6 | idea-2026-10-23-06 owner field-notes asset | 4 | 3 | 4 | 5 | ⛔ owner media | parked |
+
+**Selection rule applied:** the top three are *measurement-integrity* items, chosen
+over the easiest content to generate, because today's evidence is that the measuring
+apparatus — not the site — produced the gaps: Brave/DDG/Bing all failed and the
+Gemini quota was exhausted before the AI-surface sweep ran. Ranking a content idea
+above a broken instrument would encode a false picture of visibility. Ideas 03 and 04
+are genuine, evidence-backed content gaps (dedicated specialist pages observed) and
+are kept as `candidate` pending a fan-out map (idea 05) so they are not written blind.
+
+**No idea actioned this run:** every candidate is either docs/tooling (deferred to a
+future run with its own tests) or an HTML change that would touch page content, which
+this run is constrained not to do. Nothing was rejected.
+
+### Parked / rejected log (2026-10-23)
+
+- **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
+  job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
