@@ -32,7 +32,7 @@ requires owner confirmation is marked **UNVERIFIED — owner input required**.
 |---|---|---|---|---|
 | Street address | 78 Cameray Heights, Laguna Niguel, CA 92677, US | `index.html` JSON-LD `address`; site-wide footer | 2026-10-09 | high (as published) |
 | Published as | Address, not marked as a service-area business | `index.html` JSON-LD (no `serviceArea` type flag) | 2026-10-09 | medium |
-| Google Maps link | https://share.google/WcJBYE3uu5FsppBTR | `index.html` JSON-LD `sameAs` | 2026-10-09 | medium |
+| Google Maps link | https://share.google/sb14Anzgtd7hriV9u | `index.html` JSON-LD `sameAs` | 2026-10-09 | medium |
 | Yelp | https://www.yelp.com/biz/straight-flush-plumbing-and-leak-detection-laguna-niguel-3 | `index.html` JSON-LD `sameAs` | 2026-10-09 | medium |
 
 > Note: phone, email and address are **consistent across the repo** as of

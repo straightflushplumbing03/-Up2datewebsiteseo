@@ -71,7 +71,7 @@ Scan to add Straight Flush Plumbing straight to your contacts — one less thing
 
  ★
 
-**74+ Reviews**[Google](https://share.google/WcJBYE3uu5FsppBTR) · [Yelp](https://www.yelp.com/biz/straight-flush-plumbing-and-leak-detection-laguna-niguel-3)
+**74+ Reviews**[Google](https://share.google/sb14Anzgtd7hriV9u) · [Yelp](https://www.yelp.com/biz/straight-flush-plumbing-and-leak-detection-laguna-niguel-3)
 
 
 
