@@ -42,7 +42,7 @@ Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of o
 
 - Whole-house PEX repiping & copper line elimination
 
-- Water heater repair & installation
+- [Water heater repair & installation in Laguna Niguel](https://straightflushplumbingoc.com/services/water-heater-repair-laguna-niguel.html)
 
 - Drain services & general plumbing repair
 

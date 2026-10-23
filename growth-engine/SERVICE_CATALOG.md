@@ -47,7 +47,11 @@ Source of truth: `services/` directory and `sitemap.xml`, verified 2026-10-09.
 These appear in existing automation prompt text but have **no dedicated page**:
 sewer-line repair, whole-house repipe (beyond the PEX page), main water line,
 copper pipe repair / pinhole repair, water pressure regulator, toilet/shower/faucet
-fixture work, bathroom-remodel plumbing, tankless water heater service.
+fixture work, bathroom-remodel plumbing.
+
+**Tankless water heater service — owner-confirmed 2026-10-23** (repair, descaling and
+tank-to-tankless conversion). Covered on `/services/water-heater-services.html` and the
+city pages `/services/water-heater-repair-{laguna-niguel,dana-point,san-clemente}.html`.
 
 > Do not create pages or copy for these until the owner confirms the company
 > performs them. Until then, treat the core seven service pages as the canonical

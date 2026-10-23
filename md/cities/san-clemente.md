@@ -42,7 +42,7 @@ Whether it's an older home near the pier or a newer build in Forster Ranch or Ta
 
 - Whole-house PEX repiping & copper line elimination
 
-- Water heater repair & installation
+- [Water heater repair & installation in San Clemente](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
 
 - Drain services & general plumbing repair
 

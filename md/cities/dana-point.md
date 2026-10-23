@@ -42,11 +42,25 @@ Salt air, coastal humidity, and a number of older homes near the harbor make acc
 
 - Whole-house PEX repiping & copper line elimination
 
-- Water heater repair & installation
+- [Water heater repair & installation in Dana Point](https://straightflushplumbingoc.com/services/water-heater-repair-dana-point.html)
 
 - Drain services & general plumbing repair
 
 
+
+
+
+
+
+
+ Recent work in Dana Point
+
+
+## A job we completed here
+
+
+
+ [October 2026Kitchen island PEX and 18 shutoff valvesCopper at the kitchen island replaced with PEX, every accessible shutoff valve rebuilt, supply lines replaced and the water heater flushed.Read the case study →](https://straightflushplumbingoc.com/case-studies/dana-point-kitchen-pex-shutoff-valves.html)
 
 
 

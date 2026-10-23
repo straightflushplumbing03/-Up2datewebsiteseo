@@ -3,6 +3,16 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-23 — City water-heater pages (owner request)
+
+- Added `/services/water-heater-repair-{laguna-niguel,dana-point,san-clemente}.html`
+  (Service + BreadcrumbList + FAQPage JSON-LD). Reason: the 2026-10-23 sweep found
+  no local business page in water-heater results for these three cities, only directories.
+- Linked from each city page, `/services/water-heater-services.html`, `sitemap.xml`,
+  `llms.txt` and the md mirrors (`scripts/gen_llms_md.py`).
+- Owner confirmed tankless water heater service (`SERVICE_CATALOG.md`).
+- No job examples yet: the Joist invoice app has no connector in this session.
+
 ## 2026-10-19 — Claude takeover + AI Citation Engine
 
 - Added `citation_engine.py` (+ 9 unit tests): plans rotating service × city
