@@ -13,7 +13,7 @@ from csp_policy import GTAG_BLOCK, meta_csp_tag  # noqa: E402  (single CSP sourc
 
 PHONE_DISPLAY = "(949) 374-6524"
 PHONE_TEL = "+19493746524"
-EMAIL = "straightflushplumbing03@gmail.com"
+EMAIL = "lance@straightflushplumbingoc.com"
 ADDRESS = "78 Cameray Heights, Laguna Niguel, CA 92677"
 GOOGLE_REVIEWS_URL = "https://share.google/sb14Anzgtd7hriV9u"
 YELP_REVIEWS_URL = "https://www.yelp.com/biz/straight-flush-plumbing-and-leak-detection-laguna-niguel-3"

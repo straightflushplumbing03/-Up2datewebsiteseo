@@ -21,7 +21,7 @@ requires owner confirmation is marked **UNVERIFIED — owner input required**.
 | Slogan | Always A Safe Bet | `index.html` JSON-LD `slogan`; `llms.txt` | 2026-10-09 | high |
 | Canonical website | https://straightflushplumbingoc.com/ | `CNAME`; `sitemap.xml`; `index.html` JSON-LD `url` | 2026-10-09 | high |
 | Phone | (949) 374-6524 / `+1-949-374-6524` | `index.html` JSON-LD `telephone`; site-wide footer | 2026-10-09 | high |
-| Email | straightflushplumbing03@gmail.com | `index.html` JSON-LD `email`; `llms.txt` | 2026-10-09 | high |
+| Email | lance@straightflushplumbingoc.com (Cloudflare Email Routing forwards to the owner Gmail; replaced the Gmail address site-wide 2026-10-23) | `index.html` JSON-LD `email`; `llms.txt`; every footer | 2026-10-23 | high |
 | Founded | 2019 | `index.html` JSON-LD `foundingDate`; `llms.txt` | 2026-10-09 | high |
 | Owner / lead technician | Lance (owner-operator; answers the phone directly) | `index.html` JSON-LD `founder`; `llms.txt` | 2026-10-09 | high |
 | Business model | Owner-operated residential plumbing | `llms.txt`; About page | 2026-10-09 | high |

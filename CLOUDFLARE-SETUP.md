@@ -158,7 +158,7 @@ curl -s -o /dev/null -w "%{http_code}\n" -A "GPTBot" https://straightflushplumbi
 curl -s -o /dev/null -w "%{http_code}\n" -A "ClaudeBot" https://straightflushplumbingoc.com/
 
 # No HTML rewriting (email addresses should appear in plain text)?
-curl -s https://straightflushplumbingoc.com/contact.html | grep -c "straightflushplumbing03@gmail.com"   # expect >= 1
+curl -s https://straightflushplumbingoc.com/contact.html | grep -c "lance@straightflushplumbingoc.com"   # expect >= 1
 ```
 
 If any check fails, the matching dashboard section above is where to fix it.

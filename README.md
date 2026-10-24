@@ -3,7 +3,7 @@
 Diagnose-first marketing site for Straight Flush Plumbing & Leak Detection, serving South & Central Orange County, CA. Static HTML/CSS/JS — no build step, no framework, no dependencies to install.
 
 **Live brand:** Straight Flush Plumbing & Leak Detection — "Always A Safe Bet"
-**Phone:** (949) 374-6524 · **Email:** straightflushplumbing03@gmail.com
+**Phone:** (949) 374-6524 · **Email:** lance@straightflushplumbingoc.com
 
 The visual theme mirrors the original straightflushplumbingoc.com site (white header, navy/red-orange palette, Playfair Display serif, interactive symptom/problem pickers, Yelp/Google proof cards, service-area map, split booking form), rebuilt from scratch as a fast static site with expanded content and SEO infrastructure.
 
@@ -117,7 +117,7 @@ Both degrade gracefully: if the Web Audio API isn't available, the play buttons 
 Phone number, email, and address currently appear in the `<header>`, `<footer>`, and JSON-LD schema of every page. To change them site-wide, find-and-replace across all `.html` files:
 
 - Phone: `(949) 374-6524` and `+19493746524`
-- Email: `straightflushplumbing03@gmail.com`
+- Email: `lance@straightflushplumbingoc.com`
 - Address: `78 Cameray Heights, Laguna Niguel, CA 92677`
 
 ```bash

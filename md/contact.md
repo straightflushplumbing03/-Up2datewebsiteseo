@@ -61,7 +61,7 @@ Scan to add Straight Flush Plumbing straight to your contacts — one less thing
 
 
 
-**Email**[straightflushplumbing03@gmail.com](mailto:straightflushplumbing03@gmail.com)
+**Email**[lance@straightflushplumbingoc.com](mailto:lance@straightflushplumbingoc.com)
 
 
  ●
