@@ -53,6 +53,20 @@ Many Laguna Hills homes date to the 1970s-80s, putting original copper plumbing 
 
 
 
+ Recent work in Laguna Hills
+
+
+## A job we completed here
+
+
+
+ [April 2026Kitchen Drain BlockageBlockage of tea bags and eggshells found in the tee fitting, cleared and flow-tested.Read the case study →](https://straightflushplumbingoc.com/case-studies/laguna-hills-kitchen-drain-blockage.html)
+
+
+
+
+
+
  Nearby areas we also serve
 
 

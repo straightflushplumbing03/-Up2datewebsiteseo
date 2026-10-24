@@ -3,6 +3,18 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-24 — City slab-leak and PEX-repipe pages (owner request)
+
+- Added `/services/slab-leak-detection-{laguna-niguel,dana-point}.html` and
+  `/services/pex-repiping-{laguna-niguel,dana-point}.html` (Service + BreadcrumbList +
+  FAQPage JSON-LD). Reason: the 2026-10-24 sweep found these queries answered almost
+  entirely by homeservice.ignitionlabs.com templated pages, no real local business.
+- Linked from both city pages, `/services/slab-leak-detection.html`,
+  `/services/pex-repiping.html`, `sitemap.xml`, `llms.txt` and the md mirrors
+  (`scripts/gen_llms_md.py`; regeneration also refreshed stale mirrors of other pages).
+- Content uses only APPROVED_CLAIMS items; no prices, license numbers or new reviews.
+  Links the existing Laguna Niguel slab-leak/PEX and Dana Point kitchen-PEX case studies.
+
 ## 2026-10-23 — City water-heater pages (owner request)
 
 - Added `/services/water-heater-repair-{laguna-niguel,dana-point,san-clemente}.html`

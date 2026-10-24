@@ -53,6 +53,21 @@ As one of South Orange County's younger communities, Ladera Ranch homes are less
 
 
 
+ Recent work in Ladera Ranch
+
+
+## Jobs we completed here
+
+
+
+ [August 2026Whole-Home Leak ProtectionSmart main shutoff, new pressure regulator and check valve, leak sensors, and a water heater inspection.Read the case study →](https://straightflushplumbingoc.com/case-studies/ladera-ranch-whole-home-leak-protection.html)
+ [July 2026Laundry Overflow InvestigationDrains, fixtures and pressurized lines tested; the overflow traced to a blocked washer drain pump.Read the case study →](https://straightflushplumbingoc.com/case-studies/ladera-ranch-laundry-overflow-leak-investigation.html)
+
+
+
+
+
+
  Nearby areas we also serve
 
 

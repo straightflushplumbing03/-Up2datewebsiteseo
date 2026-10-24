@@ -20,7 +20,7 @@ Straight Flush Plumbing & Leak Detection is Laguna Niguel’s owner-operated com
 
 
 
- ![](https://straightflushplumbingoc.com//assets/img/lance-hero.jpeg)
+ ![](https://straightflushplumbingoc.com//assets/img/lance-hero-web.jpg)
  **Lance**Owner & Lead Technician
 
 

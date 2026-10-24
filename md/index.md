@@ -7,13 +7,15 @@
 ---
 Family-Owned · Laguna Niguel, CA
  Orange County · Acoustic & Electronic Leak Detection
- ![](https://straightflushplumbingoc.com//assets/img/logo.jpg)
+ ![](https://straightflushplumbingoc.com//assets/img/logo-sm.jpg)
 
 
 # Don’t gamble with your pipes. *We find the leaks others miss.*
 
 
- Plumber & Leak Detection Specialist in Laguna Niguel, CA — Straight Flush Plumbing & Leak Detection
+
+Plumber & Leak Detection Specialist in Laguna Niguel, CA
+
 
 
 Straight Flush Plumbing & Leak Detection is Laguna Niguel’s owner-operated specialist where **Lance answers the phone**. We find hidden slab leaks with acoustic, electronic, and thermal diagnostics—built for South OC homes with 1970s–90s copper pipes in clay soils—so you never pay for guesswork or unnecessary demolition.
@@ -333,7 +335,7 @@ Answer a few quick questions about your home and get an instant, personalized ri
 
 
 
- ![](https://straightflushplumbingoc.com//assets/img/lance-hero.jpeg)
+ ![](https://straightflushplumbingoc.com//assets/img/lance-hero-web.jpg)
  **Lance**Owner & Lead Technician
 
 
@@ -375,35 +377,35 @@ Straight Flush Plumbing & Leak Detection was built to bring a higher standard of
 
  01
 
-#### Consultation
+### Consultation
 
 We talk through your symptoms — bills, sounds, damp spots, pressure changes.
 
 
  02
 
-#### Visual Inspection
+### Visual Inspection
 
 We inspect accessible plumbing, fixtures, and the areas you're concerned about.
 
 
  03
 
-#### Diagnostic Testing
+### Diagnostic Testing
 
 Pressure testing narrows down which line, and which zone, is involved.
 
 
  04
 
-#### Technology-Assisted Locating
+### Technology-Assisted Locating
 
 Acoustic, electronic, or thermal equipment pinpoints the exact location.
 
 
  05
 
-#### Findings & Options
+### Findings & Options
 
 We explain what we found and every reasonable path forward — no pressure.
 
@@ -580,11 +582,11 @@ We'll respond within minutes during business hours.
 
 
 
+ Your name (required)
+ Phone number (required)
 
-
-
-
-
+ Email (optional)
+ Service needed
  Select Service Needed
  Leak Detection
  Slab Leak
@@ -594,7 +596,7 @@ We'll respond within minutes during business hours.
  General Repair
  Emergency
 
-
+ Describe your issue (optional)
  Request a Callback — It's Free
 
  [Prefer to Call? (949) 374-6524](tel:+19493746524)
