@@ -387,6 +387,53 @@ benjaminfranklinplumbing.com on emergency queries — reproduces the standing fi
 
 ---
 
+## 2026-10-24 update — 10-query Tavily sweep (Brave/DDG/Bing not used this run)
+
+Provider note: the pre-stage ran **Tavily Search API only** (the bounded default from
+`scripts/daily_measure.py`). This is **conventional search**, not an AI-platform
+result. Tavily has narrower breadth than the 2026-10-11 28-query Brave sweep, so
+treat the *ranking order* as directional and the *presence of a domain* as the
+durable signal.
+
+**Repeat competitors (appeared on ≥2 distinct queries today):**
+- `efficientplumbing.com` (7 appearances, 6 distinct queries — the single most
+  pervasive local competitor in this sweep; present for plumber, leak detection,
+  water leak detection, copper leak, PEX repipe, water heater)
+- `barkerandsonsplumbing.com` (4) · `drainandsewerpro.com` (3) · `rotorooter.com` (3)
+- `evansleakdetection.com` (2) · `leakstar.com` (2) · `streamlineplumbing.org` (2) ·
+  `clearwaterplumbingoc.com` (2) · `scottenglishplumbing.net` (2) ·
+  `socalrepipes.com` (2) · `billmetzgerplumbing.com` (2) · `parzivalplumbing.com` (2)
+
+**New this run (not previously recorded as a competitor):**
+- `sjplumbingoc.com`, `a-1totalserviceplumbing.com`, `avisplumbingandair.com` —
+  general plumbers holding the "emergency plumber in South Orange County" slot
+  alongside `pristineplumbinginc.com` and `olsonsuperior.com`.
+- `speedywaterheatersoc.com` — another **single-service water-heater** domain on
+  "water heater repair in Aliso Viejo", reinforcing the 2026-10-23 finding that the
+  water-heater intent is served by dedicated single-service domains.
+- `danapointplumbingandairpros.com` — **city-match domain** on "copper pipe leak
+  repair near Dana Point".
+- `pipebros.com` — repipe specialist on "PEX repiping company in Laguna Hills"
+  (alongside the already-recorded `integrityrepipe.com`, `allamericanrepipe.com`,
+  `socalrepipes.com`, `repipesoc.com`).
+
+**Standing gap, re-confirmed with fresh evidence:** the **repipe** intent is held by
+repipe-specialist domains and the **water-heater** intent by water-heater-only
+domains, while Straight Flush holds neither a city × repipe nor a city × water-heater
+page. Presence of those pages is a **verified fact**; that they *cause* the ranking is
+a **hypothesis** (`idea-2026-10-24-04`, `idea-2026-10-24-05`).
+
+**Aggregator/dictionary noise (not competitors):** `yelp.com` (11), `facebook.com`
+(5), `instagram.com` (3), `mapquest.com` (3). Notably, the conversational query
+"who can locate a hidden water leak in Laguna Niguel?" returned **dictionary
+definitions** (`wiktionary`, `merriam-webster`, `dictionary.com`, `thefreedictionary`,
+`collinsdictionary`) — i.e. the phrasing read as a definition lookup rather than a
+local-service query. Recorded as an **intent-mismatch observation**, not a ranking
+loss: it argues for query phrasing that carries explicit local-service intent when we
+test, and for on-page answers phrased the way homeowners actually ask.
+
+---
+
 ## Next investigation queue
 
 For each Tier A competitor, when crawlers can reach us (post-Cloudflare fix):

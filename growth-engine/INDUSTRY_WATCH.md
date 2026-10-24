@@ -287,6 +287,48 @@ New entries are prepended directly under this line, newest first, using:
 - **Proposed action (if any):** recorded only. Folded into the P-002 note in this run's
   report; no proposal file created because P-002 already covers it.
 
+## 2026-10-24 — Google: "query fan-out" is how AI Overviews / AI Mode gather sources; sitemap `<priority>`/`<changefreq>` are ignored, `<lastmod>` is used only if verifiably accurate
+
+- **What changed / observed (entry 1 — AI surface):** The primary Google Search
+  Central page "AI features and your website" states that AI Overviews and AI Mode
+  "may use a **query fan-out** technique — issuing multiple related searches across
+  subtopics and data sources — to develop a response". It also states that to be
+  eligible as a *supporting link* a page must be indexed and eligible to show a
+  snippet, that "there are no additional requirements" beyond the normal technical
+  requirements, that no AI-specific optimization is required, and that AI-feature
+  impressions are folded into the ordinary Search Console Performance report. The
+  page was fetched live this run and is unchanged in its core claims from the
+  standing reference row, but the **query fan-out** wording is the operational
+  detail worth recording: a single conversational query is decomposed into several
+  sub-queries, so coverage of *adjacent* sub-topics (cost, insurance, diagnosis,
+  prevention) is what makes a page reachable across the fan-out, not repetition of
+  one head term.
+- **Why it matters to Straight Flush:** It reframes "AI visibility" from a single
+  keyword to a **topic cluster** test. It also confirms the site's existing
+  strategy — plain-language answer-first content on slab leaks, insurance, and
+  diagnostics — is directionally right, and that the measured absence in AI answers
+  is a *coverage/authority* problem rather than a missing "AI trick". It is
+  consistent with the P-002 blocker: AI-feature performance is only diagnosable
+  inside Search Console, which is not connected.
+- **Source(s):** https://developers.google.com/search/docs/appearance/ai-features
+  (fetched 2026-10-24, HTTP 200) · **Confidence:** high (primary source, fetched).
+- **What changed / observed (entry 2 — sitemap semantics):** The primary Google
+  sitemap documentation states plainly: "**Google ignores `<priority>` and
+  `<changefreq>` values**" and "Google uses the `<lastmod>` value **if it's
+  consistently and verifiably (for example by comparing to the last modification of
+  the page) accurate**."
+- **Why it matters to Straight Flush:** Directly validates today's sitemap fix.
+  `refresh_sitemap.py` preserves existing `changefreq`/`priority` and derives
+  `lastmod` from `git log -1 --format=%cs` — i.e. it keeps the one field Google
+  actually reads **verifiably accurate**, and treats the two ignored fields as inert
+  carry-through. It also lowers the stakes of the ordering-only diff: ordering has no
+  documented effect on Google, so the fix is purely about making our own idempotency
+  check meaningful, not about ranking.
+- **Source(s):** https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+  (fetched 2026-10-24, HTTP 200) · **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** Recorded only. Idea `idea-2026-10-24-03` (query
+  fan-out coverage map) is derived from entry 1; no code change follows from entry 2.
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |
