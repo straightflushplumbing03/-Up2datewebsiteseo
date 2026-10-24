@@ -361,6 +361,48 @@ to HQ-D only for now.
 
 ---
 
+| idea-2026-10-24-01 | 2026-10-24 | Restore **canonical sitemap URL ordering** so the daily idempotency check is meaningful again | Website/ops | 3 | 5 | 2 | 5 | L1 | shipped | Committed `sitemap.xml` held a non-canonical `case-studies/` block while `refresh_sitemap.py` writes canonical order (homepage → depth → alphabetical), so every run reported `sitemap_dirty=true` and `check_sitemap_idempotent` failed. Verified ordering-only: URL set identical (85), per-URL `lastmod` identical. | Shipped on `intelligence-hq/site-2026-10-24-sitemap-order` (PR #80). 352 tests OK; `seo_audit.py` clean; re-running the generator now yields 0 changes. |
+| idea-2026-10-24-02 | 2026-10-24 | **Retire the superseded 2026-10-20 sitemap PR (#74)** rather than let a stale, oversized branch sit open | Ops | 3 | 4 | 2 | 5 | L1 | candidate | `gh` PR list fetched this run: PR #74 (`intelligence-hq/site-2026-10-20-sitemap-order`, "restore canonical sitemap.xml ordering") is still **open** and its branch diff against `main` is **190 files changed, 1259 insertions / 7368 deletions** — far larger than the ordering fix it claims. PR #80 supersedes its intent with a 1-file diff. | Closing a stale PR is reversible and non-destructive. Do **not** merge #74: a 7,368-line deletion is not the ordering fix. Recommend owner/agent closes #74 with a pointer to #80. |
+| idea-2026-10-24-03 | 2026-10-24 | Build the **query fan-out coverage map** (Google fan-out sub-topics × existing SF pages) and use it to pick the next content page | Website/ops (docs) | 4 | 5 | 2 | 5 | L1 | scored | Google Search Central *AI features and your website* (fetched 2026-10-24, HTTP 200): AI Overviews/AI Mode "may use a **query fan-out** technique — issuing multiple related searches across subtopics and data sources". Extends idea-2026-10-23-05 with the primary-source wording captured today. | Docs-only, L1. Should be done **before** ideas 04/05 so new pages cover distinct fan-out sub-topics (cost, insurance, diagnosis, prevention) instead of duplicating an existing answer. |
+| idea-2026-10-24-04 | 2026-10-24 | Add a **Laguna Hills × PEX-repipe** framing page | Website | 4 | 4 | 3 | 5 | L2 | candidate | Tavily "PEX repiping company in Laguna Hills" → SF **absent**; result set is repipe-specialist domains: `efficientplumbing.com`, `integrityrepipe.com`, `pipebros.com` (**new this run**), `allamericanrepipe.com`, `socalrepipes.com`, `repipesoc.com`. Specialist pages verified to exist; causation = hypothesis. | Extends idea-2026-10-13-02 to Laguna Hills. Education/eligibility content on an existing service, not a doorway page; no prices (Level 3). |
+| idea-2026-10-24-05 | 2026-10-24 | Add an **Aliso Viejo × water-heater** framing page | Website | 4 | 3 | 3 | 5 | L2 | candidate | Tavily "water heater repair in Aliso Viejo" → SF **absent**; `speedywaterheatersoc.com` (**new this run**) joins the single-service water-heater pattern already recorded (`waterheatermaninc.com`, `usawaterheaters.us`), plus `primewestplumbing.com`. | Same shape as idea-2026-10-23-03 (Laguna Niguel water heater). Reuse templates; no prices, no invented credentials. |
+| idea-2026-10-24-06 | 2026-10-24 | Test with **intent-explicit query phrasing** and mirror that phrasing in on-page answers (fix the "definition lookup" failure mode) | Website/ops | 3 | 4 | 2 | 5 | L1 | candidate | Tavily "who can locate a hidden water leak in Laguna Niguel?" returned **dictionary definitions** (`wiktionary`, `merriam-webster`, `dictionary.com`, `thefreedictionary`, `collinsdictionary`) — the phrasing was parsed as a definition lookup, so the row measures the *query*, not our visibility. | Measurement-integrity + content-phrasing fix. Add explicit local-service anchors ("near me", "in <city>", "contractor") to future test queries; keep a small set of conversational queries but record the intent-mismatch note instead of scoring it `absent`. |
+| idea-2026-10-24-07 | 2026-10-24 | Fix the **Gemini credential type** so the AI-surface sweep can run at all | Website/ops | 4 | 5 | 3 | 5 | L2 | scored | This run the pre-stage's Gemini calls returned **HTTP 401 UNAUTHENTICATED** (`reason: ACCESS_TOKEN_TYPE_UNSUPPORTED`) on both the `?key=` query param and the `x-goog-api-key` header, and on `models.list`. The injected value is 53 chars with prefix `AQ.Ab8…`, not the classic `AIza…` API-key shape. Hypothesis (not yet verified): the registered secret holds an OAuth/access-token-type credential rather than a Gemini API key. | Measurement-integrity, highest-value item today: without it the AI surface stays UNMEASURED (ISSUE-032). Fix is a credential/secret change → **propose**, do not alter. Also relates to idea-2026-10-23-02 (quota). |
+| idea-2026-10-24-08 | 2026-10-24 | Record **`network_budget_s` in `daily_context.json`** so the report can cite the ceiling each run actually ran under | Ops | 2 | 4 | 2 | 5 | L1 | candidate | The task brief states `daily_context.json` "carries `network_budget_s` so the report can cite the ceiling it ran under", but the file written this run has `network_budget_s: None` (key absent). Verified by reading `growth-engine/data/daily_context.json`. | Small tooling fix with a test; makes the bounded-sweep guarantee auditable rather than asserted. |
+
+## Prioritization — 2026-10-24
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-24-07 fix Gemini credential type | 4 | 5 | 3 | 5 | ✅ L2 (propose) | **prioritized** |
+| 2 | idea-2026-10-24-02 retire superseded sitemap PR #74 | 3 | 4 | 2 | 5 | ✅ L1 | **prioritized** |
+| 3 | idea-2026-10-24-03 query fan-out coverage map | 4 | 5 | 2 | 5 | ✅ L1 | **prioritized** |
+| 4 | idea-2026-10-24-06 intent-explicit query phrasing | 3 | 4 | 2 | 5 | ✅ L1 | **prioritized** |
+| 5 | idea-2026-10-24-04 Laguna Hills × PEX repipe page | 4 | 4 | 3 | 5 | ✅ L2 | candidate |
+| 6 | idea-2026-10-24-05 Aliso Viejo × water-heater page | 4 | 3 | 3 | 5 | ✅ L2 | candidate |
+| 7 | idea-2026-10-24-08 record `network_budget_s` | 2 | 4 | 2 | 5 | ✅ L1 | candidate |
+| — | idea-2026-10-24-01 canonical sitemap ordering | 3 | 5 | 2 | 5 | ✅ L1 | **shipped** (PR #80) |
+
+**Selection rule applied:** the four prioritized items are *measurement-integrity*
+items, ranked above the two content ideas, because today's evidence is again that the
+instrument produced part of the gap — the AI-surface sweep could not run at all (Gemini
+**401**), one test query was parsed as a dictionary lookup, and our own sitemap
+idempotency check was failing for an ordering-only reason. Ranking content above a
+broken instrument would encode a false picture of visibility. Ideas 04 and 05 are
+genuine, evidence-backed content gaps (specialist domains verified to exist) and stay
+`candidate` pending idea 03 so they are not written blind.
+
+**Actioned this run:** idea-2026-10-24-01 only — the canonical sitemap ordering, a
+one-file, ordering-only change on its own branch and PR (#80), tests green before and
+after. No content, claim, price, identity, or service-area change was made. Nothing
+was rejected; the two content ideas are `candidate`, not `rejected`.
+
+### Parked / rejected log (2026-10-24)
+
+- No idea parked or rejected this run. `idea-2026-10-23-06` (owner field-notes asset)
+  remains **parked** — still blocked on owner-supplied real job detail/photos;
+  fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
+
 ## Prioritization (impact / evidence / effort-to-value / reversibility / risk)
 
 | Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |

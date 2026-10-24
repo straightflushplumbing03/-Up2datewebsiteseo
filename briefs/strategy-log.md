@@ -5,6 +5,54 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-24 (Intelligence HQ daily) — sitemap idempotency fixed; AI surface still UNMEASURED (credential 401)
+
+**Status:** One ordering-only website change (`sitemap.xml`) on its own branch/PR;
+all other edits are append-only research and additive knowledge. **No page content,
+claim, price, schema, identity, or service-area value changed.**
+
+**Change:** `sitemap.xml` re-sorted to the order `refresh_sitemap.py` generates
+(homepage → depth → alphabetical). The committed file carried a non-canonical
+`case-studies/` block, so every daily run reported `sitemap_dirty=true` and the
+`sitemap_idempotent` gate failed. Verified ordering-only: URL set identical (85),
+per-URL `lastmod` identical. PR **#80**.
+
+**Reason:** a permanently-red idempotency gate is worse than no gate — it trains
+every future run to ignore a real drift signal (the ISSUE-016 failure shape).
+Primary-source support fetched this run: Google states it **ignores**
+`<priority>`/`<changefreq>` and uses `<lastmod>` only when "consistently and
+verifiably accurate", which is exactly what the generator preserves from `git log`.
+
+**Target:** internal measurement integrity first; no ranking claim is attached to
+the sitemap change.
+
+**Competitor insight:** `efficientplumbing.com` appears on 6 of 10 queries (most
+pervasive). The **repipe** intent is held by repipe-specialist domains
+(`integrityrepipe.com`, `pipebros.com`, `allamericanrepipe.com`, `socalrepipes.com`,
+`repipesoc.com`) and the **water-heater** intent by single-service domains
+(`speedywaterheatersoc.com`, `aterheatermaninc.com`); SF holds neither a city ×
+repipe nor a city × water-heater page. A separate Claude runner independently
+observed templated `homeservice.ignitionlabs.com` pages holding the same intents —
+a second source for the same gap.
+
+**Expected outcome:** `sitemap_idempotent` PASS on the next run; the idempotency
+signal becomes trustworthy again. No ranking effect is expected or claimed.
+
+**Result:** 352 unit tests OK; `validate_knowledge_base.py` OK (144 HTML);
+`seo_audit.py` clean; re-running `refresh_sitemap.py` yields 0 changes.
+**Keep.** Rollback is a one-commit revert.
+
+**Honest limitation:** the AI surface was **UNMEASURED** again — Gemini returned
+**HTTP 401 UNAUTHENTICATED** (`ACCESS_TOKEN_TYPE_UNSUPPORTED`) on `?key=`, the
+`x-goog-api-key` header, and `models.list`; the credential is 53 chars (`AQ.Ab8…`),
+not the `AIza…` API-key shape. The failure mode has changed from the documented 429.
+Every conventional query returned SF **absent**, and one conversational query was
+parsed as a dictionary lookup — recorded as intent mismatch, not as a visibility
+loss. First-party metrics remain `unverified` (no Search Console / GA4 credentials;
+P-002).
+
+---
+
 ## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
 
 **Status:** Read-only + additive documentation. **No website page, schema, claim,

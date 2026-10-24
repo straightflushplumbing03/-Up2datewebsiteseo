@@ -18,6 +18,22 @@ call. Prior verification 2026-10-09.
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
 >
+>
+> **Re-verified 2026-10-24 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
+> (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
+> `cf-mitigated`. Conventional sweep: **Tavily 10/10 HTTP 200**, Straight Flush
+> **absent** on all 10. **Gemini changed failure mode and is now fully blocked:** every
+> call returned **HTTP 401 UNAUTHENTICATED** (`reason: ACCESS_TOKEN_TYPE_UNSUPPORTED`)
+> on `?key=<credential>`, on the `x-goog-api-key` header, and on `models.list`; the
+> presented credential is 53 chars with prefix `AQ.Ab8…`, not the `AIza…` API-key shape.
+> Because `models.list` needs no grounding entitlement, this is a **credential-type**
+> problem, not the 429 quota problem recorded on 2026-10-23 — and the Gemma fallback
+> cannot engage, since it only catches quota/server refusals. The AI surface is
+> therefore **UNMEASURED (not zero)**. Owner action: re-issue `GEMINI_API_KEY` as a
+> Google AI Studio API key (see
+> `growth-engine/proposals/2026-10-24-gemini-credential-type.md`). GSC/GA4/GBP remain
+> **not connected** (P-002); impressions/clicks/queries stay `unverified`, never `0`.
+
 > **Re-verified 2026-10-23 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
 > (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
 > `cf-mitigated`; sitemap in sync (76 URLs). Search providers **worse** this run than
@@ -108,7 +124,7 @@ call. Prior verification 2026-10-09.
 | ChatGPT Search | **not testable** | chatgpt.com 403 to non-browser clients |
 | Claude web search | **not testable** | not scriptable in this environment |
 | Gemini web search (consumer app) | **not testable** | gemini.google.com not scriptable |
-| Gemini Search API | **free, with Gemma fallback** | `GEMINI_API_KEY` is set. Grounding is **not** on the Gemini 3.x free tier (HTTP 429), so the client falls back to a free Google-Search-grounded **Gemma** model and labels the row `engine: gemma` (ISSUE-032). Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Enable the true Gemini surface with billing (Tier 1 = 5,000 free grounded requests/month). |
+| Gemini Search API | **BLOCKED — HTTP 401 (credential type)** | `GEMINI_API_KEY` is set but rejected with **401 `ACCESS_TOKEN_TYPE_UNSUPPORTED`** on `?key=`, `x-goog-api-key`, and `models.list` (2026-10-24); the value is 53 chars (`AQ.Ab8…`), not an `AIza…` API key. The Gemma fallback cannot engage (it only catches quota/server refusals). Prior state (2026-10-19/23): **free, with Gemma fallback** — grounding not on the Gemini 3.x free tier (HTTP 429). Grounding is **not** on the Gemini 3.x free tier (HTTP 429), so the client falls back to a free Google-Search-grounded **Gemma** model and labels the row `engine: gemma` (ISSUE-032). Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Enable the true Gemini surface with billing (Tier 1 = 5,000 free grounded requests/month). |
 | Microsoft Copilot | **not testable** | — |
 | Grok | **not testable** | — |
 | Perplexity Agent API | **optional — key not set** | `PERPLEXITY_API_KEY` missing. Metered, no free tier; a paid second engine. Client + CLI committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`). |
@@ -119,7 +135,7 @@ call. Prior verification 2026-10-09.
 
 | Integration | Issue |
 |---|---|
-| Tavily Search API (conventional proxy) | **connected & verified** | `TAVILY_API_KEY` set. Live 10-query sweep 2026-10-15 returned 10/10 HTTP 200, 0 errors. Replaces Brave/DDG scraping. Client: `growth-engine/tavily_search.py` |
+| Tavily Search API (conventional proxy) | **connected & verified** | `TAVILY_API_KEY` set. Live 10-query sweep 2026-10-15 returned 10/10 HTTP 200, 0 errors; **re-verified 2026-10-24 (10/10 HTTP 200)**. Replaces Brave/DDG scraping. Client: `growth-engine/tavily_search.py` |
 | Brave Search scraping | **superseded** | HTTP **429** to our egress IP after ~7-8 queries. Tavily replaces it. |
 | Bing search scraping | HTTP 200 returned but organic anchors not reliably parseable here |
 | DuckDuckGo HTML | 202 (anti-bot/rate-limit) on prior runs; Lite endpoint worked 2026-10-12 |

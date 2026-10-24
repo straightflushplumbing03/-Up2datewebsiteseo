@@ -861,3 +861,34 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+### ISSUE-032 update — 2026-10-24: failure mode changed from 429 to **HTTP 401 UNAUTHENTICATED**
+
+- **New observation (this run, step 0b):** every Gemini call in the pre-stage now
+  returns **HTTP 401** rather than the 429 documented above. Captured detail:
+  `reason: ACCESS_TOKEN_TYPE_UNSUPPORTED`; the credential presented is **53
+  characters** with prefix `AQ.Ab8…` — **not** the classic `AIza…` API-key shape.
+  The 401 is returned on **all three** access patterns: `?key=<credential>` query
+  param, the `x-goog-api-key` header, and `models.list`. The Gemma fallback
+  described above therefore cannot engage either, because it is the *credential*,
+  not the grounding quota, that is being rejected.
+- **What this changes:** the previously documented root cause (free-tier grounding
+  not available for Gemini 3.x) and the documented remedy (Gemma fallback) no longer
+  describe the failure we actually observe. A 401 on `models.list` — an endpoint that
+  needs no grounding entitlement — is evidence the **secret itself** is of the wrong
+  credential type. **Hypothesis (unverified, medium confidence):** the registered
+  `GEMINI_API_KEY` now holds an OAuth/access-token-type value rather than a Google AI
+  Studio API key. This is not proven: only the API's rejection of that value was
+  observed.
+- **Impact:** the AI surface remains **UNMEASURED**; today's `ai_visibility_sweep`
+  is FAIL with all queries `inconclusive`. This is a missing integration, **not** a
+  zero and **not** a visibility decline.
+- **Not fixed this run, deliberately.** The fix is a credential change — replacing or
+  re-issuing a secret — which is outside this automation's remit (the run must never
+  print, rotate, or commit credentials). Recorded here and proposed to the owner in
+  `growth-engine/proposals/2026-10-24-gemini-credential-type.md`.
+- **Verification:** observed directly in `growth-engine/data/daily_context.json`
+  (`ai_visibility_sweep` check, 5 rows `inconclusive`) and in the 5
+  `gemini_search`/`test_failure` rows appended to
+  `growth-engine/data/ai_visibility_history.jsonl` this run.
+
+
