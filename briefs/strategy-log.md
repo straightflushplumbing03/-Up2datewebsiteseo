@@ -5,6 +5,47 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-25 (Intelligence HQ daily) — sitemap order drift fixed; AI surface blocked on an invalid key
+
+**Status:** One reversible website change (`sitemap.xml` entry order) + additive
+documentation and append-only data rows. **No page content, schema, claim, copy,
+price, or URL set changed.** Branch `intelligence-hq/daily-2026-10-25`.
+
+**Change:** regenerated `sitemap.xml` into `scripts/refresh_sitemap.py`'s canonical
+generator order. The committed file already held all 89 URLs with identical
+`lastmod` values, but the entry order had drifted from index 35, so the
+`sitemap_idempotent` check failed.
+
+**Reason:** a nightly check that fails for cosmetic order noise trains everyone to
+ignore it, and the drift would silently reappear on every regeneration.
+
+**Target:** the deterministic measurement pre-stage (`scripts/daily_measure.py`) and
+`sitemap.xml`.
+
+**Competitor insight:** `efficientplumbing.com` appeared in **13/20** Tavily
+conventional queries — the strongest consistent non-directory presence in this
+sweep. That it *caused* the rankings is a hypothesis; the presence is verified
+evidence of broad topical coverage. `evansleakdetection.com` (6/20) confirms a
+dedicated leak-detection competitor on our core service.
+
+**Expected outcome:** `sitemap_idempotent` passes and stays passing; the AI surface
+becomes measurable once the key authenticates.
+
+**Result:** `sitemap_idempotent` now reports `missing: []  extra: []`, 0 lastmod
+refreshed. Health checks **6/7** passed; the sole failure is
+`ai_visibility_sweep` (**HTTP 401 UNAUTHENTICATED**, ISSUE-034) — an auth failure,
+not a site defect. Conventional proxy: SF **absent** in all 20 Tavily queries.
+Full test suite **352 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py`
+exit 0.
+
+**Keep/modify/revert:** **keep** the sitemap normalisation (revert with
+`git revert`; no URL set changed). AI-surface blocker **kept open** as ISSUE-034
+(owner action, Level 3). `daily_measure.py` default reconciliation (ISSUE-033) is
+**proposed**, not applied — it changes the measurement contract and needs its own
+tested PR.
+
+---
+
 ## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
 
 **Status:** Read-only + additive documentation. **No website page, schema, claim,

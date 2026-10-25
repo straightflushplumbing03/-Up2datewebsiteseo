@@ -18,6 +18,24 @@ call. Prior verification 2026-10-09.
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
 >
+> **Re-verified 2026-10-25 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
+> (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
+> `cf-mitigated`. Entity consistency OK — all three historical duplicate hosts now
+> **404** (`straight-flush-plumbing-7fb7cf71.base44.app`,
+> `straightflushplumb8.wixsite.com`, `flush-pro-flow.base44.app`); canonical 200.
+> Sitemap `idempotent` check **failed at run start** (committed entry order had
+> diverged from `scripts/refresh_sitemap.py` canonical order from index 35; all 89
+> URLs present and `lastmod` identical) and was **fixed** by regenerating in
+> canonical order; now `missing: []  extra: []`. Search providers unchanged: Brave
+> **429**, DuckDuckGo HTML **202** / Lite **no parseable anchors**, Bing
+> **redirect-wrapped**; **Tavily** was again the only working conventional proxy
+> (20 queries). **Gemini AI surface is now UNAUTHENTICATED (HTTP 401)** — the key is
+> present but rejected ("API key not valid"), a *different* failure from ISSUE-032's
+> 429 quota exhaustion; because the Gemma fallback engages only on quota/server
+> refusals, it correctly does **not** engage and the AI surface is `inconclusive`,
+> not zero. Recorded as **ISSUE-034** (owner action). GSC/GA4/GBP remain **not
+> connected** (P-002).
+>
 > **Re-verified 2026-10-23 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
 > (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
 > `cf-mitigated`; sitemap in sync (76 URLs). Search providers **worse** this run than

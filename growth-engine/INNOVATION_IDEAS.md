@@ -418,3 +418,42 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+---
+
+### 2026-10-25 register entries
+
+| # | Idea | Impact | Evidence | Effort-to-value | Reversibility | Risk | Status |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-25-01 Replace the `GEMINI_API_KEY` so the AI-surface sweep runs | 5 | HTTP 401 UNAUTHENTICATED on every `gemini_search` call today (ISSUE-034); AI surface unmeasured, not zero | 5 | 5 | ⛔ owner credential (L3) | proposed |
+| 2 | idea-2026-10-25-02 Add `--network-budget` (600 s) and lower `daily_measure.py` defaults to 12 Tavily + 3 Gemini, with a test | 5 | defaults still 40+5 with no budget arg (ISSUE-033); brief cites three runs killed pre-research | 4 | 5 | ✅ L2 script-only | candidate |
+| 3 | idea-2026-10-25-03 Internal-linking pass: hub-and-spoke links from each service page to its city pages | 4 | Google AI-features doc (fetched 2026-10-25) names internal links as a core AI-eligibility fundamental | 4 | 5 | ✅ L2 content | candidate |
+| 4 | idea-2026-10-25-04 "Leak detection in <city>" supporting section where we already hold the city page, using only approved claims | 4 | evansleakdetection.com present in 6/20 queries on the core service (verified presence) | 3 | 5 | ✅ L2 content | candidate |
+| 5 | idea-2026-10-25-05 Remove any repo claim that `llms.txt` earns Google AI-feature eligibility | 3 | AI-features doc states no new files/markup are needed; an overstated claim is a correctness defect | 5 | 5 | ✅ L2 docs | candidate |
+| 6 | idea-2026-10-25-06 Owner field-notes asset (real job detail) | 4 | no fetched evidence; needs owner-supplied media | 2 | 5 | ⛔ owner media | parked |
+
+**Prioritisation (impact / evidence / effort-to-value / reversibility, risk-gated):**
+1. **idea-2026-10-25-01** — highest: it is the difference between a measured and an
+   unmeasured AI surface, and it is the only item blocking the engine's core signal.
+   An owner credential action (L3), so `proposed`, not executed.
+2. **idea-2026-10-25-02** — the highest-scoring item the engine may execute itself.
+   Evidence is a direct read of the script plus the brief's own budget table.
+   Deferred to a dedicated test-covered PR rather than bundled here, because it
+   changes the measurement contract.
+3. **idea-2026-10-25-03** — first content idea, ranked above 04 because its evidence
+   is a *primary official source* fetched today rather than competitor presence, and
+   it is trivially reversible.
+4. **idea-2026-10-25-04** — real evidence (a dedicated leak-detection competitor in
+   6/20 queries), but content work needs a fan-out map so pages are not written blind.
+5. **idea-2026-10-25-05** — cheap correctness fix; keeps the repo's own claims honest.
+6. **idea-2026-10-25-06** — parked, unchanged: needs owner-supplied real job detail.
+
+**Selection rule applied:** measurement-integrity first. The top two ideas repair the
+instrument (an invalid credential; an over-long sweep) before any content is written,
+because today's evidence is again that the measuring apparatus — not the site —
+produced the gaps. Ideas 03–05 are genuine, evidence-backed and reversible, and stay
+`candidate` pending their own tested PRs.
+
+**No idea actioned this run:** 01 is a Level 3 owner credential; 02 changes the
+measurement contract and needs its own tests; 03–05 are HTML/docs changes that this
+run is constrained not to bundle with the daily report. Nothing was rejected.
