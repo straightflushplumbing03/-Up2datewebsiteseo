@@ -861,3 +861,40 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+
+---
+
+## ISSUE-033 — Daily sweep defaults exceed the mandated time budget  [HIGH · OPEN]
+
+- **Evidence:** `scripts/daily_measure.py` still parses
+  `--queries` default **40** and `--ai-queries` default **5** with no
+  `--network-budget` argument at all, while the run brief mandates **12 Tavily +
+  3 Gemini** under a **600 s** ceiling (Tavily 60% / Gemini 40%), citing that the
+  unbounded defaults consumed the entire ~1920 s wall-clock and killed three runs
+  before research began. A full-text search of this repository returns no other
+  record of this issue, so it is recorded here for the first time.
+- **Impact:** a sweep that runs long is a run that never commits — it is recorded
+  `budget_overrun` and produces nothing durable.
+- **Fix (proposed, not applied):** add `--network-budget` (default 600) and lower
+  the two defaults to 12 / 3, with a unit test pinning the new defaults and the
+  budget arithmetic. Not applied today because it changes the measurement
+  contract and needs its own tested PR.
+- **Approval:** Level 2 (script-only, test-gated).
+
+---
+
+## ISSUE-034 — Gemini API key rejected (HTTP 401); AI surface unmeasured  [HIGH · OPEN]
+
+- **Evidence:** 2026-10-25 daily run — every `gemini_search` call returned
+  **HTTP 401 UNAUTHENTICATED** ("API key not valid"). The key is present in the
+  sandbox (length 53) but is not `AIza`-prefixed. This is an **authentication**
+  failure, distinct from ISSUE-032's HTTP **429** quota failure, and the Gemma
+  fallback is documented to engage **only** on quota/server refusals — so it
+  correctly does not engage here.
+- **Impact:** the AI-surface half of the visibility measurement cannot run. The
+  affected rows are recorded `inconclusive`, **never zero**.
+- **Fix (owner action, Level 3):** re-issue or correct the registered
+  `GEMINI_API_KEY` so it authenticates. No code change is warranted — the client
+  already distinguishes auth from quota correctly.
+- **Status:** OPEN — owner action. Until fixed, the AI-surface metric stays
+  `unverified` and is not reported as a decline.

@@ -287,6 +287,43 @@ New entries are prepended directly under this line, newest first, using:
 - **Proposed action (if any):** recorded only. Folded into the P-002 note in this run's
   report; no proposal file created because P-002 already covers it.
 
+## 2026-10-25 — Google Search Central documents AI features (primary source)
+
+- **What changed / observed:** Google Search Central now documents, on its own
+  primary page, how a site appears in **AI Overviews** and **AI Mode** —
+  `https://developers.google.com/search/docs/appearance/ai-features`
+  (fetched 2026-10-25, HTTP 200, page `Last updated 2025-12-10 UTC`). The
+  substantive points, quoted or paraphrased from that page:
+  - "You can apply the same foundational SEO best practices for AI features as you
+    do for Google Search overall" — the only *technical* requirement to be a
+    supporting link is that the page "must be indexed and eligible to be shown in
+    Google Search with a snippet."
+  - "You don't need to create new machine readable files, AI text files, or markup
+    to appear in these features. There's also no special schema.org structured data
+    that you need to add."
+  - Worthwhile fundamentals it lists: crawlable in `robots.txt`, findable via
+    **internal links**, good page experience, important content available as
+    **text**, supporting images/video, **structured data matching the visible
+    text**, and up-to-date Merchant Center / Business Profile information.
+  - A **query fan-out** technique: AI Overviews / AI Mode "issu[ing] multiple
+    related searches across subtopics and data sources", surfacing "a wider and
+    more diverse set of helpful links".
+  - Measurement: AI-feature clicks count in the Search Console Performance report
+    under the "Web" search type; "clicks from search results pages with AI
+    Overviews … are higher quality."
+- **Confidence:** high — primary source, fetched directly.
+- **Why it matters to Straight Flush:** Google states on the record that appearing
+  in AI answers needs **no special markup**. Any plan resting on "AI files"
+  (`llms.txt` as a *Google ranking* lever) or new schema for AI eligibility is
+  unsupported. It validates the site's existing strengths (text-first content,
+  internal linking, matching JSON-LD) and lifts **internal linking** and **Business
+  Profile accuracy** to the top of the AI-visibility checklist. `llms.txt` remains
+  useful for non-Google AI crawlers but is **not** a Google AI-feature requirement,
+  and the repo should not claim otherwise (see `idea-2026-10-25-05`).
+
+---
+
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |
@@ -295,7 +332,7 @@ New entries are prepended directly under this line, newest first, using:
 | Structured data policies | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/sd-policies | 2026-10-11 | high |
 | Local business structured data | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/local-business | 2026-10-11 | high |
 | Helpful content / people-first | Google Search Central | https://developers.google.com/search/docs/fundamentals/creating-helpful-content | 2026-10-11 | high |
-| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-11 | high |
+| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-25 | high |
 | Search Console performance report | Google Search Central | https://support.google.com/webmasters/answer/7576553 | 2026-10-11 | high |
 | Schema.org LocalBusiness | schema.org | https://schema.org/LocalBusiness | 2026-10-11 | high |
 | CSLB license lookup (CA) | CA Contractors State License Board | https://www.cslb.ca.gov/onlineServices/CheckLicenseII/CheckLicense.aspx | 2026-10-11 | high |
