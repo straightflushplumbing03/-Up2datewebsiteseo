@@ -142,6 +142,11 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   per page — a new ID is a **replace**, never a second paste. Verify a tag actually
   runs with Chromium `--log-net-log` + grep for `gtag/js?id=<ID>`.
   Current ID: `G-DFS6B1LV4P` (replaced `G-651QV5WYP2` 2026-10-16).
+- **Search-engine verification tags** are plain `<meta>` in the homepage `<head>` only
+  (`index.html`), inserted after `<meta name="viewport">` and before the meta CSP. They need no
+  CSP entry (inert to browsers) and Bing says never remove them after verification succeeds.
+  Bing `msvalidate.01` = `CDEF4A78CA15282FB9EA4DD9E05B9FA0` (added 2026-10-25, PR #81).
+  `grep -c msvalidate.01` must stay 1 — a second paste is never the fix.
 - Never commit to `main`; branch + PR only. **Never merge any PR — open it, request review, hand
   the merge to the owner.** No low-risk exception; review is required before merge.
 - Branches: research `intelligence-hq/daily-<date>`; site changes `intelligence-hq/site-<date>-<slug>`.
