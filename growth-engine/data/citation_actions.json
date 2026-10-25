@@ -50,10 +50,8 @@
         "best leak detection in Laguna Niguel, CA"
       ],
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "done",
-      "first_seen": "2026-10-20",
-      "done_on": "2026-10-25",
-      "owner_note": "Owner claimed the Porch listing 2026-10-25."
+      "status": "todo",
+      "first_seen": "2026-10-20"
     },
     {
       "domain": "homeadvisor.com",
