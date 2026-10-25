@@ -24,8 +24,10 @@
         "best leak detection in Dana Point, CA"
       ],
       "action": "Lead-generation network with a page for every city × service. Ask whether it lists real local pros (get listed if free); otherwise out-answer it with our own specific city × service page.",
-      "status": "todo",
-      "first_seen": "2026-10-20"
+      "status": "done",
+      "first_seen": "2026-10-20",
+      "done_on": "2026-10-25",
+      "owner_note": "Out-answered with city slab-leak + PEX-repipe pages for Laguna Niguel and Dana Point (commit fd069b5, 2026-10-24); keep measuring in sweeps."
     },
     {
       "domain": "pro.porch.com",
@@ -48,8 +50,10 @@
         "best leak detection in Laguna Niguel, CA"
       ],
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "todo",
-      "first_seen": "2026-10-20"
+      "status": "done",
+      "first_seen": "2026-10-20",
+      "done_on": "2026-10-25",
+      "owner_note": "Owner claimed the Porch listing 2026-10-25."
     },
     {
       "domain": "homeadvisor.com",
