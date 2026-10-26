@@ -67,3 +67,21 @@ Templates for new entries:
 - **Confidence:** low (channel quality). **Decision:** **revise** — retain a paid
   SerpAPI/Brave API key or a Perplexity key as the path forward (see `proposals/`
   and weekly report §7). Brave kept as fallback only; Bing dropped.
+
+---
+
+## exp-2026-10-26-aliso-viejo-direct-answer — direct answer + FAQ on the Aliso Viejo page
+- **Hypothesis:** a plain "who does slab leak detection / PEX repiping in Aliso Viejo"
+  answer, a linked service list and a PEX-repiping FAQ make `/cities/aliso-viejo` a
+  citable source for Aliso Viejo slab-leak and repipe AI answers, where no local
+  business page answers today.
+- **Evidence:** `reports/daily/2026-10-25.md` (Aliso Viejo slab/repipe results fall back to
+  Mission Viejo pages, spam and out-of-market franchise pages); `reports/citation-gaps/2026-10-26.md`.
+- **Change:** `cities/aliso-viejo.html` — hero direct-answer paragraph, 5 service items
+  linked to service pages, new FAQ "Who does PEX repiping in Aliso Viejo?" (visible +
+  FAQPage JSON-LD). Weekly run 2026-10-26, direct to `main`.
+- **Target queries:** best / recommend / who does × slab leak detection and PEX repiping, Aliso Viejo (6).
+- **Baseline:** `claude_web_search` sf_status = **absent** for all 6.
+- **Follow-up:** 2026-11-23. **Result:** pending.
+- **Confounders:** 0/96 answers recommend us anywhere; low authority; single engine.
+- **Confidence:** low. **Decision:** keep.

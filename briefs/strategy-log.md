@@ -5,6 +5,10 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
+**Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).
+**Reason:** 96/96 AI answers absent; Aliso Viejo slab/repipe queries have no credible local page; directories take broad queries. Keep.
+
 ## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
 
 **Status:** Read-only + additive documentation. **No website page, schema, claim,
