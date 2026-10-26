@@ -5,6 +5,58 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-26 (Intelligence HQ daily) — site healthy; both failing checks traced to the instrument, not the site
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim,
+copy, price, or sitemap entry changed.** Branch `intelligence-hq/daily-2026-10-26`.
+
+**Change:** none to the site. Added 15 visibility rows and 6 competitor rows
+(append-only), 1 entity-consistency row, 6 new ideas, 2 dated industry-watch entries,
+1 proposal (P-006), a report, and this log entry.
+
+**Reason:** `daily_context.json` reported 2 of 7 checks failing
+(`sitemap_idempotent`, `ai_visibility_sweep`). Both were investigated to root cause
+before anything was written, and **neither is a site problem**:
+
+1. **`sitemap_idempotent` is a self-inflicted false positive.** The check runs
+   `refresh_sitemap.py`, then reads `git status --porcelain -- sitemap.xml`. Because
+   `main`'s committed sitemap was in a *non-canonical order*, the refresh rewrites it,
+   so the tree is dirty at the instant the check reads it. Diffing
+   `origin/main:sitemap.xml` against the refreshed file: 89 URLs both sides, URL set
+   equal, **0 per-URL `<url>` blocks differing**, 22 URLs merely reordered. A second
+   refresh is byte-identical. The generator is idempotent; the check is measuring its
+   own pre-stage. It self-clears when this branch merges.
+
+2. **`ai_visibility_sweep` is a dead credential.** All 5 grounded Gemini calls returned
+   **HTTP 401 `ACCESS_TOKEN_TYPE_UNSUPPORTED`**. Re-verified by hand naming
+   `GEMINI_API_KEY` explicitly, to rule out the ISSUE-033-class failure where a secret
+   is not injected because the command text did not name it: same 401. This is a
+   **wrong-kind-of-credential**, not a missing one, and not the old ISSUE-032 429.
+   Rows recorded `inconclusive`, never zero. Filed as **P-006**.
+
+**Target:** measurement integrity. Today's *absent* readings are only interpretable if
+we know the instrument worked. One of two AI surfaces was blind.
+
+**Competitor insight:** the sharpest find of the run is
+`repipe-laguna-hills.com` ranking for "PEX repiping company in Laguna Hills" with a
+**single-purpose city × service page** — 262 "repipe" mentions, Nellie Gail Ranch
+(×25) and Moulton Ranch (×17) named, El Toro Water District (×14), PEX-A
+Uponor/Wirsbo ASTM F1960 (×4), an HOA/condo repipe section (×15), plus
+`FAQPage`+`HowTo`+`BreadcrumbList`+`Plumber` schema. We hold no city × repipe page.
+Two independent Laguna Niguel competitors (`lagunaniguelcaplumbingpros.com`,
+`proplumberlagunaniguel.com`) both publish **geography blocks** (named communities,
+ZIP codes) we do not. That is the clearest structural difference between our pages and
+the pages that rank — but naming neighborhoods is a **service-area commitment** (L3),
+so it is proposed, not built.
+
+**Expected outcome:** the sitemap check goes green on merge; the AI-surface sweep stays
+BLOCKED until the key is rotated, so **tomorrow's report should still be read as
+one-provider**, and the Gemini gap should not be mistaken for stability.
+
+**Result:** pending. **Keep/modify/revert:** keep (documentation only).
+
+---
+
 ## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
 
 **Status:** Read-only + additive documentation. **No website page, schema, claim,

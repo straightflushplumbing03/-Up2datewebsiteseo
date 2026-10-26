@@ -418,3 +418,81 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+---
+
+## 2026-10-26 (Intelligence HQ daily) — 6 new ideas, prioritized
+
+Scored 1–5 (higher is better). Risk gate: **L1** read-only/docs · **L2** reversible
+on-page or tooling · **L3** identity/price/legal/area/profile (propose only).
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-26-04 pre-stage sitemap dirty-flag: distinguish self-inflicted dirt from generator non-idempotency | 4 | 5 | 3 | 5 | ✅ L2 | **prioritized** |
+| 2 | idea-2026-10-26-03 record Gemini `ACCESS_TOKEN_TYPE_UNSUPPORTED` as a broken instrument and rotate the key | 4 | 5 | 4 | 5 | ✅ L1 (docs) | **prioritized** |
+| 3 | idea-2026-10-26-01 Laguna Hills city × PEX-repipe page | 4 | 5 | 3 | 5 | ✅ L2 | **prioritized** |
+| 4 | idea-2026-10-26-02 verifiable geography block (ZIP + water district) on city pages | 4 | 4 | 3 | 4 | ⛔ L3 area claim | propose |
+| 5 | idea-2026-10-26-05 "how to choose a plumber in <city>" answer block | 3 | 3 | 3 | 5 | ✅ L2 | candidate |
+| 6 | idea-2026-10-26-06 claim/complete HomeAdvisor + Porch listings | 4 | 4 | 2 | 3 | ⛔ L3 profile | propose |
+
+**Selection rule applied:** the top two are *measurement-integrity* items. Today the
+two failing checks in `daily_context.json` (`sitemap_idempotent`,
+`ai_visibility_sweep`) both trace to the instrument, not to the site — one is a
+one-shot migration artifact, the other a dead API key. Fixing the instrument first
+is what keeps tomorrow's *absent* readings interpretable; ranking a content idea
+above a broken instrument would encode a false picture of visibility. Idea 03 is the
+first content gap in this log backed by a **single-purpose city × service page** that
+is actually ranking (see evidence below), so it outranks the older repipe ideas.
+
+### Evidence per idea
+
+- **idea-2026-10-26-04** — `growth-engine/data/daily_context.json` →
+  `checks[sitemap_idempotent]`: `ok: false, sitemap_dirty: true`, yet running
+  `python3 scripts/refresh_sitemap.py` by hand leaves `git status --porcelain --
+  sitemap.xml` **empty** and the file is byte-identical on a second run. Diffing
+  `origin/main:sitemap.xml` against the refreshed file: 89 URLs both sides, URL set
+  equal, **0 per-URL `<url>` blocks differing**, 22 URLs in a different *order*. So
+  the generator is idempotent; `main`'s committed copy is simply in a non-canonical
+  order, and the pre-stage's own refresh rewrites it before the check reads
+  `git status`. Expected to self-clear when this branch merges. *Confidence: high.*
+- **idea-2026-10-26-03** — `ai_visibility_history.jsonl` 2026-10-26 `gemini_search`
+  rows: HTTP 401 `ACCESS_TOKEN_TYPE_UNSUPPORTED`, "API key not valid". Re-verified by
+  hand naming the secret explicitly (`export GEMINI_API_KEY="${GEMINI_API_KEY}"` then
+  `GET https://generativelanguage.googleapis.com/v1beta/models`) → same 401, so this
+  is a **dead key**, not a missing injection. All 5 rows correctly recorded
+  `inconclusive`, never zero. *Confidence: high.*
+- **idea-2026-10-26-01** — `competitor_observations.jsonl` 2026-10-26T13:10Z:
+  `repipe-laguna-hills.com` ranks for "PEX repiping company in Laguna Hills" with a
+  single-purpose city × service page (262 "repipe" mentions; names Nellie Gail Ranch
+  ×25 and Moulton Ranch ×17; El Toro Water District ×14; PEX-A Uponor/Wirsbo
+  ASTM F1960 ×4; an HOA/condo repipe section ×15; FAQPage+HowTo+BreadcrumbList+Plumber
+  schema). SF holds no city × repipe page for Laguna Hills. A feature *observed* on
+  their page is verified evidence they have it; that it *caused* the ranking is a
+  hypothesis. *Confidence: high (observation), medium (causal).*
+- **idea-2026-10-26-02** — two independent competitors publish geography blocks:
+  `lagunaniguelcaplumbingpros.com` ("Laguna Niguel Communities" + "Laguna Niguel ZIP
+  codes we serve") and `repipe-laguna-hills.com` (named ranch neighborhoods + water
+  district). Tempting and effective-looking — but naming neighborhoods we serve is a
+  **service-area commitment** (ground rule 9, L3). Proposed, not built: a factual
+  ZIP-code/water-district framing would still need owner confirmation that the 21-city
+  list is actively serviced (`SERVICE_AREAS.md` "Owner confirmation required").
+- **idea-2026-10-26-05** — Claude run report `reports/daily/2026-10-26.md`: Roto-Rooter
+  surfaces for Aliso Viejo via a "how to find a good plumber" guide, i.e. an
+  answer-shaped page outranking service pages. *Confidence: medium (single source,
+  title/URL only).*
+- **idea-2026-10-26-06** — today's Tavily top-result domain counts: `yelp.com` 16,
+  `facebook.com` 10, `homeadvisor.com` + `pro.porch.com` + `homeguide.com` in the
+  Claude run's top-5 lost-answer list. Directory presence, not site content, is where
+  the answers are being taken from. Claiming a profile is a business-profile change
+  (L3) → `proposals/`. *Confidence: medium-high.*
+
+**No idea actioned as a site change this run.** Ideas 01/05 would touch page content
+(and 01 needs the fan-out map from idea-2026-10-23-05 first, so it is not written
+blind); 02 and 06 are L3; 03/04 are documentation this run and tooling for a later
+run with its own tests. Nothing rejected.
+
+### Parked / rejected log (2026-10-26)
+
+- **idea-2026-10-23-06 owner field-notes asset** — still parked (owner-supplied media;
+  fabricating case notes is forbidden by `APPROVED_CLAIMS.md`). No new evidence.
+- No idea rejected this run.
