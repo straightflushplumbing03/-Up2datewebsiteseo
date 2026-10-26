@@ -418,3 +418,23 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+## 2026-10-26 (weekly run) — status review, no new ideas
+
+This weekly run added **no new ideas**; it reviewed the open register and updated
+statuses against this week's evidence. Nothing was deleted.
+
+| Idea | Was | Now | Reason (evidence) |
+|---|---|---|---|
+| idea-2026-10-23-01 sweep provider-fallback + HTTP-status recorder | prioritized | **prioritized (unchanged, overdue)** | Still unshipped after 3 days; 9 of 10 Gemini rows were lost to 429/500 on 2026-10-23 and a 429 can still be recorded as `absent`. Now a top-3 priority. |
+| idea-2026-10-23-02 reserve Gemini quota for the sweep | prioritized | **prioritized (unchanged, overdue)** | Same; the free Gemini quota is still spent by the step-0b pre-stage before the AI sweep runs. Now a top-3 priority. |
+| idea-2026-10-23-05 query fan-out coverage map (docs) | prioritized | **prioritized** | Kept ahead of further page writing: 7 city pages shipped 2026-10-20→24 with no map of which sub-queries existing pages answer. Ranked #6 of 10 this week. |
+| idea-2026-10-23-03 per-city water-heater page (Laguna Niguel) | candidate | **shipped (2026-10-23)** | `services/water-heater-repair-laguna-niguel.html` is live; the same pattern also shipped for Dana Point and San Clemente. Baseline `sf_status` for its target queries is `absent` (3 queries). Re-measure 4 weeks out. |
+| idea-2026-10-23-04 Newport Beach whole-house repipe page | candidate | **candidate (evidence strengthened)** | `repipe-newport-beach.com` — a single-service, single-city domain — appeared in repipe answers this window, confirming the specialist-domain pattern. Still gated on the fan-out map (idea 05). |
+| idea-2026-10-23-06 owner field-notes asset | parked | **parked (unchanged)** | Still needs owner-supplied real job detail/photos; fabricating case notes is forbidden. |
+| idea-2026-10-12-13 commit-early checkpointing | prioritized | **in-progress / proven** | This run used it successfully: a skeleton report was committed before the body was written, so a budget overrun could not lose the review. |
+| **NEW THIS RUN — not an idea but a defect to fix:** daily-runner WebFetch permission | — | **prioritized (top-3)** | 6 consecutive INCONCLUSIVE daily health checks (2026-10-21→26) caused by an interactive permission prompt no unattended run can answer. Recorded here because it is a *measurement* fix, not a site fix, and blocks daily verification. |
+
+**Selection rule applied this week:** the loop's binding constraint is verification,
+not production. The two overdue measurement-integrity ideas (01, 02) plus the
+runner-permission defect outrank any new content idea. No content idea was promoted.
