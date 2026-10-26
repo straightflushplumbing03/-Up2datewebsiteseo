@@ -46,6 +46,10 @@ html += page_hero(PREFIX,
 
 html += """<section id="quiz">
   <div class="wrap">
+    <div class="section-head reveal" style="max-width:720px; margin:0 auto 32px; text-align:center;">
+      <div class="eyebrow" style="justify-content:center;">Start here</div>
+      <h2>Five quick questions</h2>
+    </div>
     <div class="health-tool reveal" id="healthTool" data-prefix="">
       <div class="health-progress-track"><div class="health-progress-fill"></div></div>
 
