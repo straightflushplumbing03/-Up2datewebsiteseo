@@ -287,6 +287,49 @@ New entries are prepended directly under this line, newest first, using:
 - **Proposed action (if any):** recorded only. Folded into the P-002 note in this run's
   report; no proposal file created because P-002 already covers it.
 
+## 2026-10-26 — Google Search Central clarifies hyphen-vs-underscore URL word separation (changelog 2026-10-23)
+
+- **What changed / observed:** the *What's new in Google Search* changelog
+  (https://developers.google.com/search/updates, fetched 2026-10-26, HTTP 200) lists an
+  **October 23, 2026** update: "Updated guidance on crawlable URL structures … to clarify
+  word separation guidelines using hyphens versus underscores." The underlying page
+  *URL structure best practices*
+  (https://developers.google.com/search/docs/crawling-indexing/url-structure, fetched
+  2026-10-26, HTTP 200) now states: "Use hyphens to separate words … instead of
+  underscores. For historical reasons, we don't recommend using underscores, as
+  underscores are commonly used for denoting concepts that should be kept together,
+  whereas hyphens clearly signal a word boundary."
+- **Why it matters to Straight Flush:** our canonical URL convention is already
+  hyphenated. Verified locally this run: `sitemap.xml` contains **89** `<loc>` URLs and
+  **0** of them contain an underscore (`grep -o '<loc>[^<]*</loc>' sitemap.xml | grep -c '_'`
+  → 0). So this guidance change requires **no** URL migration for us, and it is worth
+  recording as a *confirmed compliance* rather than an action item — a change to this
+  guidance would otherwise have been a plausible trigger for a costly redirect map.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/crawling-indexing/url-structure
+  · **Confidence:** high (both primary sources, fetched, HTTP 200).
+- **Proposed action (if any):** none. Recorded; the hyphen convention is a standing
+  invariant to re-check if a future generator emits filenames.
+
+## 2026-10-26 — Google Search Console Indexing API quota page refreshed (changelog 2026-10-16)
+
+- **What changed / observed:** the same changelog lists an **October 16, 2026** update:
+  "Updating the Indexing API quota page … to reflect the current quota limits and
+  process," removing "an outdated form". The affected page is
+  https://developers.google.com/search/apis/indexing-api/v3/quota (linked from
+  https://developers.google.com/search/updates, fetched 2026-10-26, HTTP 200).
+- **Why it matters to Straight Flush:** the Indexing API is *not* a general-purpose
+  submission channel — Google restricts it to `JobPosting` and livestream
+  (`BroadcastEvent`) structured data, so it is **not applicable** to a plumbing site and
+  must not be proposed as an indexing shortcut. Recording the quota-page refresh mainly
+  prevents a future run from mis-reading it as a new submission opportunity, and keeps
+  the "how do we get new pages indexed" question pointed at `sitemap.xml` + Search
+  Console URL inspection (still behind P-002) rather than an ineligible API.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/apis/indexing-api/v3/quota
+  · **Confidence:** high (changelog primary source fetched; scope restriction is
+  long-standing documented Google policy).
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |

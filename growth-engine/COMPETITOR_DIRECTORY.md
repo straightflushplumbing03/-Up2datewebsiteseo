@@ -387,6 +387,49 @@ benjaminfranklinplumbing.com on emergency queries — reproduces the standing fi
 
 ---
 
+## 2026-10-26 update — 10-query Tavily sweep + 3 competitor pages fetched
+
+Provider note: Tavily Search API only (Brave still 429 from this egress IP).
+Gemini Search AI-surface sweep **BLOCKED** (key returns HTTP 401
+`ACCESS_TOKEN_TYPE_UNSUPPORTED`, i.e. the key itself is invalid — a new failure
+mode; previously 429 quota). Tavily rows are `absent` for SF on all 10 queries.
+
+**Repeat competitors (distinct result appearances today, all 10 Tavily queries):**
+`efficientplumbing.com` (7) · `clearwaterplumbingoc.com` (5) · `rotorooter.com` (3) ·
+`barkerandsonsplumbing.com` (3) · `drainandsewerpro.com` (3) · `leakstar.com` (2) ·
+`streamlineplumbing.org` (2) · `lagunaniguelcaplumbingpros.com` (2) ·
+`proplumberlagunaniguel.com` (2) · `scottenglishplumbing.net` (2) ·
+`aslplumbing.com` (2) · `emergencyresponseplumbers.com` (2).
+Directory/aggregator channels: `yelp.com` (16), `facebook.com` (10), `mapquest.com` (2).
+
+**New this run (not previously recorded):** `repipe-laguna-hills.com` — a
+single-purpose **city+service repipe page** for Laguna Hills (see below).
+`repipelagunahills.com`-style exact-match domains now confirmed for *two* Tier-2
+cities (Laguna Hills + the 2026-10-23 Newport Beach find).
+
+**Pages fetched and profiled (verified facts, not hypotheses):**
+- `repipe-laguna-hills.com` (HTTP 200, 115,845 b) — H1 "Whole-house repipe in
+  Laguna Hills"; 262 `repipe` mentions; names **Nellie Gail Ranch (25)**,
+  **Moulton Ranch (17)**, **El Toro Water District (14)**, PEX-A **Uponor/Wirsbo
+  ASTM F1960** (5/4); dedicated HOA/condo/townhome repipe section (15). JSON-LD
+  types include FAQPage + HowTo + BreadcrumbList + Plumber + City + Service.
+  No `aggregateRating` (no displayed reviews).
+- `lagunaniguelcaplumbingpros.com` (HTTP 200, 56,651 b) — FAQPage + Answer +
+  Question + Organization; a **"Laguna Niguel Communities"** section and a
+  **"Laguna Niguel ZIP codes we serve"** section; slab-leak-heavy body (22 mentions).
+- `proplumberlagunaniguel.com` (HTTP 200, 75,934 b) — Plumber + Service + Offer +
+  OfferCatalog + OpeningHoursSpecification schema; 24/7 emergency messaging;
+  "Plumbing Services FAQ" block.
+
+**Gap confirmed (evidence):** our `cities/laguna-hills.html` is leak-detection
+framed and names **no** Laguna Hills neighborhood, ZIP, or water district, and
+there is **no** city × repipe page for Laguna Hills (only
+`services/pex-repiping-laguna-niguel.html`). Competitors rank with exactly that
+page type. That the page *causes* the ranking is a **hypothesis**; the page's
+existence and its specific local entities are **verified facts**.
+
+---
+
 ## Next investigation queue
 
 For each Tier A competitor, when crawlers can reach us (post-Cloudflare fix):

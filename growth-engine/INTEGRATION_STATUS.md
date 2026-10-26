@@ -18,6 +18,22 @@ call. Prior verification 2026-10-09.
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
 >
+> **Re-verified 2026-10-26 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
+> (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
+> `cf-mitigated`; entity consistency OK (canonical 200; three retired duplicate hosts
+> still 404); sitemap in sync (89 URLs, 0 underscores). The **Tavily Search API**
+> returned usable ranked results for all 10 queries — a **recovery** from the 429s of
+> 2026-10-23 — and remains the practical primary. **Gemini is now hard-BLOCKED, not
+> merely rate-limited:** every grounded call returned **HTTP 401
+> `ACCESS_TOKEN_TYPE_UNSUPPORTED` ("API key not valid")**, re-verified by hand naming
+> `GEMINI_API_KEY` explicitly, so this is a **dead credential**, not a missing
+> injection. All 5 rows recorded `inconclusive` — never zero. Filed as
+> **P-006** (`proposals/2026-10-26-P-006-rotate-gemini-api-key.md`); the previous
+> ISSUE-032 note below (429 / free-tier grounding) no longer describes the failure
+> mode and is superseded. GSC/GA4/GBP remain **not connected** (P-002); note the new
+> Search Console *Search generative AI control* (Google docs updated 2026-10-21) also
+> sits behind that credential.
+>
 > **Re-verified 2026-10-23 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
 > (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
 > `cf-mitigated`; sitemap in sync (76 URLs). Search providers **worse** this run than
