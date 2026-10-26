@@ -5,6 +5,44 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-26 (Intelligence HQ weekly) — verification, not production, is the constraint
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim,
+copy, price, or sitemap entry changed.** Branch `intelligence-hq/weekly-2026-10-26`.
+
+**Change:** none to the site (deliberate — see below). Added the weekly review
+`growth-engine/reports/weekly/2026-10-26.md`; 4 new rows to
+`data/content_experiments.jsonl`; status updates in `INNOVATION_IDEAS.md`; outcome
+records in `EXPERIMENT_LOG.md`.
+
+**Reason:** the week shipped a lot of site work (4 city x service pages, 3 water-heater
+pages, 6 case studies, GA4, Bing verification, GBP schema, 89 sitemap URLs) but the
+measuring apparatus did not improve. GSC/GA4/GBP are still unconnected, the AI board
+is one engine (96 `claude_web_search` queries, all `absent`), and the daily runner's
+live health check returned INCONCLUSIVE for **6 consecutive days**. Fixing
+verification now beats authoring a 90th page.
+
+**Target:** the next daily report carries a timestamped PASS/FAIL health line; the
+board has >= 2 engines; the open-PR count drops below 10.
+
+**Competitor insight:** 4 of the top 5 citation gaps are **directories/lead-gen**
+(HomeAdvisor 38 lost answers, This Old House "near me" 33, Porch 21, HomeGuide 12),
+not plumbers — so the highest-leverage owner action is listing/claim work, not more
+pages. 23 new competitor domains appeared this window; `homeguide.com` rose 0 -> 5
+observations and entered the top 5. `repipe-newport-beach.com` (single-service,
+single-city) confirms the specialist-domain pattern. Feature verified; cause is a
+hypothesis.
+
+**Expected outcome:** the loop regains the ability to tell whether a change worked,
+and the owner gets one concrete, high-yield list (directory claims) instead of more
+content.
+
+**Result:** pending — re-measure 2026-11-02 (next weekly review).
+
+**Keep/modify/revert:** keep. No experiment was reverted this week; the conventional
+proxy channel (`exp-2026-10-09-measurement-providers`) was formally recorded as
+reverted/superseded.
+
 ## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
 
 **Status:** Read-only + additive documentation. **No website page, schema, claim,

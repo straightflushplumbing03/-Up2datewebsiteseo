@@ -67,3 +67,47 @@ Templates for new entries:
 - **Confidence:** low (channel quality). **Decision:** **revise** — retain a paid
   SerpAPI/Brave API key or a Perplexity key as the path forward (see `proposals/`
   and weekly report §7). Brave kept as fallback only; Bing dropped.
+
+---
+
+## Weekly review 2026-10-26 — outcomes recorded
+
+No new experiment was created this week (no site change shipped). The open
+experiments below had their outcome re-assessed against this week's evidence.
+
+### exp-2026-10-07-schema-orphans — **keep, inconclusive**
+
+- **Follow-up 2026-10-14: elapsed, still inconclusive.** No measurable SERP change
+  is possible while GSC is unconnected, and the measurement channel that replaced the
+  conventional proxy (`claude_web_search`) reports 0 recommended / 0 cited for all 96
+  queries — which is a *coverage* observation, not a test of the schema change.
+- **Decision: keep.** Next scheduled follow-up **2026-11-07**.
+- **Confounder unchanged:** no GSC/GA4/GBP access.
+
+### exp-2026-10-09-measurement-providers — **reverted / superseded**
+
+- Brave HTTP 429 for most of the window; Bing HTTP 200 but non-localized (identical
+  results across all 5 cities); DDG HTML **202** anti-bot; DDG Lite 202 on all 12
+  probes. The channel never produced a trustworthy city-level signal.
+- **Decision: revert.** Replaced 2026-10-20 by `claude_web_search` (primary) and
+  Tavily (fallback). Recorded so the failure is not silently forgotten.
+
+### exp-2026-10-09-cloudflare-crawler-access — **resolved, holding**
+
+- Re-verified 2026-10-26T13:04Z: all 7 crawler UAs + curl → **200** on `/`,
+  `/robots.txt`, `/sitemap.xml`, `/llms.txt`; no `cf-mitigated`. 15 consecutive days
+  green since the 2026-10-11 fix.
+- **Decision: resolved / keep.**
+
+### Gemini grounded AI-surface channel — **revise (blocked, not dropped)**
+
+- 2026-10-16: 5 × `bad_request` HTTP 404 (retired model slug).
+  2026-10-23: 4 × `server_error` 500, 4 × `quota_exhausted` 429, 1 usable row.
+- **Decision: revise.** Fix = idea-2026-10-23-02 (reserve Gemini quota for the
+  sweep). Until then the AI board is single-engine and must be labelled as such.
+
+### New experiment rows for the pages shipped this week
+
+`data/content_experiments.jsonl` gains one row per page shipped 2026-10-20→24 with
+its baseline `sf_status` (all `absent`) and a 2026-11-23 re-measure date. The daily
+planner retests them as they age. See the file for the machine-readable rows.
