@@ -45,6 +45,10 @@ html += page_hero(PREFIX,
 )
 html += """<section>
   <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Where we work</div>
+      <h2>Browse by city</h2>
+    </div>
     <div class="card-grid card-grid-2">
 """
 for href, name, tagbadge, desc in CITIES:

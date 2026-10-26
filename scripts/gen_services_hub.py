@@ -20,6 +20,10 @@ html += page_hero(PREFIX,
 )
 html += """<section>
   <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Services</div>
+      <h2>Browse our services</h2>
+    </div>
     <div class="card-grid">
       <div class="service-card reveal">
         <div class="icon">&#128266;</div>
