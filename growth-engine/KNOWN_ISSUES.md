@@ -861,3 +861,47 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+
+---
+
+## ISSUE-033 — Ambiguous combined review count on the contact page  [LOW · RESOLVED 2026-10-25]
+
+- **Evidence:** `contact.html` displayed `**74+ Reviews** [Google] · [Yelp]`.
+  Read plainly, "74+ Reviews" next to two platform links implies 74+ reviews
+  **across both** platforms. The homepage separately says "74 reviews on Yelp",
+  which is Yelp-only. An external audit flagged the ambiguity.
+- **Impact:** A count that can be read as larger than reality is a
+  consumer-protection and trust risk; `APPROVED_CLAIMS.md` restricts "any review
+  count or rating not matching the live Google/Yelp profiles at time of writing".
+- **Why not just correct the number:** the live counts could not be fetched from
+  this host — Yelp returns **HTTP 403** to this egress; the Google `share.google`
+  link returns 200 but exposes no count. No owner-confirmed count is recorded in
+  the repo. Asserting a new number would be a guess.
+- **Fix applied 2026-10-25:** `contact.html` now reads **"Read our reviews"
+  [Google] · [Yelp]** with **no count**. This follows the audit's own guidance:
+  if the numbers cannot be kept in sync, omit the count rather than show a
+  misleading one. The homepage's explicitly Yelp-attributed "74 reviews" was
+  left unchanged (attributed + not independently verifiable here). `md/contact.md`
+  and `llms-full.txt` regenerated to match.
+- **Approval:** Level 2 (copy using verified facts).
+- **Owner follow-up (Level 3):** confirm the live Google + Yelp ratings/counts
+  and, if kept, re-add a **platform-labelled** figure to both places. See
+  `reports/audit/2026-10-25-technical-reviews-audit-response.md`.
+
+---
+
+## ISSUE-034 — Technical checklist rows unverifiable without GSC/PSI  [LOW · OPEN 2026-10-25]
+
+- **Evidence:** An external audit listed sitemap, robots, canonicals, 5xx,
+  mobile, and LocalBusiness data as "Not confirmed" because its tool could not
+  fetch `robots.txt` / `sitemap.xml`. Re-verified live here: sitemap and robots
+  **200** and identical to the repo, 0 canonical anomalies, all 89 sitemap URLs
+  **200**, `Plumber` JSON-LD valid, `aggregateRating` correctly absent.
+- **Still unverifiable from this host (no credentials):** Google Search Console
+  (URL Inspection, indexing status, Google-selected canonical, the historical
+  "smartphone 5xx"), PageSpeed Insights / real-device Core Web Vitals, and the
+  live Google/Yelp review counts (Yelp 403s this egress).
+- **Status:** OPEN — record as UNMEASURED, never as zero. Needs owner GSC/PSI
+  access. Full detail in
+  `reports/audit/2026-10-25-technical-reviews-audit-response.md`.
+- **Approval:** — (reporting only).

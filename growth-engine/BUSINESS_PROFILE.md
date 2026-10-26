@@ -64,14 +64,20 @@ requires owner confirmation is marked **UNVERIFIED — owner input required**.
 
 | Field | Value | Source | Verified | Confidence |
 |---|---|---|---|---|
-| Google rating | 5.0 / 5 | `llms.txt` | 2026-10-09 | **medium — on-site claim, not independently verified** |
-| Yelp rating | 4.8 / 5, 74+ reviews | `index.html` JSON-LD `aggregateRating`; `llms.txt` | 2026-10-09 | **medium — self-reported** |
-| Reviews markup | `aggregateRating` + `review` present on `index.html` | `index.html` JSON-LD | 2026-10-09 | high |
+| Google rating | 5.0 / 5 | `llms.txt`; site-wide footer badge ("5/5 on Google") | 2026-10-09 | **medium — on-site claim, not independently verified** |
+| Yelp rating | 4.8 / 5, 74+ reviews | `index.html` `#reviews` section; `llms.txt` | 2026-10-09 | **medium — self-reported** |
+| Reviews markup | **None** — `aggregateRating` + `review` were removed from `index.html` JSON-LD 2026-10-15 (ISSUE-002) | `index.html` JSON-LD | 2026-10-25 | high |
 
 > Self-reported review counts must be kept in sync with the actual profiles.
 > Google's structured-data policy discourages self-serving `aggregateRating`
-> on `LocalBusiness` when the ratings are not independently verifiable. Flagged
-> in `KNOWN_ISSUES.md` — verify against the live profiles before changing.
+> on `LocalBusiness` when the ratings are not independently verifiable, so the
+> rating markup stays **removed** (ISSUE-002). On-page ratings remain
+> human-visible trust content.
+> **2026-10-25 (ISSUE-033):** the combined `74+ Reviews [Google] · [Yelp]` label
+> on `contact.html` was replaced with a count-free "Read our reviews" because the
+> live counts are not verifiable from this host and no owner-confirmed count is
+> recorded. Re-add a **platform-labelled** figure only after the owner confirms
+> the live Google and Yelp numbers.
 
 ## Areas served (published, 21 cities)
 
