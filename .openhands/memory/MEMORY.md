@@ -124,13 +124,15 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
 ## Conventions that matter
-- **GitHub token in this environment is scoped to git push + PR create only.**
-  `PATCH /pulls/{n}` (edit body/title) and `POST /issues/{n}/comments` return
-  `403 Resource not accessible by personal access token`; the secondary
-  `GITHUB_PERSONAL_ACCESS_TOKEN` returns `401 Bad credentials`. So an agent can
-  push a branch and open a PR but **cannot edit the PR description or comment**.
-  Put everything needed in the initial PR body; if a change needs an explanation
-  the owner must be told in chat. **Draft gotcha:** a PR opened via the tool can
+- **The MCP PR tools are unreliable on this repo; the REST API is not.**
+  `github_create_pull_request` and `github_update_pull_request` (and the
+  `default_create_pr` tool) can 403 with `Resource not accessible by personal
+  access token`. But a direct `POST`/`PATCH https://api.github.com/...` with
+  `Authorization: Bearer $GITHUB_TOKEN` (urllib/curl) **works** — verified
+  2026-10-25: created PR #81 and PATCHed its body. The secondary
+  `GITHUB_PERSONAL_ACCESS_TOKEN` returns `401 Bad credentials` — don't use it.
+  So: create/edit PRs via the REST API, not the MCP tool. Still put everything
+  needed in the initial PR body. **Draft gotcha:** a PR opened via the tool can
   land as a **draft** (unmergeable). Flip it with GraphQL
   `markPullRequestReadyForReview(pullRequestId: <node_id>)`; the REST
   `PATCH {"draft": false}` returns 200 but silently does nothing.
@@ -142,6 +144,11 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   per page — a new ID is a **replace**, never a second paste. Verify a tag actually
   runs with Chromium `--log-net-log` + grep for `gtag/js?id=<ID>`.
   Current ID: `G-DFS6B1LV4P` (replaced `G-651QV5WYP2` 2026-10-16).
+- **Search-engine verification tags** are plain `<meta>` in the homepage `<head>` only
+  (`index.html`), inserted after `<meta name="viewport">` and before the meta CSP. They need no
+  CSP entry (inert to browsers) and Bing says never remove them after verification succeeds.
+  Bing `msvalidate.01` = `CDEF4A78CA15282FB9EA4DD9E05B9FA0` (added 2026-10-25, PR #81).
+  `grep -c msvalidate.01` must stay 1 — a second paste is never the fix.
 - Never commit to `main`; branch + PR only. **Never merge any PR — open it, request review, hand
   the merge to the owner.** No low-risk exception; review is required before merge.
 - Branches: research `intelligence-hq/daily-<date>`; site changes `intelligence-hq/site-<date>-<slug>`.
