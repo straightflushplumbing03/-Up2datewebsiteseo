@@ -108,7 +108,7 @@ call. Prior verification 2026-10-09.
 | ChatGPT Search | **not testable** | chatgpt.com 403 to non-browser clients |
 | Claude web search | **not testable** | not scriptable in this environment |
 | Gemini web search (consumer app) | **not testable** | gemini.google.com not scriptable |
-| Gemini Search API | **free, with Gemma fallback** | `GEMINI_API_KEY` is set. Grounding is **not** on the Gemini 3.x free tier (HTTP 429), so the client falls back to a free Google-Search-grounded **Gemma** model and labels the row `engine: gemma` (ISSUE-032). Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Enable the true Gemini surface with billing (Tier 1 = 5,000 free grounded requests/month). |
+| Gemini Search API | **BLOCKED 2026-10-27 — credential type mismatch** | **2026-10-27:** all 3 grounded queries returned HTTP 401 `authentication_failed`. The injected `GEMINI_API_KEY` is an OAuth-type token (prefix `AQ.`, len 53; `looks_like_api_key=False`), not a Google API key (`AIza…`) — so neither the Gemini model nor the Gemma fallback could authenticate. The AI surface is UNMEASURED (never 0). Prior state: `GEMINI_API_KEY` was set with a Gemma fallback for HTTP 429 (ISSUE-032); client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Fix: provide a real Gemini API key (billing: Tier 1 = 5,000 free grounded requests/month). |
 | Microsoft Copilot | **not testable** | — |
 | Grok | **not testable** | — |
 | Perplexity Agent API | **optional — key not set** | `PERPLEXITY_API_KEY` missing. Metered, no free tier; a paid second engine. Client + CLI committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`). |

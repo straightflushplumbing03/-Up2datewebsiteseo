@@ -418,3 +418,45 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+
+---
+
+## 2026-10-27 — Daily idea batch (evidence-backed)
+
+Evidence base: 15-query Tavily conventional sweep (SF absent 0/15);
+fetched competitor pages (Evans, Scott English, Creative Repipe, Zoom Drain,
+Efficient Plumbing); Google Search Central AI-optimization guide
+(https://developers.google.com/search/docs/fundamentals/ai-optimization-guide,
+fetched 2026-10-27). None of these ideas is actioned today; each needs its own
+evidence and tests.
+
+| ID | Idea | Type | Impact | Evidence | Effort | Reversible | Risk gate | Status |
+|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-27-01 | **Specialist "leak detection" landing page** modeled on Evans/Leak Star: one deep page on *residential leak detection in South OC* with FAQ schema, diagnostic-method explainer (acoustic/thermal/camera), and decision guidance | Website | High | Evans + Leak Star recur 3/15 each with dedicated specialist pages + FAQPage schema | Medium | Yes | Level 1 (content) | candidate |
+| idea-2026-10-27-02 | **"Diagnostic methods" explainer page** — how SF actually finds a hidden leak (acoustic listening, thermal imaging, pressure testing, camera) with what each method is good at | Website | High | Google AI guide: non-commodity, first-hand experience content; competitor pages don't detail methods | Medium | Yes | Level 1 (content) | candidate |
+| idea-2026-10-27-03 | **Owner-experience "decision" content** ("when a repipe is *not* worth it", "slab leak vs. supply-line leak: how we tell") — matches Google's cited non-commodity example almost exactly | Website | High | Google AI guide "unique point of view"; owner has 30+ yrs experience per BUSINESS_PROFILE | Medium | Yes | Level 1 (content) | candidate |
+| idea-2026-10-27-04 | **Verify SF's own AI-answer presence on a working AI surface** — build a small script that queries an available AI answer engine (the Gemini key is OAuth-typed and 401s; needs a real API key or an alternative engine) so the AI-surface check stops returning BLOCKED | Tooling | High | Gemini sweep BLOCKED today (HTTP 401, secret prefix `AQ.` is not a `AIza…` API key) | Medium | Yes | Level 1 (tooling) | candidate |
+| idea-2026-10-27-05 | **Per-city "response time / service-area" content on Tier-1 city pages** — competitors use per-city location pages (Zoom Drain); add genuinely local detail (drive-time context, local plumbing quirks like hard water) rather than thin doorways | Website | Medium | Zoom Drain per-city page observed; Google warns against commodity/thin content so must be non-commodity | Medium | Yes | Level 1 (content) | candidate |
+| idea-2026-10-27-06 | **Directory-presence audit** — Yelp appears in 13/15 queries; ensure SF's NAP is correct/complete on Yelp/Angi/Google Business Profile (a listing fix, not a site change) | Business | Medium | yelp.com 13/15, angi.com 3/15 in today's sweep | Low | Yes | Level 2 (owner action; propose) | candidate |
+
+### Prioritization (impact / evidence / effort-to-value / reversibility + risk gate)
+
+1. **idea-2026-10-27-03** (owner-experience decision content) — highest score:
+   directly matches a *primary-source* Google example, high impact, reversible,
+   Level 1. Gate: needs real owner detail; do not fabricate.
+2. **idea-2026-10-27-02** (diagnostic methods explainer) — high impact, strong
+   evidence, Level 1, reversible.
+3. **idea-2026-10-27-04** (fix AI-surface measurement) — high leverage on the
+   *instrument*: without a working AI engine every AI-visibility number is BLOCKED.
+   Level 1 tooling.
+4. **idea-2026-10-27-01** (specialist leak-detection page) — high impact but must
+   not duplicate existing leak pages; needs a content map first.
+5. **idea-2026-10-27-05** (per-city local detail) — medium; risk of thin/doorway
+   content, so only with genuinely local non-commodity detail.
+6. **idea-2026-10-27-06** (directory NAP audit) — medium impact, lowest effort,
+   but Level 2 (owner/business profile) → **propose**, do not action.
+
+**No idea actioned this run:** every candidate is either an HTML content change
+(which needs its own evidence, tests, and a site-branch PR) or an owner/business
+action (Level 2). Nothing rejected.

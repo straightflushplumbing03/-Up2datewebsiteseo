@@ -393,3 +393,58 @@ For each Tier A competitor, when crawlers can reach us (post-Cloudflare fix):
 fetch homepage, one city page, one service page; extract title/meta/H1 patterns,
 service list, schema types, FAQ presence, review display, and CTA; record in
 `data/competitor_observations.jsonl`. Do not scrape private data or impersonate.
+
+---
+
+## 2026-10-27 update — 15-query Tavily sweep (conventional proxy)
+
+Provider: **Tavily Search API** (`api.tavily.com/search`). Brave returned a CAPTCHA
+wall and DuckDuckGo Lite returned HTTP 202 to this egress IP, so neither was usable
+today; Tavily is recorded as `test_type: conventional_proxy` — **conventional search,
+NOT an AI answer engine**. 15 queries across 6 services × Tier-1 cities. Raw rows in
+`data/ai_visibility_history.jsonl` (+15). **Straight Flush was absent from all 15**
+(0/15 recommended, 0/15 mentioned, 0/15 cited). Frequency = distinct queries (of 15)
+in which the domain appeared in the top-10 results. Presence is evidence a competitor
+*has* a feature; it is **not** proof the feature caused a ranking.
+
+### Appeared for ≥3 of 15 queries
+
+| Domain | Queries | Notes |
+|---|---|---|
+| yelp.com | 13 | directory — not a direct competitor |
+| efficientplumbing.com | 9 | highest non-directory frequency |
+| facebook.com | 8 | directory/social |
+| rotorooter.com | 7 | national franchise |
+| barkerandsonsplumbing.com | 5 | local |
+| clearwaterplumbingoc.com | 5 | local |
+| streamlineplumbing.org | 4 | local |
+| mckplumb.com | 3 | local |
+| billmetzgerplumbing.com | 3 | local |
+| leakstar.com | 3 | leak-detection specialist |
+| evansleakdetection.com | 3 | leak-detection specialist |
+| angi.com | 3 | directory |
+| drainandsewerpro.com | 3 | local |
+| scottenglishplumbing.net | 3 | local |
+
+### Verified feature observations (fetched 2026-10-27)
+
+- **evansleakdetection.com** — FAQPage + LocalBusiness JSON-LD, geo coordinates,
+  embedded map, on-page reviews, `tel:` link. Dedicated leak-detection specialist
+  positioning. Confidence: medium.
+- **scottenglishplumbing.net** — LocalBusiness JSON-LD, BreadcrumbList, geo
+  coordinates, `aggregateRating`, `tel:` link. Confidence: medium.
+- **creativerepipe.com** — LocalBusiness/Plumber JSON-LD, BreadcrumbList, geo
+  coordinates, embedded map, `tel:` link; single-service (repipe) specialist site.
+  Confidence: medium.
+- **zoomdrain.com/locations/laguna-niguel-ca/** — per-city location landing page;
+  direct fetch returned HTTP 403 (Cloudflare bot protection), so on-page features
+  were **not** verified. Confidence: low.
+- **efficientplumbing.com** — homepage 301-redirects on direct fetch; features not
+  verified. Confidence: low.
+
+**Gap pattern (evidence):** the recurring specialist competitors (Evans, Leak Star)
+run *dedicated single-service sites with FAQ schema*, while the local generalists
+run *LocalBusiness + Breadcrumb + geo* schema. Straight Flush already ships
+Breadcrumb/FAQ/Service JSON-LD on its pages (per `AGENTS.md`), so the observed
+schema gap is not a schema absence — it is a **query-presence** gap: SF did not
+appear for any of the 15 conventional queries.

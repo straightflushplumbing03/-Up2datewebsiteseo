@@ -305,3 +305,46 @@ New entries are prepended directly under this line, newest first, using:
 
 ---
 
+
+
+---
+
+## 2026-10-27 — Google's official guide to generative-AI search (primary source)
+
+**Source:** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+(fetched 2026-10-27; page shows "Last updated 2026-07-10 UTC"). Confidence: **high**
+(Google Search Central, primary source).
+
+Key claims quoted/paraphrased from the page:
+
+- **SEO still applies to AI search.** Google states its generative AI features "are
+  rooted in our core Search ranking and quality systems," using RAG (grounding) and
+  **query fan-out** (a model generates concurrent related queries to fetch more
+  results). Implication: a page must rank in the *core* index to be retrievable for
+  AI features — the AI surface is downstream of conventional ranking, not separate.
+- **"AEO"/"GEO" are not a separate discipline.** Google frames them as SEO for the
+  AI search experience and points to its "evaluating third-party SEO advice"
+  guidance. This matches `AI_VISIBILITY_METHODOLOGY.md`: measure AI surfaces
+  directly, don't infer them from conventional results.
+- **Non-commodity content wins.** "Create valuable, non-commodity content … will
+  likely influence your website's presence in generative AI search in the long run
+  more than any of the other suggestions." Google contrasts *commodity* content
+  ("7 Tips for First-Time Homebuyers") with a *non-commodity* example that is
+  strikingly close to this business: "**Why We Waived the Inspection & Saved Money:
+  A Look Inside the Sewer Line**." It calls out **"providing a unique point of
+  view"** — first-hand experience — as a differentiator over summaries.
+- **Supporting signals:** clear headings/structure, high-quality images and video
+  (Google says AI features can surface images/video, "more opportunities for your
+  website to appear beyond web page links").
+
+**Why it matters for SFPL (hypothesis, medium confidence):** SF is owner-operated
+with 30+ years of hands-on experience (per `BUSINESS_PROFILE.md`). That is exactly
+the "unique point of view / first-hand experience" Google says distinguishes
+non-commodity content. The actionable, low-risk direction is *owner-experience*
+content (real diagnostic reasoning, decision trade-offs) rather than more
+city/service templated pages. This reinforces the existing `candidate` ideas in
+`INNOVATION_IDEAS.md` about owner field-notes, which are blocked on real
+owner-supplied detail (fabricating case notes is forbidden).
+
+**Not claimed:** the page does not publish ranking factors, weights, or a list of
+"AI signals," and this run does not infer any from it.
