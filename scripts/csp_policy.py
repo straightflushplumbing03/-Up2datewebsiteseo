@@ -58,10 +58,17 @@ def csp_content():
         "style-src-attr 'unsafe-inline'; "
         "font-src https://fonts.gstatic.com; img-src 'self' data: "
         "https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com "
-        "https://www.googletagmanager.com https://*.google-analytics.com; "
-        "script-src 'self' 'sha256-%s' https://www.googletagmanager.com; "
+        "https://*.googletagmanager.com https://*.google-analytics.com "
+        "https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com; "
+        "script-src 'self' 'sha256-%s' https://*.googletagmanager.com "
+        "https://static.cloudflareinsights.com; "
         "frame-src https://www.google.com https://www.googletagmanager.com; "
-        "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com; "
+        # GA4 now sends hits to analytics.google.com, www.google.com and
+        # stats.g.doubleclick.net. Verified 2026-10-26 in a real browser: the old
+        # policy blocked every page_view, so GA recorded almost nothing.
+        "connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com "
+        "https://*.analytics.google.com https://analytics.google.com https://*.g.doubleclick.net "
+        "https://www.google.com https://cloudflareinsights.com; "
         "object-src 'none'; base-uri 'self'; form-action https://formspree.io; "
         "upgrade-insecure-requests" % inline_sha256()
     )

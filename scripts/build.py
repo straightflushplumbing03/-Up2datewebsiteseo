@@ -67,6 +67,7 @@ def head(title, description, canonical, prefix, schema=""):
 <html lang="en">
 <head>
 {GTAG_BLOCK}
+<script src="/assets/js/lead-events.js" defer></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 {meta_csp_tag()}

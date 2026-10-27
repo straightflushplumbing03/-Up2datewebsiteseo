@@ -27,7 +27,8 @@ re-apply the later passes). Never run a generator over the site as a whole.
 
 ## Conventions
 
-- Canonical/OG URLs are extensionless: `https://straightflushplumbingoc.com/cities/san-clemente`
+- Canonical/OG URLs and sitemap entries use the `.html` form: `https://straightflushplumbingoc.com/cities/san-clemente.html`
+  (verified 2026-10-26: every page and `sitemap.xml` use `.html`; keep them consistent — don't flip conventions)
 - Hub pages are directories with `index.html` and are declared in `sitemap.xml`
   with a trailing slash (`/guides/`, `/case-studies/`)
 - Breadcrumb JSON-LD must match the visible breadcrumb trail
@@ -54,6 +55,14 @@ python3 scripts/verify_live_vs_repo.py .
 Live pages and the repo are kept in sync; Cloudflare injects email-obfuscation
 and a challenge script at the edge, which `verify_live_vs_repo.py` normalises
 away before comparing.
+
+## Analytics
+
+- GA4 `G-DFS6B1LV4P`. The CSP lives in `scripts/csp_policy.py`; `connect-src` must allow every GA4 collect host
+  (`*.google-analytics.com`, `*.analytics.google.com`, `analytics.google.com`, `www.google.com`, `*.g.doubleclick.net`),
+  guarded by `test_ga4_tag.py`. Before 2026-10-26 the CSP blocked every page_view.
+- Lead events come from `assets/js/lead-events.js`: `phone_call_click`, `generate_lead`, `form_submit_confirmed`.
+  No personal data is sent.
 
 ## Gotchas
 

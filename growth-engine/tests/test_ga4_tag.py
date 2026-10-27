@@ -83,6 +83,15 @@ class TestCspAllowsTag(unittest.TestCase):
         script = re.search(r"script-src ([^;]*);", csp).group(1)
         self.assertNotEqual(script.strip(), "'self'")
 
+    def test_connect_src_allows_every_ga4_collect_host(self):
+        """Regression: GA4 page_view hits go to these hosts. Blocking any of them
+        silently drops data (verified in a live browser on 2026-10-26)."""
+        connect = re.search(r"connect-src ([^;]*);", csp_content()).group(1).split()
+        for host in ("https://*.google-analytics.com", "https://*.analytics.google.com",
+                     "https://analytics.google.com", "https://www.google.com",
+                     "https://*.g.doubleclick.net"):
+            self.assertIn(host, connect)
+
     def test_policy_is_not_weakened_to_unsafe_inline(self):
         """The inline bootstrap is hash-allowed, so XSS protection stays.
 
