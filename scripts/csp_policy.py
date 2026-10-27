@@ -68,7 +68,7 @@ def csp_content():
         # policy blocked every page_view, so GA recorded almost nothing.
         "connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com "
         "https://*.analytics.google.com https://analytics.google.com https://*.g.doubleclick.net "
-        "https://www.google.com https://cloudflareinsights.com; "
+        "https://www.google.com https://cloudflareinsights.com https://formspree.io; "
         "object-src 'none'; base-uri 'self'; form-action https://formspree.io; "
         "upgrade-insecure-requests" % inline_sha256()
     )
