@@ -21,7 +21,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 HTML_SUBS = [
     # Footer / hours list — matches the exact markup used on all pages.
     ("Mon&ndash;Fri 8am&ndash;7pm &middot; Sat&ndash;Sun 9am&ndash;6pm<br>24/7 for emergencies",
-     "Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm &middot; Sun closed<br>24/7 for emergency calls"),
+     "Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm &middot; Sun closed<br><strong>24-hour emergency service</strong> &mdash; <a href="tel:+19493746524">call anytime</a>"),
     # homepage JSON-LD "description" (compact ASCII form)
     ("Open Mon-Fri 8am-7pm and Sat-Sun 9am-6pm.",
      "Open Mon-Fri 8am-7pm, Sat 9am-6pm; closed Sunday (24/7 for emergency calls)."),
