@@ -393,3 +393,37 @@ For each Tier A competitor, when crawlers can reach us (post-Cloudflare fix):
 fetch homepage, one city page, one service page; extract title/meta/H1 patterns,
 service list, schema types, FAQ presence, review display, and CTA; record in
 `data/competitor_observations.jsonl`. Do not scrape private data or impersonate.
+
+## 2026-10-28 update — 10-query Tavily sweep (Brave 429, DDG Lite unparseable)
+
+Provider note: Brave **429** on every attempt, DuckDuckGo **Lite 200 with zero
+parseable anchors** — per the provider policy the sweep stopped rather than
+retrying. **Tavily Search API** returned 10/10 ranked result sets, so this update is
+Tavily-only (directional, lower breadth than a Brave sweep).
+
+**Repeat competitors (distinct queries today):**
+- `efficientplumbing.com` (7) · `evansleakdetection.com` (3) ·
+  `barkerandsonsplumbing.com` (5) · `clearwaterplumbingoc.com` (4) ·
+  `rotorooter.com` (5) · `drainandsewerpro.com` (3) · `scottenglishplumbing.net` (2) ·
+  `parzivalplumbing.com` (2) · `billmetzgerplumbing.com` (2) · `leakstar.com` (2) ·
+  `streamlineplumbing.org` (2)
+
+**New this run (not previously recorded):**
+- `repipe-laguna-hills.com` — **exact-match city+service domain** for repiping in
+  Laguna Hills; matches the 2026-10-23 `repipe-newport-beach.com` pattern.
+- `aterheatermaninc.com`, `aterheaterinstallations.com` — single-service water-heater
+  domains holding "water heater repair in Aliso Viejo". (Observed verbatim in the
+  Tavily result set; both appear to be missing a leading `w`, so treat the exact
+  hostnames as **medium** confidence and re-verify before citing.)
+- `ezplumbingusa.com`, `saddlebackplumbing.com` — slab-leak intent, Mission Viejo.
+- `mckplumb.com`, `lagunaniguelplumber.org`, `efficientplumbing.com` — Laguna Niguel
+  general plumber intent (SF absent).
+
+**Gap confirmed (evidence):** the repipe and water-heater intents are again served by
+**dedicated single-service domains** (not general plumbers), and SF holds neither a
+city × repipe nor a city × water-heater page. The pages' *existence* is a verified
+fact; that they *cause* the ranking is a **hypothesis**.
+
+**Directory/franchise channels (not competitors):** yelp.com (13 hits), facebook.com
+(4), mapquest.com (3), bbb.org, angi.com — reproduces the standing finding that
+directories take broad local queries.

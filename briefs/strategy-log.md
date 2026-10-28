@@ -5,6 +5,30 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-28 (Intelligence HQ daily) — AI surface BLOCKED at auth; sitemap false positive fixed
+
+**Change:** committed the generator's canonical `sitemap.xml` ordering (pure reorder,
+no URL added/removed — ISSUE-034); otherwise additive documentation only. No page,
+schema, claim, copy, price, or service-area commitment changed. Branch
+`intelligence-hq/daily-2026-10-28`, PR #91.
+
+**Reason:** pre-stage 5/7 — `sitemap_idempotent` FAILed as a **false positive**
+(89 correct URLs in non-canonical order), and `ai_visibility_sweep` is **BLOCKED**
+(`GEMINI_API_KEY` fails auth: HTTP 401 `ACCESS_TOKEN_TYPE_UNSUPPORTED` — ISSUE-035).
+Two instruments failed, so the prioritization again favoured measurement integrity.
+
+**Target:** measurement integrity + the conventional (Tavily) local-search picture.
+**Competitor insight:** the exact-match city+service domain pattern repeats
+(`repipe-laguna-hills.com`; single-service water-heater domains for Aliso Viejo);
+directories (Yelp 13) still take broad local queries; SF absent 10/10 Tavily queries.
+**Expected outcome:** after an owner re-provisions the Gemini key and P-002 lands, the
+AI and first-party surfaces become measurable and can be compared against the
+2026-10-26 Aliso Viejo re-measure (2026-11-23).
+**Result:** sitemap check green, 353 tests OK; AI surface UNMEASURED (not zero);
+conventional read Tavily-only/directional. Keep.
+**Next three:** (1) re-provision `GEMINI_API_KEY` + `--smoke` preflight; (2) sitemap
+regression test; (3) P-002 access.
+
 ## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
 **Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).
 **Reason:** 96/96 AI answers absent; Aliso Viejo slab/repipe queries have no credible local page; directories take broad queries. Keep.

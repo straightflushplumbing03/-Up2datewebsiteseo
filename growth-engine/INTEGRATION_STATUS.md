@@ -18,6 +18,21 @@ call. Prior verification 2026-10-09.
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
 >
+> **Re-verified 2026-10-28 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
+> (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
+> `cf-mitigated`; sitemap in sync (89 URLs; the committed order was corrected —
+> ISSUE-034). Search providers remain blocked: Brave **429** on every attempt,
+> DuckDuckGo **Lite 200 but zero parseable result anchors**; per the provider policy
+> the sweep stopped rather than retrying. **Tavily Search API** returned 10/10
+> ranked result sets (the practical primary). **Gemini is now BLOCKED at
+> authentication, not quota:** every grounded call returns **HTTP 401
+> `UNAUTHENTICATED` / `ACCESS_TOKEN_TYPE_UNSUPPORTED`**, and `models.list` with the
+> same key also 401s — so the registered `GEMINI_API_KEY` is not a usable AI Studio
+> API key (`AIza…`). The AI surface is therefore **UNMEASURED** (5 `inconclusive`
+> rows, never zero) and the Gemma fallback does not apply (it only covers
+> quota/server refusals). See **ISSUE-035**; owner action is to re-provision the
+> key. GSC/GA4/GBP remain **not connected** (P-002).
+>
 > **Re-verified 2026-10-23 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
 > (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
 > `cf-mitigated`; sitemap in sync (76 URLs). Search providers **worse** this run than

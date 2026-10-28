@@ -861,3 +861,53 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+
+---
+
+## ISSUE-034 — Committed `sitemap.xml` was not in the refresh tool's canonical order  [LOW · RESOLVED 2026-10-28]
+
+- **Evidence:** `scripts/daily_measure.py` reported the `sitemap_idempotent` check
+  FAIL on 2026-10-28. `scripts/refresh_sitemap.py` rewrote `sitemap.xml` on a clean
+  checkout with **88 changed lines** while a same-key diff showed **89 URLs, 0 value
+  diffs** — the committed file held the correct URL set in a *different order* than
+  the tool emits. A second run of the tool was clean (`to add: 0`, `to remove: 0`,
+  `89 URLs in sync`).
+- **Root cause:** an earlier edit to `sitemap.xml` inserted/kept entries in an order
+  the generator does not produce, so any clean checkout immediately showed the file
+  as dirty and the idempotency check could never pass. Content was correct; only the
+  ordering diverged.
+- **Impact:** low for users (search engines do not require a particular URL order in
+  a sitemap), but the recurring FAIL masked real regressions in the daily check —
+  a permanent false positive.
+- **Fix applied 2026-10-28:** committed the generator's canonical ordering (pure
+  reorder; **no URL added or removed**, no `lastmod` change). The check is now clean
+  on a fresh checkout. Reversible: `git revert` restores the prior order.
+- **Verification:** `refresh_sitemap.py` → `missing: []`, `extra: []`, 89 URLs in
+  sync, no diff; full unit suite **353 tests OK**; `validate_knowledge_base.py` OK.
+- **Approval:** Level 2 (reversible tooling artifact; no content or URL change).
+
+## ISSUE-035 — `GEMINI_API_KEY` is an unsupported token type; AI-surface sweep BLOCKED  [HIGH · OPEN · owner action]
+
+- **Evidence:** on 2026-10-28 every grounded Gemini call returned **HTTP 401
+  `UNAUTHENTICATED`**, `reason: ACCESS_TOKEN_TYPE_UNSUPPORTED`. The key is present in
+  the environment (length 53, prefix `AQ.Ab8…`) but `models.list` against
+  `generativelanguage.googleapis.com/v1beta` with that key also returns 401 — the
+  same error. A key that reaches `models.list` (as in ISSUE-032) is a *standard API
+  key*; an `AQ.`-prefixed token is a different credential type that the Generative
+  Language API does not accept.
+- **Root cause (hypothesis, medium confidence):** the secret registered for
+  `GEMINI_API_KEY` is not a Google AI Studio **API key** (`AIza…`). It may be an
+  OAuth/ephemeral token or a key from another product. ISSUE-032's mitigation assumed
+  a valid key that merely lacked grounding quota; this key fails *authentication*,
+  which is upstream of the grounding problem and disables the Gemma fallback too
+  (the fallback only triggers on quota/server refusals, not auth errors).
+- **Impact:** the AI-answer-engine surface is **UNMEASURED** — 5 rows recorded
+  `inconclusive`, never zero, per methodology. This is a **missing integration**, not
+  a visibility decline.
+- **Owner action (Level 3, not applied):** re-provision `GEMINI_API_KEY` from Google
+  AI Studio (key form `AIza…`) for the project used in ISSUE-032, then re-run
+  `python3 scripts/gemini_visibility.py --smoke`. No code change is warranted — the
+  client already handles auth errors correctly (raises → `inconclusive`).
+- **Note:** distinct from ISSUE-032 (grounding quota). Even with a valid key,
+  ISSUE-032's billing decision still governs the true Gemini surface; the Gemma
+  fallback covers a valid key without billing.
