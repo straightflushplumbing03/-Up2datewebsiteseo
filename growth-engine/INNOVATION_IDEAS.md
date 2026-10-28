@@ -418,3 +418,44 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+## 2026-10-28 (daily run) — 6 new ideas, prioritized
+
+Evidence base this run: 10 Tavily conventional-search result sets (Brave **429**,
+DDG Lite **no parseable anchors**), 0 usable AI-surface rows (Gemini **401**, see
+ISSUE-035). Repeat specialist domains confirmed: `efficientplumbing.com` (7 hits),
+`evansleakdetection.com`, `barkerandsonsplumbing.com`, `clearwaterplumbingoc.com`,
+`rotorooter.com`. New exact-match city+service domains this run:
+`repipe-laguna-hills.com`, `aterheatermaninc.com` — reinforcing the 2026-10-23
+finding that **single-service city domains** hold repipe and water-heater intents.
+
+Scored 1–5 (higher is better). Risk gate: **L1** read-only/docs · **L2** reversible
+on-page or tooling · **L3** identity/price/legal/area/profile (propose only).
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-28-01 fix the AI-surface credential path (documented owner re-provision, with a `--smoke` preflight gate in the daily runner) | 5 | 5 | 4 | 5 | ✅ L2 | **prioritized** |
+| 2 | idea-2026-10-28-02 sitemap-ordering regression test (assert committed file equals generator output byte-for-byte) | 3 | 5 | 5 | 5 | ✅ L2 | **prioritized** |
+| 3 | idea-2026-10-28-03 fan-out coverage map for water-heater × Tier-1 city (docs) | 4 | 4 | 3 | 5 | ✅ L1 | **prioritized** |
+| 4 | idea-2026-10-28-04 Laguna Hills PEX-repiping page (city × repipe) | 4 | 4 | 3 | 5 | ✅ L2 | candidate |
+| 5 | idea-2026-10-28-05 Aliso Viejo water-heater page (city × water-heater) | 4 | 4 | 3 | 5 | ✅ L2 | candidate |
+| 6 | idea-2026-10-28-06 "which specialist do I need?" decision guide (leak vs repipe vs water heater) | 3 | 3 | 3 | 5 | ✅ L2 | candidate |
+
+**Selection rule applied:** the top three are *measurement-integrity* items again.
+Two independent instruments failed today (Gemini 401, search providers blocked) and
+the one content check that failed (sitemap) was a false positive that had been
+masking regressions. Ranking a content idea above a broken instrument would encode a
+false picture of visibility — the same reasoning as 2026-10-23. Ideas 04 and 05 are
+genuine, evidence-backed city×service gaps (dedicated specialist domains observed
+holding those intents), kept `candidate` pending idea 03's fan-out map so they are
+not written blind.
+
+**No idea actioned this run:** ideas 01–03 are documentation/tooling whose tests
+belong in their own change; 04–06 are HTML changes this run is constrained not to
+make (a report-only run). Nothing rejected.
+
+### Parked / rejected log (2026-10-28)
+
+- **idea-2026-10-28-06** kept `candidate` — the decision-guide concept overlaps the
+  existing `guides/` hub; would need a fan-out map to justify a new page vs a section.
+- No idea rejected this run.

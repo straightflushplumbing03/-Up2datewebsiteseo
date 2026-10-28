@@ -305,3 +305,30 @@ New entries are prepended directly under this line, newest first, using:
 
 ---
 
+
+## 2026-10-28 (Intelligence HQ daily)
+
+- **What changed / observed:** the *What's new in Google Search* changelog
+  (https://developers.google.com/search/updates, fetched 2026-10-28, HTTP 200,
+  page footer `Last updated 2026-10-26 UTC`) lists an **April 30, 2026** entry:
+  *"Expanding preferred sources to all languages where Google Search is available"* —
+  the **preferred sources** feature now works in **all languages where Google Search
+  is available**, including new translated downloadable buttons. The AI-features
+  documentation (https://developers.google.com/search/docs/appearance/ai-features,
+  fetched 2026-10-28, HTTP 200, `Last updated 2025-12-10 UTC`) is unchanged from the
+  version already logged.
+- **Why it matters to Straight Flush:** "preferred sources" lets a searcher
+  nominate outlets they want to see more of — a **personalisation** signal, not a
+  ranking boost, so it does not change what a first-time local searcher sees for
+  "plumber in Laguna Niguel". Its practical value to SF is indirect: it reinforces
+  that Google is investing in **source-trust** surfaces, which rewards the things
+  this engine can still act on without credentials — a real, consistently-named
+  business entity, a physical service area, and first-hand method content. The
+  language expansion matters little for an English-only Orange County audience.
+  The **Search generative AI control** (from the 2026-10-21 doc update, still behind
+  P-002) remains the higher-value unverified item.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/appearance/ai-features ·
+  **Confidence:** high (both primary Google Search Central sources, fetched, HTTP 200).
+- **Proposed action (if any):** recorded only; no proposal. Preferred sources is a
+  consumer-side control with no site-side change required.
