@@ -92,6 +92,12 @@ call. Prior verification 2026-10-09.
    Google-Search-grounded **Gemma** model and labels the row `engine: gemma`. To
    measure the true Gemini surface, enable billing (Tier 1 = 5,000 free grounded
    requests/month). Perplexity remains a paid second engine, optional.
+   **Update 2026-10-29 (ISSUE-034 / P-008):** the registered key is now rejected
+   outright — `GET …/v1beta/models?key=…` returns **HTTP 401** "API key not
+   valid" (`ACCESS_TOKEN_TYPE_UNSUPPORTED`), so even the Gemma fallback cannot
+   run and all AI-surface rows are `inconclusive`. **Owner action (Level 3):**
+   validate/rotate the secret in OpenHands Cloud Secrets; the automation must not
+   touch secrets.
 2. **Google Search Console** — the only reliable source for organic impressions,
    clicks, query, and indexing/coverage data.
 3. **Google Business Profile** — local pack visibility is a primary channel for
@@ -108,7 +114,7 @@ call. Prior verification 2026-10-09.
 | ChatGPT Search | **not testable** | chatgpt.com 403 to non-browser clients |
 | Claude web search | **not testable** | not scriptable in this environment |
 | Gemini web search (consumer app) | **not testable** | gemini.google.com not scriptable |
-| Gemini Search API | **free, with Gemma fallback** | `GEMINI_API_KEY` is set. Grounding is **not** on the Gemini 3.x free tier (HTTP 429), so the client falls back to a free Google-Search-grounded **Gemma** model and labels the row `engine: gemma` (ISSUE-032). Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). Enable the true Gemini surface with billing (Tier 1 = 5,000 free grounded requests/month). |
+| Gemini Search API | **BLOCKED — key rejected (401)** | `GEMINI_API_KEY` is set but returns **HTTP 401 "API key not valid"** (ISSUE-034, 2026-10-29); grounding was already unavailable on the Gemini 3.x free tier (HTTP 429, ISSUE-032). The client falls back to a free Google-Search-grounded **Gemma** model (`engine: gemma`) when Gemini refuses — but a 401 blocks that too. Client + CLI + tests committed (`growth-engine/gemini_search_client.py`, `scripts/gemini_visibility.py`). **Owner action:** rotate the key, then enable billing for the true Gemini surface (Tier 1 = 5,000 free grounded requests/month). |
 | Microsoft Copilot | **not testable** | — |
 | Grok | **not testable** | — |
 | Perplexity Agent API | **optional — key not set** | `PERPLEXITY_API_KEY` missing. Metered, no free tier; a paid second engine. Client + CLI committed (`growth-engine/ai_agent_client.py`, `scripts/perplexity_agent.py`). |

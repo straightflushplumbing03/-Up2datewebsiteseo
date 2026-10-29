@@ -5,6 +5,31 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-29 (Intelligence HQ daily) — sitemap idempotency fixed; AI surface re-blocked (401, P-008)
+
+**Change:** committed the **generator-canonical `sitemap.xml` order** (reordering
+only — 89 URLs, identical `lastmod`/`changefreq`/`priority`) so the
+`sitemap_idempotent` check passes on a clean tree. Added 14 visibility rows and 14
+competitor rows (append-only), 6 new ideas, 2 dated industry-watch entries, the
+daily report `reports/daily/2026-10-29-hq.md`, and proposal **P-008**.
+**Reason:** `refresh_sitemap.py` emits URLs in its own `sort_key` order; the
+committed file had drifted, so the idempotency check reported FAIL on a clean
+checkout even though the URL set and metadata were identical.
+**Target:** sitemap hygiene + honest measurement.
+**Competitor insight:** `efficientplumbing.com` (6/14 queries),
+`clearwaterplumbingoc.com` (6/14), `rotorooter.com` (5/14) recur with per-city
+landing pages; Ladera Ranch slab intent is served by single-city exact-match
+domains. SF absent from all 14 conventional-proxy queries.
+**Expected outcome:** `sitemap_idempotent` green on a clean tree; a diagnostic
+rather than noisy check.
+**Result:** ✅ — 353/353 tests OK, `validate_knowledge_base.py` OK (148 files),
+`check_sitemap_idempotent()` → `ok: True`. **Keep.**
+**Measurement note:** the AI surface moved from HTTP 429 (2026-10-23) to HTTP 401
+(invalid key) — a *different* blocker, escalated as **P-008** (Level 3, owner
+action). No website page, schema, claim, copy, or price changed.
+
+---
+
 ## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
 **Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).
 **Reason:** 96/96 AI answers absent; Aliso Viejo slab/repipe queries have no credible local page; directories take broad queries. Keep.

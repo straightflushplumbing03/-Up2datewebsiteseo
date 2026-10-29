@@ -144,3 +144,47 @@ errors).
 **Why:** `INTEGRATION_STATUS.md` shows no channel configured; urgent issues
 currently cannot be pushed to the owner. Until then the daily report and PR are
 the only channel, and a critical issue found at 06:00 PT may not be seen for hours.
+
+---
+
+## P-008 — Validate or rotate the registered `GEMINI_API_KEY`  [LEVEL 3 · HIGH]
+
+**Status (2026-10-29):** open — the registered Gemini secret is present in the run
+environment but **rejected by the API**.
+
+**Observed (2026-10-29):** a direct probe
+
+```
+GET https://generativelanguage.googleapis.com/v1beta/models?key=<redacted>
+```
+
+returned **HTTP 401**, body: `"API key not valid. Please pass a valid API key."`,
+reason `ACCESS_TOKEN_TYPE_UNSUPPORTED` (`status: UNAUTHENTICATED`). This is a key
+validity problem, **not** a missing env var and **not** a quota problem. All five
+Gemini rows in `growth-engine/data/ai_visibility_history.jsonl` for 2026-10-29 are
+recorded `inconclusive` (never zero).
+
+**Context:** the AI-answer surface has now been unmeasured for at least a week —
+2026-10-23 recorded HTTP 429 (quota exhausted by the pre-stage, ISSUE-033 /
+idea-2026-10-23-02), and 2026-10-29 records HTTP 401. `data/daily_context.json`
+`ai_visibility_sweep` shows 0 usable AI-platform rows.
+
+**Ask:** Owner (or whoever provisions secrets) validates the Gemini API key at
+Google AI Studio / Cloud Console and updates the OpenHands Cloud secret
+`GEMINI_API_KEY` (or `GOOGLE_API_KEY`) with a working key. Optionally provide a
+second key dedicated to the daily sweep so the pre-stage and the AI-surface sweep do
+not share one quota.
+
+**Why not autonomous:** credential/secret changes are Level 3 and outside the
+automation's authority. The automation must never print, rotate, or create secrets.
+
+**Verification after fix:** re-run
+
+```bash
+export GEMINI_API_KEY="${GEMINI_API_KEY}"
+python3 scripts/daily_measure.py
+```
+
+and confirm `data/daily_context.json` → `ai_visibility_sweep` rows carry
+`test_type: "ai_platform"` (or `engine: "gemma"` fallback) with no
+`error_type: authentication_failed`.
