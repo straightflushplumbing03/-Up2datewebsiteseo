@@ -303,5 +303,64 @@ New entries are prepended directly under this line, newest first, using:
 > These are seeded, stable references used by every run. Daily/weekly runs append
 > dated entries below and refresh `Verified` when a page changes materially.
 
+## 2026-10-29 — Google Search Central: Oct 23 URL-structure guidance and Oct 26 user-generated-spam guidance
+
+- **What changed / observed:** the *What's new in Google Search* changelog
+  (https://developers.google.com/search/updates, fetched 2026-10-29, HTTP 200) lists
+  two October documentation updates newer than the entries recorded on 2026-10-23:
+  - **October 23, 2026 — "Updated guidance on crawlable URL structures"**: the URL
+    structure best-practices page
+    (https://developers.google.com/search/docs/crawling-indexing/url-structure)
+    was updated "to clarify word separation guidelines using hyphens versus
+    underscores". This is a *clarification*, not a new ranking factor.
+  - **October 26, 2026 — "Updated guidance on preventing user-generated spam"**:
+    the user-generated spam prevention guide gained guidance on "blocking indexing
+    of link-shared content and monitoring abuse in Search Console".
+- **Why it matters to Straight Flush:** (a) the hyphen/underscore clarification
+  confirms the site's existing convention — every URL in `sitemap.xml` uses
+  hyphenated words (`case-studies/laguna-niguel-slab-leak-detection-1.html`), so no
+  URL change is warranted and none should be made. (b) The UGC-spam guidance is
+  aimed at platforms that host user content, not a static owner-operated site, so it
+  is **not applicable** here — recorded for completeness, no action.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/crawling-indexing/url-structure
+  · **Confidence:** high (primary source, fetched, HTTP 200).
+- **Proposed action (if any):** none. Confirmed the existing hyphenated-URL
+  convention is correct; no page, schema, or copy changed.
+
+---
+
+## 2026-10-29 — Recurring homeowner question: "how to find a hidden water leak" is answered by generic guides, not by a licensed-local voice
+
+- **What changed / observed:** a conventional-search probe on 2026-10-29
+  (Tavily Search API, `test_type: conventional_proxy`) for the homeowner-intent
+  query *"homeowner questions how to find a hidden water leak"* returned a top set
+  dominated by **national content/lead-gen sites** rather than local licensed
+  plumbers: `homealliance.com`, `watercalculator.us`, `ircplumbing.com`,
+  `plumbingtoolsreview.com`, `repairingwaterdamage.com`, `plumbingsniper.com`
+  (all fetched as ranked result titles on 2026-10-29; individual pages **not**
+  fetched this run, so the *content* of each is unverified — only its ranking is
+  observed). The companion probe *"acoustic leak detection technology plumbing 2026"*
+  returned a single forum thread (`plumbingforums.com`), i.e. thin authoritative
+  coverage of the *diagnostic-technology* angle.
+- **Why it matters to Straight Flush:** the informational "hidden water leak"
+  question is a high-intent entry point (it precedes an emergency call) and the
+  current answer set is generic, not local or license-backed. This is consistent
+  with the 2026-10-23 Google guidance that AI/search rewards a "unique point of
+  view" — the owner's actual field diagnostics (acoustic listening, thermal imaging,
+  meter/dye isolation) are the differentiated input. It supports the existing
+  `idea-2026-10-23-06` (owner field-notes) rather than a new city-page permutation.
+- **Source(s):** Tavily Search API ranked results, 2026-10-29
+  (`data/ai_visibility_history.jsonl`, `platform: tavily_search`);
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  · **Confidence:** medium (result set observed; page contents not fetched).
+- **Proposed action (if any):** none on the site this run; recorded to reinforce
+  the owner field-notes idea. No page, schema, or copy changed.
+
+---
+
+
+
+
 ---
 

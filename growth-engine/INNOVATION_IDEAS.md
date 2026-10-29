@@ -418,3 +418,49 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+---
+
+## 2026-10-29 (daily run) — 6 new ideas, prioritized
+
+Scored 1–5 (higher = better). Risk gate: **L1** read-only/docs · **L2** reversible
+on-page or tooling · **L3** identity/price/legal/area/profile (propose only).
+
+| ID | Date | Idea | Type | Impact | Evid | Effort | Rev | Risk | Status | Evidence / source | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-10-29-01 | 2026-10-29 | Make the **`sitemap_idempotent` check actionable** — commit the generator-canonical `sitemap.xml` order and have the check report *what* changed (order vs. URL set vs. lastmod) | Website/ops | 3 | 5 | 1 | 5 | L1 | scored | This run: `refresh_sitemap.py` rewrote `sitemap.xml` on a clean tree; diff is **URL set identical (89/89), every lastmod/changefreq/priority identical**, only the ordering differs from the generator's `sort_key`. The check reports `sitemap_dirty: true` with no hint. | The committed order was normalised on 2026-10-16 but has since drifted (later direct edits reordered blocks). Committing the generator's own output makes the check pass on a clean tree and keeps it diagnostic. Docs/tooling + one data file; reversible with `git checkout HEAD -- sitemap.xml`. |
+| idea-2026-10-29-02 | 2026-10-29 | Add a **Tavily result-quality guard**: flag a query whose top-10 is dominated by aggregators (yelp/facebook/youtube) as `low_signal` rather than a plain `absent` | Website/ops | 3 | 4 | 2 | 5 | L1 | scored | Today 3 of 14 queries returned aggregator-heavy sets (`water leak detection Laguna Niguel` → 5× yelp/facebook; `tankless water heater descale Newport Beach` → yelp/youtube/mapquest; `best leak detection company in Laguna Niguel` → 5× yelp). A plain `absent` conflates "SF missing" with "no plumbing result set exists". | Prevents reading an aggregator-dominated SERP as a competitive loss. Docs/tooling; reversible. |
+| idea-2026-10-29-03 | 2026-10-29 | Add a per-city **slab-leak-detection page for Ladera Ranch** (Tier-1/Tier-2 gap) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Tavily "slab leak detection Ladera Ranch" → SF **absent**; dedicated single-city domains rank (`proplumberladeraranch.com`, `repipe-ladera-ranch.com`) plus `integrityrepipe.com`, `leakdetectionplumbers.com`. Feature verified; causation = hypothesis. | Extends idea-2026-10-13-01/08. One substantive page, reuse city+service templates, no new claims. Do not permute. |
+| idea-2026-10-29-04 | 2026-10-29 | Add a per-city **water-main / main-line leak** page for Rancho Santa Margarita | Website | 4 | 3 | 3 | 5 | L2 | candidate | Tavily "water main leak detection Rancho Santa Margarita" → SF **absent**; set is the water district (`smwd.com`) + local plumbers (`rsmplumbing.net`, `calischoice.com`, `appliedrooter.com`). | New service × city framing; no water-district claims, no prices. Corroborate with `SERVICE_AREAS.md` + `APPROVED_CLAIMS.md` before writing. |
+| idea-2026-10-29-05 | 2026-10-29 | Publish a **"hidden water leak: how a pro actually finds it"** explainer (meter isolation → acoustic → thermal → camera) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today's homeowner-intent probe: the "how to find a hidden water leak" answer set is national lead-gen content (`homealliance.com`, `watercalculator.us`, `ircplumbing.com`, `plumbingtoolsreview.com`), **no licensed-local voice**; Google 2026-10-23 guidance names "unique point of view" as the differentiator. | Reinforces idea-2026-10-13-03 and idea-2026-10-23-06 but does not require owner media — a process explainer can be written from approved method descriptions. No new claims. |
+| idea-2026-10-29-06 | 2026-10-29 | Fix the **Gemini AI-surface measurement blocker** (key returns HTTP 401 `ACCESS_TOKEN_TYPE_UNSUPPORTED`) — validate/rotate the registered `GEMINI_API_KEY`, or fail the pre-stage loudly with the exact status | Website/ops | 4 | 5 | 2 | 4 | L3 (secret) | proposed | This run: `GET https://generativelanguage.googleapis.com/v1beta/models?key=…` returned **HTTP 401 "API key not valid … ACCESS_TOKEN_TYPE_UNSUPPORTED"**; all 5 Gemini rows `inconclusive`. The AI surface has been unmeasured for ≥7 days (429 quota on 2026-10-23, 401 today). | Requires a valid key, which is a credential/secret change → propose, never self-execute. Proposal file created this run. |
+
+### Second-pass prioritization (2026-10-29)
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-29-06 validate/rotate Gemini key (restore AI-surface measurement) | 4 | 5 | 2 | 4 | ⛔ L3 secret | **proposed** |
+| 2 | idea-2026-10-29-01 commit generator-canonical sitemap order + make check diagnostic | 3 | 5 | 1 | 5 | ✅ L1 | **prioritized** |
+| 3 | idea-2026-10-29-02 Tavily `low_signal` guard for aggregator-dominated SERPs | 3 | 4 | 2 | 5 | ✅ L1 | **prioritized** |
+| 4 | idea-2026-10-29-05 "how a pro finds a hidden water leak" explainer | 4 | 4 | 3 | 5 | ✅ L2 | candidate |
+| 5 | idea-2026-10-29-03 Ladera Ranch slab-leak-detection page | 4 | 4 | 3 | 5 | ✅ L2 | candidate |
+| 6 | idea-2026-10-29-04 Rancho Santa Margarita water-main leak page | 4 | 3 | 3 | 5 | ✅ L2 | candidate |
+
+**Selection rule applied:** the top rank is the measurement instrument again — the
+AI surface has produced zero usable rows for over a week (429 then 401), so the
+single highest-value action is restoring it, which needs a credential change and is
+therefore **proposed, not executed**. Ranks 2–3 are the deterministic tooling fixes
+that this run can actually land (and rank 2 is actioned below). Content ideas (4–6)
+are genuine, evidence-backed gaps but stay `candidate` until the instrument is sound,
+consistent with the 2026-10-23 rule.
+
+**Actioned this run:** idea-2026-10-29-01 (committed generator-canonical
+`sitemap.xml` order; the `sitemap_idempotent` check now passes on a clean tree).
+
+### Parked / rejected log (2026-10-29)
+
+- **idea-2026-10-23-06 owner field-notes asset** — remains parked: still needs
+  owner-supplied real job detail/photos (`APPROVED_CLAIMS.md`).
+- **idea-2026-10-29-06 Gemini key rotation** — proposed (needs a valid credential);
+  never self-executed.
+- No idea rejected this run.

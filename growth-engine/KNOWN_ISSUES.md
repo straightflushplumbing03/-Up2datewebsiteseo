@@ -861,3 +861,51 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+
+---
+
+## ISSUE-033 — `sitemap_idempotent` failed on a clean tree due to ordering drift  [LOW · FIXED 2026-10-29]
+
+- **Evidence:** on a clean checkout, `scripts/refresh_sitemap.py` rewrote
+  `sitemap.xml` (check reported `sitemap_dirty: true`). The diff was **ordering
+  only**: the URL set was identical (89/89, `missing: []`, `extra: []`) and every
+  `<lastmod>`, `<changefreq>` and `<priority>` value was byte-identical. The
+  generator emits URLs in its own `sort_key` order; later direct edits to the file
+  had reordered some blocks, so the committed order no longer matched the
+  generator's output.
+- **Impact:** a noisy false-positive FAIL in the daily pre-stage — the check could
+  not distinguish "sitemap changed" from "same sitemap, different order", which
+  risks masking a real change.
+- **Fix (Level 1):** committed the generator's canonical order. The URL set and all
+  metadata are unchanged; only element order moved. Re-running `refresh_sitemap.py`
+  is now **byte-identical** (idempotent).
+- **Verification:** `check_sitemap_idempotent()` → `ok: True, sitemap_dirty: False`;
+  `validate_knowledge_base.py` OK (148 files); full suite **353 tests OK**.
+- **Related idea:** idea-2026-10-29-01 (make the check report *what* changed:
+  order vs. URL set vs. lastmod).
+- **Approval:** Level 1 (one data file, reordering only; reversible with
+  `git checkout HEAD~1 -- sitemap.xml`).
+
+---
+
+## ISSUE-034 — Gemini AI-surface key now returns HTTP 401 (invalid key)  [HIGH · BLOCKED 2026-10-29]
+
+- **Evidence:** `GET https://generativelanguage.googleapis.com/v1beta/models?key=…`
+  returned **HTTP 401**, body `"API key not valid. Please pass a valid API key."`,
+  reason `ACCESS_TOKEN_TYPE_UNSUPPORTED` (`status: UNAUTHENTICATED`). All 5 Gemini
+  rows in `ai_visibility_history.jsonl` for 2026-10-29 are `inconclusive`.
+- **Relation to ISSUE-032:** a *different* blocker. ISSUE-032 was HTTP **429
+  RESOURCE_EXHAUSTED** (grounding paid-only on the free tier). Today the key is
+  **rejected outright** (401), so even the model/quota surface is unreachable. The
+  AI-answer surface has produced **0 usable rows** across both.
+- **Impact:** the business goal is AI recommendation; with no `ai_platform` rows the
+  automation cannot state any AI recommendation/mention/citation rate. Recorded
+  `inconclusive`, **never zero**.
+- **Owner action (Level 3):** validate/rotate `GEMINI_API_KEY` (or `GOOGLE_API_KEY`)
+  in OpenHands Cloud Secrets. Filed as **P-008** in
+  `proposals/2026-10-09-priority-actions.md`. The automation must not touch secrets.
+- **Verification after fix:** re-run `scripts/daily_measure.py` with
+  `GEMINI_API_KEY` exported; confirm `ai_visibility_sweep` rows carry
+  `test_type: "ai_platform"` (or `engine: "gemma"` fallback) with no
+  `error_type: authentication_failed`.
+- **Approval:** Level 3 (credential change) — proposed only.
