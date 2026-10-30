@@ -89,6 +89,14 @@ OpenHands Cloud secret names (add via Settings → Secrets, then re-run the dail
 - `GOOGLE_BUSINESS_PROFILE_CREDENTIALS`
 - `PERPLEXITY_API_KEY` (optional but the cheapest real AI-answer signal)
 
+**Update (2026-10-30, Intelligence HQ daily):** a further, independent credential
+blocker surfaced — the registered **`GEMINI_API_KEY` now returns HTTP 401
+(`ACCESS_TOKEN_TYPE_UNSUPPORTED`)** at `GET /v1beta/models`, i.e. the key is
+invalid/expired, not merely quota-limited (contrast ISSUE-032). Until a valid
+grounding-eligible Gemini key is supplied (or billing is enabled), the
+**AI-answer surface cannot be measured at all** — every daily run records it
+`inconclusive`, never 0. See **ISSUE-034** and `INTEGRATION_STATUS.md`.
+
 **Ask:** Provide access (or exports) for:
 - **Google Search Console** (property verified for the domain).
 - **Google Analytics 4** (if present).

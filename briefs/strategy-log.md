@@ -5,6 +5,39 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-30 (Intelligence HQ daily) — health OK; Gemini key invalid (AI surface unmeasurable); sitemap normalised
+
+**Status:** Read-only + additive documentation, plus **one content-preserving
+`sitemap.xml` reorder** (no HTML/schema/claim/copy change). Branch
+`intelligence-hq/daily-2026-10-30`.
+
+**Change:** site — `sitemap.xml` rebuilt in canonical order (89 URLs; identical
+`(loc,lastmod)` pairs and changefreq/priority multiset; verified idempotent on a
+second run). KB — daily report `reports/daily/2026-10-30-hq.md`; new **ISSUE-033**
+(unbounded pre-stage killed three runs — fixed by the 600 s network cap) and
+**ISSUE-034** (Gemini key HTTP 401 → AI surface unmeasurable); INDUSTRY_WATCH entry
+(Google Search Central Oct 2026 doc updates); 6 new ideas; P-002 and
+INTEGRATION_STATUS updated. 27 visibility rows + 63 competitor rows appended.
+
+**Reason:** the visible "absence" is again driven by the instrument, not the site:
+Brave rate-limited after 6 queries and the Gemini key is invalid, so no AI-platform
+claim can be made. The sitemap reorder removes a false `sitemap_idempotent` FAIL.
+
+**Target:** measurement integrity (ideas 01–03); no ranking-position claim made.
+
+**Competitor insight:** directories (Yelp, Angi, BuildZoom, HomeGuide) plus national
+franchises (Roto-Rooter, Benjamin Franklin) top every conventional SERP; SF remains
+absent from all 16 successful queries. Repeat locals: billmetzgerplumbing.com,
+olsonsuperior.com, pristineplumbinginc.com, johnstevensonplumbing.com.
+
+**Expected outcome:** a valid Gemini key restores the AI surface; a green
+`sitemap_idempotent` check removes check noise.
+
+**Result:** crawler access OK; 353 tests OK; validate_knowledge_base OK; seo_audit
+exit 0. **Keep.**
+
+---
+
 ## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
 **Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).
 **Reason:** 96/96 AI answers absent; Aliso Viejo slab/repipe queries have no credible local page; directories take broad queries. Keep.

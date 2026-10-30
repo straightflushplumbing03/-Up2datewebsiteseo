@@ -861,3 +861,48 @@ duplicate, so the duplicates are not disavowed from the real side either.
   **343 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py` exit 0.
 - **Approval:** Level 2 (client tooling + daily runner + methodology doc).
 
+
+---
+
+## ISSUE-033 — Unbounded step-0b network sweep consumed the whole wall clock; runs died before research  [HIGH · FIXED 2026-10-30]
+
+- **Evidence:** the daily run is killed at ~1920 s. With the original pre-stage
+  defaults (**40 Tavily + 5 Gemini** queries, no cap), step 0b alone consumed the
+  entire budget; **three** consecutive runs ended `budget_overrun` with nothing
+  durable committed. Measured cost of the pre-stage on 2026-10-30 (12 Tavily + 3
+  Gemini): **~145 s**.
+- **Root cause:** `scripts/daily_measure.py` had no aggregate network ceiling, so a
+  slow/rate-limited provider could stall the whole run. Research (steps 2–5) never
+  started.
+- **Fix (now in the run contract):** `daily_measure.py` caps **both** sweeps
+  together at `--network-budget` seconds (default **600 s**, Tavily 60% / Gemini
+  40%) and runs **12 Tavily + 3 Gemini** by default. A sweep stopped by the budget
+  is recorded **`BLOCKED (partial)`**, never zero; `daily_context.json` carries
+  `network_budget_s` so the report can cite the ceiling it ran under. **Do not raise
+  the defaults to "get more data".**
+- **Impact:** restored the ability to research *and* commit inside the window; the
+  daily report now lands.
+- **Approval:** Level 2 (daily runner). Recorded here for the first time this run
+  (the prompt referenced ISSUE-033 but no entry existed).
+
+## ISSUE-034 — Gemini API key returns 401; AI-surface sweep is unmeasurable, not zero  [HIGH · OPEN]
+
+- **Evidence:** `GET https://generativelanguage.googleapis.com/v1beta/models?key=…`
+  with the registered `GEMINI_API_KEY` returned **HTTP 401** with
+  `"message": "API key not valid. Please pass a valid API key."`,
+  `"status": "UNAUTHENTICATED"`, `"reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED"`.
+  The command named `GEMINI_API_KEY` explicitly (per ISSUE-019), so this is a real
+  invalid/mistyped credential, not a non-injected secret.
+- **Distinct from ISSUE-032:** ISSUE-032 was a *quota/grounding-tier* refusal on a
+  **valid** key. Here the key itself is rejected at `models.list`, so even the
+  Gemma fallback cannot run.
+- **Impact:** all 5 Gemini AI-surface queries on 2026-10-30 recorded
+  **`inconclusive`** (`test_type: test_failure`, confidence low). The AI surface is
+  **UNMEASURED**, never 0%. `daily_context.json` lists `ai_visibility_sweep` as a
+  FAIL for this reason, outside the repo's control.
+- **Fix (proposed, Level 3 — owner action):** replace the registered
+  `GEMINI_API_KEY` with a valid key whose project can reach a grounding-eligible
+  model (see ISSUE-032 owner options). Not auto-applied.
+- **Workaround in force:** the conventional-search surface is measured via
+  **Tavily Search API** (10 rows today, all `absent`); AI-platform claims are not
+  made from it.
