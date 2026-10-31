@@ -25,6 +25,13 @@ introduced. When in doubt, omit the claim.
 - Any review count or rating not matching the live Google/Yelp profiles at time
   of writing.
 
+### Owner-confirmed (recorded)
+
+- 2026-10-31, Lance (owner): leak detection costs **$365–$525 for most homes**.
+  Published on `guides/leak-detection-cost.html`.
+- 2026-10-31, Lance (owner): when a customer files an insurance claim, insurance
+  typically reimburses the leak detection cost. Published on the same page.
+
 ## FORBIDDEN (never publish)
 
 - "Best", "#1", "top-rated", "award-winning", or superlatives not corroborated
