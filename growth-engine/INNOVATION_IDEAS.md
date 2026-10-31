@@ -418,3 +418,56 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+---
+
+## 2026-10-30 (daily run) — 6 new ideas, prioritized
+
+Scored 1–5 (higher is better). Risk gate: **L1** read-only/docs · **L2** reversible
+on-page or tooling · **L3** identity/price/legal/area/profile (propose only).
+Evidence today: Brave returned **6/12** parseable queries then HTTP 429; the Gemini
+key is **401 invalid** (see new ISSUE-034); the site is **absent** from all 6
+executed Brave queries but the query set was small and rate-limited.
+
+| Rank | Idea | Impact | Evidence | Effort→Value | Reversible | Risk gate | Decision |
+|---|---|---|---|---|---|---|---|
+| 1 | idea-2026-10-30-01 sitemap canonical-order normaliser + idempotency guard | 4 | 5 | 4 | 5 | ✅ L2 | **prioritized** |
+| 2 | idea-2026-10-30-02 record provider HTTP status in every sweep row (blocked ≠ absent) | 5 | 5 | 4 | 5 | ✅ L2 | **prioritized** |
+| 3 | idea-2026-10-30-03 Tavily remains primary; Brave demoted to opportunistic probe | 3 | 4 | 4 | 5 | ✅ L2 | **prioritized** |
+| 4 | idea-2026-10-30-04 "leak star / plumber champions" thin-page competitors — pattern dossier (docs) | 3 | 4 | 3 | 5 | ✅ L1 | candidate |
+| 5 | idea-2026-10-30-05 dedicated `/services/slab-leak-detection.html` FAQ block | 4 | 3 | 3 | 5 | ✅ L2 | candidate |
+| 6 | idea-2026-10-30-06 owner-verified "repeat competitor" service-feature table (docs) | 3 | 3 | 3 | 5 | ✅ L1 | candidate |
+
+**Selection rule applied:** the top three are again *measurement-integrity* items.
+Today's evidence is that the instrument (Brave rate-limit, invalid Gemini key, and a
+sitemap check that fails on ordering alone) — not the site — produced the visible
+gaps. Ideas 04–06 are genuine content observations kept as `candidate` because a
+6-query, half-blocked sample cannot justify an HTML edit.
+
+### Detail — top idea
+
+**idea-2026-10-30-01 — sitemap canonical-order normaliser + idempotency guard.**
+`scripts/refresh_sitemap.py` rebuilds `sitemap.xml` in a canonical order
+(`sort_key`: homepage → depth → index-first → rel). The committed `sitemap.xml`
+had its `case-studies/` block in a **non-canonical order**, so the first
+`refresh_sitemap.py` run rewrote the file — byte-content-identical (same 89 `<loc>`,
+same `(loc,lastmod)` pairs, same changefreq/priority multiset) but reordered. That
+dirty diff is what `daily_measure.py::check_sitemap_idempotent` reads as FAIL
+(`sitemap_dirty: True`). Verified today: a **second** run produces **no diff**
+(truly idempotent on the normalised tree). Fix: (a) treat an ordering-only change
+as a pass (compare the parsed entry *set*, not the raw bytes), or (b) commit the
+canonicalised sitemap so the first run is a no-op. (b) is what happened this run.
+Impact 4 · Evidence 5 · Effort-to-value 4 · Reversibility 5. **Risk gate:** ✅ L2.
+**Status:** `prioritized`.
+
+**idea-2026-10-30-02 — provider HTTP status in every sweep row.** Today 6 Brave
+queries returned HTTP 429 and were *initially* written `absent`; only manual review
+caught it. Encode the HTTP status (and a `blocked: true` flag) in each
+`ai_visibility_history.jsonl` row so a rate-limited query can never be silently
+counted as a genuine absence. Impact 5 · Evidence 5 · Effort→value 4 · Reversibility
+5. **Risk gate:** ✅ L2. **Status:** `prioritized`.
+
+### Parked / rejected log (2026-10-30)
+
+- No idea rejected this run. idea-2026-10-30-06 overlaps idea-2026-10-30-04 and is
+  kept only as a docs companion.

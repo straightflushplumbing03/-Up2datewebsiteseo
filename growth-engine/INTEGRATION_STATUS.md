@@ -18,6 +18,18 @@ call. Prior verification 2026-10-09.
 > OK, crawler access OK (unchanged from 2026-10-15). Google Search Console, GA4, and
 > GBP remain **not connected** (blocker unchanged - see P-002).
 >
+> **Re-verified 2026-10-30 (Intelligence HQ daily):** crawler access **OK** — 5/5
+> HTTP 200 (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
+> `cf-mitigated`; sitemap in sync (**89 URLs**), idempotent after a content-preserving
+> reorder. Search providers: **Tavily Search API** usable (**10/10** rows);
+> **Brave** returned **6/12** parseable then HTTP 429 (6 rows recorded
+> `inconclusive`, never "absent"). **Gemini now returns HTTP 401
+> (`ACCESS_TOKEN_TYPE_UNSUPPORTED`) at `GET /v1beta/models` — the key itself is
+> invalid**, so even the Gemma fallback cannot run and all 5 AI-surface queries were
+> `inconclusive` (UNMEASURED, not 0). This is a **new, distinct** blocker from
+> ISSUE-032's grounding quota — see **ISSUE-034** and P-002. GSC/GA4/GBP remain
+> **not connected** (P-002).
+
 > **Re-verified 2026-10-23 (Intelligence HQ daily):** crawler access OK — 5/5 HTTP 200
 > (PerplexityBot, Applebot, `/robots.txt`, `/sitemap.xml`, `/llms.txt`), no
 > `cf-mitigated`; sitemap in sync (76 URLs). Search providers **worse** this run than

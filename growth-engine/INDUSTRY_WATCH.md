@@ -287,6 +287,34 @@ New entries are prepended directly under this line, newest first, using:
 - **Proposed action (if any):** recorded only. Folded into the P-002 note in this run's
   report; no proposal file created because P-002 already covers it.
 
+## 2026-10-30 — Google Search Central: October 2026 doc updates (UGC spam, crawlable URLs, share controls)
+
+- **What changed / observed:** the *Latest documentation updates* page
+  (https://developers.google.com/search/updates, fetched 2026-10-30, HTTP 200)
+  lists three October 2026 refreshes: **Oct 26** — updated guidance on preventing
+  **user-generated spam** (block indexing of link-shared content; monitor abuse in
+  Search Console); **Oct 23** — updated **crawlable URL structures** guidance,
+  clarifying **hyphens vs underscores** word separation; **Oct 21** — the
+  *Control what you share with Google Search* refresh that folds in the
+  **Search generative AI control** (already logged here 2026-10-23). The URL
+  structure page itself (https://developers.google.com/search/docs/crawling-indexing/url-structure,
+  fetched 2026-10-30, HTTP 200, footer `Last updated 2026-10-21 UTC`) confirms:
+  "we recommend using **hyphens** ( - ) instead of underscores ( _ ) to separate
+  words in your URLs", and that "URLs are case sensitive".
+- **Why it matters to Straight Flush:** the site already uses hyphenated,
+  `.html`-terminated paths (`/cities/laguna-niguel.html`, `/case-studies/...`), so
+  it is **already compliant** with the Oct 23 clarification — no change warranted.
+  The value is confirmatory: it removes any temptation to "optimise" URL shape and
+  documents that the repo's canonical `.html` convention is aligned with current
+  Google guidance. The UGC-spam note is **not applicable** — the site has no
+  user-generated content or link-sharing surface (only two pages carry forms, and
+  neither publishes submissions).
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/crawling-indexing/url-structure
+  · **Confidence:** high (both primary sources, fetched, HTTP 200).
+- **Proposed action (if any):** none. Recorded only; no page, schema, or copy changed.
+
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |
