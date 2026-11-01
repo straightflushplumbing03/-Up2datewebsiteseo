@@ -418,3 +418,43 @@ this run is constrained not to do. Nothing was rejected.
 - **idea-2026-10-23-06 owner field-notes asset** — parked: needs owner-supplied real
   job detail/photos. Fabricating case notes is forbidden (`APPROVED_CLAIMS.md`).
 - No idea rejected this run.
+
+---
+
+## 2026-11-01 (daily run) — 6 new ideas, prioritized
+
+Today's evidence base: 12 fresh Tavily conventional-search queries (SF `absent` on all
+12), the step-0b sweep, and two fetched Google Search Central primary sources. The
+dominant observed pattern is that **service×city landing pages on both specialist and
+multi-city domains** hold every commercial query tested, and that a **robots.txt /
+Google-Extended** mechanism now governs AI-answer eligibility. Scored 1–5 (higher is
+better). Risk gate: **L1** read-only/docs · **L2** reversible on-page or tooling ·
+**L3** identity/price/legal/area/profile (propose only).
+
+| ID | Idea | Type | Impact | Evid | Effort→Value | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-11-01-01 | Surface the live **service×city coverage matrix** for SF (which city×service page exists vs. which competitor page holds that query) | Docs/tooling | 4 | 5 | 3 | 5 | ✅ L2 | **prioritized** | Today: repipe→integrityrepipe/socalrepipes/pacificcoastcopperrepipe; water-heater→thewaterheatercompany/waterheatersonly/waterheatermaninc; drains→splashplumbing/jettersndrains/appliedrooter; slab→evansleakdetection/primewest/americanleakdetection — each on a **city×service** page. |
+| idea-2026-11-01-02 | Fix the **AI-surface instrument**: `GEMINI_API_KEY` returns HTTP 401 `authentication_failed` (invalid/expired key), so every Gemini grounded row is `inconclusive` | Tooling/ops | 5 | 5 | 2 | 5 | ✅ L2 | **prioritized** | This run: `scripts/gemini_visibility.py --smoke` → `{"error_type":"authentication_failed","status_code":401, "reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED"}`. Distinct from the 2026-10-23 HTTP 429 quota cause; the Gemma fallback never engages because the key is rejected outright. Needs a **valid** key (owner action). |
+| idea-2026-11-01-03 | Add a **`robots.txt` guard test** asserting `Google-Extended: Allow` (and the other named AI crawlers) stay present | Tooling | 3 | 5 | 2 | 5 | ✅ L2 | **prioritized** | Google post 2026-10-30: "Websites that specifically allow Google-Extended are eligible to appear in responses … via grounding in Gemini Apps." SF's robots.txt already allows it; a guard prevents a future silent opt-out. |
+| idea-2026-11-01-04 | Publish a **per-city water-heater** page for the home city (Laguna Niguel) | Website | 4 | 4 | 3 | 5 | ✅ L2 | candidate | Water-heater queries are held by **single-service** domains (`thewaterheatercompany.com`, `waterheatersonly.com`, `waterheatermaninc.com`) on city pages; SF has no city×water-heater page. Feature verified; causation = hypothesis. |
+| idea-2026-11-01-05 | Publish a **per-city repipe/PEX** page for Laguna Niguel | Website | 4 | 4 | 3 | 5 | ✅ L2 | candidate | "PEX repipe Laguna Niguel" returned `integrityrepipe.com`, `socalrepipes.com`, `pexrepipe-repiping.com`, `pacificcoastcopperrepipe.com` — all **repipe-specialist** domains with a city page. SF has `/services/pex-repiping.html` but no city frame. |
+| idea-2026-11-01-06 | Add a **"what the leak-detection equipment does"** explainer tied to SF's own verified methods | Website | 4 | 3 | 3 | 5 | ✅ L2 | candidate | Leak **specialists** (evansleakdetection.com, americanleakdetection.com, sjplumbingoc.com) recur on acoustic/hidden/slab queries with dedicated detection pages; SF's service page lists methods but no explainer asset. Needs brand-voice pass; no new claims. |
+
+**Prioritization rationale:** the top three are **measurement-integrity** items, chosen
+over the easiest content to generate, because today's largest finding is that the
+**AI-surface instrument is broken by an invalid key** (idea-02) — a content idea ranked
+above a broken instrument would encode a false picture of visibility. Idea-01 turns
+today's 12-query evidence into a reusable coverage map so the two content candidates
+(04/05) are not written blind. Idea-03 is a cheap, high-evidence guard justified by a
+fetched primary source.
+
+**No idea actioned this run:** idea-02 needs an owner-supplied valid key (Level 3
+credential); ideas 01/03 are tooling that warrants its own tested PR; ideas 04–06 are
+HTML changes this run is constrained not to make. Nothing rejected.
+
+### Parked / rejected log (2026-11-01)
+
+- **idea-2026-11-01-04 / -05 per-city water-heater & repipe pages** — held as `candidate`
+  (not rejected): the same city×service pattern also needs a *local-differentiation*
+  pass so the pages are not thin permutations; deferred behind idea-01's coverage map.
+- No idea rejected this run.

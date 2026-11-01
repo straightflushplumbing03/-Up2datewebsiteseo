@@ -287,6 +287,59 @@ New entries are prepended directly under this line, newest first, using:
 - **Proposed action (if any):** recorded only. Folded into the P-002 note in this run's
   report; no proposal file created because P-002 already covers it.
 
+---
+
+## 2026-11-01 — Google plans a shared AI-training control in robots.txt (AIPREF)
+
+- **What changed / observed:** Google Search Central published *Supporting a shared AI
+  training control for websites* on **Friday, 30 October 2026**
+  (https://developers.google.com/search/blog/2026/10/ai-training-control, fetched
+  2026-11-01, HTTP 200). Google plans to support a **shared robots.txt "policy token"**
+  so a site can express AI-training preferences **once** across participating AI
+  providers, based on the IETF **AIPREF** working group. Key operational details quoted
+  from the post: if a site uses the policy token to **opt out** of training and
+  **Google-Extended is not explicitly specified**, Google "plans to interpret that as if
+  the publisher had disallowed Google-Extended"; and "**Websites that specifically allow
+  Google-Extended are eligible to appear in responses and receive clicks via grounding in
+  Gemini Apps**." Existing per-crawler controls (e.g. Google-Extended) continue to work
+  alongside the new joint signal.
+- **Why it matters to Straight Flush:** the business goal is *AI recommendation*, and this
+  post confirms the mechanism by which a site keeps that eligibility: an **explicit
+  `Google-Extended: Allow`**. SF's `robots.txt` (repo and live, verified 2026-11-01) already
+  names `User-agent: Google-Extended` / `Allow: /` alongside GPTBot, OAI-SearchBot,
+  ClaudeBot, Claude-SearchBot, PerplexityBot, Applebot-Extended, Bingbot, and others. So SF
+  is already opted **in** on the documented path — nothing to change today. The forward risk
+  is a *future* edit that adopts a generic shared opt-out token and thereby silently drops
+  Google-Extended eligibility. That is a monitoring note, not a change.
+- **Source(s):** https://developers.google.com/search/blog/2026/10/ai-training-control
+  · **Confidence:** high (primary source, fetched, HTTP 200). The proposal is a **plan** —
+  Google writes "We aim to support this new control"; it is not yet a live product, so it
+  is recorded as an announced direction, not an available feature.
+- **Proposed action (if any):** recorded only. Added a `robots.txt` guard note to the
+  standing monitoring list (idea-2026-11-01-04). No file changed.
+
+## 2026-11-01 — Google Search Console adds a Generative AI performance report (context for P-002)
+
+- **What changed / observed:** the Search Central blog index
+  (https://developers.google.com/search/blog, fetched 2026-11-01, HTTP 200) lists
+  *Introducing Search Generative AI performance reports in Search Console*
+  (June 2026) and *Announcing web multimodal Search performance reporting in Search
+  Console* (September 2026), plus *See how content from social and video platforms
+  performs on Google Search* (July 2026). These are **Search Console reporting surfaces**
+  for AI-feature and multimodal performance.
+- **Why it matters to Straight Flush:** measuring whether SF appears in Google's
+  generative-AI features is exactly the goal this engine reports on, and Google now exposes
+  a first-party report for it — but it lives **inside Search Console**, behind the **P-002**
+  credential blocker. This run again confirms **no GSC/GA4/GBP credentials** are present in
+  the environment (see the report's limitations section). Recording this as *unmeasured*,
+  never zero. It is one more concrete reason P-002 is the highest-value unblocked item.
+- **Source(s):** https://developers.google.com/search/blog (index, HTTP 200; individual post
+  slugs `/search/blog/2026/06/gen-ai-performance-reports`,
+  `/search/blog/2026/09/web-multimodal-in-sc`) · **Confidence:** medium (post titles and
+  dates verified on the official index; the report contents were **not** fetched this run).
+- **Proposed action (if any):** recorded only; folded into the P-002 note. No proposal file
+  (P-002 already covers Search Console access).
+
 ## Standing official references (stable primary sources)
 
 | Topic | Source | URL | Verified | Confidence |

@@ -905,3 +905,37 @@ duplicate, so the duplicates are not disavowed from the real side either.
   access. Full detail in
   `reports/audit/2026-10-25-technical-reviews-audit-response.md`.
 - **Approval:** — (reporting only).
+
+---
+
+## ISSUE-035 — `GEMINI_API_KEY` invalid (HTTP 401): AI-surface sweep unmeasured  [HIGH · OPEN 2026-11-01]
+
+- **Evidence:** `scripts/daily_measure.py` step 0b returned `checks_passed 6/7`, with
+  `ai_visibility_sweep` **FAIL (exit 2)** — all 5 grounded queries recorded
+  `inconclusive`, never zero. Reproduced directly this run:
+  `python3 scripts/gemini_visibility.py --smoke --query "plumber in Laguna Niguel"`
+  → `{"ok": false, "error_type": "authentication_failed", "status_code": 401,
+  "message": "HTTP 401 … API key not valid. Please pass a valid API key.",
+  "reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED"}`.
+- **Impact:** the business goal is *AI recommendation*; with the key rejected, **every
+  `ai_platform` row is `inconclusive`** and the AI surface is **UNMEASURED**.
+  `system_supervisor.py` reports `ai_visibility_blind` FAIL for a reason outside the
+  repo's control.
+- **Distinct from the prior cause:** ISSUE-032 (2026-10-19) was HTTP **429**
+  (`RESOURCE_EXHAUSTED`, quota/billing), which the labelled **Gemma** fallback was built
+  to absorb. A **401** is an auth rejection: the fallback never engages, because the
+  client only falls back on quota/server refusals and correctly treats 400/auth as a
+  hard error (`_error_type_for` → `authentication_failed`). So the Gemma fallback is
+  working as designed and cannot fix this.
+- **Likely causes (unverified, ranked):** the `GEMINI_API_KEY` secret is expired,
+  rotated, revoked, or was set to a value of the wrong type (the provider's
+  `ACCESS_TOKEN_TYPE_UNSUPPORTED` reason suggests a token that is not a plain API key);
+  or the secret was never valid for this project.
+- **Owner options (Level 3 — credential decision, not applied):** rotate/provision a
+  valid Gemini API key in the automation's secret store under the name `GEMINI_API_KEY`.
+  The key must be a Google AI Studio **API key**, not an OAuth/access token. No repo
+  change can fix this; the sweep cannot self-heal.
+- **Verification:** `--smoke` returns 401 (above). `daily_measure.py` maps the
+  sweep's exit 2 → `checks` FAIL, `blocked: []` — a **failure**, not a BLOCKED row, so
+  the report must state the AI surface as UNMEASURED and cite this issue.
+- **Approval:** — (reporting only).
