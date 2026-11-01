@@ -123,6 +123,23 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   strengthens the stale association. Consolidation = removal, not linkage.
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
+## Indexing / noindex (verified 2026-10-25)
+- The **58 root-level `.html` files are intentional `noindex, nofollow` duplicate
+  stubs** (commit `2cd5fff`, PR #10). Each canonicalizes to its real page under
+  `services/|cities/|academy/|guides/|insurance/`. The canonical pages are
+  indexable (no robots meta, self-canonical, in sitemap, live 200, no X-Robots-Tag).
+  **An owner reporting "page X is noindex" is almost always seeing the stub** — check
+  the subdir twin before changing anything. 148 files = 89 indexable (= sitemap set
+  exactly) + 59 noindex (58 stubs + `about/straight-flush-plumbing-orange-county.html`,
+  `noindex,follow`, ISSUE-013 WON'T FIX). Only ONE indexable orphan existed
+  (`guides/index.html`), fixed in PR #83.
+- **`refresh_sitemap.py` rewrites every `<lastmod>`** from each file's last git commit
+  date; on a fresh/shallow clone that churns ~108 lines with no page change. Revert it
+  (`git checkout -- sitemap.xml`) unless the URL set actually changed — open sitemap
+  PRs collide otherwise.
+- Legacy root URLs return `200 + noindex` rather than a redirect; the SEO-correct fix
+  is a **301 at the Cloudflare edge** (GitHub Pages can't emit file redirects). Owner-side.
+
 ## Conventions that matter
 - **GitHub token in this environment is scoped to git push + PR create only.**
   `PATCH /pulls/{n}` (edit body/title) and `POST /issues/{n}/comments` return
