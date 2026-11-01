@@ -3,6 +3,24 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-10-25 — Technical + reviews audit response (owner request)
+
+- Re-verified the external audit's "Not confirmed" technical rows against the
+  **live** site: `robots.txt` and `sitemap.xml` return **200** and are identical
+  to the repo; 0 canonical anomalies; all 89 sitemap URLs **200**; `Plumber`
+  JSON-LD valid on every page; `aggregateRating` correctly absent. Full table in
+  `reports/audit/2026-10-25-technical-reviews-audit-response.md`.
+- **Copy fix (ISSUE-033):** `contact.html` showed `74+ Reviews [Google] · [Yelp]`,
+  readable as 74+ across both platforms. Changed to **"Read our reviews"** with
+  the two links and **no count** — the audit's own guidance when counts cannot be
+  kept in sync. Live counts were unverifiable here (Yelp 403s this egress; the
+  Google share link exposes no count) and no owner-confirmed count is recorded.
+  Homepage's Yelp-attributed "74 reviews" left as-is (attributed, unverifiable).
+  `md/contact.md` + `llms-full.txt` regenerated.
+- Recorded ISSUE-033 (resolved) and ISSUE-034 (open: GSC/PSI rows need owner
+  access — recorded UNMEASURED, never zero).
+- No schema, NAP, price, or license change. No new review count introduced.
+
 ## 2026-10-24 — City slab-leak and PEX-repipe pages (owner request)
 
 - Added `/services/slab-leak-detection-{laguna-niguel,dana-point}.html` and
