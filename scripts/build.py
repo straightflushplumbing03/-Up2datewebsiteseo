@@ -123,7 +123,7 @@ def footer(prefix):
         </div>
       </div>
       <div>
-        <h4>Our Services</h4>
+        <h2 class="footer-h">Our Services</h2>
         <ul>
           <li><a href="{p(prefix,'services/leak-detection.html')}">Leak Detection</a></li>
           <li><a href="{p(prefix,'services/slab-leak-detection.html')}">Slab Leak Detection</a></li>
@@ -137,7 +137,7 @@ def footer(prefix):
         </ul>
       </div>
       <div>
-        <h4>Contact Us</h4>
+        <h2 class="footer-h">Contact Us</h2>
         <ul>
           <li><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
@@ -146,7 +146,7 @@ def footer(prefix):
         </ul>
       </div>
       <div>
-        <h4>Cities We Serve</h4>
+        <h2 class="footer-h">Cities We Serve</h2>
         <ul>
           <li><a href="{p(prefix,'cities/laguna-niguel.html')}">Laguna Niguel</a></li>
           <li><a href="{p(prefix,'cities/mission-viejo.html')}">Mission Viejo</a></li>
@@ -160,7 +160,7 @@ def footer(prefix):
         </ul>
       </div>
       <div>
-        <h4>Save Our Card</h4>
+        <h2 class="footer-h">Save Our Card</h2>
         <p style="color:var(--muted-on-ink); font-size:0.85rem; margin-bottom:14px;">Scan to save our digital business card to your phone.</p>
         <div class="footer-qr"><img src="{p(prefix,'assets/img/qr-code.png')}" alt="QR code to save Straight Flush Plumbing contact info"></div>
       </div>

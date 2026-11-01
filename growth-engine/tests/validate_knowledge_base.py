@@ -75,6 +75,20 @@ for p in indexable_pages():
     if len(re.findall(r"<h1[ >]", h, re.I)) != 1:
         errors.append(f"{rel}: expected 1 <h1>")
 
+# --- Heading levels descend one step at a time (H1 -> H2 -> H3, no skips) ---
+# A jump like H1 -> H4 breaks document structure for assistive tech and for
+# answer-engine parsing. Fixed 2026-10-25 across 10 pages (6 indexable + 4
+# noindex stubs, which are still served and crawled); this keeps them fixed.
+# Checked on every page, not just indexable ones, since stubs are fetched too.
+for p in indexable_pages():
+    with open(p, encoding="utf-8") as fh:
+        h = fh.read()
+    rel = os.path.relpath(p, ROOT)
+    levels = [int(m.group(1)) for m in re.finditer(r"<h([1-6])[ >]", h, re.I)]
+    for prev, cur in zip(levels, levels[1:]):
+        if cur > prev + 1:
+            errors.append(f"{rel}: heading level skips h{prev} -> h{cur}")
+
 # --- Unique titles/descriptions on indexable pages (cannibalisation guard) ---
 seen_titles, seen_descs = {}, {}
 for p in indexable_pages():

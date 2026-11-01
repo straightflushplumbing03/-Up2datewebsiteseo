@@ -117,35 +117,35 @@ Sensor-based tracing follows the exact path of a pipe, narrowing down the access
 
  01
 
-#### Consultation
+### Consultation
 
 We discuss your symptoms and history with the property.
 
 
  02
 
-#### Visual Inspection
+### Visual Inspection
 
 We check all accessible plumbing and fixtures first.
 
 
  03
 
-#### Pressure Testing
+### Pressure Testing
 
 Isolating which line and zone is involved.
 
 
  04
 
-#### Technology Locating
+### Technology Locating
 
 Acoustic, thermal, or electronic tools pinpoint the source.
 
 
  05
 
-#### Findings & Options
+### Findings & Options
 
 We explain what we found and your realistic options.
 

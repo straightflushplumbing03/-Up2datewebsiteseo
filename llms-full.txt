@@ -1275,6 +1275,13 @@ Every Orange County community has its own mix of slab types, home ages, and soil
 
 
 
+ Where we work
+
+
+## Browse by city
+
+
+
 
 
 ### Laguna Niguel Headquarters
@@ -1508,6 +1515,13 @@ From a single dripping faucet to a full slab leak diagnosis, every job starts th
 
 
 
+ Services
+
+
+## Browse our services
+
+
+
 
 
 
@@ -1720,35 +1734,35 @@ Sensor-based tracing follows the exact path of a pipe, narrowing down the access
 
  01
 
-#### Consultation
+### Consultation
 
 We discuss your symptoms and history with the property.
 
 
  02
 
-#### Visual Inspection
+### Visual Inspection
 
 We check all accessible plumbing and fixtures first.
 
 
  03
 
-#### Pressure Testing
+### Pressure Testing
 
 Isolating which line and zone is involved.
 
 
  04
 
-#### Technology Locating
+### Technology Locating
 
 Acoustic, thermal, or electronic tools pinpoint the source.
 
 
  05
 
-#### Findings & Options
+### Findings & Options
 
 We explain what we found and your realistic options.
 
@@ -4619,6 +4633,13 @@ A quick, free way to understand your home's real risk of hidden leaks and aging 
  [Skip To The Quiz](#quiz)
 
 
+
+
+
+ Start here
+
+
+## Five quick questions
 
 
 
