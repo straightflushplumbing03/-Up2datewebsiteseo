@@ -160,6 +160,7 @@ Most residential repipes take one to a few days, depending on the size of the ho
 
 
  [PEX repiping in Laguna Niguel →](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html)
+ [PEX repiping in Mission Viejo →](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html)
  [About PEX repiping →](https://straightflushplumbingoc.com/services/pex-repiping.html)
  [All service areas →](https://straightflushplumbingoc.com/service-areas.html)
 

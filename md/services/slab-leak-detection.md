@@ -180,6 +180,11 @@ Thermal imaging cross-checks the finding when applicable, and the exact spot is 
 
 
 
+ Related reading
+
+[Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html)
+
+
 
 
 
@@ -234,7 +239,7 @@ The right call when copper throughout the home is aging or leaks have repeated. 
 
 
 
-You get a specific number before any work starts, and no surprise charges. The repair path is the biggest factor: a spot repair costs least, a reroute sits in the middle, and a whole-house repipe is the larger investment that deals with aging copper once.
+Leak detection itself runs $365 to $525 for most homes, and when you file an insurance claim, insurance typically reimburses the detection cost. You get a specific number before any work starts, and no surprise charges. The repair path is the biggest factor: a spot repair costs least, a reroute sits in the middle, and a whole-house repipe is the larger investment that deals with aging copper once.
 
 
 
@@ -370,7 +375,7 @@ Coverage varies by policy and is never something we can promise. Many policies h
 
 
 
-Local details for [Laguna Niguel](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html).
+Local details for [Laguna Niguel](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html).
 
 
 
