@@ -38,6 +38,7 @@ existing repository (an established static HTML site) rather than duplicating it
 | `data/*.jsonl` | Raw observations (append-only) |
 | `citation_engine.py` | AI citation sweep planner, recorder and gap analyzer |
 | `reports/` | baseline / daily / weekly / monthly reports |
+| `runbooks/` | Step-by-step procedures to run the day a blocked integration unblocks |
 | `proposals/` | Items needing owner approval |
 | `tests/` | Validation helpers |
 
