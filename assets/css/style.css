@@ -629,3 +629,25 @@ ul.footer-cities .footer-cities-all{ grid-column:1 / -1; margin-top:6px; }
 .footer-col h2.footer-h{ color:#fff; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; font-family:'IBM Plex Mono',monospace; font-weight:500; margin-bottom:16px; line-height:1.08; }
 .footer-grid-5 h2.footer-h{ color:#fff; font-family:'Playfair Display',serif; font-size:1.05rem; font-weight:700; margin-bottom:14px; padding-bottom:10px; border-bottom:2px solid var(--straight); display:inline-block; line-height:1.08; letter-spacing:-0.01em; }
 .process-step h3{ color:var(--foam); font-size:1.02rem; margin-bottom:8px; }
+
+/* Mobile call bar (conversion, 2026-11-02): on phones the header phone link was
+   display:none, so most pages had no visible tap-to-call until the footer.
+   Reuse that same header link as a fixed bottom bar; lead-events.js already
+   tracks it as phone_call_click. backdrop-filter is removed on mobile (header made solid white) because it
+   makes .site-header the containing block for position:fixed children. */
+@media (max-width: 880px){
+  .site-header{ -webkit-backdrop-filter:none; backdrop-filter:none; background:#fff; }
+  .nav-cta .nav-phone{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    position:fixed; left:12px; right:12px; bottom:calc(12px + env(safe-area-inset-bottom, 0px)); z-index:60;
+    min-height:52px; padding:12px 18px; border-radius:999px;
+    background:var(--straight); color:#fff; font-size:1.02rem; font-weight:600;
+    box-shadow:0 8px 24px -6px rgba(22,33,62,0.45);
+  }
+  .nav-cta .nav-phone strong{ color:#fff; }
+  .nav-cta .nav-phone:focus-visible{ outline:3px solid #fff; outline-offset:-6px; }
+  body{ padding-bottom:84px; }
+  /* iOS Safari zooms the page when a focused field is under 16px (fields were 15.2px;
+     !important because contact.html sets field sizes inline). */
+  form input, form select, form textarea{ font-size:16px !important; }
+}
