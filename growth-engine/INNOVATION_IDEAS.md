@@ -965,3 +965,43 @@ HTML changes this run is constrained not to make. Nothing rejected.
 - **idea-2026-11-01-04 / -05 per-city water-heater & repipe pages** — held as `candidate`
   (not rejected): the same city×service pattern also needs a *local-differentiation*
   pass so the pages are not thin permutations; deferred behind idea-01's coverage map.
+
+## 2026-11-02 (weekly review) — 6 new ideas, statuses updated
+
+Evidence base: the week 2026-10-27 → 2026-11-02 (7 daily reports, 7 citation-gap
+reports, ~1.9k `competitor_observations` rows, ~120 `ai_visibility_history` rows),
+plus the Gemini 401 reproduced this run. Scored 1–5 (higher is better). Risk gate:
+**L1** read-only/docs · **L2** reversible on-page or tooling · **L3** identity/price/
+legal/area/profile (propose only).
+
+| ID | Idea | Type | Impact | Evid | Effort→Value | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-11-02-01 | Re-provision `GEMINI_API_KEY` as a valid AI Studio **API key** (`AIza…`) and add a smoke assertion to the daily pre-stage | Tooling/ops | 5 | 5 | 2 | 5 | ✅ L2 | **prioritized** | This run: `scripts/gemini_visibility.py --smoke` → HTTP 401 `authentication_failed` / `ACCESS_TOKEN_TYPE_UNSUPPORTED`; key length 53, prefix `AQ.A` (not `AIza`). 0 usable AI rows since 2026-10-23. |
+| idea-2026-11-02-02 | Ship the **service×city coverage matrix** as a committed, regenerable artifact (exists / who-holds-the-query / last observed) | Docs/tooling | 4 | 5 | 3 | 5 | ✅ L2 | **prioritized** | Every commercial query this week is held by a service×city page: repipe→integrityrepipe/socalrepipes; water-heater→thewaterheatercompany/waterheatersonly; slab→evansleakdetection/primewest; drains→splashplumbing/jettersndrains. Extends idea-2026-11-01-01. |
+| idea-2026-11-02-03 | Owner claim/complete the **top directory listings** (HomeAdvisor → This Old House → Angi → Porch → BBB → HomeGuide) | Business | 5 | 5 | 3 | 4 | ⚠️ L3 | **proposed** | `reports/citation-gaps/2026-11-01.md`: HomeAdvisor 70 lost answers, This Old House near-me 40, Angi 30, Porch 25, HomeGuide 21, BBB 20. Directories, not plumbers, own the lost answers. |
+| idea-2026-11-02-04 | Add a **`robots.txt` guard test** asserting `Google-Extended: Allow` + named AI crawlers stay present | Tooling | 3 | 5 | 2 | 5 | ✅ L2 | **scored** | Google post 2026-10-30 (fetched, `INDUSTRY_WATCH.md`): sites that allow Google-Extended stay eligible for Gemini grounding. Restates idea-2026-11-01-03; still unshipped. |
+| idea-2026-11-02-05 | Publish a **per-city water-heater** page for the home city (Laguna Niguel), with local differentiation | Website | 4 | 4 | 3 | 5 | ✅ L2 | candidate | Water-heater queries held by single-service domains on city pages (`thewaterheatercompany.com`, `waterheatersonly.com`, `waterheatermaninc.com`); SF still has no city×water-heater page. Feature verified; causation = hypothesis. |
+| idea-2026-11-02-06 | Publish a **per-city repipe/PEX** page for Laguna Niguel, with local differentiation | Website | 4 | 4 | 3 | 5 | ✅ L2 | candidate | "PEX repipe Laguna Niguel" → `integrityrepipe.com`, `socalrepipes.com`, `pexrepipe-repiping.com`, `pacificcoastcopperrepipe.com` — all repipe-specialist city pages. SF has `/services/pex-repiping.html`, no city frame. |
+
+**Prioritization rationale:** the top two remain measurement-integrity items, not
+content, because the week's defining fact is that the AI-answer instrument is **blind**
+(idea-01) and the content gaps are still written from a one-engine board (idea-02).
+Idea-03 is the only new high-impact *owner* action this week and is a Level 3 listing
+task, so it is proposed, not executed.
+
+**Status updates this week:**
+- idea-2026-11-01-01 → **in-progress** (coverage matrix; no artifact committed yet).
+- idea-2026-11-01-02 → **prioritized** (unchanged; blocked on the owner's key).
+- idea-2026-10-12-01 / idea-2026-10-13-01 / idea-2026-10-13-08 (city × slab-leak
+  pages) → **partially shipped**: Mission Viejo slab+PEX (#97), Laguna Niguel
+  hidden-leak (#99) merged 2026-11-02.
+- idea-2026-10-13-02 (per-city repipe/PEX) → **partially shipped**: Dana Point +
+  Laguna Niguel + Mission Viejo PEX pages live; Laguna Niguel specialist-depth page
+  still a candidate.
+
+### Parked / rejected log (2026-11-02)
+
+- **idea-2026-11-02-05 / -06 per-city water-heater & repipe pages** — held as
+  `candidate` (not rejected): both need a local-differentiation pass so the pages are
+  not thin permutations; deferred behind the coverage matrix (idea-02).
+- No idea rejected this week.

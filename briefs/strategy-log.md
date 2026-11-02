@@ -5,6 +5,54 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-11-02 (Intelligence HQ weekly) — the AI-answer instrument is still blind; ship verification, not a 90th page
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim, copy,
+price, or sitemap entry changed.** Branch `intelligence-hq/weekly-2026-11-02`; PR **#107**.
+
+**Change:** none to the site (deliberate). Added `growth-engine/reports/weekly/2026-11-02.md`;
+6 new ideas in `INNOVATION_IDEAS.md` with status updates; outcome records in
+`EXPERIMENT_LOG.md`; 3 new rows in `data/content_experiments.jsonl` (the pages merged
+this week); this log entry.
+
+**Reason:** the week shipped 5 content/tooling PRs (#85, #86, #89, #96, #97, #98, #99)
+and 6 daily-report PRs (#90–#95), but **the measuring apparatus did not improve**. The
+defining fact of the week is that the AI-answer surface is **blind**: `GEMINI_API_KEY`
+returns **HTTP 401 `authentication_failed`** (`ACCESS_TOKEN_TYPE_UNSUPPORTED`),
+reproduced twice this run with the key named explicitly. 0 usable AI rows since
+2026-10-23. GSC/GA4/GBP remain unconnected (P-002). Fixing verification now beats
+authoring more pages.
+
+**Target:** the next daily report carries ≥2 engines on the AI board and a timestamped
+PASS/FAIL health line; the open-PR count drops below 10 (currently 6 + this PR).
+
+**Competitor insight:** the service × city landing page holds **every** commercial query
+tested this week — for water-heater and repipe specifically a **single-service specialist
+domain with one page per city** (`thewaterheatercompany.com`, `integrityrepipe.com`,
+`socalrepipes.com`, `pexrepipe-repiping.com`). Feature verified; cause = hypothesis.
+Directories are the dominant non-plumber source in answers that skip us: HomeAdvisor 70
+lost answers, This Old House near-me 40, Angi 30, Porch 25, HomeGuide 21, BBB 20 — so the
+highest-leverage owner action is **listing/claim work, not more pages**. New this window:
+`integrityrepipe.com`, `socalrepipes.com`, `pexrepipe-repiping.com`,
+`pacificcoastcopperrepipe.com` (repipe); `thewaterheatercompany.com`, `waterheatersonly.com`
+(water heater); `splashplumbing.com`, `jettersndrains.com` (drains); plus `Lantern`
+booking listings and AI directories (`serviceagent.ai`, `pendium.ai`).
+
+**Expected outcome:** the loop regains the ability to tell whether a change worked, and
+the owner gets one concrete high-yield list (directory claims) instead of more content.
+
+**Result:** crawler access **OK** (7 crawler UAs + curl → 200, no `cf-mitigated`);
+`validate_knowledge_base.py` **OK** (151 HTML); Gemini smoke **401**. **Keep.** No
+experiment reverted this week; the conventional proxy channel
+(`exp-2026-10-09-measurement-providers`) remains recorded as reverted/superseded.
+
+**Honest limitation:** no ranking or traffic claim is made. GSC/GA4/GBP metrics are
+`unverified` (never 0). The `absent` counts fell 86 → 70 only because a smaller query
+set ran this week, not because visibility improved.
+
+---
+
+
 ## 2026-10-27 (Intelligence HQ daily) — 15-query conventional sweep; SF absent 0/15; sitemap normalized
 
 **Change:** `sitemap.xml` reordered to canonical sort (pure reorder: identical URL set,
