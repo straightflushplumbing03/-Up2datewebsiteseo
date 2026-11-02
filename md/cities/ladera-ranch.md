@@ -114,7 +114,7 @@ Diagnose-first leak detection and plumbing, done right the first time.
  How much does leak detection cost in Ladera Ranch, CA? +
 
 
-Costs in Ladera Ranch depend on the type of leak, how deep it sits, and how accessible the plumbing is — which is exactly why we diagnose before quoting any repair. Call (949) 374-6524 and Lance will walk you through what to expect for your specific situation.
+For most homes in Ladera Ranch, leak detection runs $365 to $525. Where you fall depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Call (949) 374-6524 and Lance will walk you through what to expect for your specific situation. Our [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) explains what moves the price.
 
 
 
