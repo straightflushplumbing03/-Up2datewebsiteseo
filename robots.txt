@@ -1,54 +1,42 @@
+# All crawlers -- including the AI / LLM answer-engine crawlers, which are
+# explicitly welcome -- share ONE group so the same rules apply to every bot.
+# (A crawler obeys only the most specific group that names it, so listing the
+# AI bots in separate groups would silently exempt them from the Disallow lines.)
 User-agent: *
-Allow: /
-
-# --- AI / LLM answer-engine crawlers: explicitly welcome ---
-# (named rules so AI citation is never left to default interpretation)
 User-agent: GPTBot
-Allow: /
-
 User-agent: OAI-SearchBot
-Allow: /
-
 User-agent: ChatGPT-User
-Allow: /
-
 User-agent: ClaudeBot
-Allow: /
-
 User-agent: Claude-User
-Allow: /
-
 User-agent: Claude-SearchBot
-Allow: /
-
 User-agent: anthropic-ai
-Allow: /
-
 User-agent: PerplexityBot
-Allow: /
-
 User-agent: Perplexity-User
-Allow: /
-
 User-agent: Google-Extended
-Allow: /
-
 User-agent: Applebot
-Allow: /
-
 User-agent: Applebot-Extended
-Allow: /
-
 User-agent: Bingbot
-Allow: /
-
 User-agent: Bytespider
-Allow: /
-
 User-agent: meta-externalagent
 Allow: /
 
-Sitemap: https://straightflushplumbingoc.com/sitemap.xml
+# Internal working files (crew notes, scripts, repo tooling) are not customer
+# content. Keep them out of search and AI answers so engines only learn the
+# business from the real pages, llms.txt and /md/.
+Disallow: /growth-engine/
+Disallow: /briefs/
+Disallow: /ai-headquarters-blueprint/
+Disallow: /scripts/
+Disallow: /.github/
+Disallow: /.claude/
+Disallow: /.agents/
+Disallow: /.codex/
+Disallow: /.mcp.json
+Disallow: /AGENTS.md
+Disallow: /README.md
+Disallow: /CLOUDFLARE-SETUP.md
+Disallow: /requirements.txt
+Disallow: /serve.sh
 
 # --- AI-readable files (all public; do not disallow) ---
 # Brief machine summary:
@@ -59,3 +47,5 @@ Sitemap: https://straightflushplumbingoc.com/sitemap.xml
 Allow: /llms.txt
 Allow: /llms-full.txt
 Allow: /md/
+
+Sitemap: https://straightflushplumbingoc.com/sitemap.xml
