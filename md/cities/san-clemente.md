@@ -15,6 +15,10 @@
 
 San Clemente's Spanish-village charm comes with a wide range of home ages and plumbing systems — we treat each one on its own merits, not a one-size-fits-all assumption.
 
+
+
+Need slab leak detection in San Clemente? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based nearby in Laguna Niguel. We pinpoint the leak first with acoustic, electronic, and thermal equipment, before any concrete, tile, or drywall is opened, then talk through repair or reroute options. Call (949) 374-6524.
+
  [Schedule Service in San Clemente](https://straightflushplumbingoc.com/contact.html)
 
 
@@ -32,19 +36,23 @@ Whether it's an older home near the pier or a newer build in Forster Ranch or Ta
 
 
 
+Most of San Clemente's water is imported through the Metropolitan Water District and MWDOC, with some from two city groundwater wells. On the sewer side, the city places the service lateral (the pipe from your house to the public main) on the property owner, so root intrusion and cracked laterals are an owner repair.
+
+
+
  Services available in San Clemente
 
 
 
-- Acoustic slab leak detection
+- [Acoustic slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
 
-- Hidden & underground water leak detection
+- [Hidden & underground water leak detection](https://straightflushplumbingoc.com/services/leak-detection.html)
 
-- Whole-house PEX repiping & copper line elimination
+- [Whole-house PEX repiping & copper line elimination](https://straightflushplumbingoc.com/services/pex-repiping.html)
 
 - [Water heater repair & installation in San Clemente](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
 
-- Drain services & general plumbing repair
+- [Drain services & general plumbing repair](https://straightflushplumbingoc.com/services/drain-services.html)
 
 
 
@@ -126,6 +134,14 @@ Yes — San Clemente's Spanish-village charm comes with a wide range of home age
 
 
 
+ Who does slab leak detection in San Clemente? +
+
+
+Straight Flush Plumbing & Leak Detection, an owner-operated plumber based nearby in Laguna Niguel, provides slab leak detection in San Clemente. We use acoustic listening equipment, electronic amplification, and thermal imaging to locate the leak before anything is opened, then explain repair, reroute, or repipe options. Call (949) 374-6524 or see our [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html) page.
+
+
+
+
  Can you find a slab leak in a San Clemente home without tearing up my floors? +
 
 
@@ -146,3 +162,27 @@ We're based nearby in Laguna Niguel, so San Clemente is a short drive. Same-day 
 
 
 An unexplained jump in your water bill, a water meter that keeps moving with everything off, the sound of running water behind a wall, a warm spot on the floor, or dropping pressure. Any one of these in a San Clemente home is worth a professional diagnosis before it becomes water damage.
+
+
+
+
+ Who is responsible for the sewer line from my San Clemente home to the street? +
+
+
+The City of San Clemente says the property owner is responsible for maintaining and repairing the sewer service lateral up to the point where it connects to the public sewer line. If your line backs up, the city will send a crew to check the public main at no charge, but clearing and repairing the private lateral is up to the owner. Tree roots are a common cause: the city notes they get in through cracked or broken pipe, and suggests scheduled maintenance if your lateral runs near a tree. A camera inspection shows where the problem is before anything is dug up.
+
+
+
+
+ Who do I call about a leak at the street or my water meter in San Clemente? +
+
+
+Leaks in the street, on the city side of the meter, or a sewer overflow should be reported to the City of San Clemente 24/7 Utilities hotline at 949-366-1553. Leaks on your side of the meter, such as the line to the house, under the slab, or inside a wall, are generally the property owner's to repair. That is the part we locate and fix. Call (949) 374-6524.
+
+
+
+
+ Do newer San Clemente homes get pinhole leaks too? +
+
+
+Yes, it is not only an older-home problem. Local news has covered pinhole-leak claims in copper water lines in South Orange County homes built in the 2000s, including cases in San Clemente. One pinhole leak is often a sign to check the rest of the system. We find the leak first, then walk you through whether a spot repair, a reroute, or a repipe makes sense (see our [repair vs. reroute vs. repipe guide](https://straightflushplumbingoc.com/repair-vs-reroute-vs-repipe.html)).
