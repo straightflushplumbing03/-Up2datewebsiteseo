@@ -5,6 +5,40 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-27 (Intelligence HQ daily) — 15-query conventional sweep; SF absent 0/15; sitemap normalized
+
+**Change:** `sitemap.xml` reordered to canonical sort (pure reorder: identical URL set,
+identical `lastmod`s, 0 content changes) so the `sitemap_idempotent` check passes.
+Append-only documentation: +15 visibility rows, +5 competitor rows, +6 ideas, +1
+industry-watch entry, the daily report, and this log entry. No page copy, schema,
+claim, price, or service-area change.
+
+**Reason:** `daily_measure.py` reported `sitemap_idempotent` FAIL caused solely by
+ordering; reordering to the generator's canonical order makes the check idempotent
+without altering what crawlers see.
+
+**Target:** Tier-1 cities (Laguna Niguel, Mission Viejo, San Clemente, Aliso Viejo,
+Dana Point) × core services (leak detection, slab leaks, drains, water heaters,
+repipe, sewer).
+
+**Competitor insight:** specialist leak-detection sites (evansleakdetection.com,
+leakstar.com) recur with dedicated FAQ-schema'd single-service pages; local
+generalists use LocalBusiness/Breadcrumb/geo schema. SF already ships equivalent
+schema — the gap is query presence, not schema.
+
+**Expected outcome:** the sitemap check goes green; visibility rows accumulate so
+weekly trends are measurable.
+
+**Result:** Tavily conventional sweep 15/15 succeeded, SF **absent 0/15**. AI surface
+(Gemini) **BLOCKED** (HTTP 401, OAuth-typed secret) — UNMEASURED, not zero. Brave
+CAPTCHA-walled; DuckDuckGo Lite 202; Bing unparseable. Tests: full suite 353 OK,
+sitemap tests 17 OK, seo_audit OK, validate_knowledge_base OK.
+
+**Keep/modify/revert:** **Keep.** Sitemap change is a pure reorder and reversible via
+`git revert`.
+
+---
+
 ## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
 **Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).
 **Reason:** 96/96 AI answers absent; Aliso Viejo slab/repipe queries have no credible local page; directories take broad queries. Keep.
