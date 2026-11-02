@@ -38,7 +38,7 @@ Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of o
 
 - [Acoustic slab leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html)
 
-- Hidden & underground water leak detection
+- [Hidden & underground water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html)
 
 - [Whole-house PEX repiping & copper line elimination in Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html)
 

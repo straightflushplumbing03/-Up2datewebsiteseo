@@ -154,6 +154,11 @@ We explain what we found and your realistic options.
 
 
 
+ Related reading
+
+[Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html) · [How long slab leak repair takes](https://straightflushplumbingoc.com/academy/how-long-does-slab-leak-repair-take.html)
+
+
 
 
 
@@ -204,10 +209,14 @@ Understanding your options once the leak is found.
 
 
 
-The factors that affect the price of finding a hidden leak.
+Most homes: $365 to $525. What moves the price, and when insurance reimburses it.
 
  [See the cost guide →](https://straightflushplumbingoc.com/guides/leak-detection-cost.html)
 
+
+
+
+Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html).
 
 
 
@@ -250,7 +259,7 @@ Coverage depends on your policy and the cause of the loss. Many policies address
  How much does leak detection cost? +
 
 
-Cost depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Lance will walk you through what to expect for your specific situation, and our leak detection cost guide explains the factors that affect price.
+For most Orange County homes, leak detection runs $365 to $525. Where you fall depends on the type of leak, how deep it sits, and how accessible the plumbing is, and we give you a clear number before we schedule the visit. Lance will walk you through what to expect for your specific situation, and our leak detection cost guide explains the factors that affect price.
 
 
 

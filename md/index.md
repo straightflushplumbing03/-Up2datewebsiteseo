@@ -744,6 +744,6 @@ Lance picks up the phone. Shows up on time. Does the job right. Charges you fair
  [Book Online →](https://straightflushplumbingoc.com//contact.html)
 
 
- 24/7 Emergency Available
+ 24-Hour Emergency Service
  Licensed & Fully Insured
  No Hidden Fees. Ever.
