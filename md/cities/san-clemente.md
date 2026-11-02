@@ -30,6 +30,8 @@ San Clemente's Spanish-village charm comes with a wide range of home ages and pl
 
 Whether it's an older home near the pier or a newer build in Forster Ranch or Talega, we bring the same diagnose-first standard to every San Clemente property.
 
+Most of San Clemente's water is imported through the Metropolitan Water District and MWDOC, with some from two city groundwater wells. On the sewer side, the city places the service lateral (the pipe from your house to the public main) on the property owner, so root intrusion and cracked laterals are an owner repair.
+
 
 
  Services available in San Clemente
@@ -146,3 +148,27 @@ We're based nearby in Laguna Niguel, so San Clemente is a short drive. Same-day 
 
 
 An unexplained jump in your water bill, a water meter that keeps moving with everything off, the sound of running water behind a wall, a warm spot on the floor, or dropping pressure. Any one of these in a San Clemente home is worth a professional diagnosis before it becomes water damage.
+
+
+
+
+ Who is responsible for the sewer line from my San Clemente home to the street? +
+
+
+The City of San Clemente says the property owner is responsible for maintaining and repairing the sewer service lateral up to the point where it connects to the public sewer line. If your line backs up, the city will send a crew to check the public main at no charge, but clearing and repairing the private lateral is up to the owner. Tree roots are a common cause: the city notes they get in through cracked or broken pipe, and suggests scheduled maintenance if your lateral runs near a tree. A camera inspection shows where the problem is before anything is dug up.
+
+
+
+
+ Who do I call about a leak at the street or my water meter in San Clemente? +
+
+
+Leaks in the street, on the city side of the meter, or a sewer overflow should be reported to the City of San Clemente 24/7 Utilities hotline at 949-366-1553. Leaks on your side of the meter, such as the line to the house, under the slab, or inside a wall, are generally the property owner's to repair. That is the part we locate and fix. Call (949) 374-6524.
+
+
+
+
+ Do newer San Clemente homes get pinhole leaks too? +
+
+
+Yes, it is not only an older-home problem. Local news has covered pinhole-leak claims in copper water lines in South Orange County homes built in the 2000s, including cases in San Clemente. One pinhole leak is often a sign to check the rest of the system. We find the leak first, then walk you through whether a spot repair, a reroute, or a repipe makes sense.
