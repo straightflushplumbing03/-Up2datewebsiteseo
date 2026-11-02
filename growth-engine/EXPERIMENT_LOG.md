@@ -126,3 +126,37 @@ experiments below had their outcome re-assessed against this week's evidence.
 `data/content_experiments.jsonl` gains one row per page shipped 2026-10-20→24 with
 its baseline `sf_status` (all `absent`) and a 2026-11-23 re-measure date. The daily
 planner retests them as they age. See the file for the machine-readable rows.
+
+---
+
+## exp-2026-11-02-dedicated-pages-vs-control — staged read of the 2026-11-02 page merges
+- **Date:** 2026-11-02 (experiments crew). **Deployment date:** 2026-11-02T00:41–00:46Z
+  (PRs #97, #98, #99 merged via #100).
+- **Hypothesis:** queries that now have a dedicated city × service page (treatment) will
+  move through three stages before control queries that only have a generic city page:
+  (1) first-party page indexed, (2) site cited as a source, (3) business named.
+- **Treatment queries (4, fixed wording, from `ai_visibility_queries`):**
+  "who can locate a hidden water leak in Laguna Niguel?" (`services/leak-detection-laguna-niguel.html`, new);
+  "slab leak detection in Mission Viejo" (`services/slab-leak-detection-mission-viejo.html`, new);
+  "who handles whole-house repiping near Mission Viejo?" (`services/pex-repiping-mission-viejo.html`, new);
+  "who provides slab leak detection in Laguna Niguel?" (`services/slab-leak-detection-laguna-niguel.html`, live since 2026-10-24).
+- **Control queries (3, no dedicated page):** "plumber in Ladera Ranch",
+  "which plumbers serve San Clemente?" (drops out of control if PR #104 merges),
+  "emergency plumber in South Orange County".
+- **Baseline (2026-10-23 → 2026-11-01, `public.ai_visibility_observations`):** 80 usable
+  answers (70 `gemini_search`, 20 `claude_web_search`, minus 10 inconclusive errors):
+  named **0/80**, `straightflushplumbingoc.com` in sources **0/80**.
+  Leading indicator 2026-11-02: web search `site:straightflushplumbingoc.com` and a
+  domain + service query return **no first-party pages** (only directory/GBP/other-company
+  results) — stage 1 is not yet reached for any page.
+- **Metrics (tracked separately, per methodology):** stage 1 = target URL appears for a
+  `site:` / exact-title search; stage 2 = site domain in `domains[]`; stage 3 = name in answer.
+- **Read rule:** compare treatment vs control rates per stage on fixed wording, ≥3 runs per
+  query per engine per check. Call a win only if treatment ≥2 of 4 queries reach a stage in
+  ≥2 separate checks while control stays at 0. One-off hits = noise (AI answers vary run to run).
+  If stage 1 is still 0 at 2026-11-16, the bottleneck is indexing, not content; stop adding
+  pages and escalate GSC verification + sitemap submission.
+- **Follow-up:** 2026-11-09 (stage 1), 2026-11-16 (stage 1–2), 2026-11-30 (all stages).
+- **Confounders:** GSC/GA4/GBP not connected; Gemini rows are Gemma fallback; only two engines;
+  PR #101–#104 merges would change other pages mid-test (log merge dates here).
+- **Confidence:** low (baseline is a floor at zero). **Decision:** keep; measure.
