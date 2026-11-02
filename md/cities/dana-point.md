@@ -38,7 +38,7 @@ Salt air, coastal humidity, and a number of older homes near the harbor make acc
 
 - [Acoustic slab leak detection in Dana Point](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html)
 
-- Hidden & underground water leak detection
+- [Hidden & underground water leak detection in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html)
 
 - [Whole-house PEX repiping & copper line elimination in Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html)
 

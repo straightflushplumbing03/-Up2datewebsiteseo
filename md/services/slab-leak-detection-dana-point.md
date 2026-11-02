@@ -67,7 +67,7 @@ If you suspect a leak, start with the [30-minute water meter test](https://strai
 
 
 
-We're a short drive from Laguna Niguel; same-day appointments are often available, and we take emergency calls 24/7. More on [how we find slab leaks](https://straightflushplumbingoc.com/services/slab-leak-detection.html) and [plumbing in Dana Point](https://straightflushplumbingoc.com/cities/dana-point.html).
+We're a short drive from Laguna Niguel; same-day appointments are often available, and we take emergency calls 24/7. More on [how we find slab leaks](https://straightflushplumbingoc.com/services/slab-leak-detection.html), [other hidden leaks in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html), and [plumbing in Dana Point](https://straightflushplumbingoc.com/cities/dana-point.html).
 
 
 
