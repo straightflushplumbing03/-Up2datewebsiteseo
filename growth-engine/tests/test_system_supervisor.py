@@ -168,11 +168,11 @@ class TestBudgetConstants(unittest.TestCase):
         self.assertGreater(SS.MAX_CHANGED_FILES, 0)
         self.assertGreater(SS.MAX_PAGES_ADDED, 0)
 
-    def test_expected_schedule_is_mon_wed_fri(self):
-        self.assertEqual(SS.EXPECTED_SCHEDULE, "0 6 * * 1,3,5")
+    def test_expected_schedule_is_daily(self):
+        self.assertEqual(SS.EXPECTED_SCHEDULE, "0 6 * * *")
 
     def test_daily_automation_id_is_the_live_one(self):
-        self.assertEqual(SS.DAILY_AUTOMATION, "1485d659-8663-4776-a507-db0fefed8483")
+        self.assertEqual(SS.DAILY_AUTOMATION, "df8e3c2d-1fac-47fb-9af2-38d59c8239c5")
 
 
 class TestCheckListMatchesPrompt(unittest.TestCase):

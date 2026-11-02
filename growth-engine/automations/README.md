@@ -8,11 +8,12 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 
 | ID | Automation | Schedule (PT) | Scope | Live automation id |
 |----|-----------|---------------|-------|--------------------|
-| **D** | **SFPL AI Headquarters Daily** | `0 6 * * 1,3,5` (Mon/Wed/Fri) | L1 + L2 (PRs) | `1485d659-8663-4776-a507-db0fefed8483` (created 2026-10-15; trigger changed to Mon/Wed/Fri 2026-10-16, ACTIVE) |
-| **R** | **SFPL AI Headquarters Daily Retry Watchdog** | `30 6,9,12,15,18 * * *` | L1 + re-dispatch | `b946624c-79c2-40a6-be1b-258388a15fb4` (created 2026-10-13; recreated 2026-10-15, ACTIVE) |
-| **S** | **SFPL AI Headquarters System Supervisor** | `0 7 * * 2,6` (Tue/Sat) | L1 + L2 (report PR) | `c1b547c8-da3b-4fa1-ba8a-e99a55e0f59e` (created 2026-10-16, ACTIVE) |
-| **HQ-D** | **SFPL Intelligence HQ Daily 6 AM** | `0 6 * * *` (daily incl. weekends) | L1 + L2 (PRs) | `df8e3c2d-1fac-47fb-9af2-38d59c8239c5` (**created 2026-10-19, ACTIVE**) |
-| **HQ-W** | **SFPL Intelligence HQ Weekly Review** | `0 6 * * 1` (Mondays) | L1 + L2 (PRs) | `d948c2e2-e4a4-49f1-a2e4-40fdf815faea` (**created 2026-10-19, ACTIVE**) |
+| **D** | **SFPL AI Headquarters Daily** | `0 6 * * 1,3,5` (Mon/Wed/Fri) | L1 + L2 (PRs) | `1485d659-8663-4776-a507-db0fefed8483` (created 2026-10-15; **disabled 2026-10-20**, superseded by HQ-D) |
+| **R** | **SFPL AI Headquarters Daily Retry Watchdog** | `30 6,9,12,15,18 * * *` | L1 + re-dispatch | `b946624c-79c2-40a6-be1b-258388a15fb4` (created 2026-10-13; **disabled — observed 2026-10-20**) |
+| **S** | **SFPL AI Headquarters System Supervisor** | `0 7 * * 2,6` (Tue/Sat) | L1 + L2 (report PR) | `c1b547c8-da3b-4fa1-ba8a-e99a55e0f59e` (**retired — 404 as of 2026-10-20**) |
+| **HQ-D** | **SFPL Intelligence HQ Daily 6 AM** | `0 6 * * *` (daily incl. weekends) | L1 + L2 (PRs) | `df8e3c2d-1fac-47fb-9af2-38d59c8239c5` (created 2026-10-19; **prompt re-deployed + enabled 2026-10-20, ACTIVE**) |
+| **HQ-W** | **SFPL Intelligence HQ Weekly Review** | `0 6 * * 1` (Mondays) | L1 + L2 (PRs) | `d948c2e2-e4a4-49f1-a2e4-40fdf815faea` (created 2026-10-19; **prompt re-deployed + enabled 2026-10-20, ACTIVE**) |
+| ~~stray~~ | ~~Newest~~ | `0 9 * * *` | n/a | `3c4e15bb-eea5-4dc0-8190-eb3437d1afcf` (**disabled 2026-10-20** — held the one-time setup prompt, was re-running it daily) |
 | ~~HQ-D (gen-1)~~ | ~~SFPL Intelligence HQ Daily 6 AM~~ | `0 6 * * *` | L1 + L2 (PRs) | `5dc89b41-6880-40e6-950c-14a635f7bd62` (**retired 2026-10-15 — 404**) |
 | ~~HQ-W (gen-1)~~ | ~~SFPL Intelligence HQ Weekly Review~~ | `0 6 * * 1` | L1 + L2 (PRs) | `0582d219-de15-42c2-83b5-4bc92995edce` (**retired 2026-10-15 — 404**) |
 | A | Morning AI Search Visibility & Competitor Intelligence | `0 6 * * *` | L1 + L2 (PRs) | `4c5213f7-080c-4edd-97a2-30962419bd14` (created 2026-10-09; **disabled 2026-10-12**, superseded by HQ-D) |
@@ -31,7 +32,7 @@ All schedules use **America/Los_Angeles** so they follow daylight saving.
 ## Oversight — the system supervisor (HQ-S)
 
 `ai-headquarters-supervisor.prompt.md`, `0 7 * * 2,6` PT (Tue + Sat). Because the
-daily content job runs Mon/Wed/Fri at 06:00, supervision lands the **next
+daily content job runs every day at 06:00, supervision lands the **next
 morning** and reviews what those runs actually produced. It runs
 `scripts/system_supervisor.py`, a deterministic drift detector (no LLM until the
 report), which checks that exactly one content automation is enabled, the schedule
@@ -100,10 +101,10 @@ on 2026-10-15 and returns `404`; the 2026-10-15 redeploy ran as `SFPL AI Headqua
 Daily` (`1485d659…`, Mon/Wed/Fri). The 2026-10-19 re-creation restores the requested
 **daily incl. weekends** cadence under the original Intelligence HQ name.
 
-**Overlap note.** `SFPL AI Headquarters Daily` (`1485d659…`, Mon/Wed/Fri) and the
-retry watchdog (`b946624c…`) are currently **INACTIVE**, so there is exactly one
-enabled daily content job. Do not enable `1485d659…` while HQ-D runs — two jobs at
-06:00 PT would race on the same branch names.
+**Overlap note.** `SFPL AI Headquarters Daily` (`1485d659…`, Mon/Wed/Fri) was
+**disabled 2026-10-20** (it was still ACTIVE alongside HQ-D), so there is now
+exactly one enabled daily content job. Do not re-enable `1485d659…` while HQ-D
+runs — two jobs at 06:00 PT would race on the same branch names.
 
 **Relationship to Automation A:** A already covered the morning visibility +
 competitor research loop at the same 06:00 PT slot. HQ-D supersedes A and adds the

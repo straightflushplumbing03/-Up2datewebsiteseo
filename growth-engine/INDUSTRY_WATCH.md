@@ -15,6 +15,98 @@ cannot be traced to a fetched source, it is not written down.
 
 ---
 
+## 2026-10-19 — Google publishes a primary-source "mythbusting" guide for generative-AI search (llms.txt, chunking, structured data)
+
+- **What changed / observed:** Google Search Central's *AI optimization guide*
+  (`/search/docs/fundamentals/ai-optimization-guide`) now carries an explicit
+  "Mythbusting generative AI search: what you don't need to do" section. Verbatim
+  from the fetched page (HTTP 200, 192,068 bytes, fetched 2026-10-19):
+  - **LLMS.txt:** "You don't need to create new machine readable files, AI text
+    files, markup, or Markdown to appear in Google Search (including its
+    generative AI capabilities), as Google Search itself doesn't use them."
+    Maintaining one is "completely fine … for other services or systems," and it
+    "will neither harm nor help your site's visibility or rankings in Google
+    Search, as Google Search ignores them."
+  - **"Chunking" content:** "There's no requirement to break your content into tiny
+    pieces for AI to better understand it."
+  - **Rewriting content for AI:** "You don't need to write in a specific way just
+    for generative AI search."
+  - **Structured data:** "Structured data isn't required for generative AI search,
+    and there's no special schema.org markup you need to add."
+  - **Eligibility requirement (actionable):** "To be eligible to be shown in
+    generative AI features on Google Search, a page must be indexed and eligible to
+    be shown in Google Search with a snippet," and a site "must be included in
+    Search generative AI features in Search Console."
+  - **Measurement:** Google points to a **Generative AI performance report** in
+    Search Console (and warns against third-party tools claiming "internal" Google
+    metrics).
+- **Why it matters to Straight Flush:** the repo's `llms.txt` / `llms-full.txt` /
+  `/md/**` assets (ISSUE-001 follow-up, idea-2026-10-12-03) should be described
+  honestly as AI-consumer/agent-readable conveniences, **not** as a Google ranking
+  or AI-Overview lever. The durable levers remain the ordinary ones: indexable,
+  snippet-eligible pages. The Search Console Generative AI performance report is
+  the only first-party measurement path — and it sits behind the same unconnected
+  Google Search Console access as P-002.
+- **Source(s):** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (fetched 2026-10-19, HTTP 200) · https://developers.google.com/search/docs/fundamentals/ai-optimization-guide#mythbusting
+  · Search Central changelog entry "Clarifying guidance on llms.txt files"
+  (https://developers.google.com/search/updates, fetched 2026-10-19).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** re-frame `idea-2026-10-12-03` and the
+  `INTEGRATION_STATUS.md` AI-overview row; add the Generative-AI report to the
+  P-002 unblock request. No website code change warranted today.
+
+## 2026-10-19 — FAQ rich-result documentation removal confirmed in the live changelog (re-verification)
+
+- **What changed / observed:** Re-fetched the Search Central updates page
+  (2026-10-19, HTTP 200). The June 2026 entry "Removing documentation for the FAQ
+  rich result feature" is live, with the reason "The FAQ rich result feature is no
+  longer shown in Google Search results." The How-To deprecation entry remains
+  present. This **re-confirms** the 2026-10-13 entry below against a fresh fetch
+  rather than a cached recollection.
+- **Why it matters to Straight Flush:** no change to the 2026-10-13 conclusion —
+  `FAQPage` markup earns no Google rich result. Keep the answer-first FAQ *content*
+  (human/AEO value); stop citing rich-result eligibility.
+- **Source(s):** https://developers.google.com/search/updates (fetched 2026-10-19)
+  · https://developers.google.com/search/docs/appearance/structured-data/faqpage.
+  **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** none new; supports the 2026-10-13 entry.
+
+## 2026-10-19 — Third-party search-result quality degraded during this run (measurement caveat, not a site finding)
+
+- **What changed / observed:** During the 2026-10-19 run an exploratory **Bing**
+  fallback probe returned partially degraded SERPs for several plumbing queries —
+  generic/definitional results (dictionary domains) rather than local plumbing
+  pages — and several requests were rate-limited (HTTP 429). No row was recorded
+  from that probe; the recorded sweep used Tavily, which returned 10/10 results per
+  query. The degraded probe was therefore **not** used to classify any query.
+- **Why it matters to Straight Flush:** a weak *result set* is not evidence about
+  our ranking. It is a caveat on today's confidence, not a signal about the site.
+- **Source(s):** run observation 2026-10-19 (Bing fallback probe; HTTP 429 +
+  definitional results); recorded sweep in `growth-engine/data/ai_visibility_history.jsonl`
+  (provider `tavily_search`). **Confidence:** medium (observed, provider-side).
+- **Proposed action (if any):** none; note in the report.
+## 2026-10-20 — Search Console exposes a Generative AI performance report (re-verified primary source)
+
+- **What changed / observed:** Google Search Central's *Optimizing for generative
+  AI search* page directs site owners to measure AI-feature performance **inside
+  Search Console**, not through third-party tooling. Verbatim: "To measure how
+  your content is performing in generative AI features on Google Search and
+  Discover, use the Generative AI performance report in Search Console." The same
+  page warns: "Be wary of third-party tools that promise ranking success or claim
+  to use 'internal' Google metrics. No third-party tool has access to our
+  internal ranking or AI systems."
+- **Also re-confirmed on the same fetch:** `llms.txt` is explicitly a no-op for
+  Google Search — "Doing so will neither harm nor help your site's visibility or
+  rankings in Google Search, as Google Search ignores them."
+  (fetched 2026-10-20, HTTP 200, ~192 KB; all three quotes re-verified verbatim against the live page).
+- **Proposed action:** the GSC ask in P-002 now names the Generative AI
+  performance report; day-one procedure written to
+  `growth-engine/runbooks/gsc-measurement-runbook.md`. No HTML change; the
+  `/llms.txt` copy re-frame remains a documentation item (idea-2026-10-13-18).
+
+---
+
 ## 2026-10-13 — Google Search Central deprecates the FAQ rich result
 
 - **What changed / observed:** Google Search Central removed the FAQ rich-result
@@ -210,6 +302,43 @@ New entries are prepended directly under this line, newest first, using:
 -->
 ## Dated entries
 
+### 2026-10-22 — Google Search Console now reports web multimodal Search performance (primary source)
+- **What changed / observed:** Google Search Central announced Search Console
+  reporting for **web multimodal search**, live in both the *performance on Search
+  results* report and the *Generative AI features* report, rolling out globally
+  from 2026-09-24. It covers searches made with **Lens**, **Circle to Search**
+  (Android), image uploads to Google Search, and the Chrome right-click "Search
+  this image" action, exposed via a new *multimodal search* type filter in the
+  Performance report (with CSV export).
+- **Why it matters to Straight Flush:** two implications. (1) The report's
+  existence confirms Google now tracks and surfaces **Generative AI feature**
+  performance in Search Console — the first-party channel this repo has been
+  waiting on (P-002); when GSC access is granted, AI-feature impressions become
+  measurable rather than inferred. (2) Multimodal (camera/image) search is a
+  natural discovery path for plumbing symptoms — a homeowner photographing a
+  stained ceiling or a corroded pipe. Our pages carry real photographs and
+  descriptive `alt` text, which is the crawlable surface multimodal search reads.
+  No page change is justified by this alone (no first-party data yet), so it stays
+  an **observation**, not an action.
+- **Source(s):** https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc
+  (fetched 2026-10-22, HTTP 200); feed listing confirmed at
+  https://developers.google.com/search/blog/feed.xml (HTTP 200).
+  **Confidence:** high (primary source, official blog).
+- **Proposed action:** none today. Feeds idea-2026-10-22-04 (photo/alt-text
+  audit) and reinforces the existing P-002 GSC runbook (idea-2026-10-13-18).
+
+### 2026-10-22 — Official Search-fundamentals learning paths published (primary source)
+- **What changed / observed:** Google Search Central published curated YouTube
+  learning paths for **Search fundamentals** and **Technical SEO**
+  (dated 2026-10-06, fetched HTTP 200). It is training material, not a ranking
+  rule change — no documented ranking or policy effect.
+- **Why it matters to Straight Flush:** low direct impact. Recorded so the daily
+  log does not misattribute a ranking change to it, and so the standing
+  "official guidance" table can cite a current, verified primary source.
+- **Source(s):** https://developers.google.com/search/blog/2026/10/seo-learning-paths
+  (fetched 2026-10-22, HTTP 200). **Confidence:** high (primary source).
+- **Proposed action:** none.
+
 ### 2026-10-12 — Knowledge base extended for Intelligence HQ (infrastructure)
 - **What:** Added `INDUSTRY_WATCH.md`, `INNOVATION_IDEAS.md`, weekly-report
   structure, and the Intelligence HQ automation. No external claims added.
@@ -286,6 +415,386 @@ New entries are prepended directly under this line, newest first, using:
   · **Confidence:** high (both primary sources, fetched, HTTP 200).
 - **Proposed action (if any):** recorded only. Folded into the P-002 note in this run's
   report; no proposal file created because P-002 already covers it.
+## 2026-10-20 — Google publishes an official "Optimizing for generative AI search" guide (primary source)
+
+- **What changed / observed:** Google Search Central now ships a first-party guide,
+  *"Optimizing your website for generative AI features on Google Search"*, at
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (fetched 2026-10-20, HTTP 200; `<title>` "Google's Guide to Optimizing for
+  Generative AI Features on Google Search"). Verbatim points captured this run:
+  - *"Is SEO still relevant for generative AI search? In short, yes! The best
+    practices for SEO continue to be relevant because our generative AI features on
+    Google Search are rooted in our core Search ranking and quality systems."*
+  - *"Create valuable, non-commodity content for your audience"* — *"Creating
+    content that people find unique, compelling, and useful will likely influence
+    your website's presence in generative AI search in the long run more than any of
+    the other suggestions in this guide."*
+  - *"Build and maintain a clear technical structure"* — existing technical SEO
+    best practices continue to be worthwhile.
+  - *"Optimize your local business and ecommerce details"* — *"Where appropriate,
+    generative AI responses can include ... information about local businesses.
+    Using products like Merchant Center ... and Google Business Profiles can help
+    your products and services to be visible in both AI responses and other Google
+    Search results."*
+  - A **"Mythbusting generative AI search: what you don't need to do"** section:
+    *"While terms like Answer Engine Optimization (AEO) or Generative Engine
+    Optimization (GEO) are common online, many suggested 'hacks' aren't effective or
+    supported by how Google Search actually works."*
+  - *"To measure how your content is performing in generative AI features on Google
+    Search and Discover, use the Generative AI performance report in Search
+    Console."*
+  - An **agentic experiences** section describing browser agents that *"may access
+    your website to gather the data they need to complete these tasks, such as
+    analyzing visual renderings (like screenshots), inspecting the DOM structure,
+    and interpreting the accessibility tree"*, pointing to
+    https://web.dev/articles/ai-agent-site-ux and mentioning *"Protocols like
+    Universal Commerce Protocol (UCP)"* as emerging.
+- **Why it matters to Straight Flush:** This is the first *official* Google statement
+  that AI-feature visibility is gated on ordinary Search fundamentals plus Google
+  Business Profile / local business details — i.e. it directly supports the repo's
+  diagnose-first, no-hack strategy and *argues against* buying AEO/GEO "hacks". It
+  also names the **Generative AI performance report in Search Console** as the
+  measurement surface, which is the same access blocked by P-002 (no GSC
+  connection) — so our AI-surface numbers stay `unverified` for first-party data.
+  The local-business sentence is additional evidence for prioritising Google
+  Business Profile completeness (a Level-3/owner action, so proposal-only).
+  (fetched 2026-10-20, HTTP 200) · https://developers.google.com/search/docs/appearance/establish-business-details
+  (fetched 2026-10-20, HTTP 200) · https://web.dev/articles/ai-agent-site-ux (cited by
+  the guide; **not** fetched this run) · **Confidence:** high (primary source, fetched;
+  quotes verbatim).
+- **Proposed action (if any):** (1) keep FAQ/answer content for humans and AI answers
+  but never describe it as an AEO "hack"; (2) add "GBP completeness" to the
+  proposal queue for owner action (Level 3 — we cannot edit the profile);
+  (3) treat the Generative AI performance report as the *first* thing to read when
+  P-002 is approved. No code change warranted this run.
+
+## 2026-10-20 — Google Search Central blog: curated "learning paths" (SEO fundamentals / technical SEO)
+
+- **What changed / observed:** The most recent Search Central blog post in the index
+  fetched this run (https://developers.google.com/search/blog, HTTP 200) is
+  *"New learning paths: curated YouTube playlists for Search fundamentals and
+  Technical SEO"* — https://developers.google.com/search/blog/2026/10/seo-learning-paths
+  (fetched 2026-10-20, HTTP 200). It is a **training-resource** announcement, not a
+  ranking or policy change.
+- **Why it matters to Straight Flush:** No ranking impact. Recorded so future runs do
+  not mistake it for a substantive algorithm/policy update. The genuinely relevant
+  recent items in the same index remain *"update-site-reputation-policy"* (2026-08)
+  and *"gen-ai-performance-reports"* (2026-06) — both already tracked.
+- **Source(s):** https://developers.google.com/search/blog/2026/10/seo-learning-paths
+  · https://developers.google.com/search/blog · **Confidence:** high (primary source,
+  fetched; classified as informational).
+
+## 2026-10-20 — Trade-press observation: tankless/heat-pump water-heater product flow continues
+
+- **What changed / observed:** The PHCPPros home page (https://www.phcppros.com/,
+  fetched 2026-10-20, HTTP 200) leads with product and technical items including a
+  condensing combi-boiler, an electric tankless water heater, a residential ducted
+  ventilation unit, and video explainers on domestic pressure boosting and
+  air-to-water heat-pump efficiency. Observed as **topic flow only** — no ranking
+  claim, no statistic taken from it.
+- **Why it matters to Straight Flush:** Consistent with the standing, evidence-backed
+  demand signal that Orange County homeowners ask about water-heater *type* choices
+  (tank vs tankless) and pressure issues — both already present in
+  `KEYWORD_UNIVERSE.md`. Supports keeping water-heater and water-pressure content
+  current; it does **not** justify any new product claim (that would be Level 3).
+- **Source(s):** https://www.phcppros.com/ (fetched 2026-10-20, HTTP 200).
+  **Confidence:** low (trade-press home page, editorial flow only — not a verified
+  demand measurement).
+
+## 2026-10-20 — Google has fully retired the FAQ rich result (primary source, high confidence)
+
+- **What changed / observed:** Google's own structured-data changelog states that the
+  FAQ rich result was deprecated (changelog entry dated **May 8**, "This feature will
+  no longer appear in Google Search starting **May 7, 2026**"), and that documentation
+  for the feature was **removed** ("Removed documentation for the FAQ rich result
+  feature … The FAQ rich result feature is no longer shown in Google Search results").
+  A prior change (September) had already restricted the feature to "well-known,
+  authoritative government and health websites." Verbatim from
+  https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200).
+- **Why it matters to Straight Flush:** It **changes the evidence for IDEA-03**
+  (FAQPage schema on method pages). FAQPage markup no longer produces a Google rich
+  result for a local plumbing business, so it must **not** be justified as a rich-result
+  play. It remains defensible only as machine-readable entity/answer clarity for
+  AI answer engines and non-Google consumers — which is a *different, weaker* claim
+  than the one originally recorded. IDEA-03 is therefore re-scoped and its rank
+  lowered; see `INNOVATION_IDEAS.md`.
+- **Counter-observation (verified, same day):** repeat competitor Evans Leak Detection
+  still ships `FAQPage`+`Question`+`Answer` markup (https://evansleakdetection.com/,
+  HTTP 200, 3 `ld+json` blocks). Presence is verified; that it *causes* ranking is a
+  hypothesis and the deprecation argues against it.
+- **Source(s):** https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200). **Confidence:** high (primary source, verbatim).
+- **What we should do:** keep FAQ *content* for users and AI surfaces; stop treating
+  `FAQPage` as a Google rich-result win, and do not spend a change window on it.
+
+---
+
+## 2026-10-20 — Google states its spam policies apply to generative-AI answers (primary source)
+
+- **What changed / observed:** Google's structured-data changelog records a change
+  "Clarifying that spam policies apply to generative AI responses in Google Search …
+  To make it clear that the spam policies apply to all of Google Search, including
+  generative AI responses." Verbatim from
+  https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200).
+- **Why it matters to Straight Flush:** Reinforces existing policy — no fabricated
+  reviews, no doorway city pages, no invented claims — now explicitly extending to AI
+  answers. It validates the engine's existing no-manipulation rule (ground rule 8)
+  as an *official* requirement, not just our ethics.
+- **Source(s):** https://developers.google.com/search/docs/appearance/structured-data/faqpage
+  (fetched 2026-10-20, HTTP 200). **Confidence:** high (primary source, verbatim).
+## 2026-10-21 — Google Search Central: "AI features and your website" (primary source, fetched)
+
+- **What changed / observed:** Google Search Central now carries a dedicated guide
+  *AI features and your website* covering how **AI Overviews** and **AI Mode** work
+  from a site owner's perspective. Key statements fetched verbatim: both features
+  "may use a **query fan-out** technique — issuing multiple related searches across
+  subtopics and data sources"; AI features "surface relevant links"; and to be
+  eligible "a page must be **indexed and eligible to be shown in Google Search**"
+  and follow the same foundations — technical requirements, Search policies, and
+  "creating helpful, reliable, people-first content". A companion navigation entry
+  *Optimizing for generative AI search* now appears in the Search Essentials section
+  (its deep-link 404s at the time of fetch; the AI-features page is the live one).
+- **Why it matters to Straight Flush:** This is the **primary-source** confirmation of
+  the AEO premise the Growth Engine has been acting on: there is no separate
+  AI-only ranking trick — eligibility is inherited from being indexed and helpful.
+  It also explains *why* query fan-out rewards **breadth of specific, answerable
+  service/city content**: one homeowner question fans out into several sub-queries,
+  and each page that can answer a sub-query is a candidate supporting link. This
+  supports the existing per-service and per-city page strategy (and the FAQ *content*
+  for AEO) while confirming there is nothing to game.
+- **Source(s):** https://developers.google.com/search/docs/appearance/ai-features
+  (fetched 2026-10-21, HTTP 200) · https://developers.google.com/search/blog
+  (Search Central changelog index, fetched 2026-10-21, HTTP 200).
+  **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** none required. Reinforces existing strategy; no
+  website change warranted by this entry alone.
+
+## 2026-10-21 — Google Search Central: "Establish your business details with Google" (primary source, fetched)
+
+- **What changed / observed:** Google publishes a consolidated guide on establishing
+  official business details: **claim your Business Profile** (address, contact info,
+  business type, photos → Google Maps + knowledge panel), **register the website in
+  Search Console** to "verify website ownership", **update the Google knowledge panel**
+  as a verified representative, and add **structured data** — explicitly naming
+  `Organization` (site logo) and `Breadcrumbs` as features "all websites can benefit
+  from".
+- **Why it matters to Straight Flush:** The guide names the exact levers the entity
+  work depends on. Two are already done (BreadcrumbList JSON-LD; Search Console
+  verification is *blocked* on owner credentials, P-002). The **Business Profile
+  claim** and **knowledge-panel ownership** are the unblocked-but-owner-gated items
+  that ISSUE-014/ISSUE-018 (duplicate base44/wix hosts splitting the entity) make
+  urgent: Google can only let a verified owner override what it finds automatically.
+- **Source(s):** https://developers.google.com/search/docs/appearance/establish-business-details
+  (fetched 2026-10-21, HTTP 200). **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** propose (owner action) — claim Business Profile and
+  knowledge panel; no website change.
+
+---
+
+## 2026-10-24 — Google: "query fan-out" is how AI Overviews / AI Mode gather sources; sitemap `<priority>`/`<changefreq>` are ignored, `<lastmod>` is used only if verifiably accurate
+
+- **What changed / observed (entry 1 — AI surface):** The primary Google Search
+  Central page "AI features and your website" states that AI Overviews and AI Mode
+  "may use a **query fan-out** technique — issuing multiple related searches across
+  subtopics and data sources — to develop a response". It also states that to be
+  eligible as a *supporting link* a page must be indexed and eligible to show a
+  snippet, that "there are no additional requirements" beyond the normal technical
+  requirements, that no AI-specific optimization is required, and that AI-feature
+  impressions are folded into the ordinary Search Console Performance report. The
+  page was fetched live this run and is unchanged in its core claims from the
+  standing reference row, but the **query fan-out** wording is the operational
+  detail worth recording: a single conversational query is decomposed into several
+  sub-queries, so coverage of *adjacent* sub-topics (cost, insurance, diagnosis,
+  prevention) is what makes a page reachable across the fan-out, not repetition of
+  one head term.
+- **Why it matters to Straight Flush:** It reframes "AI visibility" from a single
+  keyword to a **topic cluster** test. It also confirms the site's existing
+  strategy — plain-language answer-first content on slab leaks, insurance, and
+  diagnostics — is directionally right, and that the measured absence in AI answers
+  is a *coverage/authority* problem rather than a missing "AI trick". It is
+  consistent with the P-002 blocker: AI-feature performance is only diagnosable
+  inside Search Console, which is not connected.
+- **Source(s):** https://developers.google.com/search/docs/appearance/ai-features
+  (fetched 2026-10-24, HTTP 200) · **Confidence:** high (primary source, fetched).
+- **What changed / observed (entry 2 — sitemap semantics):** The primary Google
+  sitemap documentation states plainly: "**Google ignores `<priority>` and
+  `<changefreq>` values**" and "Google uses the `<lastmod>` value **if it's
+  consistently and verifiably (for example by comparing to the last modification of
+  the page) accurate**."
+- **Why it matters to Straight Flush:** Directly validates today's sitemap fix.
+  `refresh_sitemap.py` preserves existing `changefreq`/`priority` and derives
+  `lastmod` from `git log -1 --format=%cs` — i.e. it keeps the one field Google
+  actually reads **verifiably accurate**, and treats the two ignored fields as inert
+  carry-through. It also lowers the stakes of the ordering-only diff: ordering has no
+  documented effect on Google, so the fix is purely about making our own idempotency
+  check meaningful, not about ranking.
+- **Source(s):** https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
+  (fetched 2026-10-24, HTTP 200) · **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** Recorded only. Idea `idea-2026-10-24-03` (query
+  fan-out coverage map) is derived from entry 1; no code change follows from entry 2.
+
+## 2026-10-25 — Google Search Central documents AI features (primary source)
+
+- **What changed / observed:** Google Search Central now documents, on its own
+  primary page, how a site appears in **AI Overviews** and **AI Mode** —
+  `https://developers.google.com/search/docs/appearance/ai-features`
+  (fetched 2026-10-25, HTTP 200, page `Last updated 2025-12-10 UTC`). The
+  substantive points, quoted or paraphrased from that page:
+  - "You can apply the same foundational SEO best practices for AI features as you
+    do for Google Search overall" — the only *technical* requirement to be a
+    supporting link is that the page "must be indexed and eligible to be shown in
+    Google Search with a snippet."
+  - "You don't need to create new machine readable files, AI text files, or markup
+    to appear in these features. There's also no special schema.org structured data
+    that you need to add."
+  - Worthwhile fundamentals it lists: crawlable in `robots.txt`, findable via
+    **internal links**, good page experience, important content available as
+    **text**, supporting images/video, **structured data matching the visible
+    text**, and up-to-date Merchant Center / Business Profile information.
+  - A **query fan-out** technique: AI Overviews / AI Mode "issu[ing] multiple
+    related searches across subtopics and data sources", surfacing "a wider and
+    more diverse set of helpful links".
+  - Measurement: AI-feature clicks count in the Search Console Performance report
+    under the "Web" search type; "clicks from search results pages with AI
+    Overviews … are higher quality."
+- **Confidence:** high — primary source, fetched directly.
+- **Why it matters to Straight Flush:** Google states on the record that appearing
+  in AI answers needs **no special markup**. Any plan resting on "AI files"
+  (`llms.txt` as a *Google ranking* lever) or new schema for AI eligibility is
+  unsupported. It validates the site's existing strengths (text-first content,
+  internal linking, matching JSON-LD) and lifts **internal linking** and **Business
+  Profile accuracy** to the top of the AI-visibility checklist. `llms.txt` remains
+  useful for non-Google AI crawlers but is **not** a Google AI-feature requirement,
+  and the repo should not claim otherwise (see `idea-2026-10-25-05`).
+
+---
+
+
+## 2026-10-26 — Google Search Central clarifies hyphen-vs-underscore URL word separation (changelog 2026-10-23)
+
+- **What changed / observed:** the *What's new in Google Search* changelog
+  (https://developers.google.com/search/updates, fetched 2026-10-26, HTTP 200) lists an
+  **October 23, 2026** update: "Updated guidance on crawlable URL structures … to clarify
+  word separation guidelines using hyphens versus underscores." The underlying page
+  *URL structure best practices*
+  (https://developers.google.com/search/docs/crawling-indexing/url-structure, fetched
+  2026-10-26, HTTP 200) now states: "Use hyphens to separate words … instead of
+  underscores. For historical reasons, we don't recommend using underscores, as
+  underscores are commonly used for denoting concepts that should be kept together,
+  whereas hyphens clearly signal a word boundary."
+- **Why it matters to Straight Flush:** our canonical URL convention is already
+  hyphenated. Verified locally this run: `sitemap.xml` contains **89** `<loc>` URLs and
+  **0** of them contain an underscore (`grep -o '<loc>[^<]*</loc>' sitemap.xml | grep -c '_'`
+  → 0). So this guidance change requires **no** URL migration for us, and it is worth
+  recording as a *confirmed compliance* rather than an action item — a change to this
+  guidance would otherwise have been a plausible trigger for a costly redirect map.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/crawling-indexing/url-structure
+  · **Confidence:** high (both primary sources, fetched, HTTP 200).
+- **Proposed action (if any):** none. Recorded; the hyphen convention is a standing
+  invariant to re-check if a future generator emits filenames.
+
+## 2026-10-26 — Google Search Console Indexing API quota page refreshed (changelog 2026-10-16)
+
+- **What changed / observed:** the same changelog lists an **October 16, 2026** update:
+  "Updating the Indexing API quota page … to reflect the current quota limits and
+  process," removing "an outdated form". The affected page is
+  https://developers.google.com/search/apis/indexing-api/v3/quota (linked from
+  https://developers.google.com/search/updates, fetched 2026-10-26, HTTP 200).
+- **Why it matters to Straight Flush:** the Indexing API is *not* a general-purpose
+  submission channel — Google restricts it to `JobPosting` and livestream
+  (`BroadcastEvent`) structured data, so it is **not applicable** to a plumbing site and
+  must not be proposed as an indexing shortcut. Recording the quota-page refresh mainly
+  prevents a future run from mis-reading it as a new submission opportunity, and keeps
+  the "how do we get new pages indexed" question pointed at `sitemap.xml` + Search
+  Console URL inspection (still behind P-002) rather than an ineligible API.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/apis/indexing-api/v3/quota
+  · **Confidence:** high (changelog primary source fetched; scope restriction is
+  long-standing documented Google policy).
+
+## 2026-10-30 — Google Search Central: October 2026 doc updates (UGC spam, crawlable URLs, share controls)
+
+- **What changed / observed:** the *Latest documentation updates* page
+  (https://developers.google.com/search/updates, fetched 2026-10-30, HTTP 200)
+  lists three October 2026 refreshes: **Oct 26** — updated guidance on preventing
+  **user-generated spam** (block indexing of link-shared content; monitor abuse in
+  Search Console); **Oct 23** — updated **crawlable URL structures** guidance,
+  clarifying **hyphens vs underscores** word separation; **Oct 21** — the
+  *Control what you share with Google Search* refresh that folds in the
+  **Search generative AI control** (already logged here 2026-10-23). The URL
+  structure page itself (https://developers.google.com/search/docs/crawling-indexing/url-structure,
+  fetched 2026-10-30, HTTP 200, footer `Last updated 2026-10-21 UTC`) confirms:
+  "we recommend using **hyphens** ( - ) instead of underscores ( _ ) to separate
+  words in your URLs", and that "URLs are case sensitive".
+- **Why it matters to Straight Flush:** the site already uses hyphenated,
+  `.html`-terminated paths (`/cities/laguna-niguel.html`, `/case-studies/...`), so
+  it is **already compliant** with the Oct 23 clarification — no change warranted.
+  The value is confirmatory: it removes any temptation to "optimise" URL shape and
+  documents that the repo's canonical `.html` convention is aligned with current
+  Google guidance. The UGC-spam note is **not applicable** — the site has no
+  user-generated content or link-sharing surface (only two pages carry forms, and
+  neither publishes submissions).
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/crawling-indexing/url-structure
+  · **Confidence:** high (both primary sources, fetched, HTTP 200).
+- **Proposed action (if any):** none. Recorded only; no page, schema, or copy changed.
+
+
+---
+
+## 2026-11-01 — Google plans a shared AI-training control in robots.txt (AIPREF)
+
+- **What changed / observed:** Google Search Central published *Supporting a shared AI
+  training control for websites* on **Friday, 30 October 2026**
+  (https://developers.google.com/search/blog/2026/10/ai-training-control, fetched
+  2026-11-01, HTTP 200). Google plans to support a **shared robots.txt "policy token"**
+  so a site can express AI-training preferences **once** across participating AI
+  providers, based on the IETF **AIPREF** working group. Key operational details quoted
+  from the post: if a site uses the policy token to **opt out** of training and
+  **Google-Extended is not explicitly specified**, Google "plans to interpret that as if
+  the publisher had disallowed Google-Extended"; and "**Websites that specifically allow
+  Google-Extended are eligible to appear in responses and receive clicks via grounding in
+  Gemini Apps**." Existing per-crawler controls (e.g. Google-Extended) continue to work
+  alongside the new joint signal.
+- **Why it matters to Straight Flush:** the business goal is *AI recommendation*, and this
+  post confirms the mechanism by which a site keeps that eligibility: an **explicit
+  `Google-Extended: Allow`**. SF's `robots.txt` (repo and live, verified 2026-11-01) already
+  names `User-agent: Google-Extended` / `Allow: /` alongside GPTBot, OAI-SearchBot,
+  ClaudeBot, Claude-SearchBot, PerplexityBot, Applebot-Extended, Bingbot, and others. So SF
+  is already opted **in** on the documented path — nothing to change today. The forward risk
+  is a *future* edit that adopts a generic shared opt-out token and thereby silently drops
+  Google-Extended eligibility. That is a monitoring note, not a change.
+- **Source(s):** https://developers.google.com/search/blog/2026/10/ai-training-control
+  · **Confidence:** high (primary source, fetched, HTTP 200). The proposal is a **plan** —
+  Google writes "We aim to support this new control"; it is not yet a live product, so it
+  is recorded as an announced direction, not an available feature.
+- **Proposed action (if any):** recorded only. Added a `robots.txt` guard note to the
+  standing monitoring list (idea-2026-11-01-04). No file changed.
+
+## 2026-11-01 — Google Search Console adds a Generative AI performance report (context for P-002)
+
+- **What changed / observed:** the Search Central blog index
+  (https://developers.google.com/search/blog, fetched 2026-11-01, HTTP 200) lists
+  *Introducing Search Generative AI performance reports in Search Console*
+  (June 2026) and *Announcing web multimodal Search performance reporting in Search
+  Console* (September 2026), plus *See how content from social and video platforms
+  performs on Google Search* (July 2026). These are **Search Console reporting surfaces**
+  for AI-feature and multimodal performance.
+- **Why it matters to Straight Flush:** measuring whether SF appears in Google's
+  generative-AI features is exactly the goal this engine reports on, and Google now exposes
+  a first-party report for it — but it lives **inside Search Console**, behind the **P-002**
+  credential blocker. This run again confirms **no GSC/GA4/GBP credentials** are present in
+  the environment (see the report's limitations section). Recording this as *unmeasured*,
+  never zero. It is one more concrete reason P-002 is the highest-value unblocked item.
+- **Source(s):** https://developers.google.com/search/blog (index, HTTP 200; individual post
+  slugs `/search/blog/2026/06/gen-ai-performance-reports`,
+  `/search/blog/2026/09/web-multimodal-in-sc`) · **Confidence:** medium (post titles and
+  dates verified on the official index; the report contents were **not** fetched this run).
+- **Proposed action (if any):** recorded only; folded into the P-002 note. No proposal file
+  (P-002 already covers Search Console access).
 
 ## Standing official references (stable primary sources)
 
@@ -295,7 +804,7 @@ New entries are prepended directly under this line, newest first, using:
 | Structured data policies | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/sd-policies | 2026-10-11 | high |
 | Local business structured data | Google Search Central | https://developers.google.com/search/docs/appearance/structured-data/local-business | 2026-10-11 | high |
 | Helpful content / people-first | Google Search Central | https://developers.google.com/search/docs/fundamentals/creating-helpful-content | 2026-10-11 | high |
-| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-11 | high |
+| AI features & your site | Google Search Central | https://developers.google.com/search/docs/appearance/ai-features | 2026-10-25 | high |
 | Search Console performance report | Google Search Central | https://support.google.com/webmasters/answer/7576553 | 2026-10-11 | high |
 | Schema.org LocalBusiness | schema.org | https://schema.org/LocalBusiness | 2026-10-11 | high |
 | CSLB license lookup (CA) | CA Contractors State License Board | https://www.cslb.ca.gov/onlineServices/CheckLicenseII/CheckLicense.aspx | 2026-10-11 | high |
@@ -303,5 +812,133 @@ New entries are prepended directly under this line, newest first, using:
 > These are seeded, stable references used by every run. Daily/weekly runs append
 > dated entries below and refresh `Verified` when a page changes materially.
 
+## 2026-10-29 — Google Search Central: Oct 23 URL-structure guidance and Oct 26 user-generated-spam guidance
+
+- **What changed / observed:** the *What's new in Google Search* changelog
+  (https://developers.google.com/search/updates, fetched 2026-10-29, HTTP 200) lists
+  two October documentation updates newer than the entries recorded on 2026-10-23:
+  - **October 23, 2026 — "Updated guidance on crawlable URL structures"**: the URL
+    structure best-practices page
+    (https://developers.google.com/search/docs/crawling-indexing/url-structure)
+    was updated "to clarify word separation guidelines using hyphens versus
+    underscores". This is a *clarification*, not a new ranking factor.
+  - **October 26, 2026 — "Updated guidance on preventing user-generated spam"**:
+    the user-generated spam prevention guide gained guidance on "blocking indexing
+    of link-shared content and monitoring abuse in Search Console".
+- **Why it matters to Straight Flush:** (a) the hyphen/underscore clarification
+  confirms the site's existing convention — every URL in `sitemap.xml` uses
+  hyphenated words (`case-studies/laguna-niguel-slab-leak-detection-1.html`), so no
+  URL change is warranted and none should be made. (b) The UGC-spam guidance is
+  aimed at platforms that host user content, not a static owner-operated site, so it
+  is **not applicable** here — recorded for completeness, no action.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/crawling-indexing/url-structure
+  · **Confidence:** high (primary source, fetched, HTTP 200).
+- **Proposed action (if any):** none. Confirmed the existing hyphenated-URL
+  convention is correct; no page, schema, or copy changed.
+
 ---
 
+## 2026-10-29 — Recurring homeowner question: "how to find a hidden water leak" is answered by generic guides, not by a licensed-local voice
+
+- **What changed / observed:** a conventional-search probe on 2026-10-29
+  (Tavily Search API, `test_type: conventional_proxy`) for the homeowner-intent
+  query *"homeowner questions how to find a hidden water leak"* returned a top set
+  dominated by **national content/lead-gen sites** rather than local licensed
+  plumbers: `homealliance.com`, `watercalculator.us`, `ircplumbing.com`,
+  `plumbingtoolsreview.com`, `repairingwaterdamage.com`, `plumbingsniper.com`
+  (all fetched as ranked result titles on 2026-10-29; individual pages **not**
+  fetched this run, so the *content* of each is unverified — only its ranking is
+  observed). The companion probe *"acoustic leak detection technology plumbing 2026"*
+  returned a single forum thread (`plumbingforums.com`), i.e. thin authoritative
+  coverage of the *diagnostic-technology* angle.
+- **Why it matters to Straight Flush:** the informational "hidden water leak"
+  question is a high-intent entry point (it precedes an emergency call) and the
+  current answer set is generic, not local or license-backed. This is consistent
+  with the 2026-10-23 Google guidance that AI/search rewards a "unique point of
+  view" — the owner's actual field diagnostics (acoustic listening, thermal imaging,
+  meter/dye isolation) are the differentiated input. It supports the existing
+  `idea-2026-10-23-06` (owner field-notes) rather than a new city-page permutation.
+- **Source(s):** Tavily Search API ranked results, 2026-10-29
+  (`data/ai_visibility_history.jsonl`, `platform: tavily_search`);
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  · **Confidence:** medium (result set observed; page contents not fetched).
+- **Proposed action (if any):** none on the site this run; recorded to reinforce
+  the owner field-notes idea. No page, schema, or copy changed.
+
+---
+
+
+
+
+---
+
+
+
+---
+
+## 2026-10-27 — Google's official guide to generative-AI search (primary source)
+
+**Source:** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+(fetched 2026-10-27; page shows "Last updated 2026-07-10 UTC"). Confidence: **high**
+(Google Search Central, primary source).
+
+Key claims quoted/paraphrased from the page:
+
+- **SEO still applies to AI search.** Google states its generative AI features "are
+  rooted in our core Search ranking and quality systems," using RAG (grounding) and
+  **query fan-out** (a model generates concurrent related queries to fetch more
+  results). Implication: a page must rank in the *core* index to be retrievable for
+  AI features — the AI surface is downstream of conventional ranking, not separate.
+- **"AEO"/"GEO" are not a separate discipline.** Google frames them as SEO for the
+  AI search experience and points to its "evaluating third-party SEO advice"
+  guidance. This matches `AI_VISIBILITY_METHODOLOGY.md`: measure AI surfaces
+  directly, don't infer them from conventional results.
+- **Non-commodity content wins.** "Create valuable, non-commodity content … will
+  likely influence your website's presence in generative AI search in the long run
+  more than any of the other suggestions." Google contrasts *commodity* content
+  ("7 Tips for First-Time Homebuyers") with a *non-commodity* example that is
+  strikingly close to this business: "**Why We Waived the Inspection & Saved Money:
+  A Look Inside the Sewer Line**." It calls out **"providing a unique point of
+  view"** — first-hand experience — as a differentiator over summaries.
+- **Supporting signals:** clear headings/structure, high-quality images and video
+  (Google says AI features can surface images/video, "more opportunities for your
+  website to appear beyond web page links").
+
+**Why it matters for SFPL (hypothesis, medium confidence):** SF is owner-operated
+with 30+ years of hands-on experience (per `BUSINESS_PROFILE.md`). That is exactly
+the "unique point of view / first-hand experience" Google says distinguishes
+non-commodity content. The actionable, low-risk direction is *owner-experience*
+content (real diagnostic reasoning, decision trade-offs) rather than more
+city/service templated pages. This reinforces the existing `candidate` ideas in
+`INNOVATION_IDEAS.md` about owner field-notes, which are blocked on real
+owner-supplied detail (fabricating case notes is forbidden).
+
+**Not claimed:** the page does not publish ranking factors, weights, or a list of
+"AI signals," and this run does not infer any from it.
+## 2026-10-28 (Intelligence HQ daily)
+
+- **What changed / observed:** the *What's new in Google Search* changelog
+  (https://developers.google.com/search/updates, fetched 2026-10-28, HTTP 200,
+  page footer `Last updated 2026-10-26 UTC`) lists an **April 30, 2026** entry:
+  *"Expanding preferred sources to all languages where Google Search is available"* —
+  the **preferred sources** feature now works in **all languages where Google Search
+  is available**, including new translated downloadable buttons. The AI-features
+  documentation (https://developers.google.com/search/docs/appearance/ai-features,
+  fetched 2026-10-28, HTTP 200, `Last updated 2025-12-10 UTC`) is unchanged from the
+  version already logged.
+- **Why it matters to Straight Flush:** "preferred sources" lets a searcher
+  nominate outlets they want to see more of — a **personalisation** signal, not a
+  ranking boost, so it does not change what a first-time local searcher sees for
+  "plumber in Laguna Niguel". Its practical value to SF is indirect: it reinforces
+  that Google is investing in **source-trust** surfaces, which rewards the things
+  this engine can still act on without credentials — a real, consistently-named
+  business entity, a physical service area, and first-hand method content. The
+  language expansion matters little for an English-only Orange County audience.
+  The **Search generative AI control** (from the 2026-10-21 doc update, still behind
+  P-002) remains the higher-value unverified item.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/docs/appearance/ai-features ·
+  **Confidence:** high (both primary Google Search Central sources, fetched, HTTP 200).
+- **Proposed action (if any):** recorded only; no proposal. Preferred sources is a
+  consumer-side control with no site-side change required.

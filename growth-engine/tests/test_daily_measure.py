@@ -115,6 +115,46 @@ class TestSitemapIdempotency(unittest.TestCase):
         self.assertEqual(result["lastmod_refreshed"], 74)
 
 
+class TestAiVisibilityExitMeaning(unittest.TestCase):
+    """A fully-failed AI sweep must not read as a clean pass.
+
+    `gemini_visibility.py --run` used to return 0 even when every query errored,
+    so `check_ai_visibility` counted a blocked Gemini surface as `ok=True`. Exit 3
+    (platform refused every query) is BLOCKED; exit 2 (other total failure) is a
+    plain failure. Both keep the inconclusive rows.
+    """
+
+    def _with_key(self):
+        return mock.patch.dict(os.environ, {"GEMINI_API_KEY": "x"}, clear=True)
+
+    def test_all_queries_refused_is_blocked_not_ok(self):
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(False, 3, "rate_limited BLOCKED")
+        ):
+            result = daily_measure.check_ai_visibility(3)
+        self.assertTrue(result["blocked"])
+        self.assertFalse(result["ok"])
+        self.assertIn("BLOCKED", result["note"])
+        self.assertIn("never zero", result["note"])
+
+    def test_other_total_failure_is_failure_not_blocked(self):
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(False, 2, "boom")
+        ):
+            result = daily_measure.check_ai_visibility(3)
+        self.assertFalse(result["ok"])
+        self.assertFalse(result.get("blocked", False))
+        self.assertIn("inconclusive", result["note"])
+
+    def test_partial_success_is_ok(self):
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(True, 0, "ok")
+        ):
+            result = daily_measure.check_ai_visibility(3)
+        self.assertTrue(result["ok"])
+        self.assertFalse(result.get("blocked", False))
+
+
 class TestHistorySummary(unittest.TestCase):
     def test_counts_rows_and_picks_latest_per_platform(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -180,6 +220,47 @@ class TestAiVisibilityExitMeaning(unittest.TestCase):
             result = daily_measure.check_ai_visibility(3)
         self.assertTrue(result["ok"])
         self.assertFalse(result.get("blocked", False))
+
+    def test_network_budget_exhaustion_is_blocked_not_zero(self):
+        """A sweep stopped by the network budget is BLOCKED (partial), never a zero.
+
+        `_run` returns exit code -1 when it hits its timeout. Before the budget
+        existed, the default 40-query Tavily plus 5-query Gemini sweep could
+        consume the whole automation wall-clock and the run died before writing
+        anything. A truncated day must still be recorded as blocked.
+        """
+        with self._with_key(), mock.patch.object(
+            daily_measure, "_run", return_value=(False, -1, "partial")
+        ):
+            result = daily_measure.check_ai_visibility(3, timeout=120.0)
+        self.assertTrue(result["blocked"])
+        self.assertFalse(result["ok"])
+        self.assertIn("network-budget", result["note"])
+        self.assertIn("never zero", result["note"])
+
+    def test_tavily_budget_exhaustion_is_blocked_not_zero(self):
+        with mock.patch.dict(os.environ, {"Tavily_api_key": "x"}, clear=True), \
+                mock.patch.object(daily_measure, "_run",
+                                  return_value=(False, -1, "partial")):
+            result = daily_measure.check_visibility(3, timeout=120.0)
+        self.assertTrue(result["blocked"])
+        self.assertFalse(result["ok"])
+        self.assertIn("network-budget", result["note"])
+
+    def test_budget_split_keeps_both_sweeps_bounded(self):
+        """The default pre-stage budget must leave wall-clock for the research phase.
+
+        The daily automation's wall-clock is roughly 1920s. If the pre-stage's own
+        defaults can consume all of it, research never starts — which is exactly
+        what killed three runs (ISSUE-033). Assert against the module's real
+        defaults, not literals, so raising them fails this test.
+        """
+        budget = daily_measure.DEFAULT_NETWORK_BUDGET
+        ceiling = daily_measure.AUTOMATION_WALL_CLOCK_S
+        # Both sweeps combined, at the documented 60/40 split, stay well clear.
+        self.assertLess(budget * 0.6 + budget * 0.4, ceiling * 0.5)
+        self.assertLess(daily_measure.DEFAULT_TAVILY_QUERIES, 20)
+        self.assertLess(daily_measure.DEFAULT_AI_QUERIES, 6)
 
 
 if __name__ == "__main__":

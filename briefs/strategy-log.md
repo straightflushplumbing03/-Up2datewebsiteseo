@@ -5,9 +5,323 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-10-27 (Intelligence HQ daily) — 15-query conventional sweep; SF absent 0/15; sitemap normalized
+
+**Change:** `sitemap.xml` reordered to canonical sort (pure reorder: identical URL set,
+identical `lastmod`s, 0 content changes) so the `sitemap_idempotent` check passes.
+Append-only documentation: +15 visibility rows, +5 competitor rows, +6 ideas, +1
+industry-watch entry, the daily report, and this log entry. No page copy, schema,
+claim, price, or service-area change.
+
+**Reason:** `daily_measure.py` reported `sitemap_idempotent` FAIL caused solely by
+ordering; reordering to the generator's canonical order makes the check idempotent
+without altering what crawlers see.
+
+**Target:** Tier-1 cities (Laguna Niguel, Mission Viejo, San Clemente, Aliso Viejo,
+Dana Point) × core services (leak detection, slab leaks, drains, water heaters,
+repipe, sewer).
+
+**Competitor insight:** specialist leak-detection sites (evansleakdetection.com,
+leakstar.com) recur with dedicated FAQ-schema'd single-service pages; local
+generalists use LocalBusiness/Breadcrumb/geo schema. SF already ships equivalent
+schema — the gap is query presence, not schema.
+
+**Expected outcome:** the sitemap check goes green; visibility rows accumulate so
+weekly trends are measurable.
+
+**Result:** Tavily conventional sweep 15/15 succeeded, SF **absent 0/15**. AI surface
+(Gemini) **BLOCKED** (HTTP 401, OAuth-typed secret) — UNMEASURED, not zero. Brave
+CAPTCHA-walled; DuckDuckGo Lite 202; Bing unparseable. Tests: full suite 353 OK,
+sitemap tests 17 OK, seo_audit OK, validate_knowledge_base OK.
+
+**Keep/modify/revert:** **Keep.** Sitemap change is a pure reorder and reversible via
+`git revert`.
+
+---
+## 2026-10-28 (Intelligence HQ daily) — AI surface BLOCKED at auth; sitemap false positive fixed
+
+**Change:** committed the generator's canonical `sitemap.xml` ordering (pure reorder,
+no URL added/removed — ISSUE-034); otherwise additive documentation only. No page,
+schema, claim, copy, price, or service-area commitment changed. Branch
+`intelligence-hq/daily-2026-10-28`, PR #91.
+
+**Reason:** pre-stage 5/7 — `sitemap_idempotent` FAILed as a **false positive**
+(89 correct URLs in non-canonical order), and `ai_visibility_sweep` is **BLOCKED**
+(`GEMINI_API_KEY` fails auth: HTTP 401 `ACCESS_TOKEN_TYPE_UNSUPPORTED` — ISSUE-035).
+Two instruments failed, so the prioritization again favoured measurement integrity.
+
+**Target:** measurement integrity + the conventional (Tavily) local-search picture.
+**Competitor insight:** the exact-match city+service domain pattern repeats
+(`repipe-laguna-hills.com`; single-service water-heater domains for Aliso Viejo);
+directories (Yelp 13) still take broad local queries; SF absent 10/10 Tavily queries.
+**Expected outcome:** after an owner re-provisions the Gemini key and P-002 lands, the
+AI and first-party surfaces become measurable and can be compared against the
+2026-10-26 Aliso Viejo re-measure (2026-11-23).
+**Result:** sitemap check green, 353 tests OK; AI surface UNMEASURED (not zero);
+conventional read Tavily-only/directional. Keep.
+**Next three:** (1) re-provision `GEMINI_API_KEY` + `--smoke` preflight; (2) sitemap
+regression test; (3) P-002 access.
+## 2026-10-29 (Intelligence HQ daily) — sitemap idempotency fixed; AI surface re-blocked (401, P-008)
+
+**Change:** committed the **generator-canonical `sitemap.xml` order** (reordering
+only — 89 URLs, identical `lastmod`/`changefreq`/`priority`) so the
+`sitemap_idempotent` check passes on a clean tree. Added 14 visibility rows and 14
+competitor rows (append-only), 6 new ideas, 2 dated industry-watch entries, the
+daily report `reports/daily/2026-10-29-hq.md`, and proposal **P-008**.
+**Reason:** `refresh_sitemap.py` emits URLs in its own `sort_key` order; the
+committed file had drifted, so the idempotency check reported FAIL on a clean
+checkout even though the URL set and metadata were identical.
+**Target:** sitemap hygiene + honest measurement.
+**Competitor insight:** `efficientplumbing.com` (6/14 queries),
+`clearwaterplumbingoc.com` (6/14), `rotorooter.com` (5/14) recur with per-city
+landing pages; Ladera Ranch slab intent is served by single-city exact-match
+domains. SF absent from all 14 conventional-proxy queries.
+**Expected outcome:** `sitemap_idempotent` green on a clean tree; a diagnostic
+rather than noisy check.
+**Result:** ✅ — 353/353 tests OK, `validate_knowledge_base.py` OK (148 files),
+`check_sitemap_idempotent()` → `ok: True`. **Keep.**
+**Measurement note:** the AI surface moved from HTTP 429 (2026-10-23) to HTTP 401
+(invalid key) — a *different* blocker, escalated as **P-008** (Level 3, owner
+action). No website page, schema, claim, copy, or price changed.
+
+## 2026-10-30 (Intelligence HQ daily) — health OK; Gemini key invalid (AI surface unmeasurable); sitemap normalised
+
+**Status:** Read-only + additive documentation, plus **one content-preserving
+`sitemap.xml` reorder** (no HTML/schema/claim/copy change). Branch
+`intelligence-hq/daily-2026-10-30`.
+
+**Change:** site — `sitemap.xml` rebuilt in canonical order (89 URLs; identical
+`(loc,lastmod)` pairs and changefreq/priority multiset; verified idempotent on a
+second run). KB — daily report `reports/daily/2026-10-30-hq.md`; new **ISSUE-033**
+(unbounded pre-stage killed three runs — fixed by the 600 s network cap) and
+**ISSUE-034** (Gemini key HTTP 401 → AI surface unmeasurable); INDUSTRY_WATCH entry
+(Google Search Central Oct 2026 doc updates); 6 new ideas; P-002 and
+INTEGRATION_STATUS updated. 27 visibility rows + 63 competitor rows appended.
+
+**Reason:** the visible "absence" is again driven by the instrument, not the site:
+Brave rate-limited after 6 queries and the Gemini key is invalid, so no AI-platform
+claim can be made. The sitemap reorder removes a false `sitemap_idempotent` FAIL.
+
+**Target:** measurement integrity (ideas 01–03); no ranking-position claim made.
+
+**Competitor insight:** directories (Yelp, Angi, BuildZoom, HomeGuide) plus national
+franchises (Roto-Rooter, Benjamin Franklin) top every conventional SERP; SF remains
+absent from all 16 successful queries. Repeat locals: billmetzgerplumbing.com,
+olsonsuperior.com, pristineplumbinginc.com, johnstevensonplumbing.com.
+
+**Expected outcome:** a valid Gemini key restores the AI surface; a green
+`sitemap_idempotent` check removes check noise.
+
+**Result:** crawler access OK; 353 tests OK; validate_knowledge_base OK; seo_audit
+exit 0. **Keep.**
+
+## 2026-11-01 (Intelligence HQ daily) — the AI surface went blind: Gemini key now 401s, not 429s
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim, copy,
+price, or sitemap entry changed.** Branch `intelligence-hq/daily-2026-11-01`.
+
+**Change:** none to the site. Added 22 conventional visibility rows + 5 `inconclusive`
+Gemini rows, competitor rows, 6 new ideas, 2 dated industry-watch entries, a
+`COMPETITOR_DIRECTORY.md` update, ISSUE-035, the daily report, and this log entry.
+
+**Reason:** today's headline is not a content problem — it is a **broken instrument**. The
+step-0b pre-stage returned `checks_passed 6/7` with `ai_visibility_sweep` **FAIL**: all 5
+Gemini grounded queries recorded `inconclusive`. Reproduced by hand, the Gemini API returns
+**HTTP 401 `authentication_failed`** ("API key not valid", `ACCESS_TOKEN_TYPE_UNSUPPORTED`).
+That is a different failure from the 2026-10-19/10-23 **429** quota exhaustion the labelled
+Gemma fallback was built for: the fallback only engages on quota/server refusals, so an auth
+rejection leaves the AI surface **UNMEASURED**. Recording that as "0 visibility" would
+encode an outage as a decline.
+
+**Target:** measurement integrity first, and only then content. The top three priorities are
+(1) restore the AI-surface key (owner, L3), (2) build a service × city coverage matrix so the
+content gaps are written to a map, (3) then the city × water-heater and city × repipe pages.
+
+**Competitor insight:** across four service families in one sweep, every commercial query is
+held by a **service × city** page — and water-heater/repipe queries specifically by
+**single-service specialist domains** (`thewaterheatercompany.com`, `integrityrepipe.com`).
+SF has general `/services/*` pages but no city-framed variants.
+
+**Expected outcome:** with a valid key, the next run produces real `ai_platform` rows and the
+supervisor's `ai_visibility_blind` check clears.
+
+**Result:** site healthy (6/7 checks; only the AI sweep failed). Tests: `validate_knowledge_base.py`
+OK · **353 unit tests OK** · `seo_audit.py` clean. Keep.
+
+
 ## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
 **Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).
 **Reason:** 96/96 AI answers absent; Aliso Viejo slab/repipe queries have no credible local page; directories take broad queries. Keep.
+## 2026-10-24 (Intelligence HQ daily) — sitemap idempotency fixed; AI surface still UNMEASURED (credential 401)
+
+**Status:** One ordering-only website change (`sitemap.xml`) on its own branch/PR;
+all other edits are append-only research and additive knowledge. **No page content,
+claim, price, schema, identity, or service-area value changed.**
+
+**Change:** `sitemap.xml` re-sorted to the order `refresh_sitemap.py` generates
+(homepage → depth → alphabetical). The committed file carried a non-canonical
+`case-studies/` block, so every daily run reported `sitemap_dirty=true` and the
+`sitemap_idempotent` gate failed. Verified ordering-only: URL set identical (85),
+per-URL `lastmod` identical. PR **#80**.
+
+**Reason:** a permanently-red idempotency gate is worse than no gate — it trains
+every future run to ignore a real drift signal (the ISSUE-016 failure shape).
+Primary-source support fetched this run: Google states it **ignores**
+`<priority>`/`<changefreq>` and uses `<lastmod>` only when "consistently and
+verifiably accurate", which is exactly what the generator preserves from `git log`.
+
+**Target:** internal measurement integrity first; no ranking claim is attached to
+the sitemap change.
+
+**Competitor insight:** `efficientplumbing.com` appears on 6 of 10 queries (most
+pervasive). The **repipe** intent is held by repipe-specialist domains
+(`integrityrepipe.com`, `pipebros.com`, `allamericanrepipe.com`, `socalrepipes.com`,
+`repipesoc.com`) and the **water-heater** intent by single-service domains
+(`speedywaterheatersoc.com`, `aterheatermaninc.com`); SF holds neither a city ×
+repipe nor a city × water-heater page. A separate Claude runner independently
+observed templated `homeservice.ignitionlabs.com` pages holding the same intents —
+a second source for the same gap.
+
+**Expected outcome:** `sitemap_idempotent` PASS on the next run; the idempotency
+signal becomes trustworthy again. No ranking effect is expected or claimed.
+
+**Result:** 352 unit tests OK; `validate_knowledge_base.py` OK (144 HTML);
+`seo_audit.py` clean; re-running `refresh_sitemap.py` yields 0 changes.
+**Keep.** Rollback is a one-commit revert.
+
+**Honest limitation:** the AI surface was **UNMEASURED** again — Gemini returned
+**HTTP 401 UNAUTHENTICATED** (`ACCESS_TOKEN_TYPE_UNSUPPORTED`) on `?key=`, the
+`x-goog-api-key` header, and `models.list`; the credential is 53 chars (`AQ.Ab8…`),
+not the `AIza…` API-key shape. The failure mode has changed from the documented 429.
+Every conventional query returned SF **absent**, and one conversational query was
+parsed as a dictionary lookup — recorded as intent mismatch, not as a visibility
+loss. First-party metrics remain `unverified` (no Search Console / GA4 credentials;
+P-002).
+## 2026-10-25 (Intelligence HQ daily) — sitemap order drift fixed; AI surface blocked on an invalid key
+
+**Status:** One reversible website change (`sitemap.xml` entry order) + additive
+documentation and append-only data rows. **No page content, schema, claim, copy,
+price, or URL set changed.** Branch `intelligence-hq/daily-2026-10-25`.
+
+**Change:** regenerated `sitemap.xml` into `scripts/refresh_sitemap.py`'s canonical
+generator order. The committed file already held all 89 URLs with identical
+`lastmod` values, but the entry order had drifted from index 35, so the
+`sitemap_idempotent` check failed.
+
+**Reason:** a nightly check that fails for cosmetic order noise trains everyone to
+ignore it, and the drift would silently reappear on every regeneration.
+
+**Target:** the deterministic measurement pre-stage (`scripts/daily_measure.py`) and
+`sitemap.xml`.
+
+**Competitor insight:** `efficientplumbing.com` appeared in **13/20** Tavily
+conventional queries — the strongest consistent non-directory presence in this
+sweep. That it *caused* the rankings is a hypothesis; the presence is verified
+evidence of broad topical coverage. `evansleakdetection.com` (6/20) confirms a
+dedicated leak-detection competitor on our core service.
+
+**Expected outcome:** `sitemap_idempotent` passes and stays passing; the AI surface
+becomes measurable once the key authenticates.
+
+**Result:** `sitemap_idempotent` now reports `missing: []  extra: []`, 0 lastmod
+refreshed. Health checks **6/7** passed; the sole failure is
+`ai_visibility_sweep` (**HTTP 401 UNAUTHENTICATED**, ISSUE-034) — an auth failure,
+not a site defect. Conventional proxy: SF **absent** in all 20 Tavily queries.
+Full test suite **352 tests OK**; `validate_knowledge_base.py` OK; `seo_audit.py`
+exit 0.
+
+**Keep/modify/revert:** **keep** the sitemap normalisation (revert with
+`git revert`; no URL set changed). AI-surface blocker **kept open** as ISSUE-034
+(owner action, Level 3). `daily_measure.py` default reconciliation (ISSUE-033) is
+**proposed**, not applied — it changes the measurement contract and needs its own
+tested PR.
+## 2026-10-26 (Intelligence HQ daily) — site healthy; both failing checks traced to the instrument, not the site
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim,
+copy, price, or sitemap entry changed.** Branch `intelligence-hq/daily-2026-10-26`.
+
+**Change:** none to the site. Added 15 visibility rows and 6 competitor rows
+(append-only), 1 entity-consistency row, 6 new ideas, 2 dated industry-watch entries,
+1 proposal (P-006), a report, and this log entry.
+
+**Reason:** `daily_context.json` reported 2 of 7 checks failing
+(`sitemap_idempotent`, `ai_visibility_sweep`). Both were investigated to root cause
+before anything was written, and **neither is a site problem**:
+
+1. **`sitemap_idempotent` is a self-inflicted false positive.** The check runs
+   `refresh_sitemap.py`, then reads `git status --porcelain -- sitemap.xml`. Because
+   `main`'s committed sitemap was in a *non-canonical order*, the refresh rewrites it,
+   so the tree is dirty at the instant the check reads it. Diffing
+   `origin/main:sitemap.xml` against the refreshed file: 89 URLs both sides, URL set
+   equal, **0 per-URL `<url>` blocks differing**, 22 URLs merely reordered. A second
+   refresh is byte-identical. The generator is idempotent; the check is measuring its
+   own pre-stage. It self-clears when this branch merges.
+
+2. **`ai_visibility_sweep` is a dead credential.** All 5 grounded Gemini calls returned
+   **HTTP 401 `ACCESS_TOKEN_TYPE_UNSUPPORTED`**. Re-verified by hand naming
+   `GEMINI_API_KEY` explicitly, to rule out the ISSUE-033-class failure where a secret
+   is not injected because the command text did not name it: same 401. This is a
+   **wrong-kind-of-credential**, not a missing one, and not the old ISSUE-032 429.
+   Rows recorded `inconclusive`, never zero. Filed as **P-006**.
+
+**Target:** measurement integrity. Today's *absent* readings are only interpretable if
+we know the instrument worked. One of two AI surfaces was blind.
+
+**Competitor insight:** the sharpest find of the run is
+`repipe-laguna-hills.com` ranking for "PEX repiping company in Laguna Hills" with a
+**single-purpose city × service page** — 262 "repipe" mentions, Nellie Gail Ranch
+(×25) and Moulton Ranch (×17) named, El Toro Water District (×14), PEX-A
+Uponor/Wirsbo ASTM F1960 (×4), an HOA/condo repipe section (×15), plus
+`FAQPage`+`HowTo`+`BreadcrumbList`+`Plumber` schema. We hold no city × repipe page.
+Two independent Laguna Niguel competitors (`lagunaniguelcaplumbingpros.com`,
+`proplumberlagunaniguel.com`) both publish **geography blocks** (named communities,
+ZIP codes) we do not. That is the clearest structural difference between our pages and
+the pages that rank — but naming neighborhoods is a **service-area commitment** (L3),
+so it is proposed, not built.
+
+**Expected outcome:** the sitemap check goes green on merge; the AI-surface sweep stays
+BLOCKED until the key is rotated, so **tomorrow's report should still be read as
+one-provider**, and the Gemini gap should not be mistaken for stability.
+
+**Result:** pending. **Keep/modify/revert:** keep (documentation only).
+
+---
+## 2026-10-26 (Intelligence HQ weekly) — verification, not production, is the constraint
+
+copy, price, or sitemap entry changed.** Branch `intelligence-hq/weekly-2026-10-26`.
+
+**Change:** none to the site (deliberate — see below). Added the weekly review
+`growth-engine/reports/weekly/2026-10-26.md`; 4 new rows to
+`data/content_experiments.jsonl`; status updates in `INNOVATION_IDEAS.md`; outcome
+records in `EXPERIMENT_LOG.md`.
+
+**Reason:** the week shipped a lot of site work (4 city x service pages, 3 water-heater
+pages, 6 case studies, GA4, Bing verification, GBP schema, 89 sitemap URLs) but the
+measuring apparatus did not improve. GSC/GA4/GBP are still unconnected, the AI board
+is one engine (96 `claude_web_search` queries, all `absent`), and the daily runner's
+live health check returned INCONCLUSIVE for **6 consecutive days**. Fixing
+verification now beats authoring a 90th page.
+
+**Target:** the next daily report carries a timestamped PASS/FAIL health line; the
+board has >= 2 engines; the open-PR count drops below 10.
+
+**Competitor insight:** 4 of the top 5 citation gaps are **directories/lead-gen**
+(HomeAdvisor 38 lost answers, This Old House "near me" 33, Porch 21, HomeGuide 12),
+not plumbers — so the highest-leverage owner action is listing/claim work, not more
+pages. 23 new competitor domains appeared this window; `homeguide.com` rose 0 -> 5
+observations and entered the top 5. `repipe-newport-beach.com` (single-service,
+single-city) confirms the specialist-domain pattern. Feature verified; cause is a
+hypothesis.
+
+**Expected outcome:** the loop regains the ability to tell whether a change worked,
+and the owner gets one concrete, high-yield list (directory claims) instead of more
+content.
+
+**Result:** pending — re-measure 2026-11-02 (next weekly review).
+
+**Keep/modify/revert:** keep. No experiment was reverted this week; the conventional
+proxy channel (`exp-2026-10-09-measurement-providers`) was formally recorded as
+reverted/superseded.
 
 ## 2026-10-23 (Intelligence HQ daily) — health re-verified; visibility gaps traced to the instrument, not the site
 
@@ -49,8 +363,267 @@ subqueries before any new page is written.
 the first *executed* live health check in three days, after 10-21 and 10-22 both
 recorded INCONCLUSIVE for lack of one. Entity duplicates (ISSUE-014) both still
 return 200; owner action, not auto-applied.
+## 2026-10-16 (second run) — A fully-failed Gemini sweep exited 0 and read as a clean pass
+
+**Status:** Internal tooling only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-16b`.
+
+**Change — Gemini `--run` exit code (High).** `scripts/gemini_visibility.py --run` returned
+`0` even when *every* grounded query was refused by the platform. The 02:30Z run fixed the
+retired-model 404; the same class of failure survived at the exit-code layer. With today's
+HTTP 429 quota block the sweep writes N `inconclusive` rows and still exited `0`, so
+`daily_measure.check_ai_visibility` counted a **blocked** AI surface as `ok=True` — a clean
+pass on a day the platform was never successfully queried.
+
+Exit code now reflects the outcome: `3` = the platform refused every query (BLOCKED),
+`2` = other total failure, `0` = at least one row measured. `daily_measure` maps `3` to
+`blocked` with an actionable note. The `inconclusive` rows are still written — a failed test
+is not zero.
+
+**Verification.** Full suite 319 pass (was 309; 10 new regression tests). Live: quota-blocked
+`--run --limit 1` → `EXIT=3` + "Every grounded query was refused by the platform
+(rate_limited) — recorded BLOCKED, never zero." One-success case → `0`.
+
+**Target:** `growth-engine/gemini_search_client.py`, `scripts/daily_measure.py`.
+
+**Next:** apply the same exit-code contract to `scripts/tavily_search.py`, which shares the
+shape (returns `0` when every query fails).
+## 2026-10-19 — Primary-source correction: llms.txt is not a Google visibility lever; measurement integrity tightened
+
+**Status:** Knowledge-base + report only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-19`.
+
+- **Change:** Filed three dated `INDUSTRY_WATCH.md` entries from primary sources
+  fetched this run; added six candidate ideas (`idea-2026-10-19-01` … `-06`) with a
+  prioritization table; re-baselined `COMPETITOR_DIRECTORY.md` on an 18-query sweep;
+  re-verified `INTEGRATION_STATUS.md`; appended rows to
+  `data/ai_visibility_history.jsonl`, `data/competitor_observations.jsonl`, and
+  `data/technical_health_history.jsonl`.
+- **Reason:** Google Search Central's AI-optimization guide states plainly that
+  Google Search **does not use** `llms.txt` and that such files "will neither harm
+  nor help your site's visibility or rankings in Google Search". We were citing
+  llms.txt as an AI-visibility asset; that justification is wrong and must not
+  persist in the knowledge base.
+- **Target:** Reporting accuracy; search-console measurement planning.
+- **Competitor insight:** `efficientplumbing.com` led this sweep (9/18 queries) and
+  ships `LocalBusiness` + `OpeningHoursSpecification` + `Person` + review markup;
+  `yelp.com` appeared in 18/18 queries — aggregator surfaces, not content alone,
+  dominate these intents (feature verified; causation = hypothesis).
+- **Expected outcome:** The next knowledge-base reader will not repeat the llms.txt
+  claim; the P-002 unblock request now names the Generative AI performance report.
+- **Result:** Tests green — 344 unit tests OK, `validate_knowledge_base.py` OK,
+  `seo_audit.py` OK (134 HTML files). No HTML change, so no regression surface.
+- **Keep/modify/revert:** **Keep.**
+
+### 2026-10-19 (addendum) — Report-integrity correction + credential-blocker recorded
+
+**Status:** Knowledge-base + report only. **No website page, schema, claim or copy changed.**
+Same branch `intelligence-hq/daily-2026-10-19`.
+
+- **Change:** Reconciled `reports/daily/2026-10-19.md` with the data committed in the
+  same run. The report claimed ChatGPT / Perplexity / Claude / **Gemini** were "not
+  tested", but 5 `test_type: ai_platform` rows (`platform: gemini_search`, `engine:
+  gemma`, all `absent`) were already committed — so the Gemini Search API surface *was*
+  tested. Fixed the summary, the AI-visibility table, and the limitations section.
+  Added **ISSUE-033** (a registered `CHATGPT_API_KEY` is not the name any adapter
+  reads) and **P-008** (owner re-registers it as `OPENAI_API_KEY`). Updated
+  `AI_VISIBILITY_METHODOLOGY.md` and `INTEGRATION_STATUS.md`.
+- **Reason:** A report that contradicts its own committed evidence is worse than a
+  short one; it would have re-introduced a false "we tested nothing" claim into
+  durable memory. Evidence-before-conclusions requires the narrative to match the rows.
+- **Evidence:** `os.environ.get("CHATGPT_API_KEY") is None` across 14 spelling variants;
+  `GET https://api.openai.com/v1/models` → HTTP 401 `"Incorrect API key provided: ''"`
+  (empty bearer, so delivery failure, not a rejected key). Adapters read
+  `OPENAI_API_KEY` per `ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md` §3.
+- **Also fixed:** `INTEGRATION_STATUS.md` had been written through a non-UTF-8 codec
+  (mojibake `ÔÇö`/`Ôťů`/`ÔŁî` + one invalid byte). Restored from HEAD and re-applied the
+  single intended row byte-safely; file is valid UTF-8 again.
+- **Result:** 344 unit tests OK; `validate_knowledge_base.py` OK (134 HTML files). No
+  metric was altered — only narrative, and one repaired file.
+- **Keep/modify/revert:** **Keep.** Add a lint idea: assert the daily report's
+  AI-visibility table row count equals the `test_type: ai_platform` row count for the
+  date (guards this class of contradiction).
 
 ---
+## 2026-10-20 — GSC measurement runbook written; entity split confirmed on two hosts
+
+**Status:** Documentation only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-20`. Report: `reports/daily/2026-10-20.md`.
+
+**Change.** Wrote `growth-engine/runbooks/gsc-measurement-runbook.md` — the
+day-one procedure for the moment Google Search Console credentials exist
+(P-002), so the first connected run measures instead of exploring. Registered
+`runbooks/` in `growth-engine/README.md`, added the Search Console **Generative
+AI performance report** to the P-002 ask, and logged a 2026-10-20 primary-source
+entry in `INDUSTRY_WATCH.md`.
+
+**Reason.** P-002 has been open across five runs; the failure mode is not the
+missing key, it is that a connected run would spend its whole budget deciding
+what to query. The runbook removes that decision.
+
+**Target:** `growth-engine/` knowledge base. **Competitor insight:** none new —
+the tracked top-4 competitor domains were unchanged this run.
+
+**Expected outcome:** the first run with GSC access produces recorded
+impression/click/query baselines within its first 10 minutes.
+
+**Result:** runbook committed; suites green (344 unittest OK, KB OK, seo_audit
+AUDIT COMPLETE). **Keep.**
+
+**Also this run — entity check re-confirmed the standing finding.** `entity_consistency_check.py
+--run --append` returned **exit 1**: `straight-flush-plumbing-7fb7cf71.base44.app`
+and `straightflushplumb8.wixsite.com` both serve HTTP 200 indexable content,
+while `flush-pro-flow.base44.app` returns 404. This is the state already recorded
+in ISSUE-014/ISSUE-018 since 2026-10-15, not a new regression — reported again as
+**high** severity with the exact owner action (unpublish the two hosts). Not
+executed: editing an external owned property is a Level 3 owner action.
+## 2026-10-20 (OpenHands HQ, run #2) — Google retired the FAQ and HowTo rich results; two prioritized ideas corrected
+
+**Status:** Knowledge-base only. **No website page, schema, claim or copy changed.**
+Branch `intelligence-hq/daily-2026-10-20-openhands-hq` (additive to PR #73).
+
+**Change (Low risk, docs).** Fetched Google Search Central's structured-data
+changelog (https://developers.google.com/search/updates, HTTP 200) and confirmed two
+retirements that invalidate premises recorded earlier the same day:
+
+- FAQ rich result: "will no longer appear in Google Search starting May 7, 2026";
+  documentation removed.
+- How-to rich result: documentation removed "as this rich result is no longer shown
+  in search results, on both desktop and mobile devices." The old
+  `.../structured-data/how-to` URL now 302s to `#how-to-deprecation`.
+
+**Reason.** Two ideas prioritized this morning (`IDEA-03` FAQPage schema;
+`idea-2026-10-20-02` HowTo schema) were justified as rich-result wins. That
+justification is now false. Leaving it in place would send a future run to spend a
+change window on a retired feature.
+
+**Target.** `INNOVATION_IDEAS.md` (rankings corrected, 5 new ideas added) and
+`INDUSTRY_WATCH.md` (two dated primary-source entries).
+
+**Competitor insight.** Evans Leak Detection still ships `FAQPage`+`Question`+`Answer`
+(verified, HTTP 200, 3 `ld+json` blocks) — post-deprecation drift, worth monitoring,
+not worth copying.
+
+**Expected outcome.** No ranking change is expected from the markup itself. The gain
+is *decision quality*: the engine stops spending windows on dead rich results and
+re-aims at content differentiation.
+
+**Result.** Corrections applied; ideas re-ranked; `idea-2026-10-20-09` and
+`idea-2026-10-20-10` prioritized as zero-risk correctness work.
+
+**Keep/modify/revert:** **keep.**
+
+
+## 2026-10-20 (OpenHands HQ) — sitemap ordering restored; competitor + official-guidance evidence captured
+
+**Status:** Generated metadata only (`sitemap.xml` ordering). **No website page,
+schema, claim or copy changed.** Branch `intelligence-hq/site-2026-10-20-sitemap-order`.
+
+**Change — sitemap ordering (Medium).** `check_sitemap_idempotent` was red at run
+start (`sitemap_dirty: true`). Root cause: the Dana Point case study had been
+hand-inserted out of the generator's canonical order, so `refresh_sitemap.py`
+rewrote the file on every clean tree — the same failure mode fixed on 2026-10-16.
+Proven to be ordering-only before changing anything: committed vs generated gave
+76 URLs both sides, `set` equal `True`, `order` equal `False`, nothing added or
+removed. Committed the generator's own output; a second refresh is byte-identical.
+A permanently-dirty sitemap is dangerous because it masks a genuine ISSUE-016
+lastmod regression.
+
+**Research.** 30 visibility rows (25 Tavily conventional-proxy, 5 AI-surface on the
+labelled Gemma fallback): **0 recommended / 0 mentioned / 0 cited / 30 absent**.
+Four competitor homepages verified by direct fetch (Repipe OC, Creative Repipe,
+Saddleback Plumbing, SJ Plumbing) — the standout finding is that
+`cities/laguna-hills.html` has **no repipe content** while `repipe-laguna-hills.com`
+ranks on an exact city+service title with HowTo schema. Captured Google's official
+AI-optimization guide, which states AI-feature visibility rests on ordinary Search
+fundamentals and explicitly calls AEO/GEO "hacks" ineffective.
+
+**Verification.** Full suite **352 tests OK**. `validate_knowledge_base.py` OK
+(135 HTML, sitemap 76 URLs, 0 missing / 0 extra). Double refresh byte-identical.
+
+**Target:** `sitemap.xml`; `growth-engine/INDUSTRY_WATCH.md`;
+`growth-engine/INNOVATION_IDEAS.md`; `growth-engine/data/*.jsonl`.
+
+**Competitor insight:** city+service exact-match titles with `HowTo` + `FAQPage`
+schema and heavy on-page city repetition are present on the repipe competitor; our
+Tier-1 city pages carry no repipe content at all.
+
+**Expected outcome:** `sitemap_idempotent` returns green from the next run, so a real
+lastmod regression becomes visible instead of hiding behind a permanently dirty file.
+
+**Result:** sitemap fix verified locally. Visibility flat (no movement).
+
+**Keep/modify/revert:** **keep.**
+## 2026-10-21 (daily) — First non-absent AI answer; sitemap idempotency restored
+
+**Status:** Knowledge base + data + `sitemap.xml` ordering only. **No website page,
+copy, schema or claim changed.** Branch `intelligence-hq/daily-2026-10-21`.
+
+**Finding 1 — first-ever non-absent AI-platform result (High signal).** The grounded
+AI sweep returned **`recommended`** for *"best leak detection company in Laguna
+Niguel"* (2026-10-21T13:04:43Z) — the first non-`absent` AI row in 367 recorded rows.
+It is the home-city / home-service query, which is where the entity is already
+resolvable. Conventional proxy still **0/13**. **Hypothesis (not conclusion):** our
+strength is narrow and local; the leak-detection service page is the asset to deepen.
+
+**Finding 2 — `check_sitemap_idempotent` had regressed again (Medium).** The committed
+`sitemap.xml` carried the `case-studies` block non-canonically ordered, so
+`refresh_sitemap.py` rewrote it every run (`sitemap_dirty: true`) — the same class of
+failure fixed on 2026-10-16, re-introduced by a later direct edit. Committed the
+generator's own output: **pure reordering**, 76 URLs, identical set, unchanged
+lastmod/changefreq/priority, second refresh byte-identical.
+
+**Finding 3 — entity FAIL is stable, not new.** `entity_consistency` failed
+identically on 10-15, 10-16 and 10-21. Reclassified from "daily incident" to
+**owner-gated standing condition**; tracked as idea-2026-10-21-06.
+
+**Research:** 18 queries (13 Tavily conventional + 5 grounded AI), 2 competitor pages
+fetched, 2 Google Search Central primary docs fetched. 7 competitor rows and 2 dated
+`INDUSTRY_WATCH.md` entries appended; 7 new ideas scored.
+**Target:** AI-answer surfaces (AEO) and entity hygiene.
+**Competitor insight:** `efficientplumbing.com` appeared for **7 of 18** queries;
+`lagunaniguelcaplumbingpros.com` — an exact-match city domain — contests our home city.
+**Expected outcome:** sitemap check green; next run's AI sweep tests whether the
+`recommended` result is stable or a one-off.
+**Result:** gates green — `validate_knowledge_base.py` OK (135 files), **352 unit tests
+OK**, `seo_audit.py` complete.
+**Keep/modify/revert:** keep.
+## 2026-10-22 — Sitemap ordering normalised (again); AI visibility absent 14/14; new non-local competitor with 141-city markup
+
+**Status:** Tooling/generated metadata + knowledge-base records only. **No website
+page, schema, claim, price or copy changed.** Branch
+`intelligence-hq/daily-2026-10-22`.
+
+**Change (Medium).** Committed `sitemap.xml` was ordered differently from the
+generator's canonical order, so `check_sitemap_idempotent` reported
+`sitemap_dirty: true` on a clean checkout — the same class of defect as the
+2026-10-16 fix. Committed the generator's own output. Verified the URL set is
+**byte-identical** (76 URLs, 0 add/remove) and a second refresh is byte-identical.
+Rollback: `git revert`. Sitemap URL set, lastmods, changefreq and priority unchanged.
+
+**Measurement (Medium).** 15 queries (10 Tavily conventional proxy + 5 Gemini
+Search-grounded). Straight Flush **absent in 14/14 conclusive rows**; 1 row
+`inconclusive` (`test_failure`) recorded as a blocker, never as zero. Brave 429 /
+DuckDuckGo Lite 202 to this egress IP → Tavily carried the sweep. First-party
+metrics (GSC/GA4/GBP) remain **unverified** pending P-002/P-005.
+
+**Competitor insight (High).** New repeat domain **`drainandsewerpro.com`**
+(San Bernardino / Inland Empire — not a South-OC local) surfaced on three South-OC
+queries. Its visible Service Areas block lists 7 cities, but its JSON-LD carries
+**141 `areaServed` City entries** covering every SF Tier-1 city. Feature verified;
+causation is a **hypothesis**. Explicitly **not** a tactic to copy — service-area
+commitments are Level 3.
+
+**Industry (High, primary source).** Google Search Console now reports **web
+multimodal search** (Lens, Circle to Search, image uploads) in *both* the
+Search-results report and the **Generative AI features** report
+(https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc, fetched
+2026-10-22, HTTP 200). Feeds the P-002 runbook (idea-2026-10-22-01).
+
+**Expected outcome:** health checks stop reporting spurious `sitemap_dirty`; the
+knowledge base records an honest, evidence-bounded competitor observation and six
+new scored/candidate ideas. **Result:** pending next run. **Keep.**
+
 
 ## 2026-10-16 (fix) — Retired Gemini slug was silently zeroing AI visibility; sitemap ordering normalised
 

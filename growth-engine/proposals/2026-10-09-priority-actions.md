@@ -89,8 +89,20 @@ OpenHands Cloud secret names (add via Settings → Secrets, then re-run the dail
 - `GOOGLE_BUSINESS_PROFILE_CREDENTIALS`
 - `PERPLEXITY_API_KEY` (optional but the cheapest real AI-answer signal)
 
+**Update (2026-10-30, Intelligence HQ daily):** a further, independent credential
+blocker surfaced — the registered **`GEMINI_API_KEY` now returns HTTP 401
+(`ACCESS_TOKEN_TYPE_UNSUPPORTED`)** at `GET /v1beta/models`, i.e. the key is
+invalid/expired, not merely quota-limited (contrast ISSUE-032). Until a valid
+grounding-eligible Gemini key is supplied (or billing is enabled), the
+**AI-answer surface cannot be measured at all** — every daily run records it
+`inconclusive`, never 0. See **ISSUE-034** and `INTEGRATION_STATUS.md`.
+
 **Ask:** Provide access (or exports) for:
-- **Google Search Console** (property verified for the domain).
+- **Google Search Console** (property verified for the domain) — including the
+  **Generative AI performance report**, Google's own measurement surface for how
+  content performs in generative AI features on Search and Discover
+  (`https://developers.google.com/search/docs/fundamentals/ai-optimization-guide`,
+  fetched 2026-10-20, HTTP 200).
 - **Google Analytics 4** (if present).
 - **Google Business Profile** performance.
 - Optionally a **Perplexity API key** for real AI-answer visibility in-automation.
@@ -98,6 +110,10 @@ OpenHands Cloud secret names (add via Settings → Secrets, then re-run the dail
 **Why:** Without these, organic/indexing/local-pack performance cannot be
 measured, and the growth loop cannot verify its own changes. Every daily run
 currently records these as `unverified` (never as zero).
+
+**Runbook:** `growth-engine/runbooks/gsc-measurement-runbook.md` — the day-one
+checklist to execute the moment credentials exist, so the first connected run
+measures instead of exploring.
 
 ---
 
@@ -144,3 +160,79 @@ errors).
 **Why:** `INTEGRATION_STATUS.md` shows no channel configured; urgent issues
 currently cannot be pushed to the owner. Until then the daily report and PR are
 the only channel, and a critical issue found at 06:00 PT may not be seen for hours.
+
+---
+
+## P-008 — Re-register the ChatGPT key under the name the adapter reads  [LEVEL 3 · MEDIUM]
+
+**Status (2026-10-19):** open — owner added a secret named `CHATGPT_API_KEY`; it
+does not reach the automation (ISSUE-033).
+
+**Ask:** In OpenHands Settings → Secrets, store the OpenAI key under the exact name
+**`OPENAI_API_KEY`** (the name `ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md`
+§3 documents for the ChatGPT adapter). Keeping or removing the existing
+`CHATGPT_API_KEY` entry is fine — nothing reads it. Optionally add
+`PERPLEXITY_API_KEY` for a second AI answer engine.
+
+**Why:** With the key undelivered, the ChatGPT/OpenAI surface is `unverified` and
+`system_supervisor.py` keeps reporting `ai_visibility_blind`. Re-registering the
+name is what flips that engine from `unverified` to measurable — no code change is
+needed. The blueprint states this explicitly.
+
+**Why not autonomous:** registering credentials is a Level 3 owner action.
+
+**Evidence:** `CHATGPT_API_KEY` is **absent** from the process environment
+(`os.environ.get(...) is None`) across 14 spelling variants; `curl
+https://api.openai.com/v1/models` with that unset bearer → HTTP 401
+`"Incorrect API key provided: ''"` (the variable expanded to empty, so the failure
+is delivery, not a rejected credential). Re-verified 2026-10-19.
+
+**Verification after fix:** a smoke call to the OpenAI models endpoint returns HTTP
+200, and one `test_type: ai_platform` ChatGPT row appears in
+`growth-engine/data/ai_visibility_history.jsonl`.
+
+**Scope note:** the OpenAI API models the model; it is not the consumer
+`chatgpt.com` Search UI (which 403s to non-browser clients). No scraping of that UI
+is done or implied.
+
+## P-008 — Validate or rotate the registered `GEMINI_API_KEY`  [LEVEL 3 · HIGH]
+
+**Status (2026-10-29):** open — the registered Gemini secret is present in the run
+environment but **rejected by the API**.
+
+**Observed (2026-10-29):** a direct probe
+
+```
+GET https://generativelanguage.googleapis.com/v1beta/models?key=<redacted>
+```
+
+returned **HTTP 401**, body: `"API key not valid. Please pass a valid API key."`,
+reason `ACCESS_TOKEN_TYPE_UNSUPPORTED` (`status: UNAUTHENTICATED`). This is a key
+validity problem, **not** a missing env var and **not** a quota problem. All five
+Gemini rows in `growth-engine/data/ai_visibility_history.jsonl` for 2026-10-29 are
+recorded `inconclusive` (never zero).
+
+**Context:** the AI-answer surface has now been unmeasured for at least a week —
+2026-10-23 recorded HTTP 429 (quota exhausted by the pre-stage, ISSUE-033 /
+idea-2026-10-23-02), and 2026-10-29 records HTTP 401. `data/daily_context.json`
+`ai_visibility_sweep` shows 0 usable AI-platform rows.
+
+**Ask:** Owner (or whoever provisions secrets) validates the Gemini API key at
+Google AI Studio / Cloud Console and updates the OpenHands Cloud secret
+`GEMINI_API_KEY` (or `GOOGLE_API_KEY`) with a working key. Optionally provide a
+second key dedicated to the daily sweep so the pre-stage and the AI-surface sweep do
+not share one quota.
+
+**Why not autonomous:** credential/secret changes are Level 3 and outside the
+automation's authority. The automation must never print, rotate, or create secrets.
+
+**Verification after fix:** re-run
+
+```bash
+export GEMINI_API_KEY="${GEMINI_API_KEY}"
+python3 scripts/daily_measure.py
+```
+
+and confirm `data/daily_context.json` → `ai_visibility_sweep` rows carry
+`test_type: "ai_platform"` (or `engine: "gemma"` fallback) with no
+`error_type: authentication_failed`.

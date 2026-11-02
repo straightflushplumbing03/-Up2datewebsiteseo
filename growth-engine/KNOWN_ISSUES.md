@@ -117,6 +117,24 @@ Each issue: evidence, impact, fix, status, approval level.
 - **Follow-up:** confirm the hardened prompt completes within budget (second
   dispatch). If it still overruns, reduce the query sample further (10–15) and move
   industry research to a separate weekly job.
+- **Re-confirmed 2026-10-20 (still open):** the mitigation did **not** hold. The
+  scheduled run `b6ac6a4e` (2026-10-19T16:18:59Z → 16:51:47Z, **1968 s**) and the
+  manual run `052fadaa` (2026-10-20T16:42:33Z → 17:14:37Z, **1924 s**) both consumed
+  the whole ~1920 s ceiling and were classified `budget_overrun`. Unlike the original
+  2026-10-12 failure, both **did** push durable output before the kill (PR #73 daily
+  report + knowledge, PR #74 sitemap ordering), so the loss was the last few minutes
+  of verification rather than the whole run. The residual defect is that the agent
+  re-verified the push (full test suite, remote branch/PR head SHA checks) *after*
+  committing, which is unbounded.
+- **Fix applied 2026-10-20 (commit-early checkpointing — the already-approved
+  IDEA-2026-10-12-13, never previously implemented):** the daily prompt now carries
+  explicit wall-clock deadlines (checkpoint commit pushed by ~10 min; report +
+  knowledge committed by ~27 min; PR opened by ~30 min), a mandatory **checkpoint
+  commit** of a skeleton report + existing `.jsonl` rows by ~10 minutes with later
+  commits on the same branch, **bounded post-push verification** (branch existence +
+  PR head SHA only — no test re-run, no page re-fetch), and a reduced research scope
+  (**10–15** queries, ~20 fetches). The weekly prompt got the same ceiling,
+  checkpoint, and bounded-verification note.
 - **Approval:** Level 2 (automation prompt config).
 
 ---
@@ -904,4 +922,301 @@ duplicate, so the duplicates are not disavowed from the real side either.
 - **Status:** OPEN — record as UNMEASURED, never as zero. Needs owner GSC/PSI
   access. Full detail in
   `reports/audit/2026-10-25-technical-reviews-audit-response.md`.
+- **Approval:** — (reporting only).
+
+## ISSUE-036 — A registered `CHATGPT_API_KEY` is not the name any adapter reads, so the key never reaches the run  [MEDIUM · OPEN 2026-10-19] (was ISSUE-033 in its daily PR)
+
+- **Observed:** the owner registered a secret named **`CHATGPT_API_KEY`** in
+  OpenHands Settings. In this sandbox that variable is **not present** in the
+  process environment (`os.environ.get("CHATGPT_API_KEY") is None`), as are 14
+  case/spelling variants probed (`ChatGPT_api_key`, `chatgpt_api_key`,
+  `OPENAI_API_KEY`, `OPENAI_KEY`, `CHATGPT_KEY`, `CHATGPT_TOKEN`,
+  `OPENAI_API_TOKEN`, `GPT_API_KEY`, `CHAT_GPT_API_KEY`, `OPEN_AI_API_KEY`,
+  `ChatGPT_Api_Key`, …). A direct call
+  `curl -H "Authorization: Bearer $CHATGPT_API_KEY" https://api.openai.com/v1/models`
+  returned **HTTP 401 `invalid_api_key`** with message
+  `"Incorrect API key provided: ''"` — the shell expanded the unset variable to an
+  **empty** bearer, so this is a *delivery/naming* failure, not a rejected
+  credential. Only `github_token`, `GEMINI_API_KEY`, `Tavily_api_key` and the
+  platform's own vars carry values.
+- **Why it matters:** the blueprint (`ai-headquarters-blueprint/03-MCP-AND-INTEGRATIONS.md`
+  §3) states the adapters read **exact** names — `OPENAI_API_KEY` for the ChatGPT
+  adapter — and that "adding a key is what flips an engine from `unverified` to
+  measurable; no code change is needed". A key stored under `CHATGPT_API_KEY`
+  therefore flips nothing: the ChatGPT surface stays `unverified` and
+  `system_supervisor.py`'s `ai_visibility_blind` signal keeps firing.
+- **Not a site/business problem:** no website, schema, copy or claim is affected.
+- **Owner action (one step, no code):** re-register the same value under
+  **`OPENAI_API_KEY`** in OpenHands Settings → Secrets (keep or delete the
+  `CHATGPT_API_KEY` entry). Optionally also add `PERPLEXITY_API_KEY`. This is a
+  Level 3 credential/owner action, so it is proposed, not applied.
+- **Note on scope:** the OpenAI **ChatGPT API** models the model, not the consumer
+  `chatgpt.com` Search surface (which 403s to non-browser clients). A passing API
+  key makes the API surface measurable; it does **not** authorise scraping the
+  consumer UI, and no such scraping is done.
+- **Verification of the surrounding claim:** the Gemini path *was* exercised this
+  run — `growth-engine/data/ai_visibility_history.jsonl` holds **5 committed rows**
+  for 2026-10-19 with `test_type: ai_platform`, `platform: gemini_search`, all
+  `engine: gemma` — so the AI-visibility harness itself works; only the ChatGPT key
+  delivery is broken.
+- **Approval:** documentation only (knowledge-base + proposal).
+## ISSUE-037 — `daily_measure.py` defaults could consume the whole daily wall-clock  [HIGH · FIXED 2026-10-20] (was ISSUE-033 in its daily PR)
+
+- **Evidence:** three consecutive daily runs died at the ~1920s ceiling without
+  producing a report — run `c1ad98cd` (manual, 2026-10-20T17:28:50Z →
+  18:00:52Z = 1922s) was stuck in phase "Read daily measurement context"
+  (step 0b) and never reached research; scheduled run `b6ac6a4e` (1968s) died in
+  "Push daily branch to origin"; manual run `052fadaa` (1924s) died in "Verify
+  remote branches and PR head SHA". All three recorded "Timed out: command timed
+  out or was killed". The pre-stage was the bottleneck, not the research.
+- **Root cause:** the pre-stage defaulted to **40 Tavily queries + 5 Gemini
+  queries**. Measured cost: Gemini grounding ≈ 36 s/query, and each sweep runs
+  under a 900 s / 600 s timeout with up to 3 retries. A bounded 6-query run took
+  **83 s**; the 45-query default is far larger and, when Tavily rate-limits
+  (429 + Retry-After), the retry loop can spend the entire budget before research
+  begins. Nothing capped the two sweeps combined, so a slow platform starved
+  every later phase.
+- **Fix:** `scripts/daily_measure.py` now bounds both sweeps together with a hard
+  `--network-budget` (default **600 s**; Tavily 60% / Gemini 40%). Defaults
+  reduced to **12 Tavily + 3 Gemini** queries. A sweep stopped by the budget is
+  recorded **BLOCKED (partial)** — never zero — via `_run` exit code −1, matching
+  the existing BLOCKED-not-zero contract for missing keys and refused grounding.
+  The budget is recorded in `daily_context.json` as `network_budget_s` so a report
+  can cite the ceiling it ran under.
+- **Impact:** the pre-stage now takes ~145 s with defaults (measured), leaving
+  ~1700 s of the ~1920 s budget for research, report writing, and the commit/push
+  phases that previously timed out.
+- **Verification:** 355 tests OK (3 new: budget-exhaustion → BLOCKED for each
+  sweep, plus a guard that the default budget stays under the automation
+  wall-clock). Default run measured at 145 s, both sweeps `[OK]`.
+- **Approval:** Level 2 (intelligence tooling; no website page, schema, or copy
+  change).
+### ISSUE-032 update — 2026-10-24: failure mode changed from 429 to **HTTP 401 UNAUTHENTICATED**
+
+- **New observation (this run, step 0b):** every Gemini call in the pre-stage now
+  returns **HTTP 401** rather than the 429 documented above. Captured detail:
+  `reason: ACCESS_TOKEN_TYPE_UNSUPPORTED`; the credential presented is **53
+  characters** with prefix `AQ.Ab8…` — **not** the classic `AIza…` API-key shape.
+  The 401 is returned on **all three** access patterns: `?key=<credential>` query
+  param, the `x-goog-api-key` header, and `models.list`. The Gemma fallback
+  described above therefore cannot engage either, because it is the *credential*,
+  not the grounding quota, that is being rejected.
+- **What this changes:** the previously documented root cause (free-tier grounding
+  not available for Gemini 3.x) and the documented remedy (Gemma fallback) no longer
+  describe the failure we actually observe. A 401 on `models.list` — an endpoint that
+  needs no grounding entitlement — is evidence the **secret itself** is of the wrong
+  credential type. **Hypothesis (unverified, medium confidence):** the registered
+  `GEMINI_API_KEY` now holds an OAuth/access-token-type value rather than a Google AI
+  Studio API key. This is not proven: only the API's rejection of that value was
+  observed.
+- **Impact:** the AI surface remains **UNMEASURED**; today's `ai_visibility_sweep`
+  is FAIL with all queries `inconclusive`. This is a missing integration, **not** a
+  zero and **not** a visibility decline.
+- **Not fixed this run, deliberately.** The fix is a credential change — replacing or
+  re-issuing a secret — which is outside this automation's remit (the run must never
+  print, rotate, or commit credentials). Recorded here and proposed to the owner in
+  `growth-engine/proposals/2026-10-24-gemini-credential-type.md`.
+- **Verification:** observed directly in `growth-engine/data/daily_context.json`
+  (`ai_visibility_sweep` check, 5 rows `inconclusive`) and in the 5
+  `gemini_search`/`test_failure` rows appended to
+  `growth-engine/data/ai_visibility_history.jsonl` this run.
+
+
+## ISSUE-038 — Daily sweep defaults exceed the mandated time budget  [HIGH · OPEN] (was ISSUE-033 in its daily PR)
+
+- **Evidence:** `scripts/daily_measure.py` still parses
+  `--queries` default **40** and `--ai-queries` default **5** with no
+  `--network-budget` argument at all, while the run brief mandates **12 Tavily +
+  3 Gemini** under a **600 s** ceiling (Tavily 60% / Gemini 40%), citing that the
+  unbounded defaults consumed the entire ~1920 s wall-clock and killed three runs
+  before research began. A full-text search of this repository returns no other
+  record of this issue, so it is recorded here for the first time.
+- **Impact:** a sweep that runs long is a run that never commits — it is recorded
+  `budget_overrun` and produces nothing durable.
+- **Fix (proposed, not applied):** add `--network-budget` (default 600) and lower
+  the two defaults to 12 / 3, with a unit test pinning the new defaults and the
+  budget arithmetic. Not applied today because it changes the measurement
+  contract and needs its own tested PR.
+- **Approval:** Level 2 (script-only, test-gated).
+
+
+## ISSUE-039 — Gemini API key rejected (HTTP 401); AI surface unmeasured  [HIGH · OPEN] (was ISSUE-034 in its daily PR)
+
+- **Evidence:** 2026-10-25 daily run — every `gemini_search` call returned
+  **HTTP 401 UNAUTHENTICATED** ("API key not valid"). The key is present in the
+  sandbox (length 53) but is not `AIza`-prefixed. This is an **authentication**
+  failure, distinct from ISSUE-032's HTTP **429** quota failure, and the Gemma
+  fallback is documented to engage **only** on quota/server refusals — so it
+  correctly does not engage here.
+- **Impact:** the AI-surface half of the visibility measurement cannot run. The
+  affected rows are recorded `inconclusive`, **never zero**.
+- **Fix (owner action, Level 3):** re-issue or correct the registered
+  `GEMINI_API_KEY` so it authenticates. No code change is warranted — the client
+  already distinguishes auth from quota correctly.
+- **Status:** OPEN — owner action. Until fixed, the AI-surface metric stays
+  `unverified` and is not reported as a decline.
+## ISSUE-040 — Committed `sitemap.xml` was not in the refresh tool's canonical order  [LOW · RESOLVED 2026-10-28] (was ISSUE-034 in its daily PR)
+
+- **Evidence:** `scripts/daily_measure.py` reported the `sitemap_idempotent` check
+  FAIL on 2026-10-28. `scripts/refresh_sitemap.py` rewrote `sitemap.xml` on a clean
+  checkout with **88 changed lines** while a same-key diff showed **89 URLs, 0 value
+  diffs** — the committed file held the correct URL set in a *different order* than
+  the tool emits. A second run of the tool was clean (`to add: 0`, `to remove: 0`,
+  `89 URLs in sync`).
+- **Root cause:** an earlier edit to `sitemap.xml` inserted/kept entries in an order
+  the generator does not produce, so any clean checkout immediately showed the file
+  as dirty and the idempotency check could never pass. Content was correct; only the
+  ordering diverged.
+- **Impact:** low for users (search engines do not require a particular URL order in
+  a sitemap), but the recurring FAIL masked real regressions in the daily check —
+  a permanent false positive.
+- **Fix applied 2026-10-28:** committed the generator's canonical ordering (pure
+  reorder; **no URL added or removed**, no `lastmod` change). The check is now clean
+  on a fresh checkout. Reversible: `git revert` restores the prior order.
+- **Verification:** `refresh_sitemap.py` → `missing: []`, `extra: []`, 89 URLs in
+  sync, no diff; full unit suite **353 tests OK**; `validate_knowledge_base.py` OK.
+- **Approval:** Level 2 (reversible tooling artifact; no content or URL change).
+
+## ISSUE-035 — `GEMINI_API_KEY` is an unsupported token type; AI-surface sweep BLOCKED  [HIGH · OPEN · owner action]
+
+- **Evidence:** on 2026-10-28 every grounded Gemini call returned **HTTP 401
+  `UNAUTHENTICATED`**, `reason: ACCESS_TOKEN_TYPE_UNSUPPORTED`. The key is present in
+  the environment (length 53, prefix `AQ.Ab8…`) but `models.list` against
+  `generativelanguage.googleapis.com/v1beta` with that key also returns 401 — the
+  same error. A key that reaches `models.list` (as in ISSUE-032) is a *standard API
+  key*; an `AQ.`-prefixed token is a different credential type that the Generative
+  Language API does not accept.
+- **Root cause (hypothesis, medium confidence):** the secret registered for
+  `GEMINI_API_KEY` is not a Google AI Studio **API key** (`AIza…`). It may be an
+  OAuth/ephemeral token or a key from another product. ISSUE-032's mitigation assumed
+  a valid key that merely lacked grounding quota; this key fails *authentication*,
+  which is upstream of the grounding problem and disables the Gemma fallback too
+  (the fallback only triggers on quota/server refusals, not auth errors).
+- **Impact:** the AI-answer-engine surface is **UNMEASURED** — 5 rows recorded
+  `inconclusive`, never zero, per methodology. This is a **missing integration**, not
+  a visibility decline.
+- **Owner action (Level 3, not applied):** re-provision `GEMINI_API_KEY` from Google
+  AI Studio (key form `AIza…`) for the project used in ISSUE-032, then re-run
+  `python3 scripts/gemini_visibility.py --smoke`. No code change is warranted — the
+  client already handles auth errors correctly (raises → `inconclusive`).
+- **Note:** distinct from ISSUE-032 (grounding quota). Even with a valid key,
+  ISSUE-032's billing decision still governs the true Gemini surface; the Gemma
+  fallback covers a valid key without billing.
+## ISSUE-041 — `sitemap_idempotent` failed on a clean tree due to ordering drift  [LOW · FIXED 2026-10-29] (was ISSUE-033 in its daily PR)
+
+- **Evidence:** on a clean checkout, `scripts/refresh_sitemap.py` rewrote
+  `sitemap.xml` (check reported `sitemap_dirty: true`). The diff was **ordering
+  only**: the URL set was identical (89/89, `missing: []`, `extra: []`) and every
+  `<lastmod>`, `<changefreq>` and `<priority>` value was byte-identical. The
+  generator emits URLs in its own `sort_key` order; later direct edits to the file
+  had reordered some blocks, so the committed order no longer matched the
+  generator's output.
+- **Impact:** a noisy false-positive FAIL in the daily pre-stage — the check could
+  not distinguish "sitemap changed" from "same sitemap, different order", which
+  risks masking a real change.
+- **Fix (Level 1):** committed the generator's canonical order. The URL set and all
+  metadata are unchanged; only element order moved. Re-running `refresh_sitemap.py`
+  is now **byte-identical** (idempotent).
+- **Verification:** `check_sitemap_idempotent()` → `ok: True, sitemap_dirty: False`;
+  `validate_knowledge_base.py` OK (148 files); full suite **353 tests OK**.
+- **Related idea:** idea-2026-10-29-01 (make the check report *what* changed:
+  order vs. URL set vs. lastmod).
+- **Approval:** Level 1 (one data file, reordering only; reversible with
+  `git checkout HEAD~1 -- sitemap.xml`).
+
+
+## ISSUE-042 — Gemini AI-surface key now returns HTTP 401 (invalid key)  [HIGH · BLOCKED 2026-10-29] (was ISSUE-034 in its daily PR)
+
+- **Evidence:** `GET https://generativelanguage.googleapis.com/v1beta/models?key=…`
+  returned **HTTP 401**, body `"API key not valid. Please pass a valid API key."`,
+  reason `ACCESS_TOKEN_TYPE_UNSUPPORTED` (`status: UNAUTHENTICATED`). All 5 Gemini
+  rows in `ai_visibility_history.jsonl` for 2026-10-29 are `inconclusive`.
+- **Relation to ISSUE-032:** a *different* blocker. ISSUE-032 was HTTP **429
+  RESOURCE_EXHAUSTED** (grounding paid-only on the free tier). Today the key is
+  **rejected outright** (401), so even the model/quota surface is unreachable. The
+  AI-answer surface has produced **0 usable rows** across both.
+- **Impact:** the business goal is AI recommendation; with no `ai_platform` rows the
+  automation cannot state any AI recommendation/mention/citation rate. Recorded
+  `inconclusive`, **never zero**.
+- **Owner action (Level 3):** validate/rotate `GEMINI_API_KEY` (or `GOOGLE_API_KEY`)
+  in OpenHands Cloud Secrets. Filed as **P-008** in
+  `proposals/2026-10-09-priority-actions.md`. The automation must not touch secrets.
+- **Verification after fix:** re-run `scripts/daily_measure.py` with
+  `GEMINI_API_KEY` exported; confirm `ai_visibility_sweep` rows carry
+  `test_type: "ai_platform"` (or `engine: "gemma"` fallback) with no
+  `error_type: authentication_failed`.
+- **Approval:** Level 3 (credential change) — proposed only.
+## ISSUE-043 — Unbounded step-0b network sweep consumed the whole wall clock; runs died before research  [HIGH · FIXED 2026-10-30] (was ISSUE-033 in its daily PR)
+
+- **Evidence:** the daily run is killed at ~1920 s. With the original pre-stage
+  defaults (**40 Tavily + 5 Gemini** queries, no cap), step 0b alone consumed the
+  entire budget; **three** consecutive runs ended `budget_overrun` with nothing
+  durable committed. Measured cost of the pre-stage on 2026-10-30 (12 Tavily + 3
+  Gemini): **~145 s**.
+- **Root cause:** `scripts/daily_measure.py` had no aggregate network ceiling, so a
+  slow/rate-limited provider could stall the whole run. Research (steps 2–5) never
+  started.
+- **Fix (now in the run contract):** `daily_measure.py` caps **both** sweeps
+  together at `--network-budget` seconds (default **600 s**, Tavily 60% / Gemini
+  40%) and runs **12 Tavily + 3 Gemini** by default. A sweep stopped by the budget
+  is recorded **`BLOCKED (partial)`**, never zero; `daily_context.json` carries
+  `network_budget_s` so the report can cite the ceiling it ran under. **Do not raise
+  the defaults to "get more data".**
+- **Impact:** restored the ability to research *and* commit inside the window; the
+  daily report now lands.
+- **Approval:** Level 2 (daily runner). Recorded here for the first time this run
+  (the prompt referenced ISSUE-033 but no entry existed).
+
+## ISSUE-044 — Gemini API key returns 401; AI-surface sweep is unmeasurable, not zero  [HIGH · OPEN] (was ISSUE-034 in its daily PR)
+
+  with the registered `GEMINI_API_KEY` returned **HTTP 401** with
+  `"message": "API key not valid. Please pass a valid API key."`,
+  `"status": "UNAUTHENTICATED"`, `"reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED"`.
+  The command named `GEMINI_API_KEY` explicitly (per ISSUE-019), so this is a real
+  invalid/mistyped credential, not a non-injected secret.
+- **Distinct from ISSUE-032:** ISSUE-032 was a *quota/grounding-tier* refusal on a
+  **valid** key. Here the key itself is rejected at `models.list`, so even the
+  Gemma fallback cannot run.
+- **Impact:** all 5 Gemini AI-surface queries on 2026-10-30 recorded
+  **`inconclusive`** (`test_type: test_failure`, confidence low). The AI surface is
+  **UNMEASURED**, never 0%. `daily_context.json` lists `ai_visibility_sweep` as a
+  FAIL for this reason, outside the repo's control.
+- **Fix (proposed, Level 3 — owner action):** replace the registered
+  `GEMINI_API_KEY` with a valid key whose project can reach a grounding-eligible
+  model (see ISSUE-032 owner options). Not auto-applied.
+- **Workaround in force:** the conventional-search surface is measured via
+  **Tavily Search API** (10 rows today, all `absent`); AI-platform claims are not
+  made from it.
+---
+
+## ISSUE-045 — `GEMINI_API_KEY` invalid (HTTP 401): AI-surface sweep unmeasured  [HIGH · OPEN 2026-11-01] (was ISSUE-035 in its daily PR)
+
+- **Evidence:** `scripts/daily_measure.py` step 0b returned `checks_passed 6/7`, with
+  `ai_visibility_sweep` **FAIL (exit 2)** — all 5 grounded queries recorded
+  `inconclusive`, never zero. Reproduced directly this run:
+  `python3 scripts/gemini_visibility.py --smoke --query "plumber in Laguna Niguel"`
+  → `{"ok": false, "error_type": "authentication_failed", "status_code": 401,
+  "message": "HTTP 401 … API key not valid. Please pass a valid API key.",
+  "reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED"}`.
+- **Impact:** the business goal is *AI recommendation*; with the key rejected, **every
+  `ai_platform` row is `inconclusive`** and the AI surface is **UNMEASURED**.
+  `system_supervisor.py` reports `ai_visibility_blind` FAIL for a reason outside the
+  repo's control.
+- **Distinct from the prior cause:** ISSUE-032 (2026-10-19) was HTTP **429**
+  (`RESOURCE_EXHAUSTED`, quota/billing), which the labelled **Gemma** fallback was built
+  to absorb. A **401** is an auth rejection: the fallback never engages, because the
+  client only falls back on quota/server refusals and correctly treats 400/auth as a
+  hard error (`_error_type_for` → `authentication_failed`). So the Gemma fallback is
+  working as designed and cannot fix this.
+- **Likely causes (unverified, ranked):** the `GEMINI_API_KEY` secret is expired,
+  rotated, revoked, or was set to a value of the wrong type (the provider's
+  `ACCESS_TOKEN_TYPE_UNSUPPORTED` reason suggests a token that is not a plain API key);
+  or the secret was never valid for this project.
+- **Owner options (Level 3 — credential decision, not applied):** rotate/provision a
+  valid Gemini API key in the automation's secret store under the name `GEMINI_API_KEY`.
+  The key must be a Google AI Studio **API key**, not an OAuth/access token. No repo
+  change can fix this; the sweep cannot self-heal.
+- **Verification:** `--smoke` returns 401 (above). `daily_measure.py` maps the
+  sweep's exit 2 → `checks` FAIL, `blocked: []` — a **failure**, not a BLOCKED row, so
+  the report must state the AI surface as UNMEASURED and cite this issue.
 - **Approval:** — (reporting only).
