@@ -141,7 +141,7 @@ Yes. PEX piping is certified for potable water use and is the standard choice in
 
 
 
-Local details for [Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html).
+Local details for [Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html).
 
 
 
