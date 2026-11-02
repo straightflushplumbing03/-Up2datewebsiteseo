@@ -924,7 +924,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `reports/audit/2026-10-25-technical-reviews-audit-response.md`.
 - **Approval:** — (reporting only).
 
-## ISSUE-033 — A registered `CHATGPT_API_KEY` is not the name any adapter reads, so the key never reaches the run  [MEDIUM · OPEN 2026-10-19]
+## ISSUE-036 — A registered `CHATGPT_API_KEY` is not the name any adapter reads, so the key never reaches the run  [MEDIUM · OPEN 2026-10-19] (was ISSUE-033 in its daily PR)
 
 - **Observed:** the owner registered a secret named **`CHATGPT_API_KEY`** in
   OpenHands Settings. In this sandbox that variable is **not present** in the
@@ -960,7 +960,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `engine: gemma` — so the AI-visibility harness itself works; only the ChatGPT key
   delivery is broken.
 - **Approval:** documentation only (knowledge-base + proposal).
-## ISSUE-033 — `daily_measure.py` defaults could consume the whole daily wall-clock  [HIGH · FIXED 2026-10-20]
+## ISSUE-037 — `daily_measure.py` defaults could consume the whole daily wall-clock  [HIGH · FIXED 2026-10-20] (was ISSUE-033 in its daily PR)
 
 - **Evidence:** three consecutive daily runs died at the ~1920s ceiling without
   producing a report — run `c1ad98cd` (manual, 2026-10-20T17:28:50Z →
@@ -1022,7 +1022,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `growth-engine/data/ai_visibility_history.jsonl` this run.
 
 
-## ISSUE-033 — Daily sweep defaults exceed the mandated time budget  [HIGH · OPEN]
+## ISSUE-038 — Daily sweep defaults exceed the mandated time budget  [HIGH · OPEN] (was ISSUE-033 in its daily PR)
 
 - **Evidence:** `scripts/daily_measure.py` still parses
   `--queries` default **40** and `--ai-queries` default **5** with no
@@ -1040,7 +1040,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
 - **Approval:** Level 2 (script-only, test-gated).
 
 
-## ISSUE-034 — Gemini API key rejected (HTTP 401); AI surface unmeasured  [HIGH · OPEN]
+## ISSUE-039 — Gemini API key rejected (HTTP 401); AI surface unmeasured  [HIGH · OPEN] (was ISSUE-034 in its daily PR)
 
 - **Evidence:** 2026-10-25 daily run — every `gemini_search` call returned
   **HTTP 401 UNAUTHENTICATED** ("API key not valid"). The key is present in the
@@ -1055,7 +1055,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   already distinguishes auth from quota correctly.
 - **Status:** OPEN — owner action. Until fixed, the AI-surface metric stays
   `unverified` and is not reported as a decline.
-## ISSUE-034 — Committed `sitemap.xml` was not in the refresh tool's canonical order  [LOW · RESOLVED 2026-10-28]
+## ISSUE-040 — Committed `sitemap.xml` was not in the refresh tool's canonical order  [LOW · RESOLVED 2026-10-28] (was ISSUE-034 in its daily PR)
 
 - **Evidence:** `scripts/daily_measure.py` reported the `sitemap_idempotent` check
   FAIL on 2026-10-28. `scripts/refresh_sitemap.py` rewrote `sitemap.xml` on a clean
@@ -1102,7 +1102,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
 - **Note:** distinct from ISSUE-032 (grounding quota). Even with a valid key,
   ISSUE-032's billing decision still governs the true Gemini surface; the Gemma
   fallback covers a valid key without billing.
-## ISSUE-033 — `sitemap_idempotent` failed on a clean tree due to ordering drift  [LOW · FIXED 2026-10-29]
+## ISSUE-041 — `sitemap_idempotent` failed on a clean tree due to ordering drift  [LOW · FIXED 2026-10-29] (was ISSUE-033 in its daily PR)
 
 - **Evidence:** on a clean checkout, `scripts/refresh_sitemap.py` rewrote
   `sitemap.xml` (check reported `sitemap_dirty: true`). The diff was **ordering
@@ -1125,7 +1125,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `git checkout HEAD~1 -- sitemap.xml`).
 
 
-## ISSUE-034 — Gemini AI-surface key now returns HTTP 401 (invalid key)  [HIGH · BLOCKED 2026-10-29]
+## ISSUE-042 — Gemini AI-surface key now returns HTTP 401 (invalid key)  [HIGH · BLOCKED 2026-10-29] (was ISSUE-034 in its daily PR)
 
 - **Evidence:** `GET https://generativelanguage.googleapis.com/v1beta/models?key=…`
   returned **HTTP 401**, body `"API key not valid. Please pass a valid API key."`,
@@ -1146,7 +1146,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   `test_type: "ai_platform"` (or `engine: "gemma"` fallback) with no
   `error_type: authentication_failed`.
 - **Approval:** Level 3 (credential change) — proposed only.
-## ISSUE-033 — Unbounded step-0b network sweep consumed the whole wall clock; runs died before research  [HIGH · FIXED 2026-10-30]
+## ISSUE-043 — Unbounded step-0b network sweep consumed the whole wall clock; runs died before research  [HIGH · FIXED 2026-10-30] (was ISSUE-033 in its daily PR)
 
 - **Evidence:** the daily run is killed at ~1920 s. With the original pre-stage
   defaults (**40 Tavily + 5 Gemini** queries, no cap), step 0b alone consumed the
@@ -1167,7 +1167,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
 - **Approval:** Level 2 (daily runner). Recorded here for the first time this run
   (the prompt referenced ISSUE-033 but no entry existed).
 
-## ISSUE-034 — Gemini API key returns 401; AI-surface sweep is unmeasurable, not zero  [HIGH · OPEN]
+## ISSUE-044 — Gemini API key returns 401; AI-surface sweep is unmeasurable, not zero  [HIGH · OPEN] (was ISSUE-034 in its daily PR)
 
   with the registered `GEMINI_API_KEY` returned **HTTP 401** with
   `"message": "API key not valid. Please pass a valid API key."`,
@@ -1189,7 +1189,7 @@ duplicate, so the duplicates are not disavowed from the real side either.
   made from it.
 ---
 
-## ISSUE-035 — `GEMINI_API_KEY` invalid (HTTP 401): AI-surface sweep unmeasured  [HIGH · OPEN 2026-11-01]
+## ISSUE-045 — `GEMINI_API_KEY` invalid (HTTP 401): AI-surface sweep unmeasured  [HIGH · OPEN 2026-11-01] (was ISSUE-035 in its daily PR)
 
 - **Evidence:** `scripts/daily_measure.py` step 0b returned `checks_passed 6/7`, with
   `ai_visibility_sweep` **FAIL (exit 2)** — all 5 grounded queries recorded
