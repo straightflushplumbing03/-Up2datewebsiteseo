@@ -126,3 +126,65 @@ experiments below had their outcome re-assessed against this week's evidence.
 `data/content_experiments.jsonl` gains one row per page shipped 2026-10-20→24 with
 its baseline `sf_status` (all `absent`) and a 2026-11-23 re-measure date. The daily
 planner retests them as they age. See the file for the machine-readable rows.
+
+---
+
+## Weekly review 2026-11-02 — outcomes recorded
+
+The week 2026-10-27 → 2026-11-02 shipped 5 content/tooling PRs and 6 daily-report
+PRs, but **no measurement improvement**. Every open experiment is still judged
+against a one-engine board, and the one engine that could ground answers (Gemini)
+has been blind for most of the window. Outcomes below are recorded as they are —
+including the failures.
+
+### Gemini grounded AI-surface channel — **revise (failed again, blocked)**
+
+- 2026-10-16: 5 × `bad_request` HTTP 404 (retired model slug).
+- 2026-10-23: 4 × `server_error` 500, 4 × `quota_exhausted` 429, 1 usable row.
+- **2026-11-01 / 2026-11-02: HTTP 401 `authentication_failed`**
+  (`ACCESS_TOKEN_TYPE_UNSUPPORTED`), reproduced this run with the key named
+  explicitly. 0 usable AI rows since 2026-10-23.
+- **Decision: revise.** The labelled Gemma fallback only engages on quota/server
+  refusals, so an auth rejection leaves the surface UNMEASURED. Fix is
+  idea-2026-11-02-01 (owner supplies a valid `AIza…` key) — Level 3, propose only.
+  Until then the AI board must be labelled single-engine.
+
+### exp-2026-10-07-schema-orphans — **keep, inconclusive**
+
+- Follow-up 2026-11-07 not yet elapsed. No measurable SERP change is possible while
+  GSC is unconnected, and the AI channel reports 0 recommended / 0 cited.
+- **Decision: keep.** Confounder unchanged: no GSC/GA4/GBP access.
+
+### exp-2026-10-09-measurement-providers — **reverted / superseded (unchanged)**
+
+- No new evidence this week; remains reverted. Recorded so the failure is not
+  silently forgotten.
+
+### exp-2026-10-09-cloudflare-crawler-access — **resolved, holding**
+
+- Re-verified 2026-11-02T14:04Z: 7 crawler UAs + curl → **200** on `/`,
+  `/robots.txt`, `/sitemap.xml`, `/llms.txt`; no `cf-mitigated`. 22 consecutive days
+  green since the 2026-10-11 fix.
+- **Decision: resolved / keep.**
+
+### exp-2026-10-26-aliso-viejo-direct-answer — **keep, pending**
+
+- Baseline `claude_web_search` = absent for all 6 target queries. Re-measure
+  2026-11-23. No evidence of effect yet; not enough data to revise or revert.
+
+### exp-2026-10-20 / -10-23 / -10-24 city × service pages — **keep, pending**
+
+- All baselines `absent`; re-measure 2026-11-23. This week added two more pages to
+  the same family (Mission Viejo slab/PEX, Laguna Niguel hidden-leak, PRs #97/#99).
+
+### Claude-runner live-site health check — **revise (stalled)**
+
+- INCONCLUSIVE for most of the window: the unattended runner hits an unanswered
+  WebFetch permission prompt. Last real pass 2026-10-30. Needs a standing approval
+  or a `curl` fallback in the runner prompt. **Decision: revise.**
+
+### New experiment rows for the pages shipped 2026-11-01 → 11-02
+
+`data/content_experiments.jsonl` gains three rows for the pages merged this week
+(Mission Viejo slab-leak, Mission Viejo PEX, Laguna Niguel hidden-leak), each with
+its baseline `sf_status` and a 2026-11-23 re-measure date.
