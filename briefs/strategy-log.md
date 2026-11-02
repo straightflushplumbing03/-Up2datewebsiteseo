@@ -115,6 +115,39 @@ olsonsuperior.com, pristineplumbinginc.com, johnstevensonplumbing.com.
 **Result:** crawler access OK; 353 tests OK; validate_knowledge_base OK; seo_audit
 exit 0. **Keep.**
 
+## 2026-11-01 (Intelligence HQ daily) — the AI surface went blind: Gemini key now 401s, not 429s
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim, copy,
+price, or sitemap entry changed.** Branch `intelligence-hq/daily-2026-11-01`.
+
+**Change:** none to the site. Added 22 conventional visibility rows + 5 `inconclusive`
+Gemini rows, competitor rows, 6 new ideas, 2 dated industry-watch entries, a
+`COMPETITOR_DIRECTORY.md` update, ISSUE-035, the daily report, and this log entry.
+
+**Reason:** today's headline is not a content problem — it is a **broken instrument**. The
+step-0b pre-stage returned `checks_passed 6/7` with `ai_visibility_sweep` **FAIL**: all 5
+Gemini grounded queries recorded `inconclusive`. Reproduced by hand, the Gemini API returns
+**HTTP 401 `authentication_failed`** ("API key not valid", `ACCESS_TOKEN_TYPE_UNSUPPORTED`).
+That is a different failure from the 2026-10-19/10-23 **429** quota exhaustion the labelled
+Gemma fallback was built for: the fallback only engages on quota/server refusals, so an auth
+rejection leaves the AI surface **UNMEASURED**. Recording that as "0 visibility" would
+encode an outage as a decline.
+
+**Target:** measurement integrity first, and only then content. The top three priorities are
+(1) restore the AI-surface key (owner, L3), (2) build a service × city coverage matrix so the
+content gaps are written to a map, (3) then the city × water-heater and city × repipe pages.
+
+**Competitor insight:** across four service families in one sweep, every commercial query is
+held by a **service × city** page — and water-heater/repipe queries specifically by
+**single-service specialist domains** (`thewaterheatercompany.com`, `integrityrepipe.com`).
+SF has general `/services/*` pages but no city-framed variants.
+
+**Expected outcome:** with a valid key, the next run produces real `ai_platform` rows and the
+supervisor's `ai_visibility_blind` check clears.
+
+**Result:** site healthy (6/7 checks; only the AI sweep failed). Tests: `validate_knowledge_base.py`
+OK · **353 unit tests OK** · `seo_audit.py` clean. Keep.
+
 
 ## 2026-10-26 (Claude weekly) — Aliso Viejo direct answer shipped; owner to claim HomeAdvisor / Porch / HomeGuide
 **Change:** `/cities/aliso-viejo` direct-answer paragraph, linked service list, PEX-repiping FAQ (exp-2026-10-26-aliso-viejo-direct-answer; re-measure 2026-11-23).

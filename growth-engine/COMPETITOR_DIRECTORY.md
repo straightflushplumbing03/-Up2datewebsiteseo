@@ -514,6 +514,38 @@ there is **no** city × repipe page for Laguna Hills (only
 `services/pex-repiping-laguna-niguel.html`). Competitors rank with exactly that
 page type. That the page *causes* the ranking is a **hypothesis**; the page's
 existence and its specific local entities are **verified facts**.
+## 2026-11-01 update — 12-query Tavily sweep (Brave unavailable)
+
+Provider note: Tavily Search API again the only reliable ranked-result provider (Brave
+**429** to this egress IP). Lower breadth than a Brave sweep; treat as directional. 12
+queries across Laguna Niguel, Dana Point, San Clemente, Mission Viejo, Irvine, Newport
+Beach, and Orange County-wide. **SF `absent` on all 12** (conventional search; not an
+AI-platform result).
+
+**Repeat competitors (distinct queries today):** `efficientplumbing.com` (4 queries) ·
+`barkerandsonsplumbing.com` (4) · `rotorooter.com` (3) · `billmetzgerplumbing.com` (3) ·
+`evansleakdetection.com` (3) · `clearwaterplumbingoc.com` (2) · `americanleakdetection.com`
+(2) · `scottenglishplumbing.net` (2) · `mckplumb.com` (2) · `sjplumbingoc.com` (2).
+(Yelp appeared on 11 of 12 queries — a directory channel, not a competitor.)
+
+**New this run (not previously recorded):** `integrityrepipe.com`, `socalrepipes.com`,
+`pexrepipe-repiping.com` (PEX repipe, Laguna Niguel); `thewaterheatercompany.com`,
+`waterheatersonly.com`, `waterheatermaninc.com` (water heater, Irvine);
+`splashplumbing.com`, `jettersndrains.com`, `appliedrooter.com` (drains, Mission Viejo);
+`primewestplumbing.com` (repipe Newport Beach + slab Laguna Niguel); `hummelplumbing.com`,
+`slableakfix.com`, `parzivalplumbing.com`, `hanahouhome.com` (leak detection, OC);
+`lagunaniguelplumber.org`, `lagunaniguelplumbingco.com`, `avisplumbingandair.com`,
+`dialonesonshine.com` (Laguna Niguel city pages).
+
+**Dominant observed pattern (verified feature; causation is a hypothesis):** every
+commercial query tested is held by a **service × city** landing page — and for water
+heaters and repipes specifically, by **single-service specialist domains** with a page
+per city, not by general plumbers. SF holds a general `/services/*` page for each of
+these services but no city-framed variant. Reproduced across four service families in one
+sweep, so this is the strongest content-gap signal on file.
+
+**Directory/franchise channels (not competitors):** yelp.com (11/12), facebook.com (5),
+angi.com, bbb.org, thumbtack.com, reddit.com — reproduces the standing finding.
 
 ---
 
