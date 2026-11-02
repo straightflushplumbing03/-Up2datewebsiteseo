@@ -5,6 +5,10 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-11-02 (Claude weekly) — San Clemente slab-leak direct answer; board still 0/154
+**Change:** `cities/san-clemente.html` direct-answer hero line, linked service list, FAQ "Who does slab leak detection in San Clemente?" (visible + JSON-LD). Experiment `exp-2026-11-02-san-clemente-slab-direct-answer`, re-measure 2026-11-30.
+**Reason:** 4 San Clemente slab-leak AI answers named no business at all. Owner priority: HomeAdvisor (74 lost answers), Angi, Porch listings.
+
 ## 2026-10-27 (Intelligence HQ daily) — 15-query conventional sweep; SF absent 0/15; sitemap normalized
 
 **Change:** `sitemap.xml` reordered to canonical sort (pure reorder: identical URL set,
