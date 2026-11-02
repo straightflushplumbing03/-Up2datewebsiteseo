@@ -965,3 +965,45 @@ HTML changes this run is constrained not to make. Nothing rejected.
 - **idea-2026-11-01-04 / -05 per-city water-heater & repipe pages** — held as `candidate`
   (not rejected): the same city×service pattern also needs a *local-differentiation*
   pass so the pages are not thin permutations; deferred behind idea-01's coverage map.
+
+---
+
+## 2026-11-02 (Intelligence HQ daily) — ≥5 new candidate ideas + prioritization
+
+**Evidence base this run:** 16 conclusive Tavily conventional-proxy rows (SF **absent
+16/16**); Gemini AI surface **BLOCKED** (HTTP 401, ISSUE-035); two competitor/industry
+pages fetched (`barkerandsonsplumbing.com/slab-leak-faqs`,
+`fieldedge.com/blog/new-plumbing-technology-in-2026-...`); Google Search Central docs
+re-fetched and unchanged since 2026-10-26.
+
+| ID | Date | Idea | Type | Impact | Evid | Effort→Value | Rev | Risk | Status | Evidence / source | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-11-02-01 | 2026-11-02 | Add a **per-city "hidden water leak" symptom-first section** to the existing leak-detection city pages (Laguna Niguel, Mission Viejo, San Clemente, Dana Point, Aliso Viejo) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today: `who can locate a hidden water leak in Laguna Niguel?` returned `proplumberlagunaniguel.com`, `lagunaniguelcaplumbingpros.com`, `youtube.com`, `facebook.com` — SF absent; symptom-intent queries recur across runs. | Extends idea-2026-10-13-16; on-page only, no new thin pages; no new claims. |
+| idea-2026-11-02-02 | 2026-11-02 | Publish a **per-city slab-leak FAQ / "what to expect" block** on the existing slab-leak page (answer-first, no prices) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today: `homeowner questions slab leak repair what to expect` → `barkerandsonsplumbing.com/slab-leak-faqs` (fetched, HTTP 200), `leaktronics.com`, `servpro.com`, `callmother.com`; SF absent. | Question-intent, human value; **no prices** (Level 3). Ties to idea-2026-10-13-07 (answer-first content). |
+| idea-2026-11-02-03 | 2026-11-02 | Add a **per-city water-heater page for a second Tier-1 city** (Aliso Viejo) — extend idea-2026-11-01-04 | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today: `water heater repair in Aliso Viejo` → `pristineplumbinginc.com`, `aterheatermaninc.com`, `thewaterheatercompany.com`; `water heater installation Irvine` → `aterheatersonly.com`, `aterheatermaninc.com`; SF absent, no city×water-heater page. | Single-service domains hold the intent; needs local-differentiation pass so it is not a thin permutation. No prices. |
+| idea-2026-11-02-04 | 2026-11-02 | Add a **per-city repipe/PEX page for San Clemente** (in addition to the Laguna Niguel one in idea-2026-11-01-05) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today: `PEX repiping company in Laguna Hills` → `allamericanrepipe.com`, `socalrepipes.com`; `whole house repipe Newport Beach` → `repipetopteam.com`, `primewestplumbing.com`, `creativerepipe.com`; all **repipe-specialist** domains. SF has `/services/pex-repiping.html` only. | Repipe intent is consistently served by specialists with city pages. No new claims. |
+| idea-2026-11-02-05 | 2026-11-02 | Add a **`scripts/measure_integrity_check.py`** that fails loudly when a scheduled measurement platform records `test_failure`/`inconclusive` for N consecutive runs (e.g. Gemini 401 for ≥3 days) | Tooling/ops | 4 | 5 | 3 | 5 | L2 | candidate | Gemini has recorded `inconclusive`/`test_failure` on **every** run since 2026-10-23 (ISSUE-035); today's 3 rows are `test_failure` HTTP 401. A broken instrument currently degrades silently into the "absent" narrative. | Purely additive, read-only tooling; surfaces a stale integration instead of letting it look like a measurement result. |
+| idea-2026-11-02-06 | 2026-11-02 | Add a **`city × service` coverage assertion** to the knowledge-base validator: every Tier-1 city referenced in `SERVICE_AREAS.md` must have (or explicitly be exempted from) each core service page | Tooling/docs | 3 | 4 | 3 | 5 | L2 | candidate | This run: repipe/water-heater/drain intents are all held by city×service competitor pages while SF holds only `/services/*.html`; the gap is invisible without a coverage check. | Complements idea-2026-11-01-01 (coverage matrix); read-only test, no page change. |
+
+**Prioritization (impact · evidence · effort-to-value · reversibility · risk gate):**
+
+1. **idea-2026-11-02-05 (measurement-integrity check)** — top pick. The largest *durable*
+   finding today is that the AI-surface instrument has been broken for 11 consecutive days
+   (Gemini HTTP 401, ISSUE-035) while the conventional proxy is healthy. A content idea
+   ranked above a broken instrument would let a degraded measurement masquerade as a
+   visibility result. High evidence (every run's rows), low effort, fully reversible,
+   additive tooling.
+2. **idea-2026-11-02-02 (slab-leak "what to expect" block)** — highest-evidence *content*
+   item: a competitor FAQ page was actually fetched and the homeowner questions are
+   concrete. Low risk (no prices), reuses an existing page.
+3. **idea-2026-11-02-01 (hidden-leak symptom section)** — same cluster, directly observed
+   today for the home city.
+4. **idea-2026-11-02-03 / -04 (city × water-heater / repipe)** — evidence-backed but held
+   behind a local-differentiation pass so they are not thin permutations.
+5. **idea-2026-11-02-06 (coverage assertion)** — useful guard; lower impact than the
+   instrument fix.
+
+**No idea actioned this run.** idea-05 is tooling that warrants its own tested PR (this
+run is constrained to research + documentation); ideas 01–04 are HTML changes; idea-06 is
+a validator change. Nothing rejected. idea-2026-11-01-02 (invalid `GEMINI_API_KEY`)
+remains the single highest-value owner action and is unchanged today.

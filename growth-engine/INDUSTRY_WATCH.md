@@ -942,3 +942,80 @@ owner-supplied detail (fabricating case notes is forbidden).
   **Confidence:** high (both primary Google Search Central sources, fetched, HTTP 200).
 - **Proposed action (if any):** recorded only; no proposal. Preferred sources is a
   consumer-side control with no site-side change required.
+
+---
+
+## 2026-11-02 (Intelligence HQ daily)
+
+- **What changed / observed:** the Google Search Central documentation changelog
+  (https://developers.google.com/search/updates, fetched 2026-11-02, HTTP 200, footer
+  `Last updated 2026-10-26 UTC`) still lists **no new entries after October 26, 2026**
+  (the user-generated-spam and crawlable-URL updates already logged 2026-10-30). The
+  Google Search Central blog index (https://developers.google.com/search/blog, fetched
+  2026-11-02, HTTP 200) shows only category landing pages and no dated posts newer than
+  the 2026-10-30 AIPREF post. The AI-optimization guide
+  (https://developers.google.com/search/docs/fundamentals/ai-optimization-guide, HTTP
+  200, `Last updated 2026-07-10 UTC`) and the local-business structured-data doc
+  (https://developers.google.com/search/docs/appearance/structured-data/local-business,
+  HTTP 200, `Last updated 2026-09-08 UTC`) are both unchanged from the versions already
+  recorded. **No new official Google guidance to action today.**
+- **Why it matters to Straight Flush:** this is a "nothing changed" observation recorded
+  deliberately — it confirms the standing guidance in `AI_VISIBILITY_METHODOLOGY.md` is
+  still current, so the engine does not invent a change to justify content. The practical
+  read is unchanged: SF's differentiator is first-hand, non-commodity owner experience
+  (the AI-optimization guide's own framing), and the highest-value unverified item remains
+  the **P-002** Search Console / Generative-AI performance report.
+- **Source(s):** https://developers.google.com/search/updates ·
+  https://developers.google.com/search/blog ·
+  https://developers.google.com/search/docs/fundamentals/ai-optimization-guide ·
+  https://developers.google.com/search/docs/appearance/structured-data/local-business ·
+  **Confidence:** high (all primary Google Search Central sources, fetched, HTTP 200).
+- **Proposed action (if any):** recorded only; no change.
+
+## 2026-11-02 — Diagnostic-technology / industry signal: leak detection is the lead 2026 service theme (third-party, medium confidence)
+
+- **What changed / observed:** a third-party industry blog
+  (https://fieldedge.com/blog/new-plumbing-technology-in-2026-whats-worth-paying-attention-to-whats-not,
+  fetched 2026-11-02, HTTP 200, dated September 17, 2026) frames the 2026 plumbing
+  technology themes as **smart leak detection systems, water-monitoring/conservation
+  tools, advanced sewer/drain inspection equipment, and predictive maintenance**, and
+  argues the value is "technology that helps plumbing companies solve real customer
+  problems" rather than novelty. A separate Tavily result set for
+  "plumbing industry news 2026 leak detection technology" surfaced multiple
+  **leak-detection market reports** and "certification" framing for leak-detection
+  services. This is **third-party commentary, not official Google guidance** — it is
+  corroborating context, not a ranking input.
+- **Why it matters to Straight Flush:** the recurring market theme matches SF's core
+  positioning (leak detection) and the still-recurring gap observed this run — SF is
+  **absent from every leak/slab query tested** while dedicated leak-specialist domains
+  (evansleakdetection.com, leakstar.com, americanleakdetection.com) appear. The
+  actionable, low-risk direction remains an **owner-experience explainer** of SF's own
+  verified methods (acoustic/electronic/thermal/camera), which is the "unique point of
+  view" the official Google guide rewards — *not* more templated pages.
+- **Source(s):** https://fieldedge.com/blog/new-plumbing-technology-in-2026-whats-worth-paying-attention-to-whats-not
+  (HTTP 200) · Tavily result set, 2026-11-02 (`data/ai_visibility_history.jsonl`).
+  **Confidence:** medium (vendor blog = commercial interest; treated as context only).
+- **Proposed action (if any):** reinforces `candidate` idea-2026-11-01-06 (equipment
+  explainer); no file changed.
+
+## 2026-11-02 — Recurring homeowner question: "slab leak — what happens next?" is answered by competitors' FAQ pages, not by SF
+
+- **What changed / observed:** a Tavily query for
+  `homeowner questions slab leak repair what to expect` (2026-11-02) returned
+  **competitor FAQ/education pages** — `barkerandsonsplumbing.com/slab-leak-faqs`
+  (fetched 2026-11-02, HTTP 200, titled "Slab Leak FAQs for Orange County & Anaheim
+  Homeowners"), `leaktronics.com` ("Find the Leak Before You Break the Floor"),
+  `servpro.com`, `callmother.com` ("When to Tunnel vs When to Reroute"), plus a Reddit
+  r/homeowners thread. The recurring homeowner questions are: *how do I know it's a slab
+  leak, what will the repair involve, will you break the floor, tunnel vs reroute, and
+  what does it cost.* SF was **absent** from this set.
+- **Why it matters to Straight Flush:** this is the same answer-first, question-intent
+  pattern the engine has logged repeatedly, now confirmed with a fetched competitor page.
+  A **symptom-first, question-answering section** (no prices — Level 3) on SF's existing
+  slab-leak page is the low-risk response; it extends the standing idea cluster rather
+  than creating a new thin page.
+- **Source(s):** https://www.barkerandsonsplumbing.com/slab-leak-faqs (HTTP 200) ·
+  Tavily result set, 2026-11-02. **Confidence:** medium (competitor page fetched; the
+  Reddit thread was observed in results but not fetched).
+- **Proposed action (if any):** reinforces `candidate` idea-2026-11-02-04 (below); no
+  file changed this run.

@@ -204,3 +204,19 @@ are redacted.
   https://developers.google.com/search/docs/fundamentals/ai-optimization-guide,
   fetched 2026-10-19).
 
+
+## Re-verified 2026-11-02 (Intelligence HQ daily)
+
+- **Crawler access:** all bot UAs and `curl` paths 200; ISSUE-001 still resolved. No
+  `cf-mitigated`.
+- **Tavily Search API (conventional proxy):** **working** — 19 queries executed, 16
+  conclusive, all HTTP 200 (10 pre-stage + 6 added this run). Recorded as
+  `test_type: conventional_proxy`, never as an AI-answer-engine result.
+- **Gemini (AI surface): BLOCKED — 11th consecutive day (ISSUE-035).** All 3 grounded
+  queries returned HTTP 401 `authentication_failed`; the Gemma fallback never engaged
+  because the key was rejected outright. Recorded `inconclusive`, **not zero**. Needs a
+  **valid `GEMINI_API_KEY`** (owner action).
+- **Measurement (still blocked, P-002):** `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*` /
+  `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **absent** from the
+  environment — GSC, GA4, and GBP remain unconnected. All impression/click/traffic/review
+  metrics stay `unverified` (never `0`).

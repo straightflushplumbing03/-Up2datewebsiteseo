@@ -703,3 +703,48 @@ fact; that they *cause* the ranking is a **hypothesis**.
 **Directory/franchise channels (not competitors):** yelp.com (13 hits), facebook.com
 (4), mapquest.com (3), bbb.org, angi.com — reproduces the standing finding that
 directories take broad local queries.
+
+---
+
+## 2026-11-02 update — 16-query Tavily conventional proxy (AI surface blocked)
+
+**Provider note:** the deterministic pre-stage ran **13** Tavily conventional-proxy
+queries; this run added **6** more (19 total executed, **16 conclusive**, 3 Gemini rows
+were `test_failure`). Brave/DDG were not used today — Tavily is the working proxy per
+`INTEGRATION_STATUS.md`. Straight Flush was **absent from all 16 conclusive rows**.
+
+### Appeared repeatedly (2026-11-02)
+- `efficientplumbing.com` — 5 slots across general-plumber, leak-detection, and repipe
+  intents; the most frequent single *company* domain today.
+- `barkerandsonsplumbing.com` — 4 slots (Laguna Niguel, South OC, sewer-backup, slab FAQ).
+- `pristineplumbinginc.com` — 3 slots (slab-leak San Clemente, water-heater Aliso Viejo,
+  drain cleaning Mission Viejo).
+- `evansleakdetection.com` — 3 slots (Mission Viejo slab, Laguna Niguel water-leak,
+  San Clemente slab); the recurring leak-specialist domain.
+- `rotorooter.com` (3), `aterheatermaninc.com` (3), `clearwaterplumbingoc.com` (2),
+  `socalrepipes.com` (2), `leakstar.com` (1), `thewaterheatercompany.com` (2),
+  `aterheatersonly.com` (1), `scottenglishplumbing.net` (1).
+
+### Newly observed 2026-11-02
+- **Exact-match city domains:** `proplumberlagunaniguel.com`,
+  `lagunaniguelcaplumbingpros.com` (both on the *hidden-water-leak* question for Laguna
+  Niguel), `bestplumberindanapoint.com` (emergency Dana Point),
+  `repipe-newport-beach.com` (whole-house repipe Newport Beach),
+  `plumbingdanapointca.com` (copper-leak Dana Point). Pattern: **city-name domains**
+  are a recurring local tactic.
+- **Single-service specialist domains** holding whole intents: `allamericanrepipe.com`,
+  `repipetopteam.com`, `primewestplumbing.com`, `creativerepipe.com`, `ocrepipes.com`
+  (repipe); `aterheatermaninc.com`, `aterheatersonly.com`, `thewaterheatercompany.com`
+  (water heaters); `jettersndrains.com`, `zoomdrain.com`, `appliedrooter.com`
+  (drains); `leakstar.com`, `evansleakdetection.com` (leak detection).
+- **Directories/aggregators** (not competitors): `yelp.com`, `facebook.com`, `bbb.org`,
+  `thumbtack.com`, `mapquest.com`, `youtube.com`, `reddit.com` — the standing finding
+  that directories take broad local queries reproduces.
+
+### Gap confirmed (evidence)
+The **repipe, water-heater, drain, and slab-leak** intents are each served by
+**specialist domains with a city page**, while SF holds only `/services/*.html` pages and
+is absent from every one of these queries. The pages' *existence* is verified; that they
+*cause* the ranking is a **hypothesis**. A fetched competitor FAQ
+(`barkerandsonsplumbing.com/slab-leak-faqs`) shows the answer-first pattern the engine has
+logged repeatedly.
