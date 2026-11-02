@@ -97,12 +97,11 @@ def main():
     for t in TARGETS:
         path = os.path.join(HERE, t["file"])
         body = prompt_body(path)
-        payload = {
+        base = {
             "name": t["name"],
             "prompt": body,
             "trigger": {"type": "cron", "schedule": t["schedule"], "timezone": TIMEZONE},
             "timeout": TIMEOUT,
-            "repos": [{"url": REPO_URL, "ref": "main"}],
         }
         print(f"{t['name']}: {len(body)} prompt chars, cron {t['schedule']} {TIMEZONE}")
         if not args.deploy:
@@ -110,13 +109,18 @@ def main():
 
         existing = find_by_name(args.host, token, t["name"])
         if existing:
+            # `repos` is accepted only at creation; PATCH rejects it with HTTP 422.
+            # The clone target is already fixed at creation, so omit it on update.
             status, data = api(
-                "PATCH", f"{args.host}/api/automation/v1/{existing['id']}", token, payload)
+                "PATCH", f"{args.host}/api/automation/v1/{existing['id']}", token, base)
             print(f"  PATCH {existing['id']} -> HTTP {status}")
         else:
             status, data = api(
-                "POST", f"{args.host}/api/automation/v1/preset/prompt", token, payload)
+                "POST", f"{args.host}/api/automation/v1/preset/prompt", token,
+                dict(base, repos=[{"url": REPO_URL, "ref": "main"}]))
             print(f"  POST create -> HTTP {status}")
+        if status not in (200, 201):
+            sys.exit(f"deploy failed for {t['name']!r}: HTTP {status} {data}")
         print("  " + json.dumps({k: data.get(k) for k in
                                  ("id", "name", "trigger", "enabled", "state")}))
 

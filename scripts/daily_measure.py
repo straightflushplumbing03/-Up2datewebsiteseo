@@ -53,6 +53,14 @@ from datetime import datetime, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONTEXT_PATH = os.path.join(ROOT, "growth-engine", "data", "daily_context.json")
 
+# The daily automation is killed at ~1920s. These defaults are the pre-stage's
+# share of that: measured at ~145s for the full check set. Raising them is what
+# starved the research phase and killed three runs (ISSUE-033).
+DEFAULT_NETWORK_BUDGET = 600.0
+DEFAULT_TAVILY_QUERIES = 12
+DEFAULT_AI_QUERIES = 3
+AUTOMATION_WALL_CLOCK_S = 1920.0
+
 
 def _now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -133,7 +141,7 @@ def check_sitemap_idempotent():
     }
 
 
-def check_visibility(queries: int):
+def check_visibility(queries: int, timeout: float = 900):
     """Tavily sweep. Absent key is BLOCKED, never a zero."""
     have_key = any(
         os.environ.get(n) for n in ("TAVILY_API_KEY", "Tavily_api_key")
@@ -154,12 +162,21 @@ def check_visibility(queries: int):
     ok, code, out = _run(
         [sys.executable, "scripts/tavily_search.py", "--run", "--append",
          "--limit", str(queries)],
-        timeout=900,
+        timeout=timeout,
     )
-    return {"name": "visibility_sweep", "ok": ok, "exit_code": code, "detail": _tail(out, 8)}
+    result = {"name": "visibility_sweep", "ok": ok, "exit_code": code,
+              "detail": _tail(out, 8)}
+    if code == -1:
+        result.update({
+            "ok": False,
+            "blocked": True,
+            "note": (f"sweep exceeded its {int(timeout)}s network-budget share and was "
+                     "stopped — record BLOCKED (partial), never zero"),
+        })
+    return result
 
 
-def check_ai_visibility(queries: int):
+def check_ai_visibility(queries: int, timeout: float = 600):
     """Gemini Search-grounded AI sweep. Absent key is BLOCKED, never a zero.
 
     This is the *AI-platform* measurement (test_type: ai_platform). It is
@@ -184,11 +201,18 @@ def check_ai_visibility(queries: int):
     ok, code, out = _run(
         [sys.executable, "scripts/gemini_visibility.py", "--run", "--append",
          "--limit", str(queries)],
-        timeout=600,
+        timeout=timeout,
     )
     result = {"name": "ai_visibility_sweep", "ok": ok, "exit_code": code,
               "detail": _tail(out, 8)}
-    if code == 3:
+    if code == -1:
+        result.update({
+            "ok": False,
+            "blocked": True,
+            "note": (f"sweep exceeded its {int(timeout)}s network-budget share and was "
+                     "stopped — record BLOCKED (partial), never zero"),
+        })
+    elif code == 3:
         # Exit 3 = every grounded query was refused by the platform (quota, 5xx,
         # network). That is a blocked AI surface, not a zero and not a code defect.
         result.update({
@@ -245,13 +269,26 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--skip-tavily", action="store_true",
                     help="skip the network sweep (fast path)")
-    ap.add_argument("--queries", type=int, default=40,
-                    help="max queries for the Tavily sweep (default 40)")
-    ap.add_argument("--ai-queries", type=int, default=5,
-                    help="max queries for the Gemini AI-visibility sweep (default 5)")
+    ap.add_argument("--queries", type=int, default=DEFAULT_TAVILY_QUERIES,
+                    help=f"max queries for the Tavily sweep "
+                         f"(default {DEFAULT_TAVILY_QUERIES})")
+    ap.add_argument("--ai-queries", type=int, default=DEFAULT_AI_QUERIES,
+                    help=f"max queries for the Gemini AI-visibility sweep "
+                         f"(default {DEFAULT_AI_QUERIES})")
+    ap.add_argument("--network-budget", type=float, default=DEFAULT_NETWORK_BUDGET,
+                    help=(
+                        f"hard wall-clock seconds for BOTH network sweeps combined "
+                        f"(default {int(DEFAULT_NETWORK_BUDGET)}). Tavily gets 60%% and "
+                        "Gemini 40%%. A sweep that "
+                        "exceeds its share is recorded BLOCKED, never zero — a partial "
+                        "day is still a recorded day. Raise it only when the caller has "
+                        "more wall-clock headroom than the daily automation's budget."
+                    ))
     args = ap.parse_args()
 
     started = _now()
+    tavily_timeout = max(60.0, args.network_budget * 0.6)
+    gemini_timeout = max(60.0, args.network_budget * 0.4)
     checks = [
         check_knowledge_base(),
         check_crawler_access(),
@@ -269,13 +306,14 @@ def main() -> int:
             "detail": "--skip-tavily", "note": "record BLOCKED, never zero",
         })
     else:
-        checks.append(check_visibility(args.queries))
-        checks.append(check_ai_visibility(args.ai_queries))
+        checks.append(check_visibility(args.queries, tavily_timeout))
+        checks.append(check_ai_visibility(args.ai_queries, gemini_timeout))
 
     counts, latest = summarise_history()
     ctx = {
         "generated_at": started,
         "finished_at": _now(),
+        "network_budget_s": args.network_budget,
         "checks": checks,
         "history_row_counts": counts,
         "latest_visibility_row_per_platform": latest,
