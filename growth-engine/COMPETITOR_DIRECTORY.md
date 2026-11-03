@@ -748,3 +748,48 @@ is absent from every one of these queries. The pages' *existence* is verified; t
 *cause* the ranking is a **hypothesis**. A fetched competitor FAQ
 (`barkerandsonsplumbing.com/slab-leak-faqs`) shows the answer-first pattern the engine has
 logged repeatedly.
+
+---
+
+## 2026-11-03 update — 15-query Tavily conventional proxy
+
+**Provider note:** Tavily Search API used as the conventional-search proxy (Brave 429 /
+DuckDuckGo 202 to this egress IP; see provider policy). Gemini AI-surface sweep BLOCKED
+(HTTP 401, ISSUE-045) — no AI-platform row today. Straight Flush was **`cited` on 1 of 15**
+conclusive rows (`who can locate a hidden water leak in Laguna Niguel?`) and **absent on
+the other 14**. This is the first conventional-proxy citation observed; treat as a single
+observation, not a trend.
+
+### Appeared repeatedly (2026-11-03, Tavily; count = distinct queries in which the domain appeared)
+- **yelp.com** — 12/15 (directory, not a competitor).
+- **efficientplumbing.com** — 9/15. The most persistent *plumbing business* across city,
+  leak, repipe, water-heater and slab-leak intent.
+- **rotorooter.com** — 6/15; **barkerandsonsplumbing.com** — 6/15; **clearwaterplumbingoc.com**
+  — 5/15; **billmetzgerplumbing.com** — 4/15; **mckplumb.com** — 4/15;
+  **scottenglishplumbing.net** — 4/15.
+- **Leak/repipe specialists:** `evansleakdetection.com` 3/15, `leakstar.com` 3/15,
+  `socalrepipes.com` 3/15, `primewestplumbing.com` 2/15, `integrityrepipe.com` 2/15.
+- **City-name domains:** `lagunaniguelplumber.org` 2/15, `lagunaniguelcaplumbingpros.com`
+  2/15, `proplumbermissionviejo.com`, `proplumberlagunaniguel.com`, `proplumberdanapoint.com`,
+  `repipe-san-clemente.com`, `plumbingdanapointca.com`, `pro-drain.com`.
+- **Directories/aggregators** (not competitors): `yelp.com`, `facebook.com`, `youtube.com`,
+  `thumbtack.com`, `bbb.org`.
+
+### Newly observed this run
+- **`proplumber<city>.com` multi-city network** — `proplumbermissionviejo.com` (slab leak
+  detection Mission Viejo), `proplumberlagunaniguel.com` (hidden water leak Laguna Niguel),
+  `proplumberdanapoint.com` (copper pipe leak Dana Point). One brand operating per-city
+  domains. *Verified: the domains appeared in results. Hypothesis: the per-city domain
+  structure is a deliberate tactic — not proven to cause ranking.*
+- **Exact-match / near-exact-match domains** holding intents: `repipe-san-clemente.com`
+  (whole-house repipe San Clemente), `emergencyplumbernearme.website`, `urgentplumberspot.com`,
+  `bestserviceplumber.com`, `sewerpros.com` (emergency South OC), `ironwoodplumbing.com`,
+  `sewerpros.com` (emergency South OC), `esternrooter.com` (slab leak cost Laguna Niguel),
+  `aterdamagemissionviejo.com` (slab leak Mission Viejo).
+- **`billmetzgerplumbing.com` and `mckplumb.com`** now appear across both leak and
+  water-heater intent — added to the repeat set.
+
+### Gap confirmed (evidence, unchanged direction)
+Repipe, water-heater, drain, emergency and slab-leak intents remain served by
+**specialist/city-domain pages** while SF holds only `/services/*.html`; SF is absent from
+14/15 conclusive rows. Page existence is verified; causation is a **hypothesis**.
