@@ -5,6 +5,36 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-11-03 (Intelligence HQ daily) — 15-query conventional sweep; first SF citation (1/15); sitemap dedupe
+
+**Change:** `sitemap.xml` duplicate URL removed + canonical sort (identical URL set
+otherwise). Append-only documentation: +15 conventional-proxy visibility rows, +3
+inconclusive AI-surface rows, +20 competitor observations, +6 ideas, +2 industry-watch
+entries, this daily report, and an `INTEGRATION_STATUS.md` entry. No page copy, schema,
+claim, price, or service-area change.
+
+**Reason:** a duplicate `<url>` for `/services/leak-detection-laguna-niguel.html` was
+present; deduping is a pure hygiene fix. The measurement additions record what step 0b
+actually observed.
+
+**Target:** Tier-1 cities (Laguna Niguel, Mission Viejo, San Clemente, Aliso Viejo, Dana
+Point) × core services (leak detection, slab leaks, drains, water heaters, repipe,
+emergency).
+
+**Competitor insight:** city-name and exact-match domains hold local intent — a
+`proplumber<city>.com` network (Mission Viejo / Laguna Niguel / Dana Point),
+`repipe-san-clemente.com`, `emergencyplumbernearme.website`. `efficientplumbing.com`
+appeared in 9/15 result sets; `yelp.com` in 12/15.
+
+**Expected outcome:** the sitemap stays in sync (checker already reports *"in sync"*);
+the citation on `who can locate a hidden water leak in Laguna Niguel?` is logged as a
+single observation to be re-tested, not a trend.
+
+**Result:** pending — re-measure on the next comparable run. SF `cited` 1/15, absent 14/15;
+AI surface still BLOCKED (HTTP 401, ISSUE-045).
+
+**Keep/modify/revert:** keep (dedupe is a correctness fix; documentation is append-only).
+
 ## 2026-11-02 (Claude weekly) — San Clemente slab-leak direct answer; board still 0/154
 **Change:** `cities/san-clemente.html` direct-answer hero line, linked service list, FAQ "Who does slab leak detection in San Clemente?" (visible + JSON-LD). Experiment `exp-2026-11-02-san-clemente-slab-direct-answer`, re-measure 2026-11-30.
 **Reason:** 4 San Clemente slab-leak AI answers named no business at all. Owner priority: HomeAdvisor (74 lost answers), Angi, Porch listings.
