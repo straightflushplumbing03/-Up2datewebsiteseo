@@ -126,3 +126,16 @@ experiments below had their outcome re-assessed against this week's evidence.
 `data/content_experiments.jsonl` gains one row per page shipped 2026-10-20→24 with
 its baseline `sf_status` (all `absent`) and a 2026-11-23 re-measure date. The daily
 planner retests them as they age. See the file for the machine-readable rows.
+
+### exp-2026-11-02-san-clemente-slab-direct-answer — **shipped 2026-11-02, pending**
+
+- **Page:** `cities/san-clemente.html` — hero direct-answer paragraph ("Need slab leak
+  detection in San Clemente?…"), the 4 plain-text services now link to their service
+  pages, new FAQ "Who does slab leak detection in San Clemente?" (visible + FAQPage JSON-LD).
+- **Why:** 4 San Clemente slab-leak observations (10-20 → 11-02) were all `absent` and the
+  AI named **no business at all** — the most open query set on the board.
+- **Target queries / baseline:** best / who does / recommend × slab leak detection in
+  San Clemente — all `absent`.
+- **Claims used:** only APPROVED_CLAIMS (owner-operated, Laguna Niguel based, acoustic /
+  electronic / thermal, locate before opening). No prices, guarantees or new facts.
+- **Re-measure:** 2026-11-30.

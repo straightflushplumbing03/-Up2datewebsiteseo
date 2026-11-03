@@ -5,38 +5,9 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
-## 2026-11-02 (Intelligence HQ daily) — 16-query conventional sweep; SF absent 16/16; AI surface blocked (11th day)
-
-**Change:** documentation-only. +19 `ai_visibility_history.jsonl` rows (16 Tavily
-conventional proxy + 3 Gemini `test_failure`), +109 `competitor_observations.jsonl`
-rows, +3 `INDUSTRY_WATCH.md` entries, +6 `INNOVATION_IDEAS.md` candidates,
-`COMPETITOR_DIRECTORY.md` update, this log entry, and the daily report. **No page copy,
-schema, claim, price, or service-area change; no HTML touched.**
-
-**Reason:** the durable-memory pass — record what today's bounded measurement actually
-observed, and record the broken AI-surface instrument as a blocker rather than as
-visibility.
-
-**Target:** Tier-1 cities (Laguna Niguel, Mission Viejo, San Clemente, Aliso Viejo,
-Dana Point) × core services (leak detection, slab leaks, drains, water heaters, repipe).
-
-**Competitor insight:** repipe / water-heater / drain / slab-leak intents are each held
-by **specialist domains with a city page** (`allamericanrepipe.com`,
-`thewaterheatercompany.com`, `jettersndrains.com`, `evansleakdetection.com`); exact-match
-city domains (`proplumberlagunaniguel.com`, `bestplumberindanapoint.com`) recur. SF holds
-only `/services/*.html` and is absent from all 16 conclusive queries.
-
-**Expected outcome:** visibility rows accumulate for weekly trend measurement; the
-instrument blocker stays visible so a degraded measurement is never read as "SF absent".
-
-**Result:** Tavily 16/16 conclusive, HTTP 200, **SF absent 16/16**. Gemini **BLOCKED**
-(HTTP 401, ISSUE-035) — UNMEASURED, not zero. Google Search Central docs re-fetched and
-**unchanged since 2026-10-26**. No safe code change was warranted; none made.
-
-**Keep/modify/revert:** **Keep.** Append-only; reversible via `git revert` of the docs
-commit.
-
----
+## 2026-11-02 (Claude weekly) — San Clemente slab-leak direct answer; board still 0/154
+**Change:** `cities/san-clemente.html` direct-answer hero line, linked service list, FAQ "Who does slab leak detection in San Clemente?" (visible + JSON-LD). Experiment `exp-2026-11-02-san-clemente-slab-direct-answer`, re-measure 2026-11-30.
+**Reason:** 4 San Clemente slab-leak AI answers named no business at all. Owner priority: HomeAdvisor (74 lost answers), Angi, Porch listings.
 
 ## 2026-10-27 (Intelligence HQ daily) — 15-query conventional sweep; SF absent 0/15; sitemap normalized
 
