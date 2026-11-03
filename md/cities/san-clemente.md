@@ -15,6 +15,10 @@
 
 San Clemente's Spanish-village charm comes with a wide range of home ages and plumbing systems — we treat each one on its own merits, not a one-size-fits-all assumption.
 
+
+
+Need slab leak detection in San Clemente? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based nearby in Laguna Niguel. We pinpoint the leak first with acoustic, electronic, and thermal equipment, before any concrete, tile, or drywall is opened, then talk through repair or reroute options. Call (949) 374-6524.
+
  [Schedule Service in San Clemente](https://straightflushplumbingoc.com/contact.html)
 
 
@@ -36,15 +40,15 @@ Whether it's an older home near the pier or a newer build in Forster Ranch or Ta
 
 
 
-- Acoustic slab leak detection
+- [Acoustic slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
 
-- Hidden & underground water leak detection
+- [Hidden & underground water leak detection](https://straightflushplumbingoc.com/services/leak-detection.html)
 
-- Whole-house PEX repiping & copper line elimination
+- [Whole-house PEX repiping & copper line elimination](https://straightflushplumbingoc.com/services/pex-repiping.html)
 
 - [Water heater repair & installation in San Clemente](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
 
-- Drain services & general plumbing repair
+- [Drain services & general plumbing repair](https://straightflushplumbingoc.com/services/drain-services.html)
 
 
 
@@ -122,6 +126,14 @@ For most homes in San Clemente, leak detection runs $365 to $525. Where you fall
 
 
 Yes — San Clemente's Spanish-village charm comes with a wide range of home ages and plumbing systems — we treat each one on its own merits, not a one-size-fits-all assumption. We serve all of San Clemente and the surrounding South and Central Orange County communities, and Lance personally answers the phone.
+
+
+
+
+ Who does slab leak detection in San Clemente? +
+
+
+Straight Flush Plumbing & Leak Detection, an owner-operated plumber based nearby in Laguna Niguel, provides slab leak detection in San Clemente. We use acoustic listening equipment, electronic amplification, and thermal imaging to locate the leak before anything is opened, then explain repair, reroute, or repipe options. Call (949) 374-6524 or see our [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html) page.
 
 
 

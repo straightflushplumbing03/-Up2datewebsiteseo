@@ -216,7 +216,7 @@ Most homes: $365 to $525. What moves the price, and when insurance reimburses it
 
 
 
-Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html).
+Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html) and [leak detection in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html).
 
 
 
