@@ -139,3 +139,56 @@ planner retests them as they age. See the file for the machine-readable rows.
 - **Claims used:** only APPROVED_CLAIMS (owner-operated, Laguna Niguel based, acoustic /
   electronic / thermal, locate before opening). No prices, guarantees or new facts.
 - **Re-measure:** 2026-11-30.
+
+---
+
+## exp-2026-11-03-indexnow-split — does IndexNow get pages into Bing faster than waiting?
+
+- **Why this test, now:** the AI board is 0 named / 0 cited across 80 usable answers
+  (2026-10-23 → 11-02), and on 2026-11-02 and again on 2026-11-03 a web search for
+  `site:straightflushplumbingoc.com` returned **no first-party pages**. Content tests
+  (exp-2026-11-02-dedicated-pages-vs-control, PR #105) cannot read until pages are
+  indexed. This test works on that first stage. It targets the Bing index because
+  Copilot and other Bing-grounded answers draw from it, and Bing accepts IndexNow.
+  Google does not use IndexNow, so Google indexing still needs Search Console (P-002).
+- **Hypothesis:** URLs submitted by IndexNow show up as indexed in Bing sooner than
+  matched URLs left to normal sitemap crawling.
+- **Change:** root key file `3ff9508dd5110375b6ea304de6df46ca.txt`,
+  `scripts/indexnow_submit.py` (dry run unless `--send`), arms in
+  `growth-engine/data/indexnow_experiment.json`. Also removed a duplicate
+  `services/leak-detection-laguna-niguel.html` entry from `sitemap.xml` (new test
+  guards against duplicates).
+- **Arms (6 v 6, matched by page type):**
+  - Treatment (submit on day 0): slab-leak-detection-mission-viejo,
+    leak-detection-laguna-niguel, pex-repiping-mission-viejo,
+    water-heater-repair-laguna-niguel, cities/laguna-niguel, cities/san-clemente.
+  - Holdout (no submission until day 14): slab-leak-detection-laguna-niguel,
+    slab-leak-detection-dana-point, pex-repiping-laguna-niguel,
+    water-heater-repair-dana-point, cities/dana-point, cities/mission-viejo.
+  - Homepage and all other pages are in neither arm.
+- **Day 0:** the day the PR is merged, GitHub Pages serves the key file, and
+  `python3 scripts/indexnow_submit.py --arm treatment --send` returns HTTP 200/202.
+- **Metric (per URL, yes/no):** "indexed in Bing". Primary reading: Bing Webmaster
+  Tools URL Inspection (owner). Fallback the crew can run: an exact-title search plus
+  a `site:` + URL-path search; record which method was used.
+- **Checks:** day 3, day 7, day 14 after day 0.
+- **How to read it:** treatment wins if, at day 14, at least 4 of 6 treatment URLs
+  are indexed **and** treatment leads holdout by 3 or more. Equal or within 2 =
+  no detectable effect at this sample size (6 v 6 only detects a large effect).
+  Both arms at 0 on day 14 = the blocker is not discovery (look at site quality,
+  duplicate root `.html` stubs, or Bing Webmaster crawl errors instead).
+- **After the read (any outcome):** submit the holdout and every other sitemap URL.
+  The cost of holding out is at most 14 days of delay on 6 pages.
+- **Rules during the test:** do not edit holdout pages (a content change can trigger
+  Cloudflare Crawler Hints, which itself sends IndexNow pings). Sitewide edits that
+  touch both arms equally are allowed but must be noted here with the date.
+- **Confounders:** Cloudflare Crawler Hints may already be on (CLOUDFLARE-SETUP.md
+  recommends it). If it is, it pings Bing on changed pages, so the 11-02 sitewide
+  commits may already have been sent for both arms. The owner should check the
+  setting; if on, the test still compares an explicit submission against no new ping.
+  Single engine (Bing). Small n.
+- **Baseline (2026-11-03):** 0/12 found by the crew's web search fallback (no
+  first-party result for `site:straightflushplumbingoc.com`). Bing Webmaster status
+  not yet read (needs owner).
+- **Status:** designed, awaiting merge and owner OK to send. **Confidence:** low
+  until read. **Decision:** run.

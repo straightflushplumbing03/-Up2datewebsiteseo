@@ -1,0 +1,22 @@
+{
+  "id": "exp-2026-11-03-indexnow-split",
+  "note": "Matched pairs: same page type, similar age. Homepage and every page not listed are in neither arm. Do not edit holdout pages or submit them until the day-14 read.",
+  "arms": {
+    "treatment": [
+      "services/slab-leak-detection-mission-viejo.html",
+      "services/leak-detection-laguna-niguel.html",
+      "services/pex-repiping-mission-viejo.html",
+      "services/water-heater-repair-laguna-niguel.html",
+      "cities/laguna-niguel.html",
+      "cities/san-clemente.html"
+    ],
+    "holdout": [
+      "services/slab-leak-detection-laguna-niguel.html",
+      "services/slab-leak-detection-dana-point.html",
+      "services/pex-repiping-laguna-niguel.html",
+      "services/water-heater-repair-dana-point.html",
+      "cities/dana-point.html",
+      "cities/mission-viejo.html"
+    ]
+  }
+}
