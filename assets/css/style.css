@@ -5,7 +5,8 @@
    and its playing-card identity (every card face-up before the bet is made).
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* Google Fonts load from a <link> in each page's <head> (not @import) so the
+   font CSS is fetched in parallel with this file instead of after it. */
 
 :root{
   /* ---- Color tokens (mirrors straightflushplumbingoc.com theme) ---- */
