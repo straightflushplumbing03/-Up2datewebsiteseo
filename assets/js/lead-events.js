@@ -2,8 +2,11 @@
 // Events: phone_call_click (tap on any tel: link), generate_lead (contact form sent to Formspree),
 // form_submit_confirmed (thank-you page reached after Formspree redirect).
 (function () {
+  // Count leads only on the real site. The same files are also served from a Cloudflare
+  // workers.dev preview host; test taps and form sends there must not show up as leads.
+  var LIVE = /^(www\.)?straightflushplumbingoc\.com$/i.test(location.hostname);
   function track(name, params) {
-    if (typeof window.gtag === 'function') {
+    if (LIVE && typeof window.gtag === 'function') {
       window.gtag('event', name, Object.assign({ transport_type: 'beacon', lead_page: location.pathname }, params || {}));
     }
   }
