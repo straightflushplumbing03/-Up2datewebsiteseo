@@ -142,7 +142,7 @@ def footer(prefix):
           <li><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
           <li>{ADDRESS}</li>
-          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm<br>Sun Closed &middot; 24/7 for emergencies</li>
+          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat&ndash;Sun 9am&ndash;6pm<br>24/7 for emergencies</li>
         </ul>
       </div>
       <div>

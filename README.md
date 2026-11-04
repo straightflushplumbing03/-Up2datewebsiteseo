@@ -126,9 +126,9 @@ grep -rl "374-6524" --include="*.html" . | xargs sed -i 's/(949) 374-6524/YOUR-N
 
 ## Business hours
 
-Real hours (confirmed by the owner, do not change without confirming first): **Monday–Friday 8am–7pm, Saturday 9am–6pm, closed Sunday — with 24/7 availability for emergency calls only.** These appear in the footer of every page (`scripts/build.py`'s `footer()` function) and in the homepage's `openingHoursSpecification` JSON-LD schema.
+Real hours (confirmed by the owner 2026-11-04, do not change without confirming first): **Monday–Friday 8am–7pm, Saturday–Sunday 9am–6pm — with 24/7 availability for emergency calls.** These appear in the footer of every page (`scripts/build.py`'s `footer()` function) and in the homepage's `openingHoursSpecification` JSON-LD schema.
 
-If these ever change, update `scripts/build.py` and re-run `python3 scripts/fix_hours.py` — the idempotent hours patcher rewrites the footer hours line in every HTML file, the homepage JSON-LD description, and `llms.txt`, then verifies no stale phrasing remains. (In September 2026 it corrected all 131 pages that still said "Sat–Sun 9am–6pm" from an earlier version.) For the homepage `openingHoursSpecification` block, `Sat`/`Sun` day lists are hand-edited in `index.html`.
+If these ever change, update `scripts/build.py` and re-run `python3 scripts/fix_hours.py` — the idempotent hours patcher rewrites the footer hours line in every HTML file, the homepage JSON-LD description, and `llms.txt`, then verifies no stale phrasing remains. (In September 2026 it corrected all 131 pages that still said "Sat–Sun 9am–6pm" from an earlier version.) For the homepage `openingHoursSpecification` block, `Sat`/`Sun` day lists are hand-edited in `index.html`. **`fix_hours.py` encodes the old Sunday-closed hours and is retired (it exits without changing anything).**
 
 **Do not state the business is open 24/7 for general service** — only emergencies are handled outside the hours above. An earlier version of this site incorrectly stated blanket 24/7 hours; this was corrected sitewide and should not be reintroduced.
 
