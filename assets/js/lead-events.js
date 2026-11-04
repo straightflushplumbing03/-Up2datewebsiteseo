@@ -20,7 +20,10 @@
   document.addEventListener('submit', function (e) {
     var f = e.target;
     if (e.defaultPrevented || !f || !f.action || f.action.indexOf('formspree.io') === -1) return;
-    track('generate_lead', { lead_source: 'website_form' });
+    // heard_about is the visitor's own answer to the optional "How did you hear about us?" menu
+    // (a fixed list, no personal data). It is the only way to see AI-assistant leads, which GA4 logs as direct.
+    var heard = f.elements && f.elements.heard_about ? f.elements.heard_about.value : '';
+    track('generate_lead', { lead_source: 'website_form', heard_about: heard || 'not_answered' });
     if (!window.fetch || !window.FormData) return;
     e.preventDefault();
     var btn = f.querySelector('[type="submit"]');
