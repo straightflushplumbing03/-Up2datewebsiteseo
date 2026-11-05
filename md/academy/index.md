@@ -193,11 +193,11 @@ A growing library of straight answers about hidden leaks, slab leaks, and the te
  More resources
 
 
-## Insurance & local city guides
+## Insurance, cost & local city guides
 
 
 
-These two categories have their own dedicated sections, linked below.
+These categories have their own dedicated sections, linked below.
 
 
 
@@ -215,6 +215,13 @@ Coverage basics, documentation checklists, and questions to ask your provider.
 City-specific pages covering local plumbing conditions across our full service area.
 
 [Browse all service areas →](https://straightflushplumbingoc.com/service-areas.html)
+
+
+### Cost & Repair Guides
+
+What leak detection and slab leak repair cost, and how to choose between repair, reroute and repipe.
+
+[Visit the cost guides →](https://straightflushplumbingoc.com/guides/)
 
 
 
