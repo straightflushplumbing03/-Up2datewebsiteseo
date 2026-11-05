@@ -139,3 +139,35 @@ planner retests them as they age. See the file for the machine-readable rows.
 - **Claims used:** only APPROVED_CLAIMS (owner-operated, Laguna Niguel based, acoustic /
   electronic / thermal, locate before opening). No prices, guarantees or new facts.
 - **Re-measure:** 2026-11-30.
+
+## exp-2026-11-05-lake-forest-serp-title — title test on a page-2 city page (3 arms)
+
+- **Why:** the 11-04 GSC readout (PR #127) found ranking, not indexing, is the gate:
+  AI answers draw from page-1 results and most of our pages sit at position 25-60.
+  The crew has only tested *adding pages*. This tests the cheapest lever we control on a
+  page that is already close: the title.
+- **Arm A, treatment:** `cities/lake-forest.html`. Title `Leak Detection in Lake Forest, CA |
+  Straight Flush Plumbing` → `Leak Detection & Slab Leak Repair in Lake Forest, CA`;
+  description rewritten to lead with the same phrase (og/twitter copies and
+  `scripts/patch_city_meta.py` kept in sync). Body, H1 and schema unchanged, so the
+  title/description is the only variable. The page gets "slab leak repair lake forest"
+  impressions at 9.7-26.7 without using that phrase anywhere.
+- **Arm B, already shipped:** San Clemente (direct answer + FAQ 11-02, dedicated
+  leak-detection page 11-04). Lets us compare "new page" against "better title".
+- **Arm C, control:** `cities/coto-de-caza.html`, no change. **Freeze its title,
+  description, H1 and body until 2026-12-17.**
+- **Metric:** impression-weighted average GSC position over a fixed query list per arm,
+  extensionless + `.html` rows summed (baseline file:
+  `data/gsc_striking_distance_baseline_2026-11-05.json`). Secondary: cluster queries at
+  position ≤ 10. Baseline (08-02 → 11-02): **A 23.8** (41 impr, 2 queries ≤ 10),
+  **B 32.0** (43, 0), **C 34.6** (42, 0).
+- **Read it (28-day window after the merge date, vs baseline):**
+  - **Supported:** A improves ≥ 5 positions more than C *and* gains ≥ 1 query at ≤ 10.
+  - **Refuted:** A moves within ±3 of C's change.
+  - **Inconclusive:** any arm has < 20 impressions in the window, or C itself moves > 8
+    (a sitewide update swamped the test).
+  - B vs A is descriptive only (different cities, different change dates).
+- **Checks:** 2026-11-19, 2026-12-03, 2026-12-17 (GSC lags ~3 days).
+- **Decision it drives:** if supported, roll title/description rewrites to every city page
+  with page-2 service impressions (Irvine, Laguna Hills, Dana Point next) before writing
+  more new pages. If refuted, titles are not the gate; put effort into authority.
