@@ -1,0 +1,113 @@
+{
+ "source": "Google Search Console via OpenSEO (read-only), web search, query x page, 2026-08-02..2026-11-02, pulled 2026-11-05",
+ "metric": "impression-weighted average position across all site URLs (extensionless + .html summed) for a fixed query list; secondary = count of cluster queries at position <= 10",
+ "arms": {
+  "A_title_treatment": {
+   "page": "cities/lake-forest.html",
+   "change": "title + meta/og/twitter description only (2026-11-05 PR)",
+   "impressions": 41,
+   "weighted_position": 23.8,
+   "queries_le10": 2,
+   "queries_le20": 3,
+   "queries": {
+    "leak detection lake forest": [
+     18,
+     25.5
+    ],
+    "leak detection lake forest ca": [
+     9,
+     25.8
+    ],
+    "leak detection service lake forest": [
+     2,
+     9.5
+    ],
+    "slab leak detection lake forest": [
+     1,
+     46.0
+    ],
+    "slab leak repair lake forest": [
+     6,
+     26.7
+    ],
+    "slab leak repair lake forest ca": [
+     3,
+     9.7
+    ],
+    "water leak repair lake forest ca": [
+     2,
+     15.5
+    ]
+   }
+  },
+  "B_dedicated_page": {
+   "page": "cities/san-clemente.html + services/leak-detection-san-clemente.html",
+   "change": "already shipped: city-page direct answer + FAQ (2026-11-02, #109) and dedicated leak-detection page (2026-11-04, #121)",
+   "impressions": 43,
+   "weighted_position": 32.0,
+   "queries_le10": 0,
+   "queries_le20": 0,
+   "queries": {
+    "leak detection san clemente": [
+     14,
+     35.6
+    ],
+    "leak detection san clemente ca": [
+     4,
+     31.5
+    ],
+    "slab leak detection san clemente": [
+     10,
+     28.8
+    ],
+    "slab leak detection san clemente ca": [
+     9,
+     26.2
+    ],
+    "slab leak repair san clemente": [
+     3,
+     49.3
+    ],
+    "water leak detection san clemente": [
+     3,
+     27.3
+    ]
+   }
+  },
+  "C_control": {
+   "page": "cities/coto-de-caza.html",
+   "change": "none (freeze SERP-facing title/description/H1/body until 2026-12-17)",
+   "impressions": 42,
+   "weighted_position": 34.6,
+   "queries_le10": 0,
+   "queries_le20": 1,
+   "queries": {
+    "coto de caza plumbing services": [
+     7,
+     28.9
+    ],
+    "emergency plumber coto de caza": [
+     2,
+     52.5
+    ],
+    "emergency plumbing coto de caza": [
+     1,
+     13.0
+    ],
+    "plumber coto de caza": [
+     23,
+     40.8
+    ],
+    "plumbing coto de caza": [
+     9,
+     21.7
+    ]
+   }
+  }
+ },
+ "excluded_noise": [
+  "trouble urinating lake forest (15 impr, off-topic)",
+  "* lake forest park * (Washington State)",
+  "near-me queries (personalised)"
+ ]
+}
