@@ -1007,3 +1007,46 @@ re-fetched and unchanged since 2026-10-26.
 run is constrained to research + documentation); ideas 01–04 are HTML changes; idea-06 is
 a validator change. Nothing rejected. idea-2026-11-01-02 (invalid `GEMINI_API_KEY`)
 remains the single highest-value owner action and is unchanged today.
+
+---
+
+## 2026-11-06 (Intelligence HQ daily) — ≥5 new candidate ideas + prioritization
+
+**Evidence base this run:** 15 conclusive Tavily conventional-proxy rows (SF **cited 1 /
+absent 14**); Gemini AI surface **BLOCKED** (HTTP 401, ISSUE-035/045, re-verified by
+naming the secret); two primary Google Search Central docs re-fetched (HTTP 200,
+unchanged); two competitor homepages fetched (`evansleakdetection.com`, `leakstar.com`).
+
+| ID | Date | Idea | Type | Impact | Evid | Effort→Value | Rev | Risk | Status | Evidence / source | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-11-06-01 | 2026-11-06 | Add a **"leak detection without destruction" / "how we find it before we break anything"** explainer block to the existing `/services/leak-detection.html` and slab-leak pages | Website | 4 | 4 | 4 | 5 | L2 | candidate | `evansleakdetection.com` (fetched 2026-11-06, HTTP 200) leads with "Leak Detection without Destruction!" and a named FLO-by-Moen method; SF's `how-plumbers-find-leaks-without-cutting-walls.html` exists but is not linked from the service pages | On-page only; uses SF's own verified methods (acoustic/electronic/thermal/camera). No new claims, no prices. |
+| idea-2026-11-06-02 | 2026-11-06 | Add an **internal-linking pass**: link `how-plumbers-find-leaks-without-cutting-walls.html`, `acoustic-leak-detection-explained.html`, `electronic-pipe-locating-explained.html` from the relevant `/services/*.html` pages | Website | 4 | 4 | 5 | 5 | L1 | candidate | Google (fetched 2026-11-06) lists "Making your content easily findable through internal links on your website" as a foundational practice; SF has the explainers but they are weakly linked from service pages | Purely additive anchors; zero new claims; trivially reversible. |
+| idea-2026-11-06-03 | 2026-11-06 | Publish a **"why is my water bill high / hidden leak symptom" checklist** page (or section) targeting the one query class where SF already wins | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today SF was **cited** on `who can locate a hidden water leak in Laguna Niguel?` but **absent** on the head terms; the win is question/symptom intent | Build on the winning intent rather than the lost head terms; no prices (Level 3). |
+| idea-2026-11-06-04 | 2026-11-06 | Add **`areaServed`-aware local differentiation** to each existing city page: one verified local detail (neighbourhood, housing-stock/pipe-age note) so city pages are not thin permutations | Website | 4 | 3 | 3 | 5 | L2 | candidate | `leakstar.com` (fetched) ranks with a cloned city × service network; SF must *not* clone, but can differentiate the city pages it already has | Must stay factual and verified; no fabricated local offices or stats. |
+| idea-2026-11-06-05 | 2026-11-06 | Implement **`scripts/measure_integrity_check.py`** — fail loudly when any platform records `test_failure`/`inconclusive` for N consecutive runs | Tooling/ops | 4 | 5 | 4 | 5 | L2 | candidate | Gemini has recorded `test_failure`/`inconclusive` on every run since 2026-10-23 (ISSUE-035/045); a broken instrument silently degrades into the "absent" narrative | Additive, read-only tooling; surfaces a stale integration. (Same as idea-2026-11-02-05 — still not actioned, re-surfaced with one more day of evidence.) |
+| idea-2026-11-06-06 | 2026-11-06 | Add a **`Service` + `FAQPage` JSON-LD consistency test** that asserts every city page's visible FAQ text matches its JSON-LD | Tooling/tests | 3 | 4 | 4 | 5 | L1 | candidate | Google (fetched 2026-11-06): "Making sure that your structured data matches the visible text on the page"; per-page JSON-LD is a known regeneration hazard (AGENTS.md) | Read-only test; protects the later-pass JSON-LD from regressions. |
+
+**Prioritization (impact · evidence · effort-to-value · reversibility · risk gate):**
+
+1. **idea-2026-11-06-02 (internal-linking pass)** — top pick. Highest effort-to-value
+   (5) and lowest risk (L1): purely additive anchors, zero new claims, fully reversible,
+   and it directly implements a foundational practice named by the primary Google source
+   fetched today. It also improves the discoverability of the explainer pages that
+   support the winning question-intent query.
+2. **idea-2026-11-06-01 ("without destruction" explainer block)** — high evidence (a
+   fetched competitor page leads with exactly this), on-page only, reuses SF's own
+   verified methods.
+3. **idea-2026-11-06-05 (measurement-integrity check)** — the largest *durable* finding
+   is still that the AI-surface instrument has been broken for 14+ days; ranked above
+   content ideas so a degraded measurement cannot masquerade as a visibility result.
+4. **idea-2026-11-06-03 (high-water-bill symptom content)** — build on the one intent
+   class where SF already wins.
+5. **idea-2026-11-06-04 (city-page differentiation)** — evidence-backed, but must not
+   become cloned permutations; needs the verification discipline first.
+6. **idea-2026-11-06-06 (JSON-LD consistency test)** — useful regression guard for the
+   known generator hazard; lower impact than the above.
+
+**No idea actioned this run.** This run is constrained to research + documentation +
+the one sitemap correction; ideas 01–04 are HTML changes, 05–06 are tooling/tests.
+Nothing rejected. idea-2026-11-01-02 (invalid `GEMINI_API_KEY`) remains the single
+highest-value owner action and is unchanged today (now 14+ days).

@@ -220,3 +220,23 @@ are redacted.
   `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **absent** from the
   environment — GSC, GA4, and GBP remain unconnected. All impression/click/traffic/review
   metrics stay `unverified` (never `0`).
+
+## Re-verified 2026-11-06 (Intelligence HQ daily)
+
+- **Crawler access:** all bot UAs and `curl` paths 200; ISSUE-001 still resolved. No
+  `cf-mitigated`. Knowledge base validates (153 HTML files).
+- **Tavily Search API (conventional proxy):** **working** — 15 queries executed, all
+  conclusive, all HTTP 200. Recorded as `test_type: conventional_proxy`, never as an
+  AI-answer-engine result. First-ever SF `cited` row recorded
+  (`who can locate a hidden water leak in Laguna Niguel?`).
+- **Gemini (AI surface): BLOCKED — 14th consecutive day (ISSUE-035 / ISSUE-045).** All 3
+  grounded queries returned HTTP 401 `authentication_failed`
+  (`ACCESS_TOKEN_TYPE_UNSUPPORTED`). The secret was **named explicitly** before the
+  re-run (`export GEMINI_API_KEY="${GEMINI_API_KEY}"`), so this is a genuine invalid-key
+  block, not a missing-injection artefact. Verbatim: *"API key not valid. Please pass a
+  valid API key."* Recorded `inconclusive`, **not zero**. Owner action: supply a valid
+  `GEMINI_API_KEY`.
+- **Measurement (still blocked, P-002):** `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*` /
+  `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **absent** from the
+  environment — GSC, GA4, and GBP remain unconnected. All impression/click/traffic/review
+  metrics stay `unverified` (never `0`).
