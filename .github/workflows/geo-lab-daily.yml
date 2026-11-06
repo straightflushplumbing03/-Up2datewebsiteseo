@@ -13,11 +13,12 @@ name: GEO Lab daily operations
 
 on:
   schedule:
-    # 06:00 America/Los_Angeles. GitHub cron is UTC; these two lines cover PDT
-    # (UTC-7) and PST (UTC-8). The gate below exits early unless the local hour
-    # is 06, so exactly one of them fires each day.
-    - cron: "0 13 * * *" # 13:00 UTC = 06:00 PDT (summer)
-    - cron: "0 14 * * *" # 14:00 UTC = 06:00 PST (winter)
+    # 06:00 every day, including weekends, in the business's own timezone.
+    # GitHub Actions supports an IANA timezone on a schedule, so this stays
+    # 06:00 local across the PST/PDT changeover without a second cron entry.
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+    - cron: "0 6 * * *"
+      timezone: "America/Los_Angeles"
   workflow_dispatch:
     inputs:
       report:
@@ -36,22 +37,7 @@ jobs:
   daily:
     runs-on: ubuntu-latest
     steps:
-      - name: Check local time (skip the duplicate cron)
-        id: gate
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"; exit 0
-          fi
-          HOUR=$(TZ=America/Los_Angeles date +%H)
-          if [ "$HOUR" = "06" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Not 06:00 local (currently $HOUR) — skipping this cron." >> "$GITHUB_STEP_SUMMARY"
-          fi
-
       - name: Trigger the daily run
-        if: steps.gate.outputs.run == 'true'
         env:
           GEO_LAB_URL: ${{ secrets.GEO_LAB_URL }}
           GEO_LAB_RUN_TOKEN: ${{ secrets.GEO_LAB_RUN_TOKEN }}
@@ -73,7 +59,7 @@ jobs:
           echo '```json' >> "$GITHUB_STEP_SUMMARY"
           cat /tmp/run.json >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
-          # 409 = a run is already in progress (overlap guard). Not a failure.
+          # 409 = a run is already in progress (the lab's overlap guard). Not a failure.
           if [ "$HTTP" != "200" ] && [ "$HTTP" != "409" ]; then
             echo "Run failed with HTTP $HTTP"
             exit 1

@@ -29,9 +29,9 @@
   optimization engine and the integration registry.
 - `.github/workflows/geo-lab.yml` — typecheck, test and build on every PR
   touching `geo-lab/**`.
-- `.github/workflows/geo-lab-daily.yml` — the persistent scheduler: 06:00
-  America/Los_Angeles daily, with a PST/PDT gate and a safe no-op when the lab
-  is not deployed yet.
+- `.github/workflows/geo-lab-daily.yml` — the persistent scheduler: `0 6 * * *`
+  pinned to the `America/Los_Angeles` IANA timezone, daily, with a safe no-op
+  when the lab is not deployed yet.
 - Documentation: `README.md`, `ARCHITECTURE.md`, `DATABASE.md`,
   `GEO_METHODOLOGY.md`, `API_INTEGRATIONS.md`, `AUTONOMOUS_OPERATIONS.md`,
   `SECURITY.md`, `DEPLOYMENT.md`, `AGENTS.md`, `CHANGELOG.md`.

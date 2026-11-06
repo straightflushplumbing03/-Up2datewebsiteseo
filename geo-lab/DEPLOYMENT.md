@@ -72,9 +72,9 @@ Add two repository secrets to the GitHub repo:
 - `GEO_LAB_RUN_TOKEN` — the same value as the lab's environment variable
 
 `.github/workflows/geo-lab-daily.yml` then fires at 06:00 America/Los_Angeles
-daily (two cron entries cover PST/PDT; a local-time gate drops the duplicate) and
-POSTs to the lab. If the secrets are missing the workflow exits with a notice, so
-it is safe to merge before deployment.
+daily. The cron entry (`0 6 * * *`) carries `timezone: "America/Los_Angeles"`,
+so it stays 06:00 local across the PST/PDT changeover. If the secrets are missing
+the workflow exits with a notice, so it is safe to merge before deployment.
 
 You can also drive the lab from the existing OpenHands daily automation:
 

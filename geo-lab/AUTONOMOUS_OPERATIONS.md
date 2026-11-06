@@ -45,8 +45,9 @@ Authorization: Bearer $GEO_LAB_RUN_TOKEN
 Two schedulers drive it:
 
 1. **GitHub Actions** — `.github/workflows/geo-lab-daily.yml` (the primary,
-   repository-owned scheduler). Two cron entries cover PST/PDT and a local-time
-   gate drops the duplicate.
+   repository-owned scheduler). One cron entry, `0 6 * * *`, pinned to the
+   `America/Los_Angeles` IANA timezone, so it stays 06:00 local across the
+   PST/PDT changeover. GitHub Actions supports a `timezone` on a schedule.
 2. **The existing OpenHands daily automation** ("SFPL Intelligence HQ Daily
    6 AM") — a second heartbeat, useful when Actions is unavailable.
 
