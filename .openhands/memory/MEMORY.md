@@ -9,8 +9,18 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
 - **A separate Next.js 16 app** (App Router, TS, Tailwind v4, `node:sqlite`) — NOT part of
   the static site, does not deploy with it. Run from `geo-lab/`: `npm run seed`, `npm test`
   (34 tests, real DB + real crawl, no mocks), `npx tsc --noEmit`, `npm run build`. Serves 12000.
-- **Cannot run on Cloudflare Pages** (no persistent filesystem, no long-lived process). Needs a
-  Node host with a persistent disk (Fly/Railway/Render/VPS). Cloudflare Pages keeps the site.
+- **Cannot run on Cloudflare Pages / Vercel / Render free** (no persistent filesystem — Render
+  free docs: "local SQLite databases … are lost"; its free Postgres "expire[s] 30 days after
+  creation"). **Free options that DO fit:** Oracle Cloud Always Free (real VM + block volume,
+  but idle instances are reclaimed if 95th-pct CPU *and* network stay <20% over 7 days) or GCP
+  `e2-micro` + 30 GB disk (us-west1/us-central1/us-east1). **Simplest: no server at all** —
+  standard GitHub runners are free for public repos; run `npm run job` (headless, same
+  orchestrator as the HTTP route) on cron. Fly.io is NOT free (~$5/mo; "$1 of free credit …
+  lasts for 7 days").
+- **The lab DB is a credential store, not data — never commit it.** It holds the owner's scrypt
+  password hash + live session tokens, and this repo is **public**. `.gitignore` must cover
+  `data/geo-lab.db` *and* the `-wal`/`-shm`/`-journal` sidecars (a plain `data/*.db` rule misses
+  them). Three tests enforce this; each was negative-tested.
 - Autonomy is an **external scheduler** — `.github/workflows/geo-lab-daily.yml` cron 06:00 PT
   POSTs `/api/run` with `GEO_LAB_RUN_TOKEN`; no session needed. `geo-lab.yml` gates PRs.
 - Publishing goes through `engine/publishing.ts` only: snapshot → validate → **branch + PR**,
