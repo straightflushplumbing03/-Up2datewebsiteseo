@@ -30,10 +30,23 @@ in Settings, then delete that file.**
 Run the gates:
 
 ```bash
-npm test          # 32 tests, real SQLite + real site crawl, no mocks
+npm test          # 37 tests, real SQLite + real site crawl, no mocks
 npm run build     # production build
 npx tsc --noEmit  # typecheck
 ```
+
+Headless operation — no server, no browser, no OpenHands session. This is what
+a scheduler should call, and it is the whole daily workload:
+
+```bash
+npm run job                    # daily operations, no live network calls
+npm run job -- --visibility    # also run the live visibility sweep
+npm run job -- --report weekly
+npm run refresh                # cheap re-crawl + re-score, no agents
+npm run migrate                # apply the schema and print row counts
+```
+
+See `DEPLOYMENT.md` for where this can run free.
 
 ## What actually works today
 

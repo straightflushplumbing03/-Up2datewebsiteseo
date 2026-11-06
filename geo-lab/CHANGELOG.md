@@ -1,5 +1,32 @@
 # CHANGELOG
 
+## 2026-11-06 — headless operation, free-hosting guidance, distribution guards
+
+### Fixed
+- **Three `package.json` scripts pointed at files that did not exist.**
+  `npm run job`, `npm run migrate` and `npm run refresh` referenced
+  `scripts/job.ts`, `scripts/migrate.ts` and `scripts/refresh.ts`; only
+  `seed.ts` was present, so all three crashed with `ERR_MODULE_NOT_FOUND`.
+  Added `scripts/run.ts` (the headless daily run — same orchestrator as the
+  HTTP route, no server needed), `scripts/migrate.ts` and `scripts/refresh.ts`.
+- **`.gitignore` did not exclude the database sidecars.** The rule was
+  `data/*.db`, which misses the `-wal`/`-shm`/`-journal` files SQLite writes in
+  WAL mode. Those can contain committed pages, including the owner's scrypt
+  password hash and session tokens. Now excluded explicitly.
+
+### Added
+- **Distribution-safety tests** (3), each verified to fail when the bug it
+  guards is reintroduced: every declared npm script resolves to a real file;
+  the database and all sidecars are gitignored; the live database is not tracked
+  by git.
+- **Headless operation** documented in `README.md` — `npm run job`,
+  `npm run refresh`, `npm run migrate`.
+- **Free-hosting analysis** in `DEPLOYMENT.md`, quoting each provider's own
+  docs: Oracle Always Free and GCP e2-micro fit (real VM + persistent disk);
+  GitHub Actions is the simplest zero-cost route because the daily job needs no
+  server; Fly.io is ~$5/mo, not free; Render's free web service and its free
+  Postgres do not fit; Vercel/Cloudflare Workers have no persistent filesystem.
+
 ## 2026-11-06 — Phase 11 (quality assurance) and documentation
 
 ### Fixed

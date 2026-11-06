@@ -16,11 +16,49 @@ Cloudflare Pages; the lab is a separate deployment.
 
 ## Where to deploy
 
-All of these give a persistent disk on a low-cost plan:
+### Free options, ranked
+
+The hard constraint is **a persistent filesystem** (SQLite + `data/snapshots/`).
+That is what rules out the serverless platforms, not CPU or memory. Verified
+against each provider's own docs on 2026-11-06:
+
+| Option | Cost | Fits? | Evidence |
+|---|---|---|---|
+| **Oracle Cloud Always Free** | $0 | **Yes — best free fit** | *"All Oracle Cloud Infrastructure accounts (whether free or paid) have a set of resources that are free of charge in the home region of the tenancy, for the life of the account."* Includes "Arm-based Ampere A1 Compute" and "Block Volume" ([Always Free Resources](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm)). A real VM with a real disk. **Caveat:** *"Idle Always Free compute instances may be reclaimed by Oracle… during a 7-day period… CPU utilization for the 95th percentile is less than 20% [and] Network utilization is less than 20%."* A lab that mostly sleeps is exactly what that rule targets, so take a backup (see Backups) and expect a rare rebuild. |
+| **Google Cloud e2-micro** | $0 | Yes | *"1 non-preemptible e2-micro VM instance per month"* plus *"30 GB-months standard persistent disk"*, in `us-west1`, `us-central1` or `us-east1` ([Free cloud features](https://cloud.google.com/free/docs/free-cloud-features)). A VM with a boot disk; same idle caveat does **not** apply, but you administer it. |
+| **GitHub Actions (no server)** | $0 | **Yes — simplest** | *"The following usage remains free independently… Standard GitHub-hosted runners in public repositories."* ([Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions)). Run the headless job (`npm run job`) on a cron, commit the results as data (JSON), and skip hosting entirely. **Do not commit the SQLite file** — it holds the owner password hash and session tokens. See "The no-server option". |
+| **Fly.io** | ~$5/mo | Yes, not free | *"One shared-cpu-1x 512MB Machine, running continuously $3.69 [and] 10GB volume $1.50"* ([pricing](https://fly.io/docs/about/pricing/)). The free trial is *"$1 of free credit… lasts for 7 days"* ([free trial](https://fly.io/docs/about/free-trial/)) — a trial, not a free tier. |
+| **Render free web service** | $0 | **No** | *"Free web services have an ephemeral filesystem. This means that any changes to your web service's filesystem (uploaded images, local SQLite databases, etc.) are lost every time the service redeploys, restarts, or spins down… Paid services can preserve local filesystem changes by attaching a persistent disk, but Free web services cannot."* Its free Postgres is also unusable: *"Free Render Postgres databases expire 30 days after creation."* ([Deploy for Free](https://render.com/docs/free)) |
+| **Vercel / Cloudflare Workers** | $0 | **No** | No persistent filesystem. Cloudflare's D1 is the nearest fit but its free tier is *"Maximum database size 500 MB (Free)"* and it would mean rewriting the data layer ([D1 limits](https://developers.cloudflare.com/d1/platform/limits/)). |
+
+**Recommendation:** start with the **no-server GitHub Actions option** — it is
+free, has no uptime problem, and needs no new account. Move to **Oracle Always
+Free** when you want the interactive dashboard reachable on demand and the
+agents running on their own schedule. Do not put it on Cloudflare Pages.
+
+### The no-server option
+
+The daily work does not need a web server. `npm run job` runs the same
+orchestrator the dashboard buttons call, entirely headless:
+
+```bash
+npm run job                    # daily operations, no live network calls
+npm run job -- --visibility    # also run the live visibility sweep
+npm run job -- --report weekly
+```
+
+Point `GEO_LAB_DB` at a path inside the workspace and commit the **derived data**
+(a JSON export), never the database file. This keeps the repository public-safe
+while still giving the lab persistent history. `npm test` now enforces the part
+that matters: it fails if the database or any of its sidecars becomes tracked.
+
+### Hosts that give a persistent disk
 
 | Host | Notes |
 |---|---|
-| **Fly.io** | Persistent volume + a small machine. Good default. |
+| **Oracle Cloud Always Free** | Free forever; Arm Ampere A1 VM + block volume. Watch the idle-reclaim rule. |
+| **Google Cloud e2-micro** | Free in 3 US regions; 30 GB persistent disk. |
+| **Fly.io** | Persistent volume + a small machine, ~$5/mo. Good default paid option. |
 | **Railway** | Volume support, simple env management. |
 | **Render** | Persistent disk on paid tiers only. |
 | **A small VPS** | Cheapest at scale; you manage updates. |

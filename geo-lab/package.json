@@ -2,7 +2,7 @@
   "name": "sfpl-geo-lab",
   "version": "1.0.0",
   "private": true,
-  "description": "Straight Flush GEO Intelligence Lab — autonomous GEO/AI-search command center",
+  "description": "Straight Flush GEO Intelligence Lab \u2014 autonomous GEO/AI-search command center",
   "scripts": {
     "dev": "next dev -p 12000",
     "build": "next build",
@@ -10,8 +10,8 @@
     "lint": "next lint",
     "migrate": "tsx scripts/migrate.ts",
     "seed": "tsx scripts/seed.ts",
+    "job": "tsx scripts/run.ts",
     "refresh": "tsx scripts/refresh.ts",
-    "job": "tsx scripts/job.ts",
     "test": "tsx tests/run.ts"
   },
   "dependencies": {

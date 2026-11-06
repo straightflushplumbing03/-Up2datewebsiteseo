@@ -8,6 +8,7 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 
 // Point the whole process at a throwaway database before any module loads it.
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "geolab-test-"));
@@ -459,6 +460,54 @@ async function main() {
       assert(valid.has(String(i.status)), `unknown status "${i.status}" for ${i.label}`);
       assert(String(i.detail).length > 0, `integration ${i.label} must explain its status`);
     }
+  });
+
+  // ── Distribution safety ─────────────────────────────────────────────────
+  // The lab's SQLite file holds the owner's scrypt password hash and live
+  // session tokens, so it must never be committed. Two real traps: (1) the
+  // file was named data/*.db but .gitignore only excluded *.db, and (2) this
+  // repository is public, so a stray `git add -A` would publish the hash.
+  await test("distribution: every declared npm script points at a file that exists", () => {
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")) as {
+      scripts: Record<string, string>;
+    };
+    for (const [name, cmd] of Object.entries(pkg.scripts)) {
+      // Only the tsx-driven scripts name a repo file we can resolve.
+      const m = cmd.match(/(?:^|\s)((?:scripts|tests)\/[\w./-]+\.ts)\b/);
+      if (!m) continue;
+      const target = path.join(__dirname, "..", m[1]);
+      assert(fs.existsSync(target), `npm run ${name} -> missing file ${m[1]}`);
+    }
+  });
+
+  await test("distribution: the database file and its sidecars are gitignored", () => {
+    const ignore = fs.readFileSync(path.join(__dirname, "..", ".gitignore"), "utf8");
+    const patterns = ignore.split("\n").map((l) => l.trim()).filter((l) => l && !l.startsWith("#"));
+    const covered = (name: string) =>
+      patterns.some((p) => {
+        const rx = new RegExp("^" + p.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*") + "$");
+        return rx.test(name);
+      });
+    for (const f of ["data/geo-lab.db", "data/geo-lab.db-wal", "data/geo-lab.db-shm", "data/geo-lab.db-journal"]) {
+      assert(covered(f), `.gitignore must exclude ${f} (it holds password hashes and session tokens)`);
+    }
+  });
+
+  await test("distribution: the live database is not tracked by git", async () => {
+    // This process redirects GEO_LAB_DB at a temp dir, so resolve the file the
+    // lab would really use (unset env var) rather than the test's own DB.
+    const { REPO_ROOT } = await import("../src/lib/paths");
+    const rel = "geo-lab/data/geo-lab.db";
+    let tracked = "";
+    try {
+      tracked = execFileSync("git", ["ls-files", "--error-unmatch", rel], {
+        cwd: REPO_ROOT,
+        stdio: ["ignore", "pipe", "ignore"],
+      }).toString().trim();
+    } catch {
+      tracked = ""; // git exits non-zero when the path is untracked — that is the pass case
+    }
+    assert(!tracked, `${rel} is committed to git — it contains the owner password hash and session tokens`);
   });
 
   // ── Report ──────────────────────────────────────────────────────────────
