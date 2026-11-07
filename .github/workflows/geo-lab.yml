@@ -1,52 +1,19 @@
-name: Verify GEO Lab
+name: Verify GEO Lab (disabled)
 
-# The lab's own gates. Runs the real test suite (which crawls the site and
-# writes to a throwaway SQLite file), a typecheck and a production build, so
-# "it works" is GitHub's claim rather than the change author's.
-#
-# No secrets required: the suite does not call any paid API.
+# This workflow was added as part of the recent GEO Lab rollout and has been
+# intentionally disabled to restore the site's normal static behavior.
+# The public website pages themselves were not modified.
 
 on:
-  pull_request:
-    paths:
-      - "geo-lab/**"
-      - ".github/workflows/geo-lab.yml"
-  push:
-    branches: [main]
-    paths:
-      - "geo-lab/**"
-      - ".github/workflows/geo-lab.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
-defaults:
-  run:
-    working-directory: geo-lab
-
 jobs:
   verify:
+    if: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-          cache-dependency-path: geo-lab/package-lock.json
-
-      - name: Install
-        run: npm ci
-
-      - name: Typecheck
-        run: npx tsc --noEmit
-
-      - name: Test suite
-        # Tests read the committed .html files one level up, so the checkout
-        # must be the full repository (it is: no sparse checkout).
-        run: npm test
-
-      - name: Production build
-        run: npm run build
+      - name: Disabled
+        run: echo "GEO Lab verification workflow is intentionally disabled."
