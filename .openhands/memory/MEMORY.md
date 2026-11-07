@@ -189,8 +189,13 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
 - **Never run `scripts/gen_*.py` site-wide** — they revert per-page JSON-LD and unique city meta
   (4->1 JSON-LD blocks, 585 lines deleted). Edit `.html` directly. `write_page()` now guards it.
 - Root-level `.html` files are `noindex` stubs; indexable pages live in subdirectories.
-- **A stale `ghu_…` token in `.git/config` makes `git push` hang on a password prompt** while
-  `$GITHUB_TOKEN` is fine. Fix: `git remote set-url origin "https://${GITHUB_TOKEN}@github.com/OWNER/REPO.git"`.
+- **The git token ROTATES during a session.** A push hangs on a password prompt because
+  `.git/config` holds the *previous* `ghu_…` token while `$GITHUB_TOKEN` has moved on. Happened
+  twice in one day. Fix: `git remote set-url origin "https://${GITHUB_TOKEN}@github.com/OWNER/REPO.git"`.
+  If a push ever hangs, that is the cause — do not wait for the timeout.
+- **geo-lab is essentially complete** (audited against spec §22, 2026-11-07). Notifications (§16)
+  was the last gap and is now built. **`/api/reports` + `/api/entity` return 405 by design** —
+  POST-only actions, not missing GETs. Do not "fix" them.
 - Search-provider reality on this egress IP: Brave -> 429, DDG HTML -> 202; Tavily is the
   reliable path (DDG Lite is the only parseable scraper fallback).
 - No GSC/GA4/GBP credentials here — record as a blocker, never as zero.
