@@ -17,6 +17,13 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   standard GitHub runners are free for public repos; run `npm run job` (headless, same
   orchestrator as the HTTP route) on cron. Fly.io is NOT free (~$5/mo; "$1 of free credit …
   lasts for 7 days").
+- **The lab crawls the checkout it lives in.** `REPO_ROOT = process.cwd()/..`, so deploying
+  `geo-lab/` alone makes the crawler walk its own parent dir and report a confident, wrong
+  answer (observed 51 pages / 0% consistency vs the real 153 / 100%). Deploy the **whole repo**;
+  `GEO_LAB_SITE_DIR` overrides, and `crawlRepo()` now throws rather than guess. **Verify a
+  deploy by running it from an isolated copy** — this class of bug exits 0 and looks healthy.
+  Also: `npm ci --omit=dev` breaks both the build and the daily job (tailwind/postcss/tsx are
+  devDeps).
 - **The lab DB is a credential store, not data — never commit it.** It holds the owner's scrypt
   password hash + live session tokens, and this repo is **public**. `.gitignore` must cover
   `data/geo-lab.db` *and* the `-wal`/`-shm`/`-journal` sidecars (a plain `data/*.db` rule misses
@@ -182,6 +189,8 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
 - **Never run `scripts/gen_*.py` site-wide** — they revert per-page JSON-LD and unique city meta
   (4->1 JSON-LD blocks, 585 lines deleted). Edit `.html` directly. `write_page()` now guards it.
 - Root-level `.html` files are `noindex` stubs; indexable pages live in subdirectories.
+- **A stale `ghu_…` token in `.git/config` makes `git push` hang on a password prompt** while
+  `$GITHUB_TOKEN` is fine. Fix: `git remote set-url origin "https://${GITHUB_TOKEN}@github.com/OWNER/REPO.git"`.
 - Search-provider reality on this egress IP: Brave -> 429, DDG HTML -> 202; Tavily is the
   reliable path (DDG Lite is the only parseable scraper fallback).
 - No GSC/GA4/GBP credentials here — record as a blocker, never as zero.
