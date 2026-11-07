@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { REPO_ROOT, SITE_DIR } from "../paths";
+import { SITE_DIR } from "../paths";
 import { parseDocument, schemaTypes, headingSkips, type ParsedDoc } from "./html";
 import { sha256 } from "../util";
 import { COMPANY } from "../company";
@@ -70,7 +70,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 export function sitemapUrls(): string[] {
-  const file = path.join(REPO_ROOT, "sitemap.xml");
+  const file = path.join(SITE_DIR, "sitemap.xml");
   if (!fs.existsSync(file)) return [];
   const xml = fs.readFileSync(file, "utf8");
   return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
@@ -90,8 +90,8 @@ export function urlToRepoPath(url: string): string | null {
   if (u.endsWith("/")) return path.join(u, "index.html");
   if (u.endsWith(".html")) return u;
   // extensionless: prefer the .html twin at the same level
-  if (fs.existsSync(path.join(REPO_ROOT, u + ".html"))) return u + ".html";
-  if (fs.existsSync(path.join(REPO_ROOT, u, "index.html"))) return path.join(u, "index.html");
+  if (fs.existsSync(path.join(SITE_DIR, u + ".html"))) return u + ".html";
+  if (fs.existsSync(path.join(SITE_DIR, u, "index.html"))) return path.join(u, "index.html");
   return u + ".html";
 }
 
@@ -102,7 +102,7 @@ export function repoPathToUrl(p: string): string {
   return COMPANY.website.replace(/\/$/, "") + "/" + rel.replace(/^\//, "");
 }
 
-export function walkHtml(dir = REPO_ROOT): string[] {
+export function walkHtml(dir = SITE_DIR): string[] {
   const out: string[] = [];
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const e of entries) {
@@ -119,11 +119,23 @@ export function walkHtml(dir = REPO_ROOT): string[] {
 }
 
 export function crawlRepo(): CrawledPage[] {
+  // A deployed lab may sit anywhere; the site being analysed must be told to it
+  // explicitly. Without GEO_LAB_SITE_DIR we fall back to the repository layout
+  // (SITE_DIR is the parent of geo-lab/). Getting this wrong is not a small
+  // error: the crawler would walk the lab's own parent directory and score
+  // whatever it found, so we refuse to guess.
+  if (!fs.existsSync(path.join(SITE_DIR, "index.html"))) {
+    throw new Error(
+      `GEO Lab: no index.html in the site directory ${SITE_DIR}.\n` +
+        "Set GEO_LAB_SITE_DIR to the directory that holds the website (the folder " +
+        "containing index.html and sitemap.xml), or check out the website next to geo-lab/.",
+    );
+  }
   const sm = new Set(sitemapUrls().map((u) => urlToRepoPath(u)).filter(Boolean) as string[]);
   const files = walkHtml();
   const pages: CrawledPage[] = [];
   for (const file of files) {
-    const rel = path.relative(REPO_ROOT, file);
+    const rel = path.relative(SITE_DIR, file);
     const html = fs.readFileSync(file, "utf8");
     const url = repoPathToUrl(rel);
     const doc = parseDocument(html, url);
@@ -168,7 +180,7 @@ export function auditSite(pages: CrawledPage[]): SiteAudit {
       }
       if (target.startsWith("#") || target.startsWith("mailto:") || target.startsWith("tel:")) continue;
       const repoRel = urlToRepoPath(target);
-      if (repoRel && !known.has(repoRel) && !fs.existsSync(path.join(REPO_ROOT, repoRel))) {
+      if (repoRel && !known.has(repoRel) && !fs.existsSync(path.join(SITE_DIR, repoRel))) {
         brokenInternalLinks.push({ from: p.path, href: l.href });
       }
     }

@@ -52,6 +52,20 @@ Point `GEO_LAB_DB` at a path inside the workspace and commit the **derived data*
 while still giving the lab persistent history. `npm test` now enforces the part
 that matters: it fails if the database or any of its sidecars becomes tracked.
 
+### Oracle: step-by-step
+
+`deploy/oracle/README.md` walks through the console (creating the VM, choosing
+the Arm shape, saving the SSH key) and `deploy/oracle/bootstrap.sh` does the
+install. Two things that are easy to get wrong:
+
+- **The lab needs the whole repository, not just `geo-lab/`.** It analyses the
+  website by walking the checkout, and the website lives at the repository root.
+  A standalone `geo-lab/` copy makes the crawler walk its own parent directory.
+  `crawlRepo()` now refuses to run in that case rather than score the wrong
+  files, and `GEO_LAB_SITE_DIR` overrides the location explicitly.
+- **Never open the app port to the internet.** Reach it over an SSH tunnel or
+  put Cloudflare Tunnel in front of it (outbound-only, no inbound ports).
+
 ### Hosts that give a persistent disk
 
 | Host | Notes |

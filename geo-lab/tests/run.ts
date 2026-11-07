@@ -510,6 +510,28 @@ async function main() {
     assert(!tracked, `${rel} is committed to git — it contains the owner password hash and session tokens`);
   });
 
+  // ── Site discovery ──────────────────────────────────────────────────────
+  // A deployed lab sits next to a checkout of the website, not inside it. If
+  // the site directory is wrong the crawler would happily walk the lab's own
+  // parent directory and score unrelated files, so crawlRepo must refuse
+  // instead of reporting nonsense. Verified by running it in a child process
+  // with GEO_LAB_SITE_DIR pointed at an empty directory.
+  await test("site: refuses to crawl a site directory that has no index.html", () => {
+    const empty = fs.mkdtempSync(path.join(os.tmpdir(), "geolab-nosite-"));
+    const script =
+      "import { crawlRepo } from './src/lib/engine/site';" +
+      "try { crawlRepo(); console.log('NO_THROW'); }" +
+      "catch (e) { console.log('THREW:' + String((e as Error).message)); }";
+    const out = execFileSync("npx", ["--yes", "tsx", "-e", script], {
+      cwd: path.join(__dirname, ".."),
+      env: { ...process.env, GEO_LAB_SITE_DIR: empty, GEO_LAB_DB: path.join(empty, "t.db") },
+      encoding: "utf8",
+    });
+    fs.rmSync(empty, { recursive: true, force: true });
+    assert(out.includes("THREW"), `crawlRepo scored an empty site dir instead of refusing: ${out.trim()}`);
+    assert(out.includes("GEO_LAB_SITE_DIR"), `the refusal must name the variable to fix: ${out.trim()}`);
+  });
+
   // ── Report ──────────────────────────────────────────────────────────────
   const pass = results.filter((r) => r.ok).length;
   const fail = results.length - pass;

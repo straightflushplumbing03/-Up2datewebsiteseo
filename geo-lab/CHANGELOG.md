@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## 2026-11-06 — Oracle deployment path
+
+### Fixed
+- **The crawler silently analysed the wrong directory on a standalone deploy.**
+  `REPO_ROOT` is `process.cwd()/..`, so a lab deployed outside the website's
+  repository walked *its own parent directory* and scored whatever it found.
+  Observed from an isolated copy: **51 pages, entity consistency 0%, 0
+  competitors, 283 issues** — versus 153 / 100% / 289 / 0 in the real
+  repository. It now reads `GEO_LAB_SITE_DIR` (default: `REPO_ROOT`, which is
+  correct inside this repository) and `crawlRepo()` throws a message naming that
+  variable rather than reporting nonsense.
+- **`sitemapUrls()` and three other site lookups used `REPO_ROOT`** where they
+  meant the site directory, so a relocated checkout would have found no
+  sitemap, mis-resolved extensionless URLs, and reported false broken links.
+
+### Added
+- **`deploy/oracle/bootstrap.sh`** — idempotent install for an Oracle Cloud
+  Always Free VM: timezone, Node 22, full-repository clone, build, and two
+  systemd units (`geo-lab.service` for the dashboard, `geo-lab-daily.timer` for
+  the 06:00 local run with `Persistent=true`). Takes no secrets as arguments.
+- **`deploy/oracle/README.md`** — the console walkthrough: instance creation,
+  Arm vs AMD shape, the idle-reclaim rule, SSH tunnel access, first sign-in,
+  backups.
+- **Test** (38 total): `crawlRepo()` must refuse a site directory with no
+  `index.html`. Negative-tested by deleting the guard and observing the failure.
+
 ## 2026-11-06 — headless operation, free-hosting guidance, distribution guards
 
 ### Fixed

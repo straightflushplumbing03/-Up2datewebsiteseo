@@ -11,10 +11,19 @@ export const DATA_DIR = path.join(GEO_LAB_DIR, "data");
 export const DB_PATH = process.env.GEO_LAB_DB || path.join(DATA_DIR, "geo-lab.db");
 export const SNAPSHOT_DIR = path.join(DATA_DIR, "snapshots");
 
+/**
+ * The website under analysis. In this repository that is REPO_ROOT, because
+ * geo-lab/ sits inside the website's repository. A standalone deployment (an
+ * Oracle VM, for instance) must set GEO_LAB_SITE_DIR to a checkout of the
+ * website, otherwise the crawler would walk the lab's own parent directory.
+ */
+export const SITE_DIR = process.env.GEO_LAB_SITE_DIR
+  ? path.resolve(process.env.GEO_LAB_SITE_DIR)
+  : REPO_ROOT;
+
 /** Existing growth-engine knowledge base + raw observation logs. */
 export const GROWTH_ENGINE_DIR = path.join(REPO_ROOT, "growth-engine");
 export const GE_DATA_DIR = path.join(GROWTH_ENGINE_DIR, "data");
-export const SITE_DIR = REPO_ROOT;
 
 export function ensureDirs(): void {
   for (const d of [DATA_DIR, SNAPSHOT_DIR]) {
