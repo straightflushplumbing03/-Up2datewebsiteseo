@@ -12,7 +12,7 @@ SQLite via Node's built-in `node:sqlite`. The schema is applied idempotently on 
 - **Experiments** — `experiments`, `experiment_measurements`
 - **Optimization & publishing** — `opportunities`, `publications`
 - **Operations** — `agent_runs`, `activity`, `tasks`, `technical_health_history`
-- **Reporting & cost** — `reports`, `cost_entries`, `integrations`
+- **Reporting & cost** — `reports`, `cost_entries`, `integrations`, `notifications`
 - **Knowledge** — `research_notes`, `citation_actions`, `schema_meta`
 
 ## Conventions
@@ -371,6 +371,25 @@ SQLite via Node's built-in `node:sqlite`. The schema is applied idempotently on 
 | `body` | `TEXT NOT NULL` |
 | `source_run` | `INTEGER REFERENCES agent_runs(id) ON DELETE SET NULL` |
 | `UNIQUE` | `(period, report_date)` |
+
+### `notifications`
+
+One row per attempted notification delivery (spec §16). The `status` column is
+the honest record of what happened: `sent`, `skipped` (a provider is configured
+but there is no recipient) or `failed`. With no provider configured the message
+is recorded here and in the activity feed with channel `console`, and no network
+call is made.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `INTEGER PRIMARY KEY AUTOINCREMENT` | |
+| `ts` | `TEXT NOT NULL DEFAULT (datetime('now'))` | |
+| `kind` | `TEXT NOT NULL` | `test`, `run-complete`, `run-failed` |
+| `subject` | `TEXT NOT NULL` | |
+| `body` | `TEXT NOT NULL` | |
+| `channel` | `TEXT NOT NULL` | `console`, `resend`, `sendgrid`, `smtp` |
+| `status` | `TEXT NOT NULL` | `sent`, `skipped`, `failed` |
+| `detail` | `TEXT` | Provider response, or why nothing was sent |
 
 ### `cost_entries`
 

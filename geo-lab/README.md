@@ -30,7 +30,7 @@ in Settings, then delete that file.**
 Run the gates:
 
 ```bash
-npm test          # 37 tests, real SQLite + real site crawl, no mocks
+npm test          # 40 tests, real SQLite + real site crawl, no mocks
 npm run build     # production build
 npx tsc --noEmit  # typecheck
 ```
@@ -64,6 +64,7 @@ Everything below was executed in this environment and is backed by stored rows.
 | Optimization engine | **Working** | 31 evidence-based opportunities, deduplicated |
 | Autonomous publishing | **Working** | Policy-enforced validation + PR, never pushes to `main` |
 | Reports | **Working** | Daily / weekly / monthly, persisted |
+| Notifications | **Working (in-app)** | Every run records a notification; email needs `RESEND_API_KEY`/`SENDGRID_API_KEY` + `GEO_LAB_NOTIFY_TO`. A channel without credentials reports `unavailable`, never `sent` |
 | Background scheduling | **Working** | External scheduler calls `POST /api/run` (see AUTONOMOUS_OPERATIONS.md) |
 | GSC / GA4 / GBP / Bing | **Not connected** | No credentials here — reported as UNVERIFIED, never as zero |
 

@@ -328,6 +328,21 @@ CREATE TABLE IF NOT EXISTS reports (
   UNIQUE (period, report_date)
 );
 
+-- ── Notifications (spec §16) ───────────────────────────────────────────────
+-- One row per attempted delivery. A channel with no provider configured is
+-- recorded as skipped, never as sent, so the log can never imply an email
+-- went out when none did.
+CREATE TABLE IF NOT EXISTS notifications (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts          TEXT NOT NULL DEFAULT (datetime('now')),
+  kind        TEXT NOT NULL,
+  subject     TEXT NOT NULL,
+  body        TEXT NOT NULL,
+  channel     TEXT NOT NULL,
+  status      TEXT NOT NULL,
+  detail      TEXT
+);
+
 -- ── Costs ──────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS cost_entries (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,

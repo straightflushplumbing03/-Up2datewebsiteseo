@@ -532,6 +532,42 @@ async function main() {
     assert(out.includes("GEO_LAB_SITE_DIR"), `the refusal must name the variable to fix: ${out.trim()}`);
   });
 
+  // ── Notifications (spec §16) ────────────────────────────────────────────
+  // A notification must never claim to have been emailed when no provider is
+  // configured. That is the failure this guards: a log that says "sent" while
+  // nothing left the machine is worse than no notification at all.
+  await test("notifications: a message with no provider configured is recorded, not claimed as emailed", async () => {
+    const { notify, activeChannel, notificationStatus } = await import("../src/lib/notifications");
+    const { query } = await import("../src/lib/db");
+    for (const k of ["RESEND_API_KEY", "SENDGRID_API_KEY", "GEO_LAB_NOTIFY_CHANNEL"]) delete process.env[k];
+    assert(activeChannel() === "console", `expected the console fallback, got ${activeChannel()}`);
+    const r = await notify({ kind: "test", subject: "unit test", body: "body" });
+    assert(r.status === "sent", `console delivery should succeed, got ${r.status}`);
+    assert(r.channel === "console", `expected channel console, got ${r.channel}`);
+    assert(/no email provider/i.test(r.detail), `the detail must state no email was sent: ${r.detail}`);
+    const row = query<{ status: string; channel: string }>("SELECT status, channel FROM notifications ORDER BY id DESC LIMIT 1")[0];
+    assert(row?.channel === "console" && row?.status === "sent", `row not persisted: ${JSON.stringify(row)}`);
+    // Every non-console provider must report itself unavailable, so Settings
+    // cannot show a channel as ready when it has no credentials.
+    for (const c of notificationStatus()) {
+      if (c.channel !== "console") assert(!c.available, `${c.channel} claims to be available with no credentials`);
+    }
+  });
+
+  await test("notifications: a configured provider with no recipient is recorded as skipped, not sent", async () => {
+    const { notify } = await import("../src/lib/notifications");
+    const { query } = await import("../src/lib/db");
+    process.env.RESEND_API_KEY = "test-key-not-real";
+    delete process.env.GEO_LAB_NOTIFY_TO;
+    delete process.env.GEO_LAB_OWNER_EMAIL;
+    const r = await notify({ kind: "test", subject: "no recipient", body: "body" });
+    delete process.env.RESEND_API_KEY;
+    assert(r.channel === "resend", `expected the configured provider to be chosen, got ${r.channel}`);
+    assert(r.status === "skipped", `expected skipped with no recipient, got ${r.status}`);
+    const row = query<{ status: string }>("SELECT status FROM notifications ORDER BY id DESC LIMIT 1")[0];
+    assert(row?.status === "skipped", `row should record skipped: ${JSON.stringify(row)}`);
+  });
+
   // ── Report ──────────────────────────────────────────────────────────────
   const pass = results.filter((r) => r.ok).length;
   const fail = results.length - pass;

@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## 2026-11-07 — Notifications (spec §16), the last missing spec item
+
+### Added
+- **`src/lib/notifications.ts`** — provider-agnostic email notifications, the one
+  item from the spec's definition of complete that was genuinely absent. One
+  registry declares each channel; adding a provider needs no caller changes.
+  Channels: `console` (default, no network), `resend`, `sendgrid`, `smtp`
+  (declared but unwired, and reports itself unavailable rather than pretending).
+- **The orchestrator notifies after every run**, including the failure list.
+  A notification failure is logged, never thrown — it must not fail the run.
+- **Settings UI**: channel table, active channel, recipient, recent deliveries,
+  and a **Send test notification** button that reports the real outcome.
+- **`notifications` table** (`DATABASE.md` updated).
+- **Tests 38 → 40**, both negative-tested: a message with no provider configured
+  must not claim to be emailed, and a configured provider with no recipient must
+  be recorded `skipped`. Mutating the code to report `sent` in that case makes
+  the second test fail, which is the point of it.
+
+### Verified
+- Live `POST /api/settings {action:"test-notification"}` returns
+  `{channel:"console", status:"sent", detail:"…no email provider is configured."}`
+- A full scheduled run records a `run-complete` notification automatically.
+- `tsc` clean, build ✓, 40/40 tests.
+
 ## 2026-11-06 — Oracle deployment path
 
 ### Fixed

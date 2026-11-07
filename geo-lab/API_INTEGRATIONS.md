@@ -65,3 +65,25 @@ The lab is designed to run on free tiers. Only Tavily is metered in the default
 configuration, and the query volume is intentionally small (a handful of tests
 per run). The Reports and Settings pages show the live estimate from
 `costEstimate()`, which is built from real usage counts plus known plan prices.
+
+
+## Notifications (spec §16)
+
+`src/lib/notifications.ts` is provider-agnostic. Channels are declared in one
+registry; adding a provider means adding one entry there, not editing callers.
+
+| Channel | Required env | Behaviour |
+|---|---|---|
+| `console` | none | Always available. Records the message in `notifications` and the activity feed; **no email is sent**. |
+| `resend` | `RESEND_API_KEY` | POSTs to `api.resend.com`. |
+| `sendgrid` | `SENDGRID_API_KEY` | POSTs to `api.sendgrid.com`. |
+| `smtp` | `SMTP_URL` | Declared but not wired — it needs a mail library, so it always reports unavailable rather than pretending. |
+
+The active channel is `GEO_LAB_NOTIFY_CHANNEL` if set and configured, otherwise
+the first configured provider, otherwise `console`. The recipient is
+`GEO_LAB_NOTIFY_TO`, falling back to `GEO_LAB_OWNER_EMAIL`.
+
+Every attempt is written to `notifications` with its real outcome. A channel with
+no credentials is reported `unavailable` in Settings and a delivery with no
+recipient is recorded `skipped` — never `sent`. This is deliberate: a log that
+claims an email was sent when none was is worse than no notification at all.

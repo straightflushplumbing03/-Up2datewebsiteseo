@@ -50,7 +50,7 @@ request, and reports honestly.
 
 ```bash
 cd geo-lab
-npm test          # 32 tests, real DB + real crawl
+npm test          # 40 tests, real DB + real crawl
 npx tsc --noEmit
 npm run build
 ```
@@ -63,6 +63,19 @@ injected scripts).
 If you change the schema in `db.ts`, add a test that exercises the new column.
 If you add a scoring factor, document it in `GEO_METHODOLOGY.md`. If you add an
 integration, document it in `API_INTEGRATIONS.md` with its real status.
+
+## Never claim something happened when it did not
+
+The hardest rule in this repository. It has already been violated once in
+spirit: a deployment that copied only `geo-lab/` made the crawler walk its own
+parent directory and report 51 pages, 0% entity consistency and 0 competitors —
+with exit code 0. It looked healthy and was entirely wrong.
+
+So: a notification with no provider configured is recorded `skipped`, never
+`sent`. An integration without credentials is `disconnected`, never `connected`.
+An agent that cannot measure something logs UNMEASURED, never 0. When you add a
+feature whose failure mode is a plausible-looking wrong answer, add the guard
+that refuses, and add the test that proves the guard fires.
 
 ## When a check fails
 

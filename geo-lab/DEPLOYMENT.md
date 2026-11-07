@@ -93,6 +93,10 @@ install. Two things that are easy to get wrong:
 | `GA4_PROPERTY_ID` / `GA4_SERVICE_ACCOUNT_JSON` | Optional | Analytics data. |
 | `GBP_OAUTH_CLIENT_ID` | Optional | Business Profile data. |
 | `BING_WEBMASTER_API_KEY` | Optional | Bing indexing/query data. |
+| `GEO_LAB_NOTIFY_CHANNEL` | Optional | Force a notification channel (`console`, `resend`, `sendgrid`). Default: first configured provider, else `console`. |
+| `GEO_LAB_NOTIFY_TO` | Optional | Notification recipient. Falls back to `GEO_LAB_OWNER_EMAIL`. |
+| `GEO_LAB_MAIL_FROM` | Optional | From address for email providers. |
+| `RESEND_API_KEY` / `SENDGRID_API_KEY` | Optional | Enables email delivery of run notifications (spec §16). |
 
 Never commit any of these. Set them in the host's secret store.
 

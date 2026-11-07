@@ -4,6 +4,7 @@ import { getDb, audit, query, run as sqlRun, insert } from "@/lib/db";
 import { seedIntegrations } from "@/lib/integrations";
 import { providerEnvFromProcess } from "@/lib/agents/orchestrator";
 import { costEstimate } from "@/lib/reporting";
+import { notificationStatus, activeChannel, defaultRecipient, listNotifications, notify } from "@/lib/notifications";
 import { COMPANY } from "@/lib/company";
 
 export const maxDuration = 60;
@@ -32,6 +33,16 @@ export async function POST(req: Request) {
   if (action === "refresh-integrations") {
     seedIntegrations(providerEnvFromProcess());
     return NextResponse.json({ ok: true });
+  }
+
+  if (action === "test-notification") {
+    // Prove the configured channel end to end rather than only displaying it.
+    const result = await notify({
+      kind: "test",
+      subject: "GEO Lab test notification",
+      body: `This is a test sent from Settings at ${new Date().toISOString()}.\nChannel: ${activeChannel()}\nRecipient: ${defaultRecipient() ?? "(none set)"}`,
+    });
+    return NextResponse.json({ ok: result.status !== "failed", result });
   }
 
   if (action === "add-cost" && body.cost) {
@@ -65,11 +76,19 @@ export async function GET() {
     costs,
     costRows,
     auditRows,
+    notifications: {
+      channels: notificationStatus(),
+      active: activeChannel(),
+      recipient: defaultRecipient() ?? null,
+      recent: listNotifications(25),
+    },
     env: {
       runTokenSet: Boolean(process.env.GEO_LAB_RUN_TOKEN),
       githubTokenSet: Boolean(process.env.GITHUB_TOKEN),
       tavilySet: Boolean(process.env.Tavily_api_key || process.env.TAVILY_API_KEY),
       geminiSet: Boolean(process.env.GEMINI_API_KEY),
+      notifyChannel: process.env.GEO_LAB_NOTIFY_CHANNEL ?? null,
+      notifyTo: Boolean(defaultRecipient()),
     },
   });
 }

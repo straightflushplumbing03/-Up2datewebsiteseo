@@ -1,4 +1,5 @@
 import { insert, query, queryOne, run as sqlRun, logActivity, audit } from "../db";
+import { notifyRunComplete } from "../notifications";
 import { nowIso } from "../util";
 import { crawlRepo, auditSite, fetchLive, sitemapUrls } from "../engine/site";
 import { scorePage, type PageScore } from "../engine/geo";
@@ -236,6 +237,15 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
   sqlRun("UPDATE agent_runs SET status=?, summary=?, finished_at=datetime('now'), duration_ms=? WHERE id=?",
     ok ? "ok" : "partial", summary, Date.now() - new Date(startedAt).getTime(), orchRunId);
   audit("orchestrator", "daily-run", trigger, summary);
+
+  // Notify the owner (spec §16). A notification failure must never fail the run,
+  // so the outcome is logged rather than thrown.
+  await notifyRunComplete({
+    trigger,
+    ok,
+    summary,
+    failures: steps.filter((s) => s.status === "failed").map((s) => `${s.agent}: ${s.summary}`),
+  });
 
   return { startedAt, finishedAt: nowIso(), trigger, steps, ok, summary };
 }
