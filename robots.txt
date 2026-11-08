@@ -26,6 +26,7 @@ Allow: /
 Disallow: /growth-engine/
 Disallow: /briefs/
 Disallow: /ai-headquarters-blueprint/
+Disallow: /geo-lab/
 Disallow: /scripts/
 Disallow: /.github/
 Disallow: /.claude/
