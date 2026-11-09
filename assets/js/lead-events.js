@@ -6,9 +6,20 @@
   // Count leads only on the real site. The same files are also served from a Cloudflare
   // workers.dev preview host; test taps and form sends there must not show up as leads.
   var LIVE = /^(www\.)?straightflushplumbingoc\.com$/i.test(location.hostname);
+  // lead_page is the page's canonical path, so one page reports as one row. The same page is
+  // reached as /cities/x, /cities/x.html, /x.html (root stub) or /index.html, and GA4 would
+  // otherwise split its leads across those spellings. Pages without a canonical (404) keep the raw path.
+  function leadPage() {
+    var c = document.querySelector('link[rel="canonical"]');
+    if (c && c.href) {
+      var m = /^https?:\/\/(www\.)?straightflushplumbingoc\.com(\/[^?#]*)/i.exec(c.href);
+      if (m) return m[2];
+    }
+    return location.pathname;
+  }
   function track(name, params) {
     if (LIVE && typeof window.gtag === 'function') {
-      window.gtag('event', name, Object.assign({ transport_type: 'beacon', lead_page: location.pathname }, params || {}));
+      window.gtag('event', name, Object.assign({ transport_type: 'beacon', lead_page: leadPage() }, params || {}));
     }
   }
   document.addEventListener('click', function (e) {
