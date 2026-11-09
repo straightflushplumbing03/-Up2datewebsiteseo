@@ -113,11 +113,15 @@ export function siteEntityFacts(): EntityFactRow[] {
 
   // areaServed coverage
   const areaServed = plumber?.areaServed;
+  // The site state-qualifies its cities ("Laguna Niguel, CA", PR #134) so AI
+  // engines don't confuse them with same-named places elsewhere. Compare on the
+  // bare city name, or every city reads as missing and consistency collapses.
+  const cityName = (n: string) => n.replace(/,\s*(CA|California)\s*$/i, "").trim();
   const declared = new Set<string>();
   if (Array.isArray(areaServed)) {
     for (const a of areaServed) {
-      if (typeof a === "string") declared.add(a);
-      else if (a && typeof a === "object" && "name" in a) declared.add(String((a as { name: unknown }).name));
+      if (typeof a === "string") declared.add(cityName(a));
+      else if (a && typeof a === "object" && "name" in a) declared.add(cityName(String((a as { name: unknown }).name)));
     }
   }
   for (const c of CITIES) {

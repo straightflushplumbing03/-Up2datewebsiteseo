@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { currentUser, requireRole } from "@/lib/auth";
+import { bearerTokenMatches, currentUser, requireRole } from "@/lib/auth";
 import { getDb, logActivity } from "@/lib/db";
 import { runOrchestrator, providerEnvFromProcess, isRunInProgress } from "@/lib/agents/orchestrator";
 import { saveReport } from "@/lib/reporting";
@@ -21,9 +21,7 @@ export async function POST(req: Request) {
   const url = new URL(req.url);
   const triggerParam = url.searchParams.get("trigger") ?? "manual";
 
-  const runToken = process.env.GEO_LAB_RUN_TOKEN;
-  const auth = req.headers.get("authorization") ?? "";
-  const tokenOk = Boolean(runToken) && auth === `Bearer ${runToken}`;
+  const tokenOk = bearerTokenMatches(req.headers.get("authorization"), process.env.GEO_LAB_RUN_TOKEN);
 
   let actor = "scheduler";
   if (!tokenOk) {

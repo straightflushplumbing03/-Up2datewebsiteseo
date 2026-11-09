@@ -48,16 +48,26 @@ jobs:
             echo "GEO_LAB_URL / GEO_LAB_RUN_TOKEN are not configured — the lab is not deployed yet. Nothing to do." >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-          echo "Triggering $REPORT run at $GEO_LAB_URL"
-          HTTP=$(curl -sS -o /tmp/run.json -w "%{http_code}" \
+          # The bearer token must never travel in clear text.
+          case "$GEO_LAB_URL" in
+            https://*) ;;
+            *) echo "GEO_LAB_URL must start with https:// - refusing to send the run token." >&2; exit 1 ;;
+          esac
+          echo "Triggering $REPORT run"
+          HTTP=$(curl -sS --proto '=https' -o /tmp/run.json -w "%{http_code}" \
             -X POST "$GEO_LAB_URL/api/run?trigger=github-cron&report=$REPORT&visibility=$VISIBILITY" \
             -H "Authorization: Bearer $GEO_LAB_RUN_TOKEN" \
             --max-time 600)
           echo "HTTP $HTTP"
-          cat /tmp/run.json
-          echo "### GEO Lab run" >> "$GITHUB_STEP_SUMMARY"
+          # This repository is public, so Actions logs and step summaries are
+          # public too. Publish only the outcome, never the lab's full response
+          # (step details, provider errors, internal paths). The full report
+          # stays inside the lab.
+          OUTCOME=$(jq -c '{ok, skipped, startedAt, finishedAt}' /tmp/run.json 2>/dev/null || echo '{"ok":null,"note":"response was not JSON"}')
+          echo "$OUTCOME"
+          echo "### GEO Lab run: HTTP $HTTP" >> "$GITHUB_STEP_SUMMARY"
           echo '```json' >> "$GITHUB_STEP_SUMMARY"
-          cat /tmp/run.json >> "$GITHUB_STEP_SUMMARY"
+          echo "$OUTCOME" >> "$GITHUB_STEP_SUMMARY"
           echo '```' >> "$GITHUB_STEP_SUMMARY"
           # 409 = a run is already in progress (the lab's overlap guard). Not a failure.
           if [ "$HTTP" != "200" ] && [ "$HTTP" != "409" ]; then
