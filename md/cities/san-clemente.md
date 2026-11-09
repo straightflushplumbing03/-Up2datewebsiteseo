@@ -46,7 +46,7 @@ Most of San Clemente's water is imported through the Metropolitan Water District
 
 - [Acoustic slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
 
-- [Hidden & underground water leak detection](https://straightflushplumbingoc.com/services/leak-detection.html)
+- [Hidden & underground water leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html)
 
 - [Whole-house PEX repiping & copper line elimination](https://straightflushplumbingoc.com/services/pex-repiping.html)
 

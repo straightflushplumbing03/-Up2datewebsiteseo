@@ -605,6 +605,7 @@ We'll respond within minutes during business hours.
  General Repair
  Emergency
 
+ How did you hear about us? (optional) How did you hear about us? Google search Google Maps ChatGPT or another AI assistant Yelp Nextdoor Friend or neighbor Other
  Describe your issue (optional)
  Request a Callback — It's Free
 
@@ -1167,6 +1168,7 @@ Call, save our number, or send the details below and we'll get back to you with 
 
  City
  Email (optional)
+ How did you hear about us? (optional) How did you hear about us? Google search Google Maps ChatGPT or another AI assistant Yelp Nextdoor Friend or neighbor Other
  What are you noticing?
  Send Request
 
@@ -1239,7 +1241,7 @@ Laguna Niguel and communities throughout South and Central Orange County — see
  Do you handle emergency calls? +
 
 
-Yes. Outside regular hours (Mon–Fri 8am–7pm, Sat 9am–6pm, closed Sunday), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.
+Yes. Outside regular hours (Mon–Fri 8am–7pm, Sat–Sun 9am–6pm), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.
 
 
 
@@ -1600,6 +1602,33 @@ Faucets, toilets, pipe repair, and water pressure issues, fixed right the first 
 
 
 
+ By city
+
+
+## Local service pages
+
+
+
+
+
+- **Leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html) · [San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html)
+
+- **Slab leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html)
+
+- **PEX repiping:** [Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html) · [Ladera Ranch](https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html)
+
+- **Water heater repair:** [Laguna Niguel](https://straightflushplumbingoc.com/services/water-heater-repair-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/water-heater-repair-dana-point.html) · [San Clemente](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
+
+
+
+
+Plus [emergency plumbing](https://straightflushplumbingoc.com/services/emergency-plumbing.html). For every city we serve, see [service areas](https://straightflushplumbingoc.com/service-areas.html). For pricing and repair options, see our [cost guides](https://straightflushplumbingoc.com/guides/).
+
+
+
+
+
+
 
 
 
@@ -1833,7 +1862,7 @@ Most homes: $365 to $525. What moves the price, and when insurance reimburses it
 
 
 
-Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html) and [leak detection in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html).
+Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html), [leak detection in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html), [leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html) and [leak detection in Mission Viejo](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html).
 
 
 
@@ -2588,7 +2617,7 @@ Yes. PEX piping is certified for potable water use and is the standard choice in
 
 
 
-Local details for [Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html).
+Local details for [Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html) · [Ladera Ranch](https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html).
 
 
 
@@ -3342,7 +3371,7 @@ Call Lance for a diagnosis and an honest answer about repair vs. replacement.
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html
 > Section: Services
-> Summary: Hidden leak in your Laguna Niguel home? A plumber based in town finds it in walls, ceilings, slabs and yard lines before opening anything. $365–$525 for most homes.
+> Summary: Hidden leak in your Laguna Niguel home? A local plumber finds it in walls, ceilings, slabs and yard lines before opening anything. $365–$525 for most homes.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › Laguna Niguel
@@ -3780,6 +3809,498 @@ Call Lance and find the leak before anyone opens a wall or floor.
  [Call (949) 374-6524](tel:+19493746524)
 
 
+<!-- ===== https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html ===== -->
+
+# Leak Detection in San Clemente, CA | Straight Flush
+
+> AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html
+> Section: Services
+> Summary: Leak in your San Clemente home? An owner-operated Laguna Niguel plumber finds it in walls, slabs and yard lines before opening anything. $365–$525 for most homes.
+
+---
+[Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › San Clemente
+ Serving San Clemente from Laguna Niguel
+
+
+# Leak Detection in San Clemente, CA
+
+
+
+Straight Flush Plumbing & Leak Detection is based nearby in Laguna Niguel and finds hidden leaks in San Clemente homes: inside a wall or ceiling, under the slab, or in the buried line from the meter. We pinpoint it with acoustic, electronic and thermal tools before anything is opened.
+
+ [Call (949) 374-6524](tel:+19493746524)
+
+
+
+
+
+ Who to call in San Clemente
+
+
+## Who does leak detection in San Clemente?
+
+
+
+Straight Flush Plumbing & Leak Detection does leak detection in San Clemente, from the older neighborhoods near the pier and downtown to Forster Ranch, Talega and the hillside streets. We're an owner-operated plumbing company based nearby in Laguna Niguel, leak detection is the core of what we do, and owner Lance answers the phone himself at [(949) 374-6524](tel:+19493746524).
+
+
+
+For most homes, leak detection runs **$365 to $525**. Where you fall depends on the size of the home, how many areas need testing, and whether the leak is under the slab, inside a wall or underground. See the [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) for what changes the price.
+
+
+
+## Where leaks show up in San Clemente homes
+
+
+
+**Copper lines in newer tracts, not just old homes.** In 2015 a class action was announced alleging that copper pipe installed in San Clemente-area subdivisions, including Talega, was prone to leaks ([PHCP Pros](https://phcppros.com/articles/657-lawsuit-blames-california-home-builders-for-leaks-from-copper-pipes)). Whatever the cause in a given house, a first pinhole leak is a reason to check the rest of the system.
+
+
+
+**Under the slab.** Many San Clemente homes sit on concrete slabs with water lines running underneath. A warm spot on the floor or the sound of running water with everything off are typical signs. See [how we find slab leaks](https://straightflushplumbingoc.com/services/slab-leak-detection.html).
+
+
+
+**Inside walls and ceilings.** Supply lines to bathrooms, kitchens and laundry rooms run behind drywall, and in two-story homes a leak upstairs often first appears as a ceiling stain below.
+
+
+
+**Between the meter and the house, and on sloped lots.** The buried service line and irrigation lines can leak for a long time with no sign indoors except the bill. A soggy patch, or a spot that stays green in a dry month, can point to it.
+
+
+
+## Check for a leak yourself first
+
+
+
+Turn off every faucet, appliance and irrigation zone, note the reading on your water meter, and check again after 30 minutes. If it moved, water is leaving the system somewhere. Our [water meter test guide](https://straightflushplumbingoc.com/academy/water-meter-still-moving-everything-off.html) walks through it, and [why is my water bill so high?](https://straightflushplumbingoc.com/academy/why-is-my-water-bill-so-high.html) covers the usual causes.
+
+
+
+## City side or your side?
+
+
+
+The City of San Clemente runs its own water utility. A leak in the street, on the city side of the meter, or a sewer overflow goes to the city's 24/7 Utilities line at (949) 366-1553. A leak on your side of the meter is generally the owner's to find and fix. If a leak ran up your bill, the city's Utility Billing Division has a [Tiered Rate Adjustment Application](https://san-clemente.org/home/showpublisheddocument/31572/636137792470400000) that lists plumbing and slab leaks; the form says it offers one courtesy adjustment per 12 months and may ask for proof of repair, so keep your written findings and invoice. Confirm current terms with Utility Billing at (949) 361-8315.
+
+
+
+ Leak detection services in San Clemente
+
+
+
+- Pressure testing to isolate the hot line, cold line or service line
+
+- Acoustic leak location through drywall, tile, wood or concrete
+
+- Electronic pipe locating to trace lines in walls, under the slab and in the yard
+
+- Thermal imaging to confirm hot-water leaks
+
+- Repair once the leak is found, or a [slab leak](https://straightflushplumbingoc.com/services/slab-leak-detection.html) reroute or [PEX repipe](https://straightflushplumbingoc.com/services/pex-repiping.html) when that is the better call
+
+- Written findings to bring to your insurer or the city (no coverage or adjustment promises)
+
+
+
+
+See a real local job: [kitchen drain camera inspection and reroute plan in San Clemente](https://straightflushplumbingoc.com/case-studies/san-clemente-kitchen-drain-camera-reroute.html). More on [how we find leaks](https://straightflushplumbingoc.com/services/leak-detection.html), [how plumbers find leaks without cutting walls](https://straightflushplumbingoc.com/academy/how-plumbers-find-leaks-without-cutting-walls.html), [repair vs. reroute vs. repipe](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html), and [plumbing in San Clemente](https://straightflushplumbingoc.com/cities/san-clemente.html).
+
+
+
+
+
+
+
+ How we work
+
+
+## Find the leak first, then a straight answer on the fix
+
+
+
+ 1 · Isolate
+
+### Which line is leaking?
+
+Pressure testing shows whether the hot line, cold line or the service line from the meter is losing water, so we know where to look.
+
+
+ 2 · Pinpoint
+
+### Listen, trace and confirm
+
+Acoustic equipment picks up the sound of pressurized water escaping, electronic locating traces where the pipe runs, and thermal imaging cross-checks hot-water leaks. The spot is marked for the smallest possible opening.
+
+
+ 3 · Decide
+
+### Repair, reroute, or repipe
+
+A single leak in a sound line is usually a spot repair. Repeat leaks in aging or failing copper may make a reroute or repipe the smarter call. We explain the trade-offs after diagnosis, never before.
+
+
+
+
+
+
+
+
+
+ San Clemente leak detection FAQ
+
+
+## Common questions from San Clemente homeowners
+
+
+
+ Who does leak detection in San Clemente? +
+
+
+Straight Flush Plumbing & Leak Detection does leak detection in San Clemente homes, from the older neighborhoods near the pier and downtown to Forster Ranch, Talega and the hillside streets. We're an owner-operated plumbing company based nearby in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before anything is opened, and owner Lance answers the phone at (949) 374-6524. Whoever you call, ask what equipment they use and whether you get written findings.
+
+
+
+
+ How much does leak detection cost in San Clemente? +
+
+
+For most homes, leak detection runs $365 to $525. Where you fall depends on the size of the home, how many areas need testing, and whether the leak is under the slab, inside a wall or underground. You get a clear number before the visit is scheduled.
+
+
+
+
+ Who do I call about a leak at the street or the water meter in San Clemente? +
+
+
+The City of San Clemente runs its own water utility. Leaks in the street, on the city side of the meter, or a sewer overflow go to the city's 24/7 Utilities line at (949) 366-1553. A leak on your side of the meter, in the line to the house, under the slab or inside a wall, is generally the property owner's to find and repair, and that is the part we locate.
+
+
+
+
+ Can I get a break on my San Clemente water bill after a leak? +
+
+
+The City of San Clemente's Utility Billing Division has a Tiered Rate Adjustment Application that lists plumbing and slab leaks, toilet leaks and irrigation leaks as reasons for high use. The city's form says it offers one courtesy adjustment per 12-month period, that applications are subject to verification of the repair, and that it may ask for repair invoices. Check the current form and terms with Utility Billing at (949) 361-8315. Keep the written findings and the repair invoice; that is the paperwork the city may ask for.
+
+
+
+
+ Do newer homes in Talega and Forster Ranch get pinhole leaks? +
+
+
+It isn't only an older-home problem. In 2015 a class action was announced alleging that copper pipe installed in subdivisions in the San Clemente area, including the Talega community, was prone to leaks; the builders' side disputed similar claims elsewhere in South County. Whatever the cause, one pinhole leak is a reason to check the rest of the system. We find the leak first, then walk through whether a spot repair, reroute or repipe makes sense.
+
+
+
+
+ How do I know if I have a hidden water leak? +
+
+
+Common signs are a water bill that rises for no reason, a water meter that keeps moving with every fixture off, the sound of running water when nothing is on, a warm spot on the floor, damp or stained drywall, a musty smell, or a soggy patch in the yard. The simplest check is the water meter test: turn off every fixture and irrigation, note the meter, and look again after 30 minutes.
+
+
+
+
+ Can you find a leak without tearing open walls or floors? +
+
+
+In most cases, yes. Pressure testing tells us which line is losing water, acoustic equipment listens for the leak through drywall, tile or concrete, electronic locating traces where the pipe runs, and thermal imaging helps confirm hot-water leaks. The goal is one small, targeted opening at the leak, not exploratory demolition.
+
+
+
+
+ Does insurance pay for leak detection? +
+
+
+If you're filing an insurance claim, insurance typically reimburses the leak detection cost. Coverage depends on your policy and the cause of the leak, so check with your insurer. We give you written findings, including the affected line, its location and what we found, to bring to them.
+
+
+
+
+
+
+
+
+
+ Related
+
+
+## More leak help in and around San Clemente
+
+
+
+ [Water heaters in San Clemente →](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
+ [Leak detection in Dana Point →](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html)
+ [Leak detection in Laguna Niguel →](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html)
+ [Leak detection, South OC →](https://straightflushplumbingoc.com/services/leak-detection.html)
+
+
+
+
+
+
+
+
+
+## Water going somewhere you can't see?
+
+
+
+Call Lance and find the leak before anyone opens a wall or floor.
+
+
+ [Call (949) 374-6524](tel:+19493746524)
+
+
+<!-- ===== https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html ===== -->
+
+# Leak Detection in Mission Viejo, CA | Straight Flush
+
+> AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html
+> Section: Services
+> Summary: Hidden leak in your Mission Viejo home? An owner-operated plumber next door in Laguna Niguel finds it in walls, slabs and yard lines first. $365–$525 for most homes.
+
+---
+[Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › Mission Viejo
+ Serving Mission Viejo from next door in Laguna Niguel
+
+
+# Leak Detection in Mission Viejo, CA
+
+
+
+Straight Flush Plumbing & Leak Detection is based next door in Laguna Niguel and finds hidden leaks in Mission Viejo homes: inside a wall or ceiling, under the slab, or in the buried line from the meter. We pinpoint it with acoustic, electronic and thermal tools before anything is opened.
+
+ [Call (949) 374-6524](tel:+19493746524)
+
+
+
+
+
+ Who to call in Mission Viejo
+
+
+## Who does leak detection in Mission Viejo?
+
+
+
+Straight Flush Plumbing & Leak Detection does leak detection in Mission Viejo, from the original 1960s and 1970s tracts to newer builds and the hillside lots toward the Saddleback foothills. We're an owner-operated plumbing company based next door in Laguna Niguel, leak detection is the core of what we do, and owner Lance answers the phone himself at [(949) 374-6524](tel:+19493746524).
+
+
+
+For most homes, leak detection runs **$365 to $525**. Where you fall depends on the size of the home, how many areas need testing, and whether the leak is under the slab, inside a wall or underground. See the [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) for what changes the price.
+
+
+
+## Where leaks show up in Mission Viejo homes
+
+
+
+**Original copper in the older tracts.** Mission Viejo was built as a master-planned community starting in the mid-1960s, and plumbing age varies block to block. Many homes in the older tracts still have their original copper supply lines in the walls and under the slab, which is where pinhole leaks tend to start once pipe has been in service for decades.
+
+
+
+**Under the slab.** A warm spot on the floor or the sound of running water with everything off are typical signs of a leak in a line under the concrete. If that is what you are seeing, read [slab leak detection in Mission Viejo](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html).
+
+
+
+**Inside walls and ceilings.** Supply lines to bathrooms, kitchens and laundry rooms run behind drywall, and in two-story homes a leak upstairs often first appears as a ceiling stain below.
+
+
+
+**Irrigation and the line from the meter, especially on sloped lots.** Buried service and irrigation lines can leak for months with no sign indoors except the bill. Moulton Niguel Water District lists irrigation leaks and irrigation timer malfunctions among the reasons for a high-bill adjustment, which tells you how often it happens. A soggy patch, or a spot that stays green in a dry month, can point to it.
+
+
+
+## Check for a leak yourself first
+
+
+
+Turn off every faucet, appliance and irrigation zone, note the reading on your water meter, and check again after 30 minutes. If it moved, water is leaving the system somewhere. Our [water meter test guide](https://straightflushplumbingoc.com/academy/water-meter-still-moving-everything-off.html) walks through it, and [why is my water bill so high?](https://straightflushplumbingoc.com/academy/why-is-my-water-bill-so-high.html) covers the usual causes.
+
+
+
+## Three water districts: whose side is the leak on?
+
+
+
+The [City of Mission Viejo](https://www.missionviejo.gov/departments/public-works/water-conservation) says water is supplied to its residents by Moulton Niguel Water District, Santa Margarita Water District and El Toro Water District. Your bill shows which one serves you. A leak in the street or on the district's side of the meter goes to your district; Moulton Niguel's line is (949) 831-2500, answered 24/7 for emergencies, and Santa Margarita's customer care is (949) 459-6420. A leak on your side of the meter is generally the owner's to find and fix.
+
+
+
+If a leak ran up your bill and you are a Moulton Niguel customer, its [Adjustment Request](https://www.mnwd.com/adjustments/) lists repair of a leak (a toilet, irrigation or a pinhole leak in the home) as a reason, asks for the form within 90 days of the high bill, and says approved adjustments are credited within two billing cycles. Santa Margarita and El Toro customers should ask their district about its policy. Keep your written findings and the repair invoice.
+
+
+
+ Leak detection services in Mission Viejo
+
+
+
+- Pressure testing to isolate the hot line, cold line or service line
+
+- Acoustic leak location through drywall, tile, wood or concrete
+
+- Electronic pipe locating to trace lines in walls, under the slab and in the yard
+
+- Thermal imaging to confirm hot-water leaks
+
+- Repair once the leak is found, or a [slab leak](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html) reroute or [PEX repipe in Mission Viejo](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html) when that is the better call
+
+- Written findings to bring to your insurer or water district (no coverage or adjustment promises)
+
+
+
+
+More on [how we find leaks](https://straightflushplumbingoc.com/services/leak-detection.html), [how plumbers find leaks without cutting walls](https://straightflushplumbingoc.com/academy/how-plumbers-find-leaks-without-cutting-walls.html), [repair vs. reroute vs. repipe](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html), and [plumbing in Mission Viejo](https://straightflushplumbingoc.com/cities/mission-viejo.html).
+
+
+
+
+
+
+
+ How we work
+
+
+## Find the leak first, then a straight answer on the fix
+
+
+
+ 1 · Isolate
+
+### Which line is leaking?
+
+Pressure testing shows whether the hot line, cold line or the service line from the meter is losing water, so we know where to look.
+
+
+ 2 · Pinpoint
+
+### Listen, trace and confirm
+
+Acoustic equipment picks up the sound of pressurized water escaping, electronic locating traces where the pipe runs, and thermal imaging cross-checks hot-water leaks. The spot is marked for the smallest possible opening.
+
+
+ 3 · Decide
+
+### Repair, reroute, or repipe
+
+A single leak in a sound line is usually a spot repair. Repeat leaks in aging or failing copper may make a reroute or repipe the smarter call. We explain the trade-offs after diagnosis, never before.
+
+
+
+
+
+
+
+
+
+ Mission Viejo leak detection FAQ
+
+
+## Common questions from Mission Viejo homeowners
+
+
+
+ Who does leak detection in Mission Viejo? +
+
+
+Straight Flush Plumbing & Leak Detection does leak detection in Mission Viejo homes, from the original 1960s and 1970s tracts to newer builds and the hillside lots toward the Saddleback foothills. We're an owner-operated plumbing company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before anything is opened, and owner Lance answers the phone at (949) 374-6524. Whoever you call, ask what equipment they use and whether you get written findings.
+
+
+
+
+ How much does leak detection cost in Mission Viejo? +
+
+
+For most homes, leak detection runs $365 to $525. Where you fall depends on the size of the home, how many areas need testing, and whether the leak is under the slab, inside a wall or underground. You get a clear number before the visit is scheduled.
+
+
+
+
+ Which water district serves my Mission Viejo home? +
+
+
+The City of Mission Viejo says three agencies supply water to its residents: Moulton Niguel Water District, Santa Margarita Water District and El Toro Water District. Which one serves you depends on where you live, and the district's name is on your water bill. Leaks in the street or on the district's side of the meter go to your district; for Moulton Niguel customers that is (949) 831-2500, answered 24/7 for emergencies. A leak on your side of the meter, in the line to the house, under the slab or inside a wall, is generally the property owner's to find and repair, and that is the part we locate.
+
+
+
+
+ Can I get a bill adjustment from Moulton Niguel after a leak? +
+
+
+Moulton Niguel Water District has an Adjustment Request for bills with use above Tier 3 of the customer's water budget, and it lists repair of a leak, such as a toilet, irrigation or a pinhole leak in the home, as a reason. The district asks for the form within 90 days of the high bill and says approved adjustments are credited on a future bill within two billing cycles. If you are a Santa Margarita or El Toro Water District customer, ask your district about its own policy. Keep the written findings and the repair invoice either way.
+
+
+
+
+ Why do older Mission Viejo homes get leaks? +
+
+
+Much of Mission Viejo was built as a master-planned community starting in the mid-1960s, so many homes in the older tracts still have their original copper water lines in the walls and under the slab. Decades of use, water chemistry and soil movement are the usual causes of pinhole and slab leaks in those homes. One pinhole leak is a reason to check the rest of the system.
+
+
+
+
+ How do I know if I have a hidden water leak? +
+
+
+Common signs are a water bill that rises for no reason, a water meter that keeps moving with every fixture off, the sound of running water when nothing is on, a warm spot on the floor, damp or stained drywall, a musty smell, or a soggy patch in the yard. The simplest check is the water meter test: turn off every fixture and irrigation, note the meter, and look again after 30 minutes.
+
+
+
+
+ Can you find a leak without tearing open walls or floors? +
+
+
+In most cases, yes. Pressure testing tells us which line is losing water, acoustic equipment listens for the leak through drywall, tile or concrete, electronic locating traces where the pipe runs, and thermal imaging helps confirm hot-water leaks. The goal is one small, targeted opening at the leak, not exploratory demolition.
+
+
+
+
+ Does insurance pay for leak detection? +
+
+
+If you're filing an insurance claim, insurance typically reimburses the leak detection cost. Coverage depends on your policy and the cause of the leak, so check with your insurer. We give you written findings, including the affected line, its location and what we found, to bring to them.
+
+
+
+
+
+
+
+
+
+ Related
+
+
+## More leak help in and around Mission Viejo
+
+
+
+ [Slab leaks in Mission Viejo →](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html)
+ [PEX repiping in Mission Viejo →](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html)
+ [Leak detection in Laguna Niguel →](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html)
+ [Leak detection, South OC →](https://straightflushplumbingoc.com/services/leak-detection.html)
+
+
+
+
+
+
+
+
+
+## Water going somewhere you can't see?
+
+
+
+Call Lance and find the leak before anyone opens a wall or floor.
+
+
+ [Call (949) 374-6524](tel:+19493746524)
+
+
 <!-- ===== https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html ===== -->
 
 # Slab Leak Detection in Laguna Niguel, CA | Straight Flush
@@ -4162,7 +4683,7 @@ Call Lance to locate it before anyone starts opening floors.
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html
 > Section: Services
-> Summary: Whole-house and partial PEX repiping for Laguna Niguel homes with aging copper, from a plumber based in town. Diagnosis first, then an honest answer: (949) 374-6524.
+> Summary: Whole-house and partial PEX repiping for Laguna Niguel homes with aging copper, from a local plumber. Diagnosis first, then an honest answer: (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [PEX Repiping](https://straightflushplumbingoc.com/services/pex-repiping.html) › Laguna Niguel
@@ -4913,6 +5434,234 @@ Call Lance to find out whether you need a section or the whole house.
  [Call (949) 374-6524](tel:+19493746524)
 
 
+<!-- ===== https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html ===== -->
+
+# PEX Repiping in Ladera Ranch, CA | Straight Flush
+
+> AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html
+> Section: Services
+> Summary: Ladera Ranch copper pinhole leaks and PEX repiping: what the 2013-2016 lawsuits were about, how to tell if you still have copper, and when a repipe makes sense.
+
+---
+[Home](https://straightflushplumbingoc.com/) › [PEX Repiping](https://straightflushplumbingoc.com/services/pex-repiping.html) › Ladera Ranch
+ Serving Ladera Ranch
+
+
+# PEX Repiping in Ladera Ranch, CA
+
+
+
+Ladera Ranch homes are young, but many were built with copper that has had a pinhole-leak history. We find the leak first, then tell you whether a repair, a reroute or a PEX repipe makes sense.
+
+ [Call (949) 374-6524](tel:+19493746524)
+
+
+
+
+
+ Who to call in Ladera Ranch
+
+
+## Who handles PEX repiping in Ladera Ranch?
+
+
+
+Straight Flush Plumbing & Leak Detection does whole-house and partial PEX repiping in Ladera Ranch. We're an owner-operated plumbing company based nearby in Laguna Niguel, we locate and diagnose leaks before recommending a repipe, and owner Lance answers the phone himself at [(949) 374-6524](tel:+19493746524).
+
+
+
+## Ladera Ranch's copper pinhole-leak history
+
+
+
+Ladera Ranch broke ground in 1999, so most homes are newer than the rest of South Orange County. Even so, starting in 2013 hundreds of Ladera Ranch homeowners sued their builders over pinhole leaks in copper water pipes. Settlements reached in 2015 and 2016 paid toward PEX repiping or epoxy pipe treatment for covered homes built between May 2003 and May 2013 ([ABC7, 2016](https://abc7.com/post/oc-homes-could-face-possible-damaging-leaks-from-holes-in-pipes/1208620/); [plaintiffs' counsel, 2015](https://www.bridgfordlaw.com/news/bridgford-gleason-artinian-llp-secures-win-for-ladera-homeowners-in-copper-pipe-suit/)).
+
+
+
+The cause was never settled as a finding. Homeowners argued the copper was not suited to the local water; builders said there was no defect in the pipe itself. A separate class action against the water districts was dismissed in 2015, with the court ruling that districts following state and federal disinfectant standards could not be sued ([report of the July 2015 ruling](https://www.bridgfordlaw.com/news/judge-tosses-out-lawsuit-on-south-county-copper-pipe-leaks/)). Ladera Ranch water is supplied by the [Santa Margarita Water District](https://smwd.com/627/Water-Quality-Ladera-Ranch).
+
+
+
+What that means for you: if your home still has its original copper and you have had one pinhole leak, another one is worth planning for. If a previous owner already repiped with PEX, leaks are more likely to come from fittings, fixture connections, the water heater or irrigation lines.
+
+
+
+ Repiping services in Ladera Ranch
+
+
+
+- Whole-house copper-to-PEX repiping
+
+- Partial repipes and reroutes for one failing line
+
+- [Leak detection](https://straightflushplumbingoc.com/services/leak-detection.html) and [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html) before any repipe decision
+
+- Pinhole leak repair when a spot fix is the right call
+
+- Shutoff valve rebuilds and supply line replacement
+
+- Water restored at the end of each working day whenever possible
+
+
+
+
+## Still have copper? A 2-minute check
+
+
+
+Open the cabinet under a kitchen or bathroom sink and look where the supply pipes leave the wall, then look at the pipes on top of your water heater. Reddish-brown metal is copper. Flexible plastic tubing in red, blue or white is PEX. Green or blue crust on copper fittings is worth mentioning when you call.
+
+
+
+More on [how PEX repiping works](https://straightflushplumbingoc.com/services/pex-repiping.html), [copper vs. PEX](https://straightflushplumbingoc.com/copper-vs-pex-pipes.html), [repair vs. reroute vs. repipe](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html), and [plumbing in Ladera Ranch](https://straightflushplumbingoc.com/cities/ladera-ranch.html).
+
+
+
+
+
+
+
+ How we work
+
+
+## Find the leak first, then repipe only what needs it
+
+
+
+ 1 · Locate
+
+### Where is it leaking?
+
+Acoustic, electronic and thermal tools pinpoint the leak before any drywall or concrete is opened.
+
+
+ 2 · Plan
+
+### Repair, reroute or repipe
+
+We look at how many leaks you've had, where they are and the condition of exposed pipe, then explain the options and trade-offs in plain language.
+
+
+ 3 · Repipe
+
+### Replace with PEX
+
+Most residential repipes take one to a few days depending on the size of the home and access, with water restored at the end of each working day whenever possible.
+
+
+
+
+
+
+
+
+
+ Ladera Ranch repiping FAQ
+
+
+## Common questions from Ladera Ranch homeowners
+
+
+
+ Who handles PEX repiping in Ladera Ranch? +
+
+
+Straight Flush Plumbing & Leak Detection does whole-house and partial PEX repiping in Ladera Ranch. We're an owner-operated company based nearby in Laguna Niguel, we locate and diagnose leaks before recommending a repipe, and owner Lance answers the phone at (949) 374-6524.
+
+
+
+
+ Are pinhole leaks common in Ladera Ranch homes? +
+
+
+They have been. Starting in 2013, hundreds of Ladera Ranch homeowners sued their builders over pinhole leaks in copper water pipes, and settlements in 2015 and 2016 paid toward PEX repiping or epoxy pipe treatment for covered homes built between May 2003 and May 2013. The cause was disputed: homeowners argued the copper was not suited to the local water, builders said the pipe itself was not defective, and a 2015 court ruling dismissed a separate suit against the water districts.
+
+
+
+
+ What causes pinhole leaks in copper pipes? +
+
+
+Pinhole leaks come from pitting corrosion, where small spots on the inside of a copper pipe wear through while the rest of the pipe looks fine. Water chemistry, water velocity and installation quality are all factors that have been argued. In Ladera Ranch the cause was contested in court and never settled as a finding, so we diagnose each home on its own evidence.
+
+
+
+
+ How do I know if my Ladera Ranch home still has copper pipes? +
+
+
+Look at the pipes where they come out of the wall under a kitchen or bathroom sink and at the water heater connections. Copper is reddish-brown metal; PEX is flexible plastic tubing, usually red, blue or white. Many Ladera Ranch homes were repiped with PEX after the lawsuits, so a previous owner may already have done it. If you are not sure, we can check during a visit.
+
+
+
+
+ Do I need a whole-house repipe after one pinhole leak in Ladera Ranch? +
+
+
+Not necessarily. A single leak can often be repaired or a line rerouted. Repeat pinhole leaks in different spots, a leak under the slab, or green or blue staining on exposed copper are signs the system as a whole is wearing, and that is when a whole-house PEX repipe is worth comparing against further repairs. We locate the leak first and lay out both options.
+
+
+
+
+ Is PEX better than copper for Ladera Ranch homes? +
+
+
+PEX does not corrode the way copper does, and its flexible runs need fewer fittings inside walls. That removes the pitting corrosion behind most pinhole leaks, though no plumbing is leak-proof forever, and fittings, fixture connections and water heaters still need attention. Our copper vs. PEX guide covers the trade-offs.
+
+
+
+
+ Can I still file a claim under the Ladera Ranch copper pipe settlements? +
+
+
+The settlements we found reported on were from 2015 and 2016 and had limited claim windows, so they are unlikely to still be open. We are plumbers, not attorneys: if you think your home was covered, check your purchase or HOA records or ask an attorney. Whatever the answer, we can document the leak and the condition of your pipes for you.
+
+
+
+
+ How long does a repipe take in Ladera Ranch? +
+
+
+Most residential repipes take one to a few days depending on the size of the home and access, with water restored at the end of each working day whenever possible.
+
+
+
+
+
+
+
+
+
+ Nearby
+
+
+## PEX repiping in nearby cities
+
+
+
+ [PEX repiping in Mission Viejo →](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html)
+ [PEX repiping in Laguna Niguel →](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html)
+ [PEX repiping in Dana Point →](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html)
+ [All service areas →](https://straightflushplumbingoc.com/service-areas.html)
+
+
+
+
+
+
+
+
+
+## Another pinhole leak in Ladera Ranch?
+
+
+
+Call Lance to find out whether you need a repair, a reroute or a repipe.
+
+
+ [Call (949) 374-6524](tel:+19493746524)
+
+
 <!-- ===== https://straightflushplumbingoc.com/services/drain-services.html ===== -->
 
 # Drain Cleaning & Sewer Services | Orange County
@@ -5102,7 +5851,7 @@ If you can hear water running constantly with everything off, feel a warm spot e
 
 
 
-Any leak you cannot control with a shutoff valve, or one causing visible water damage to walls, ceilings, or floors, is an emergency. Mold growth begins within 24–48 hours.
+Any leak you cannot control with a shutoff valve, or one causing visible water damage to walls, ceilings, or floors, is an emergency. Mold can start growing within 24–48 hours, which is why the [EPA advises drying water-damaged areas within that window](https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home).
 
 
 
@@ -5191,7 +5940,7 @@ Take photos and video of the leak, standing water, and any visible damage before
 
 
 
-Call [(949) 374-6524](tel:+19493746524). Lance or a member of the team will walk you through the situation over the phone and dispatch immediately.
+Call [(949) 374-6524](tel:+19493746524). Lance will walk you through the situation over the phone, starting with what to shut off while you wait.
 
 
 
@@ -5209,7 +5958,7 @@ Call [(949) 374-6524](tel:+19493746524). Lance or a member of the team will walk
 
 
 
-Straight Flush Plumbing is owner-operated. When you call, you reach Lance directly—a working plumber with over a decade of experience in Orange County. You won't navigate a phone tree or wait for a dispatcher to relay messages.
+Straight Flush Plumbing is owner-operated. When you call, you reach Lance directly—a working plumber, not a dispatcher. You won't navigate a phone tree or wait for a dispatcher to relay messages.
 
 
 
@@ -5249,12 +5998,12 @@ We respond to plumbing emergencies throughout South and Central Orange County, i
 
 - [Lake Forest](https://straightflushplumbingoc.com/cities/lake-forest.html) · [Ladera Ranch](https://straightflushplumbingoc.com/cities/ladera-ranch.html) · [Rancho Santa Margarita](https://straightflushplumbingoc.com/cities/rancho-santa-margarita.html)
 
-- [San Juan Capistrano](https://straightflushplumbingoc.com/cities/san-juan-capistrano.html) · [Corona del Mar](https://straightflushplumbingoc.com/cities/newport-beach.html)
+- [San Juan Capistrano](https://straightflushplumbingoc.com/cities/san-juan-capistrano.html) · [Laguna Woods](https://straightflushplumbingoc.com/cities/laguna-woods.html)
 
 
 
 
-Not sure if we cover your area? Call and ask. If we can't come, we'll tell you who can.
+See [all 21 service areas](https://straightflushplumbingoc.com/service-areas.html), or call and ask. If we can't come, we'll tell you who can.
 
 
 
@@ -5304,7 +6053,7 @@ For leaks in walls, ceilings, or under floors that cannot be visually located, e
 
 
 
-After a leak is located, our team makes the repair—from spot fixes on a single pipe to complete line replacements—with the smallest access point necessary.
+After a leak is located, we make the repair—from spot fixes on a single pipe to complete line replacements—with the smallest access point necessary.
 
  [Plumbing Repair Services](https://straightflushplumbingoc.com/services/plumbing-repair.html)
 
@@ -5965,11 +6714,11 @@ A growing library of straight answers about hidden leaks, slab leaks, and the te
  More resources
 
 
-## Insurance & local city guides
+## Insurance, cost & local city guides
 
 
 
-These two categories have their own dedicated sections, linked below.
+These categories have their own dedicated sections, linked below.
 
 
 
@@ -5987,6 +6736,13 @@ Coverage basics, documentation checklists, and questions to ask your provider.
 City-specific pages covering local plumbing conditions across our full service area.
 
 [Browse all service areas →](https://straightflushplumbingoc.com/service-areas.html)
+
+
+### Cost & Repair Guides
+
+What leak detection and slab leak repair cost, and how to choose between repair, reroute and repipe.
+
+[Visit the cost guides →](https://straightflushplumbingoc.com/guides/)
 
 
 
@@ -6039,6 +6795,14 @@ Straight Flush Plumbing & Leak Detection is headquartered in Laguna Niguel — t
 
 
 Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of original copper plumbing still in service. We've come to know the common leak patterns in neighborhoods throughout the city, from Bear Brand to Niguel Summit. Homes of that era, with aging copper lines and South OC's expansive clay soils, are exactly the situation our [slab leak detection service](https://straightflushplumbingoc.com/services/slab-leak-detection.html) is built around (background: [why South OC copper homes get slab leaks](https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html)).
+
+
+
+Laguna Niguel was planned before it was built. The Laguna Niguel Corporation was formed in 1959, making it one of the first master planned communities in California; land sales began in 1961, and Avco Community Developers took over the plan in 1971 and built out much of the city. Laguna Niguel incorporated on December 1, 1989, as Orange County’s 29th city ([City of Laguna Niguel](https://cityoflagunaniguel.org/388/History)). The median home here was built in 1986, and about 74% of homes are single-family and 26% multi-family ([City-Stats, 2023 ACS data](https://city-stats.com/california/laguna-niguel/housing)). So the original copper lines in a typical Laguna Niguel home are now close to 40 years old. In condos and townhomes, a leak can start in a neighbor’s unit or a shared line, so we locate the source before anyone opens a wall.
+
+
+
+Most Laguna Niguel homes get their water from Moulton Niguel Water District ([MNWD](https://www.mnwd.com/)). Check the name on your water bill to confirm your district. After a leak, your usage history and any bill adjustment go through that district, so keep the leak detection findings and the repair invoice.
 
 
 
@@ -6138,6 +6902,14 @@ We're based nearby in Laguna Niguel, so Laguna Niguel is a short drive. Same-day
 
 
 
+ How old is the plumbing in a typical Laguna Niguel home? +
+
+
+The median Laguna Niguel home was built in 1986, according to 2023 Census survey data, and the city's first land sales date to 1961. That means about half of the city's homes are now 40 years old or older, and many still have their original copper water lines, which is the age range where pinhole and slab leaks become more common. Age alone does not mean you have a leak. If your bill jumps or the meter moves with everything off, we locate the source with acoustic, electronic and thermal tools before anything is opened. Our guide to [slab leaks in older Orange County homes](https://straightflushplumbingoc.com/academy/slab-leaks-in-older-orange-county-homes.html) explains more.
+
+
+
+
  What are the warning signs of a hidden leak in a Laguna Niguel home? +
 
 
@@ -6176,7 +6948,11 @@ From the Lantern District to Monarch Beach, Dana Point's coastal conditions and 
 
 
 
-Salt air, coastal humidity, and a number of older homes near the harbor make accurate diagnosis especially valuable in Dana Point — guesswork here tends to be more costly than elsewhere.
+Dana Point became a city on January 1, 1989 and covers about 6.5 square miles of coastline, taking in Capistrano Beach, Lantern Village near the harbor, Niguel Shores and Monarch Beach ([Wikipedia](https://en.wikipedia.org/wiki/Dana_Point,_California); [City of Dana Point](https://danapoint.org/i-want-to-/city-history-facts)). About 65% of homes are single-family, 34% are condos, townhomes or apartments, and under 1% are mobile homes ([City-Stats, 2023 ACS data](https://city-stats.com/california/dana-point/housing)). With a third of homes sharing walls, floors or a roof line, a leak in Dana Point can start in a neighbor’s unit or a shared line, so we locate the source before anyone opens a wall or a ceiling.
+
+
+
+Dana Point is served by two water districts. The city says its water system is owned and run by South Coast Water District and Moulton Niguel Water District, and that South Coast Water District runs the sewer system citywide; the city publishes a district boundary map so you can confirm which one serves your address ([City of Dana Point, Utilities](https://www.danapoint.org/department/public-works-engineering/utilities)). Your water bill also shows your district. That matters after a leak, because meter readings, usage history and any leak-related bill adjustment all go through your own district.
 
 
 
@@ -6269,7 +7045,15 @@ For most homes in Dana Point, leak detection runs $365 to $525. Where you fall d
  Do you serve my neighborhood in Dana Point? +
 
 
-Yes — From the Lantern District to Monarch Beach, Dana Point's coastal conditions and mix of home ages call for a detection-first approach before any repair begins. We serve all of Dana Point and the surrounding South and Central Orange County communities, and Lance personally answers the phone.
+Yes. We serve every Dana Point neighborhood, including Capistrano Beach, Lantern Village and the harbor area, Niguel Shores and Monarch Beach. We serve all of Dana Point and the surrounding South and Central Orange County communities, and Lance personally answers the phone.
+
+
+
+
+ Which water district serves my Dana Point home, and who do I call about a leak? +
+
+
+It depends on your address. Dana Point is split between South Coast Water District and Moulton Niguel Water District, and the City of Dana Point publishes a [boundary map](https://www.danapoint.org/department/public-works-engineering/utilities); your water bill also names your district. Both districts run 24-hour lines: South Coast Water District at (949) 499-4555 and Moulton Niguel Water District at (949) 831-2500. Call your district if water is coming from the street, the meter box or a main. If the meter keeps moving with every fixture off, the leak is usually on your side of the meter (see [water meter still moving with everything off](https://straightflushplumbingoc.com/academy/water-meter-still-moving-everything-off.html)), and that is what we locate with acoustic, electronic and thermal tools before anything is opened. Ask your district about any leak adjustment on your bill.
 
 
 
@@ -6346,7 +7130,7 @@ Most of San Clemente's water is imported through the Metropolitan Water District
 
 - [Acoustic slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
 
-- [Hidden & underground water leak detection](https://straightflushplumbingoc.com/services/leak-detection.html)
+- [Hidden & underground water leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html)
 
 - [Whole-house PEX repiping & copper line elimination](https://straightflushplumbingoc.com/services/pex-repiping.html)
 
@@ -6536,7 +7320,7 @@ What that means for you: if your home still has its original copper, a pinhole l
 
 - Hidden & underground water leak detection
 
-- Whole-house PEX repiping & copper line elimination
+- [Whole-house PEX repiping & copper line elimination in Ladera Ranch](https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html)
 
 - Water heater repair & installation
 
@@ -6685,7 +7469,11 @@ Laguna Hills sits right in the heart of our service area, with a mix of establis
 
 
 
-Many Laguna Hills homes date to the 1970s-80s, putting original copper plumbing squarely in the age range where slab leaks become more common. We bring the same acoustic detection standard here as anywhere else in South Orange County.
+Laguna Hills grew out of the Moulton Ranch, which was subdivided in the early 1960s; the community first appeared in the 1970 U.S. Census and became a city on December 20, 1991 ([Wikipedia](https://en.wikipedia.org/wiki/Laguna_Hills,_California)). The median home here was built in 1980, and about 74% of homes are single-family, 24% multi-family and 2% mobile homes ([City-Stats, 2023 ACS data](https://city-stats.com/california/laguna-hills/housing)). That means the original copper water lines in a typical Laguna Hills home are now more than 40 years old, the age range where pinhole and slab leaks become more common. In condos and townhomes, a leak can also start in a neighbor’s unit or a shared line, so we locate the source before anyone opens a wall.
+
+
+
+Laguna Hills is split between two water districts. The city lists both El Toro Water District and Moulton Niguel Water District as serving Laguna Hills residents ([City of Laguna Hills](https://www.lagunahillsca.gov/DocumentCenter/View/7819/Outside-Agency-Contact-List); [El Toro Water District](https://en.wikipedia.org/wiki/El_Toro_Water_District); [MNWD](https://www.mnwd.com/servicearea/)). Your water bill shows which one serves your home. That matters after a leak, because meter readings, usage history and any leak-related bill adjustment all go through your own district.
 
 
 
@@ -6803,3 +7591,11 @@ We're based nearby in Laguna Niguel, so Laguna Hills is a short drive. Same-day 
 
 
 An unexplained jump in your water bill, a water meter that keeps moving with everything off, the sound of running water behind a wall, a warm spot on the floor, or dropping pressure. Any one of these in a Laguna Hills home is worth a professional diagnosis before it becomes water damage.
+
+
+
+
+ Which water district serves my Laguna Hills home? +
+
+
+Laguna Hills is served by two water districts: El Toro Water District (949-837-0660) and Moulton Niguel Water District (949-831-2500), according to the City of Laguna Hills. Your water bill names your district. If a leak has pushed your bill up, call your district for your usage history and ask whether it offers a leak adjustment, and keep the leak detection findings and repair invoice to show them.
