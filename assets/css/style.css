@@ -5,7 +5,8 @@
    and its playing-card identity (every card face-up before the bet is made).
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* Google Fonts load from a <link> in each page's <head> (not @import) so the
+   font CSS is fetched in parallel with this file instead of after it. */
 
 :root{
   /* ---- Color tokens (mirrors straightflushplumbingoc.com theme) ---- */
@@ -156,6 +157,20 @@ section{ padding:96px 0; }
 .hero-trust-item{ }
 .hero-trust-item strong{ display:block; font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; }
 .hero-trust-item span{ font-size:0.8rem; color:var(--muted-on-ink); }
+/* Contact page (conversion, 2026-11-09): 574 "Schedule"/"Contact" buttons site-wide land
+   here, but on a 390x664 phone the first screen was hero copy only and the form started
+   at ~751px. Compact the hero on phones, add hero buttons, and give the form an anchor. */
+.hero-contact{ padding-bottom:90px; }
+.contact-request{ scroll-margin-top:72px; }
+@media (max-width:560px){
+  .hero-contact{ padding:40px 0 36px; }
+  .hero-contact .hero-eyebrow{ margin-bottom:14px; }
+  .hero-contact .hero-sub{ margin-top:14px; font-size:1.02rem; }
+  .hero-contact .hero-ctas{ margin-top:20px; gap:10px; }
+  .hero-contact .hero-ctas .btn{ flex:1 1 100%; justify-content:center; }
+  .hero-contact .hero-ctas .btn-ghost{ display:none; }
+  .contact-request{ padding-top:36px; }
+}
 
 /* ---- Signature element: The Tell (sonar sweep house diagram) ---- */
 .tell{ position:relative; aspect-ratio:1/1.05; max-width:480px; margin:0 auto; }
@@ -545,6 +560,13 @@ footer.site-footer{ background:var(--ink); color:var(--muted-on-ink); padding:64
 .booking-field{ width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; margin-bottom:14px; background:var(--foam); }
 .booking-row-2{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px; }
 .booking-row-2 .booking-field{ margin-bottom:0; }
+.form-row-2{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; }
+/* Phones (conversion, 2026-11-03): name and phone sat side by side at ~125px (home)
+   and ~159px (contact) wide, which clipped the "Phone Number *" placeholder and made
+   the two required fields cramped. Stack them on narrow screens. */
+@media (max-width: 560px){
+  .booking-row-2, .form-row-2{ grid-template-columns:1fr; }
+}
 .booking-alt-call{
   display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; width:100%;
   background:var(--ink); color:#fff; padding:15px; border-radius:12px; font-weight:700; font-size:0.95rem;

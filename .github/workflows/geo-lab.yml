@@ -1,0 +1,19 @@
+name: Verify GEO Lab (disabled)
+
+# This workflow was added as part of the recent GEO Lab rollout and has been
+# intentionally disabled to restore the site's normal static behavior.
+# The public website pages themselves were not modified.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Disabled
+        run: echo "GEO Lab verification workflow is intentionally disabled."

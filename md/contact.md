@@ -35,6 +35,7 @@ Call, save our number, or send the details below and we'll get back to you with 
 
  City
  Email (optional)
+ How did you hear about us? (optional) How did you hear about us? Google search Google Maps ChatGPT or another AI assistant Yelp Nextdoor Friend or neighbor Other
  What are you noticing?
  Send Request
 
@@ -107,7 +108,7 @@ Laguna Niguel and communities throughout South and Central Orange County — see
  Do you handle emergency calls? +
 
 
-Yes. Outside regular hours (Mon–Fri 8am–7pm, Sat 9am–6pm, closed Sunday), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.
+Yes. Outside regular hours (Mon–Fri 8am–7pm, Sat–Sun 9am–6pm), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.
 
 
 

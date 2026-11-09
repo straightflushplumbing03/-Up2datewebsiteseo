@@ -44,9 +44,9 @@ requires owner confirmation is marked **UNVERIFIED — owner input required**.
 
 | Field | Value | Source | Verified | Confidence |
 |---|---|---|---|---|
-| Mon–Fri | 08:00–19:00 | `index.html` JSON-LD `openingHoursSpecification` | 2026-10-09 | high |
-| Saturday | 09:00–18:00 | `index.html` JSON-LD `openingHoursSpecification` | 2026-10-09 | high |
-| Sunday | Closed; 24/7 for emergency calls | `index.html` JSON-LD `description`; `llms.txt` | 2026-10-09 | high |
+| Mon–Fri | 08:00–19:00 | Owner (Lance), confirmed in chat; matches Yelp | 2026-11-04 | high |
+| Saturday | 09:00–18:00 | Owner (Lance), confirmed in chat; matches Yelp | 2026-11-04 | high |
+| Sunday | 09:00–18:00; 24/7 for emergency calls | Owner (Lance), confirmed in chat; matches Yelp (was "closed" before 2026-11-04) | 2026-11-04 | high |
 
 ## Credentials
 

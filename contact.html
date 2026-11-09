@@ -31,6 +31,7 @@
 <link rel="icon" href="assets/img/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="assets/css/style.css">
 <script type="application/ld+json">
 {
@@ -52,7 +53,7 @@
       "name": "How do I schedule leak detection or plumbing service?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Call (949) 374-6524 and Lance answers the phone directly, or send the request form on this page with what you're noticing. We'll confirm a visit window and give you an up-front time estimate."
+        "text": "Call (949) 374-6524 and Lance answers the phone directly, or send the request form above with what you're noticing. We'll confirm a visit window and give you an up-front time estimate."
       }
     },
     {
@@ -60,7 +61,7 @@
       "name": "What areas do you serve?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Laguna Niguel and communities throughout South and Central Orange County, including Dana Point, San Clemente, Mission Viejo, Aliso Viejo, Laguna Hills, Laguna Beach, San Juan Capistrano, Irvine, and more. See the service areas page for the full list."
+        "text": "Laguna Niguel and communities throughout South and Central Orange County — see the service areas page for the full list."
       }
     },
     {
@@ -68,7 +69,7 @@
       "name": "Do you handle emergency calls?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Outside regular hours (Mon-Fri 8am-7pm, Sat 9am-6pm, closed Sunday), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures."
+        "text": "Yes. Outside regular hours (Mon–Fri 8am–7pm, Sat–Sun 9am–6pm), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures."
       }
     },
     {
@@ -76,7 +77,7 @@
       "name": "What information helps before the visit?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "A short description of what you're noticing (water bill changes, sounds behind a wall, warm floor spots, pressure drops), when it started, and your home's approximate age. Original copper plumbing in 1970s-1990s South OC homes is especially common in slab leak calls."
+        "text": "A short description of what you're noticing (water bill changes, sounds behind a wall, warm floor spots, pressure drops), when it started, and your home's approximate age."
       }
     }
   ]
@@ -101,21 +102,22 @@
     </ul>
     <div class="nav-cta">
       <a href="tel:+19493746524" class="nav-phone">Call <strong>(949) 374-6524</strong></a>
-      <a href="contact.html" class="btn btn-primary btn-sm">Schedule Detection</a>
+      <a href="#request" class="btn btn-primary btn-sm">Schedule Detection</a>
       <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:-0.15em;" ><line x1="3.5" y1="7" x2="20.5" y2="7"/><line x1="3.5" y1="12" x2="20.5" y2="12"/><line x1="3.5" y1="17" x2="20.5" y2="17"/></svg></button>
     </div>
   </nav>
 </header>
 <main id="main">
-<section class="hero" style="padding-bottom:90px;">
+<section class="hero hero-contact">
   <div class="wrap">
     <div class="breadcrumbs"><a href="index.html">Home</a> &rsaquo; <span>Contact</span></div>
     <div class="hero-eyebrow"><span class="dot"></span> We usually respond same day</div>
     <h1 style="max-width:20ch;">Let's find out what's really going on.</h1>
     <p class="hero-sub">Call, save our number, or send the details below and we'll get back to you with next steps &mdash; no pressure, no obligation. Lance answers the phone.</p>
+    <div class="hero-ctas"><a href="#request" class="btn btn-primary">Send the Details &darr;</a><a href="tel:+19493746524" class="btn btn-ghost">Call (949) 374-6524</a></div>
   </div>
 </section>
-<section>
+<section id="request" class="contact-request">
   <div class="wrap two-col">
     <div class="reveal">
       <div class="eyebrow">Get in touch</div>
@@ -127,12 +129,13 @@
       <form action="https://formspree.io/f/xgojqkvb" method="post" data-secure-form style="display:flex; flex-direction:column; gap:16px;">
         <input type="text" name="_gotcha" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px; height:0; width:0; opacity:0;">
         <input type="hidden" name="_next" value="https://straightflushplumbingoc.com/thank-you.html">
-        <div style="display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px;">
+        <div class="form-row-2">
           <label for="ct-name" class="sr-only">Full name (required)</label><input id="ct-name" type="text" name="name" placeholder="Full name" required maxlength="80" autocomplete="name" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
           <label for="ct-phone" class="sr-only">Phone number (required)</label><input id="ct-phone" type="tel" name="phone" placeholder="Phone number" required maxlength="20" pattern="[0-9()+.\s-]{7,20}" autocomplete="tel" title="Phone number, e.g. (949) 555-0123" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
         </div>
         <label for="ct-city" class="sr-only">City</label><input id="ct-city" type="text" name="city" placeholder="City (Laguna Niguel, Dana Point, San Clemente...)" maxlength="60" autocomplete="address-level2" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
         <label for="ct-email" class="sr-only">Email (optional)</label><input id="ct-email" type="email" name="email" placeholder="Email (optional — if you'd like a written follow-up)" maxlength="120" autocomplete="email" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem;">
+        <label for="ct-heard" class="sr-only">How did you hear about us? (optional)</label><select id="ct-heard" name="heard_about" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; background:#fff;"><option value="">How did you hear about us?</option><option>Google search</option><option>Google Maps</option><option>ChatGPT or another AI assistant</option><option>Yelp</option><option>Nextdoor</option><option>Friend or neighbor</option><option>Other</option></select>
         <label for="ct-details" class="sr-only">What are you noticing?</label><textarea id="ct-details" name="details" rows="5" maxlength="2000" placeholder="What are you noticing? (high water bill, sounds behind a wall, warm floor spot, low pressure...)" style="width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; resize:vertical;"></textarea>
         <button type="submit" class="btn btn-primary btn-block">Send Request</button>
         <p class="muted" style="font-size:0.82rem;">Prefer to talk it through? Call <a href="tel:+19493746524" style="color:var(--straight); font-weight:600;">(949) 374-6524</a> directly.</p>
@@ -170,7 +173,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">Do you handle emergency calls?<span class="plus">+</span></button>
-        <div class="faq-a"><p>Yes. Outside regular hours (Mon&ndash;Fri 8am&ndash;7pm, Sat 9am&ndash;6pm, closed Sunday), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.</p></div>
+        <div class="faq-a"><p>Yes. Outside regular hours (Mon&ndash;Fri 8am&ndash;7pm, Sat&ndash;Sun 9am&ndash;6pm), the phone is answered 24/7 for emergency calls such as burst pipes, active leaks, and water heater failures.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">What information helps before the visit?<span class="plus">+</span></button>
@@ -211,7 +214,7 @@
           <li><a href="tel:+19493746524">(949) 374-6524</a></li>
           <li><a href="mailto:lance@straightflushplumbingoc.com">lance@straightflushplumbingoc.com</a></li>
           <li>78 Cameray Heights, Laguna Niguel, CA 92677</li>
-          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm &middot; Sun closed<br><strong>24-hour emergency service</strong> &mdash; <a href="tel:+19493746524">call anytime</a></li>
+          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat&ndash;Sun 9am&ndash;6pm<br><strong>24-hour emergency service</strong> &mdash; <a href="tel:+19493746524">call anytime</a></li>
         </ul>
       </div>
       <div>

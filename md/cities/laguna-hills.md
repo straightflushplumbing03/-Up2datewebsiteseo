@@ -28,7 +28,11 @@ Laguna Hills sits right in the heart of our service area, with a mix of establis
 
 
 
-Many Laguna Hills homes date to the 1970s-80s, putting original copper plumbing squarely in the age range where slab leaks become more common. We bring the same acoustic detection standard here as anywhere else in South Orange County.
+Laguna Hills grew out of the Moulton Ranch, which was subdivided in the early 1960s; the community first appeared in the 1970 U.S. Census and became a city on December 20, 1991 ([Wikipedia](https://en.wikipedia.org/wiki/Laguna_Hills,_California)). The median home here was built in 1980, and about 74% of homes are single-family, 24% multi-family and 2% mobile homes ([City-Stats, 2023 ACS data](https://city-stats.com/california/laguna-hills/housing)). That means the original copper water lines in a typical Laguna Hills home are now more than 40 years old, the age range where pinhole and slab leaks become more common. In condos and townhomes, a leak can also start in a neighbor’s unit or a shared line, so we locate the source before anyone opens a wall.
+
+
+
+Laguna Hills is split between two water districts. The city lists both El Toro Water District and Moulton Niguel Water District as serving Laguna Hills residents ([City of Laguna Hills](https://www.lagunahillsca.gov/DocumentCenter/View/7819/Outside-Agency-Contact-List); [El Toro Water District](https://en.wikipedia.org/wiki/El_Toro_Water_District); [MNWD](https://www.mnwd.com/servicearea/)). Your water bill shows which one serves your home. That matters after a leak, because meter readings, usage history and any leak-related bill adjustment all go through your own district.
 
 
 
@@ -146,3 +150,11 @@ We're based nearby in Laguna Niguel, so Laguna Hills is a short drive. Same-day 
 
 
 An unexplained jump in your water bill, a water meter that keeps moving with everything off, the sound of running water behind a wall, a warm spot on the floor, or dropping pressure. Any one of these in a Laguna Hills home is worth a professional diagnosis before it becomes water damage.
+
+
+
+
+ Which water district serves my Laguna Hills home? +
+
+
+Laguna Hills is served by two water districts: El Toro Water District (949-837-0660) and Moulton Niguel Water District (949-831-2500), according to the City of Laguna Hills. Your water bill names your district. If a leak has pushed your bill up, call your district for your usage history and ask whether it offers a leak adjustment, and keep the leak detection findings and repair invoice to show them.

@@ -83,6 +83,7 @@ def head(title, description, canonical, prefix, schema=""):
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://straightflushplumbingoc.com/{canonical}">
 <meta name="twitter:card" content="summary">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,600&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
 <link rel="stylesheet" href="{prefix}assets/css/style.css">
 {schema}</head>
 <body>
@@ -142,7 +143,7 @@ def footer(prefix):
           <li><a href="tel:{PHONE_TEL}">{PHONE_DISPLAY}</a></li>
           <li><a href="mailto:{EMAIL}">{EMAIL}</a></li>
           <li>{ADDRESS}</li>
-          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat 9am&ndash;6pm<br>Sun Closed &middot; 24/7 for emergencies</li>
+          <li>Mon&ndash;Fri 8am&ndash;7pm &middot; Sat&ndash;Sun 9am&ndash;6pm<br>24/7 for emergencies</li>
         </ul>
       </div>
       <div>
