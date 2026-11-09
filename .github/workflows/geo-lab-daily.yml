@@ -1,0 +1,66 @@
+name: GEO Lab daily operations
+
+# Persistent autonomous operation (spec §13). This workflow is the scheduler:
+# it drives the lab over HTTP so the lab never needs an open browser, terminal
+# or OpenHands session.
+#
+# It requires ONE repository secret:
+#   GEO_LAB_URL        e.g. https://geo-lab.example.com   (the deployed lab)
+#   GEO_LAB_RUN_TOKEN  the same value as the lab's GEO_LAB_RUN_TOKEN env var
+#
+# If the secrets are absent the job exits successfully with a notice, so the
+# workflow is safe to merge before the lab is deployed.
+
+on:
+  schedule:
+    # 06:00 every day, including weekends, in the business's own timezone.
+    # GitHub Actions supports an IANA timezone on a schedule, so this stays
+    # 06:00 local across the PST/PDT changeover without a second cron entry.
+    # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
+    - cron: "0 6 * * *"
+      timezone: "America/Los_Angeles"
+  workflow_dispatch:
+    inputs:
+      report:
+        description: "Report period to generate after the run"
+        type: choice
+        options: [daily, weekly, monthly]
+        default: daily
+      visibility:
+        description: "Run live visibility tests (0 to skip)"
+        default: "1"
+
+permissions:
+  contents: read
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the daily run
+        env:
+          GEO_LAB_URL: ${{ secrets.GEO_LAB_URL }}
+          GEO_LAB_RUN_TOKEN: ${{ secrets.GEO_LAB_RUN_TOKEN }}
+          REPORT: ${{ inputs.report || 'daily' }}
+          VISIBILITY: ${{ inputs.visibility || '1' }}
+        run: |
+          if [ -z "$GEO_LAB_URL" ] || [ -z "$GEO_LAB_RUN_TOKEN" ]; then
+            echo "GEO_LAB_URL / GEO_LAB_RUN_TOKEN are not configured — the lab is not deployed yet. Nothing to do." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "Triggering $REPORT run at $GEO_LAB_URL"
+          HTTP=$(curl -sS -o /tmp/run.json -w "%{http_code}" \
+            -X POST "$GEO_LAB_URL/api/run?trigger=github-cron&report=$REPORT&visibility=$VISIBILITY" \
+            -H "Authorization: Bearer $GEO_LAB_RUN_TOKEN" \
+            --max-time 600)
+          echo "HTTP $HTTP"
+          cat /tmp/run.json
+          echo "### GEO Lab run" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/run.json >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          # 409 = a run is already in progress (the lab's overlap guard). Not a failure.
+          if [ "$HTTP" != "200" ] && [ "$HTTP" != "409" ]; then
+            echo "Run failed with HTTP $HTTP"
+            exit 1
+          fi
