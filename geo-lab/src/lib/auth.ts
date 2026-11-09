@@ -53,6 +53,16 @@ export function verifyPassword(password: string, stored: string): boolean {
   }
 }
 
+/**
+ * Constant-time check of an `Authorization: Bearer <token>` header. Both sides
+ * are hashed first so the comparison length never depends on the input.
+ */
+export function bearerTokenMatches(header: string | null | undefined, token: string | undefined): boolean {
+  if (!token) return false;
+  const digest = (v: string) => crypto.createHash("sha256").update(v).digest();
+  return crypto.timingSafeEqual(digest(header ?? ""), digest(`Bearer ${token}`));
+}
+
 export function createUser(email: string, name: string, role: Role, password: string): number {
   return insert("users", {
     email: email.toLowerCase().trim(),

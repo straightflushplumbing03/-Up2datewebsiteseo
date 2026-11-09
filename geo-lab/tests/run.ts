@@ -96,6 +96,18 @@ async function main() {
     logout(ok!.token);
   });
 
+  await test("auth: scheduler bearer token is checked exactly and refused when unset", async () => {
+    const { bearerTokenMatches } = await import("../src/lib/auth");
+    const t = "a".repeat(64);
+    assert(bearerTokenMatches(`Bearer ${t}`, t), "the right token must pass");
+    assert(!bearerTokenMatches(`Bearer ${t}x`, t), "a longer token must fail");
+    assert(!bearerTokenMatches(`Bearer ${t.slice(1)}`, t), "a shorter token must fail");
+    assert(!bearerTokenMatches(t, t), "a token without the Bearer scheme must fail");
+    assert(!bearerTokenMatches(null, t), "a missing header must fail");
+    assert(!bearerTokenMatches("Bearer ", undefined), "an unset GEO_LAB_RUN_TOKEN must never authorise");
+    assert(!bearerTokenMatches("Bearer ", ""), "an empty GEO_LAB_RUN_TOKEN must never authorise");
+  });
+
   // ── Company knowledge base ──────────────────────────────────────────────
   await test("company: identity facts are present and internally consistent", () => {
     eq(COMPANY.name, "Straight Flush Plumbing & Leak Detection", "name");
