@@ -106,6 +106,33 @@ Faucets, toilets, pipe repair, and water pressure issues, fixed right the first 
 
 
 
+ By city
+
+
+## Local service pages
+
+
+
+
+
+- **Leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html) · [San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html)
+
+- **Slab leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html)
+
+- **PEX repiping:** [Laguna Niguel](https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/pex-repiping-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html) · [Ladera Ranch](https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html)
+
+- **Water heater repair:** [Laguna Niguel](https://straightflushplumbingoc.com/services/water-heater-repair-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/water-heater-repair-dana-point.html) · [San Clemente](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
+
+
+
+
+Plus [emergency plumbing](https://straightflushplumbingoc.com/services/emergency-plumbing.html). For every city we serve, see [service areas](https://straightflushplumbingoc.com/service-areas.html). For pricing and repair options, see our [cost guides](https://straightflushplumbingoc.com/guides/).
+
+
+
+
+
+
 
 
 

@@ -32,6 +32,14 @@ Laguna Niguel's mix of 1970s–90s hillside developments means a wide range of o
 
 
 
+Laguna Niguel was planned before it was built. The Laguna Niguel Corporation was formed in 1959, making it one of the first master planned communities in California; land sales began in 1961, and Avco Community Developers took over the plan in 1971 and built out much of the city. Laguna Niguel incorporated on December 1, 1989, as Orange County’s 29th city ([City of Laguna Niguel](https://cityoflagunaniguel.org/388/History)). The median home here was built in 1986, and about 74% of homes are single-family and 26% multi-family ([City-Stats, 2023 ACS data](https://city-stats.com/california/laguna-niguel/housing)). So the original copper lines in a typical Laguna Niguel home are now close to 40 years old. In condos and townhomes, a leak can start in a neighbor’s unit or a shared line, so we locate the source before anyone opens a wall.
+
+
+
+Most Laguna Niguel homes get their water from Moulton Niguel Water District ([MNWD](https://www.mnwd.com/)). Check the name on your water bill to confirm your district. After a leak, your usage history and any bill adjustment go through that district, so keep the leak detection findings and the repair invoice.
+
+
+
  Services available in Laguna Niguel
 
 
@@ -124,6 +132,14 @@ In most cases, yes. We use acoustic listening equipment, electronic amplificatio
 
 
 We're based nearby in Laguna Niguel, so Laguna Niguel is a short drive. Same-day appointments are often available, and we offer 24/7 service for emergencies. Call (949) 374-6524 and we'll find the earliest slot that works for you.
+
+
+
+
+ How old is the plumbing in a typical Laguna Niguel home? +
+
+
+The median Laguna Niguel home was built in 1986, according to 2023 Census survey data, and the city's first land sales date to 1961. That means about half of the city's homes are now 40 years old or older, and many still have their original copper water lines, which is the age range where pinhole and slab leaks become more common. Age alone does not mean you have a leak. If your bill jumps or the meter moves with everything off, we locate the source with acoustic, electronic and thermal tools before anything is opened. Our guide to [slab leaks in older Orange County homes](https://straightflushplumbingoc.com/academy/slab-leaks-in-older-orange-county-homes.html) explains more.
 
 
 

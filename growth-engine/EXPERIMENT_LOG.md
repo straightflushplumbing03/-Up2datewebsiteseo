@@ -127,6 +127,93 @@ experiments below had their outcome re-assessed against this week's evidence.
 its baseline `sf_status` (all `absent`) and a 2026-11-23 re-measure date. The daily
 planner retests them as they age. See the file for the machine-readable rows.
 
+### exp-2026-11-02-san-clemente-slab-direct-answer — **shipped 2026-11-02, pending**
+
+- **Page:** `cities/san-clemente.html` — hero direct-answer paragraph ("Need slab leak
+  detection in San Clemente?…"), the 4 plain-text services now link to their service
+  pages, new FAQ "Who does slab leak detection in San Clemente?" (visible + FAQPage JSON-LD).
+- **Why:** 4 San Clemente slab-leak observations (10-20 → 11-02) were all `absent` and the
+  AI named **no business at all** — the most open query set on the board.
+- **Target queries / baseline:** best / who does / recommend × slab leak detection in
+  San Clemente — all `absent`.
+- **Claims used:** only APPROVED_CLAIMS (owner-operated, Laguna Niguel based, acoustic /
+  electronic / thermal, locate before opening). No prices, guarantees or new facts.
+- **Re-measure:** 2026-11-30.
+
+## 2026-11-04 — Google Search Console readout (experiments crew)
+
+**New measurement channel.** Search Console *is* readable from crew sessions through the
+OpenSEO connector (property `https://straightflushplumbingoc.com/`, read-only URL Inspection
++ Search Analytics, no credits used). Repo secrets are still absent (P-002), but the GSC
+blocker no longer stops measurement. Snapshot: `data/gsc_snapshot_2026-11-04.json`.
+
+### exp-2026-11-02-dedicated-pages-vs-control — stage 1 met for Google
+
+- URL Inspection: **all target pages are "Submitted and indexed"** (crawled 2026-10-29 → 11-04).
+  The `site:` web searches used on 11-02 and 11-03 were a false zero: the search tool does
+  not honour `site:` reliably. **Do not use `site:` as the indexing metric again; use URL Inspection.**
+- The stop rule ("stage 1 still zero on 2026-11-16") is void. Stages 2–3 (cited / named) stay
+  on the original 11-09 / 11-16 / 11-30 dates.
+
+### exp-2026-11-03-indexnow-split — Bing only, still valid
+
+- All 12 pages (6 treatment, 6 holdout) are already in **Google**. That was always expected:
+  IndexNow does not feed Google. The test measures **Bing** indexing only and stays as designed.
+
+### exp-2026-11-04-gsc-rank-gate — new, pending
+
+- **Hypothesis:** the 0-of-80 AI board is a *ranking* problem, not an indexing problem.
+  Google-grounded AI answers (Gemini, AI Overviews) cite pages that already rank on page 1,
+  and our pages average position ~34–62 sitewide.
+- **Baseline (GSC, 2026-10-05 → 11-01):** 1,526 impressions, 0 clicks; daily impressions grew
+  from ~20 to ~80–110. Only 10 query×page rows sit at position ≤ 20 (see snapshot).
+  The brand query "straight flush plumbing" ranks the homepage at **8.5** (the name twins outrank it).
+- **Metric, weekly:** for each AI-board query family (city × service), the GSC average position of
+  its target page (sum the `.html` and extensionless forms) next to that week's AI result
+  (absent / cited / named).
+- **How to read it:**
+  - *Supported:* every AI citation or mention that appears comes from a page at position ≤ 10,
+    and pages at > 20 stay absent.
+  - *Refuted:* a page is cited or named while its position is > 20, or a page sits at ≤ 10
+    for 3+ weekly checks and stays absent (Laguna Niguel already ranks 2.3–5.7 for three
+    "… laguna niguel ca" queries, so watch it first).
+  - *Inconclusive:* fewer than 2 target pages reach ≤ 10 by 2026-12-02.
+- **Checks:** 2026-11-11, 11-18, 11-25, 12-02.
+- **Decision it drives:** if supported, the next effort goes to authority (citations, GBP,
+  reviews, local links) and to pushing pages from 10–20 onto page 1, not to more new pages.
+---
+
+## exp-2026-11-02-dedicated-pages-vs-control — staged read of the 2026-11-02 page merges
+- **Date:** 2026-11-02 (experiments crew). **Deployment date:** 2026-11-02T00:41–00:46Z
+  (PRs #97, #98, #99 merged via #100).
+- **Hypothesis:** queries that now have a dedicated city × service page (treatment) will
+  move through three stages before control queries that only have a generic city page:
+  (1) first-party page indexed, (2) site cited as a source, (3) business named.
+- **Treatment queries (4, fixed wording, from `ai_visibility_queries`):**
+  "who can locate a hidden water leak in Laguna Niguel?" (`services/leak-detection-laguna-niguel.html`, new);
+  "slab leak detection in Mission Viejo" (`services/slab-leak-detection-mission-viejo.html`, new);
+  "who handles whole-house repiping near Mission Viejo?" (`services/pex-repiping-mission-viejo.html`, new);
+  "who provides slab leak detection in Laguna Niguel?" (`services/slab-leak-detection-laguna-niguel.html`, live since 2026-10-24).
+- **Control queries (3, no dedicated page):** "plumber in Ladera Ranch",
+  "which plumbers serve San Clemente?" (drops out of control if PR #104 merges),
+  "emergency plumber in South Orange County".
+- **Baseline (2026-10-23 → 2026-11-01, `public.ai_visibility_observations`):** 80 usable
+  answers (70 `gemini_search`, 20 `claude_web_search`, minus 10 inconclusive errors):
+  named **0/80**, `straightflushplumbingoc.com` in sources **0/80**.
+  Leading indicator 2026-11-02: web search `site:straightflushplumbingoc.com` and a
+  domain + service query return **no first-party pages** (only directory/GBP/other-company
+  results) — stage 1 is not yet reached for any page.
+- **Metrics (tracked separately, per methodology):** stage 1 = target URL appears for a
+  `site:` / exact-title search; stage 2 = site domain in `domains[]`; stage 3 = name in answer.
+- **Read rule:** compare treatment vs control rates per stage on fixed wording, ≥3 runs per
+  query per engine per check. Call a win only if treatment ≥2 of 4 queries reach a stage in
+  ≥2 separate checks while control stays at 0. One-off hits = noise (AI answers vary run to run).
+  If stage 1 is still 0 at 2026-11-16, the bottleneck is indexing, not content; stop adding
+  pages and escalate GSC verification + sitemap submission.
+- **Follow-up:** 2026-11-09 (stage 1), 2026-11-16 (stage 1–2), 2026-11-30 (all stages).
+- **Confounders:** GSC/GA4/GBP not connected; Gemini rows are Gemma fallback; only two engines;
+  PR #101–#104 merges would change other pages mid-test (log merge dates here).
+- **Confidence:** low (baseline is a floor at zero). **Decision:** keep; measure.
 ---
 
 ## Weekly review 2026-11-02 — outcomes recorded

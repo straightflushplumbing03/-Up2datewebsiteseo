@@ -2,7 +2,7 @@
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html
 > Section: Services
-> Summary: Hidden leak in your Laguna Niguel home? A plumber based in town finds it in walls, ceilings, slabs and yard lines before opening anything. $365–$525 for most homes.
+> Summary: Hidden leak in your Laguna Niguel home? A local plumber finds it in walls, ceilings, slabs and yard lines before opening anything. $365–$525 for most homes.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › Laguna Niguel

@@ -25,11 +25,16 @@ Modify Response Header → Create rule**
 
 Name the rule `security-headers`. Set **"All incoming responses"** (match all),
 then add these **Set static** header actions — values identical to the repo's
-`_headers` file so the meta CSP and header CSP intersect cleanly:
+`_headers` file and `scripts/csp_policy.py`. A CSP response header is enforced
+together with the meta CSP on every page, so a narrower header policy silently
+blocks GA4, Cloudflare Insights and the Formspree lead post. Safest path: run
+`scripts/cloudflare_add_security_headers.py`, which reads the policy from
+`csp_policy.py`. If you paste by hand, copy the CSP exactly as below (guarded by
+`growth-engine/tests/test_ga4_tag.py`):
 
 | Header | Value |
 |---|---|
-| `Content-Security-Policy` | `default-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com; script-src 'self'; frame-src https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests` |
+| `Content-Security-Policy` | `default-src 'self'; style-src 'self' https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://maps.google.com https://maps.gstatic.com https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://*.g.doubleclick.net https://www.google.com; script-src 'self' 'sha256-Z+KfC8aWCEElp/dJ1lGMrz8bDDvk5zK0cKD0oxbgTvI=' https://*.googletagmanager.com https://static.cloudflareinsights.com; frame-src https://www.google.com https://www.googletagmanager.com; connect-src 'self' https://*.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://*.g.doubleclick.net https://www.google.com https://cloudflareinsights.com https://formspree.io; object-src 'none'; base-uri 'self'; form-action https://formspree.io; upgrade-insecure-requests` |
 | `Strict-Transport-Security` | `max-age=63072000; includeSubDomains; preload` |
 | `X-Frame-Options` | `SAMEORIGIN` |
 | `X-Content-Type-Options` | `nosniff` |
@@ -90,8 +95,8 @@ highest-impact AEO fixes on this list.
 
 **Where:** Speed → Optimization → Rocket Loader → **Off**
 
-It rewrites script loading order and conflicts with the strict
-`script-src 'self'` CSP.
+It rewrites script loading order and conflicts with the hash-based
+`script-src` CSP (its rewritten loader script has no allowed hash).
 
 ### 2e. Mirage / other HTML-rewriting Scrape Shield features: OFF
 

@@ -2,7 +2,7 @@
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html
 > Section: Services
-> Summary: Whole-house and partial PEX repiping for Laguna Niguel homes with aging copper, from a plumber based in town. Diagnosis first, then an honest answer: (949) 374-6524.
+> Summary: Whole-house and partial PEX repiping for Laguna Niguel homes with aging copper, from a local plumber. Diagnosis first, then an honest answer: (949) 374-6524.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [PEX Repiping](https://straightflushplumbingoc.com/services/pex-repiping.html) › Laguna Niguel
