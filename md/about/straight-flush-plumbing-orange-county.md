@@ -15,7 +15,7 @@
 
 Straight Flush Plumbing & Leak Detection is an owner-operated plumbing company based in Laguna Niguel, CA, serving South Orange County homes. Lance answers the phone, diagnoses first, and only recommends the repair that actually solves the problem.
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 
@@ -249,7 +249,7 @@ Yes — 24/7 emergency response is available for burst pipes, urgent leaks, and 
 
 
 
-Call Lance at (949) 374-6524 — real answers, honest pricing, no call center.
+Call Lance at [(949) 374-6524](tel:+19493746524) — real answers, honest pricing, no call center.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
