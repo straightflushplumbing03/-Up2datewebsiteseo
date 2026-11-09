@@ -428,3 +428,25 @@ its baseline `sf_status` and a 2026-11-23 re-measure date.
   next ranking lever across the city section.
 - **Status:** awaiting owner go-ahead. Shipping it adds one more open PR on top of the
   ~24 already open.
+
+## exp-2026-11-09-leak-detection-hub-direct-answer — leak-detection hub answers "who does leak detection in <city>" for cities without a city leak page
+
+- **Page:** `services/leak-detection.html` (weekly run 2026-11-09, direct to `main`).
+- **Why:** the gap report maps Rooter Hero (49 lost answers) and American Leak Detection
+  (23) to this page. Aliso Viejo, Laguna Hills, San Juan Capistrano and Ladera Ranch have
+  no dedicated city × leak-detection page, and the hub only linked the four that do.
+- **Change:** hero direct-answer line; "local details" line links the four city pages;
+  new FAQ "Who does leak detection in Aliso Viejo, Laguna Hills and nearby South Orange
+  County cities?" (visible + FAQPage JSON-LD). Approved claims only (owner-operated,
+  Laguna Niguel based, Lance answers, acoustic/electronic/thermal, locate first,
+  documentation for insurer). No new prices, guarantees or superlatives.
+- **Target queries (baseline `absent`, claude_web_search):** best / who does / recommend ×
+  leak detection in Aliso Viejo; best leak detection in Laguna Hills, San Juan Capistrano,
+  Ladera Ranch.
+- **Re-measure:** 2026-12-07. Supported only if ≥ 1 target query moves to `cited` or
+  better; otherwise inconclusive (one engine, one search per query).
+
+### exp-2026-11-02-dedicated-pages-vs-control — 2026-11-09 checkpoint: **no change**
+
+- All 10 Laguna Niguel / Mission Viejo leak, slab and PEX queries re-run 11-02..11-08 are
+  still `absent` (named 0, cited 0). Keep; next checkpoints 11-16 and 11-30.

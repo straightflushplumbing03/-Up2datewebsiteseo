@@ -5,6 +5,13 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-11-09 (Claude weekly) — leak-detection hub answers "who does leak detection in <city>"; owner to-dos
+
+**Change:** `/services/leak-detection.html` hero direct answer + FAQ (visible + JSON-LD) + links to Aliso Viejo / Laguna Hills / SJC / Ladera Ranch; exp `exp-2026-11-09-leak-detection-hub-direct-answer`, re-measure 2026-12-07.
+**Why:** Rooter Hero (49) and American Leak Detection (23) win leak-detection answers mapped to this page; 6 target queries baseline absent. Scoreboard still 0/154. Owner: HomeAdvisor, Angi, approve WebFetch for the daily task.
+
+---
+
 ## 2026-11-06 (Intelligence HQ daily) — 15-query conventional sweep; first SF `cited` row; sitemap duplicate removed
 
 **Change:** removed the duplicate `<loc>` for `/services/leak-detection-laguna-niguel.html`
