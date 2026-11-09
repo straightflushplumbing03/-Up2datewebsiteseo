@@ -545,6 +545,13 @@ footer.site-footer{ background:var(--ink); color:var(--muted-on-ink); padding:64
 .booking-field{ width:100%; padding:14px 16px; border-radius:10px; border:1px solid var(--line); font-family:inherit; font-size:0.95rem; margin-bottom:14px; background:var(--foam); }
 .booking-row-2{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px; }
 .booking-row-2 .booking-field{ margin-bottom:0; }
+.form-row-2{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; }
+/* Phones (conversion, 2026-11-03): name and phone sat side by side at ~125px (home)
+   and ~159px (contact) wide, which clipped the "Phone Number *" placeholder and made
+   the two required fields cramped. Stack them on narrow screens. */
+@media (max-width: 560px){
+  .booking-row-2, .form-row-2{ grid-template-columns:1fr; }
+}
 .booking-alt-call{
   display:flex; align-items:center; justify-content:center; gap:10px; margin-top:14px; width:100%;
   background:var(--ink); color:#fff; padding:15px; border-radius:12px; font-weight:700; font-size:0.95rem;
