@@ -1019,3 +1019,119 @@ owner-supplied detail (fabricating case notes is forbidden).
   Reddit thread was observed in results but not fetched).
 - **Proposed action (if any):** reinforces `candidate` idea-2026-11-02-04 (below); no
   file changed this run.
+
+## 2026-11-06 — Google Search Central: AI Overviews / AI Mode require *no* special optimisation; foundational SEO only (primary source, fetched)
+
+- **What changed / observed:** the AI-features guidance was re-fetched from two
+  primary Google Search Central URLs (both HTTP 200, fetched 2026-11-06):
+  `https://developers.google.com/search/docs/appearance/ai-features` (179,675 bytes)
+  and `https://developers.google.com/search/docs/fundamentals/ai-optimization-guide`
+  (192,546 bytes). Verbatim from the fetched page:
+  - "The best practices for SEO remain relevant for AI features in Google Search
+    (such as AI Overviews and AI Mode). There are **no additional requirements** to
+    appear in AI Overviews or AI Mode, nor other special optimizations necessary."
+  - "You **don't need to create new machine readable files, AI text files, or markup**
+    to appear in these features. There's also **no special schema.org structured data**
+    that you need to add."
+  - Technical eligibility: "a page must be **indexed and eligible to be shown in Google
+    Search with a snippet**, fulfilling the Search technical requirements. There are no
+    additional technical requirements." Indexing is not guaranteed.
+  - Measurement: AI-feature appearances "are included in the overall search traffic in
+    Search Console … within the 'Web' search type."
+  - **Query fan-out:** both features "may use a 'query fan-out' technique — issuing
+    multiple related searches across subtopics and data sources", surfacing "a wider and
+    more diverse set of helpful links … than with a classic web search."
+- **Why it matters to Straight Flush:** this is unchanged official guidance (consistent
+  with the 2026-10-19 entry) and it directly constrains the engine: the lever is
+  **helpful, indexable, snippet-eligible pages**, not new machine-readable files or
+  special schema. The "query fan-out" language is a primary-source rationale for
+  **question-intent, answer-first sections** (the standing idea cluster 2026-11-02-01/02)
+  rather than for thin doorway pages, which Search policy forbids.
+- **Source(s):** https://developers.google.com/search/docs/appearance/ai-features
+  (HTTP 200) · https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (HTTP 200). **Confidence:** high (primary source, fetched).
+- **Proposed action (if any):** recorded only; no change.
+
+## 2026-11-06 — Diagnostic-technology + competitor structure: slab-leak specialists win with city × service page networks (fetched, medium confidence)
+
+- **What changed / observed:** two leak-detection competitor homepages were fetched
+  (both HTTP 200, 2026-11-06) after they recurred across today's leak/slab queries:
+  - `https://www.evansleakdetection.com/` (233,688 bytes) — a slab-leak-focused site
+    (title "Evans Leak Detection & Slab Leak Repair | Orange County CA") with a
+    service structure of **Slab Leak Detection / Slab Leak Repair / Slab Leak
+    Prevention / Main Water Line Leaks**, a displayed CA contractor licence
+    (#1057449), phone, and a stated "authorized installer of **FLO by Moen** leak
+    detection devices". Positioning line: "Leak Detection without Destruction!"
+  - `https://leakstar.com/` (47,342 bytes) — a **city × service page network**:
+    a long nav of `Slab Leak Detection <City>`, `Leak Detection & Plumbing <City>`,
+    `Repiping <City>`, `Water Heater Replacement <City>`, including the exact SF
+    service-area cities **Laguna Niguel (Slab Leak Repair), San Clemente (Plumbing
+    Repair), Dana Point (Leak Detection & Slab Leak Repair), Ladera Ranch (Repiping &
+    Reroute)**. Services span leak detection, pool leaks, infrared camera, re-route /
+    re-pipe, water-heater replacement, and water damage / mold.
+- **Why it matters to Straight Flush:** the recurring structural advantage of the
+  domains that beat SF on leak/slab queries is a **city × service page network** plus a
+  named diagnostic method. SF holds only `/services/*.html` and a small set of city
+  pages, and (correctly) makes no price or licence claims beyond the approved set. The
+  low-risk, non-thin response is **local-differentiation content on existing pages**
+  (idea cluster 2026-11-02-01/03/04), not cloned city permutations — which Google's
+  spam policies and the SF growth rules both forbid.
+- **Source(s):** https://www.evansleakdetection.com/ (HTTP 200) ·
+  https://leakstar.com/ (HTTP 200). **Confidence:** medium (competitor pages fetched;
+  that the page network *caused* the ranking is a hypothesis, not a measurement).
+- **Proposed action (if any):** recorded; reinforces existing `candidate` ideas; no file
+  changed.
+## 2026-11-03 — Google Search Central: AI-optimization guide is explicitly "SEO still matters"; llms.txt is officially ignored for Search
+
+- **What changed / observed:** re-fetched `https://developers.google.com/search/updates`
+  (HTTP 200, footer `Last updated 2026-10-26 UTC`) and
+  `https://developers.google.com/search/docs/fundamentals/ai-optimization-guide`
+  (HTTP 200, `Last updated 2026-07-10 UTC`). The guide's heading set is unchanged:
+  *"Is SEO still relevant for generative AI search?"*, *"Apply foundational SEO best
+  practices"*, *"Create valuable, non-commodity content"*, *"Optimize your local business
+  and ecommerce details"*, *"Mythbusting generative AI search: what you don't need to
+  do"*, *"Measure visibility in generative AI features with Search Console"*. The
+  mythbusting section states verbatim: *"LLMS.txt files and other 'special' markup: You
+  don't need to create new machine readable files, AI text files, markup, or Markdown to
+  appear in Google Search (including its generative AI capabilities), as Google Search
+  itself doesn't use them."* It also says *"Chunking content: There's no requirement to
+  break your content into tiny pieces"*, *"Rewriting content just for AI systems: You
+  don't need to write in a specific way just for generative AI search"*, and warns
+  against *"Seeking inauthentic 'mentions'"*.
+- **Why it matters to Straight Flush:** this is the authoritative, primary-source answer to
+  the AEO/GEO "hacks" that circulate. It means SF should **not** invest in llms.txt-style
+  special markup or content-rewriting for AI, and should **not** pursue inauthentic
+  mentions; the guide instead endorses foundational SEO plus *"Optimize your local
+  business and ecommerce details"* — i.e. exactly the entity/NAP consistency and
+  answer-first local pages the engine already prioritises. Note the site already serves
+  `/llms.txt` (HTTP 200 per `crawler_access`); per Google it is harmless but neither helps
+  nor hurts Search visibility, so it should stay as-is for other consumers, not be
+  expanded for Search.
+- **Source(s):** https://developers.google.com/search/docs/fundamentals/ai-optimization-guide
+  (HTTP 200, `Last updated 2026-07-10 UTC`) · https://developers.google.com/search/updates
+  (HTTP 200, `Last updated 2026-10-26 UTC`). **Confidence:** high (official Google primary
+  source, quoted verbatim).
+- **Proposed action (if any):** reinforces the standing answer-first/local-entity direction;
+  explicitly **de-prioritises** any llms.txt expansion idea. No file changed.
+
+## 2026-11-03 — Official docs page notes the FAQ rich result feature was deprecated (June 2026), yet SF keeps FAQPage JSON-LD
+
+- **What changed / observed:** the Search updates log (HTTP 200, `Last updated 2026-10-26
+  UTC`) lists under **June 2026**: *"Removing documentation for the FAQ rich result
+  feature"* and *"Deprecating the FAQ rich result feature"*, with the link resolving to
+  `https://developers.google.com/search/docs/appearance/structured-data/faqpage`. Under
+  **May 2026**: *"Deprecating the FAQ rich result feature"*. So the FAQ *rich result* in
+  Google Search is deprecated as a Search appearance.
+- **Why it matters to Straight Flush:** several SF city pages carry `FAQPage` JSON-LD
+  added in earlier passes. Deprecation of the rich-result appearance does **not** mean the
+  on-page FAQ text is harmful — the visible Q&A is still useful for users and for
+  AI-answer extraction, and the markup is not a spam violation. The correct reading is:
+  keep the *visible* answer-first FAQ copy; do not expect an FAQ rich result in Google
+  Search; and do not add new FAQ schema purely for a rich result that no longer renders.
+  This is a **hypothesis about appearance only** — no evidence any SF page was penalised.
+- **Source(s):** https://developers.google.com/search/updates (HTTP 200, `Last updated
+  2026-10-26 UTC`) · https://developers.google.com/search/docs/appearance/structured-data/faqpage.
+  **Confidence:** medium-high (official updates log; the deprecation date is read from the
+  changelog, the per-page doc itself was not re-fetched this run).
+- **Proposed action (if any):** no change — record as context for future FAQ/schema work;
+  do **not** remove existing visible FAQ copy (Level 3-adjacent content; no evidence of harm).

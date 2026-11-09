@@ -1,8 +1,28 @@
 # Integration Status — Straight Flush Growth Engine
 
+> **Update 2026-11-04 (experiments crew):** Google Search Console is readable from Claude crew sessions through the **OpenSEO connector** (property `https://straightflushplumbingoc.com/`, siteOwner; URL Inspection + Search Analytics, read-only, no credits). Repo secrets for GSC are still absent (P-002 stands for in-repo automations), but crew reports can now use real GSC numbers. First snapshot: `data/gsc_snapshot_2026-11-04.json`. The Ryze connector's Search Console tools returned `subscription_required` and were not used.
+
 Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
 OpenHands Cloud environment; a check is only marked ✅ after an actual successful
 call. Prior verification 2026-10-09.
+> **Re-verified 2026-11-03 (OpenHands Intelligence HQ daily, 14:0xZ).**
+> Crawler access ✅ **PASS** — `PerplexityBot /` 200, `Applebot /` 200,
+> `curl /robots.txt` 200, `curl /sitemap.xml` 200, `curl /llms.txt` 200
+> (`crawler_access_check.sh` exit 0), no `cf-mitigated`. Knowledge base ✅ OK
+> (152 HTML files); `seo_audit.py` ✅ OK; `entity_consistency` ✅ OK (canonical 200,
+> three stale hosts 404). Conventional-search proxy ✅ **Tavily** — 15 conclusive
+> rows; Straight Flush **`cited` on 1** (`who can locate a hidden water leak in
+> Laguna Niguel?`) and absent on 14 (first conventional citation observed; single
+> observation, not a trend). AI surface ❌ **BLOCKED — HTTP 401** on all 3 grounded
+> queries (`ai_visibility_sweep` FAIL exit 2, ISSUE-045); recorded `inconclusive`,
+> **never zero**. `sitemap_idempotent` reported ❌ `ok=false` but its own detail says
+> *"Sitemap is in sync with the indexable page set"* with *"history unavailable: 93"*
+> — a shallow-clone false negative, not drift (see idea-2026-11-03-02). **Google
+> Search Console, GA4, and GBP remain NOT CONNECTED** ❌ — no
+> `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*`/`GOOGLE_ANALYTICS_*`, or
+> `GOOGLE_BUSINESS_PROFILE_*` secret exists in this sandbox. Blocker unchanged:
+> **P-002**; their metrics are `unverified` — never reported as 0.
+
 
 > **Re-verified 2026-10-20 (OpenHands Intelligence HQ daily, 16:43Z).**
 > Crawler access ✅ **PASS** — `PerplexityBot /` 200, `Applebot /` 200,
@@ -216,6 +236,26 @@ are redacted.
   queries returned HTTP 401 `authentication_failed`; the Gemma fallback never engaged
   because the key was rejected outright. Recorded `inconclusive`, **not zero**. Needs a
   **valid `GEMINI_API_KEY`** (owner action).
+- **Measurement (still blocked, P-002):** `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*` /
+  `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **absent** from the
+  environment — GSC, GA4, and GBP remain unconnected. All impression/click/traffic/review
+  metrics stay `unverified` (never `0`).
+
+## Re-verified 2026-11-06 (Intelligence HQ daily)
+
+- **Crawler access:** all bot UAs and `curl` paths 200; ISSUE-001 still resolved. No
+  `cf-mitigated`. Knowledge base validates (153 HTML files).
+- **Tavily Search API (conventional proxy):** **working** — 15 queries executed, all
+  conclusive, all HTTP 200. Recorded as `test_type: conventional_proxy`, never as an
+  AI-answer-engine result. First-ever SF `cited` row recorded
+  (`who can locate a hidden water leak in Laguna Niguel?`).
+- **Gemini (AI surface): BLOCKED — 14th consecutive day (ISSUE-035 / ISSUE-045).** All 3
+  grounded queries returned HTTP 401 `authentication_failed`
+  (`ACCESS_TOKEN_TYPE_UNSUPPORTED`). The secret was **named explicitly** before the
+  re-run (`export GEMINI_API_KEY="${GEMINI_API_KEY}"`), so this is a genuine invalid-key
+  block, not a missing-injection artefact. Verbatim: *"API key not valid. Please pass a
+  valid API key."* Recorded `inconclusive`, **not zero**. Owner action: supply a valid
+  `GEMINI_API_KEY`.
 - **Measurement (still blocked, P-002):** `GOOGLE_SEARCH_CONSOLE_*`, `GA4_*` /
   `GOOGLE_ANALYTICS_*`, and `GOOGLE_BUSINESS_PROFILE_*` are **absent** from the
   environment — GSC, GA4, and GBP remain unconnected. All impression/click/traffic/review

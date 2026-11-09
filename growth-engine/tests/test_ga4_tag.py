@@ -144,6 +144,26 @@ class TestCspSourcesStayInSync(unittest.TestCase):
         self.assertEqual(add_security_meta.CSP_CONTENT, shared)
         self.assertEqual(cf.HEADERS["Content-Security-Policy"], shared)
 
+    def test_headers_file_matches_the_cloudflare_rule(self):
+        """`_headers` and the Cloudflare script must set the same values."""
+        with open(os.path.join(ROOT, "_headers"), encoding="utf-8") as fh:
+            got = dict(
+                line.strip().split(": ", 1)
+                for line in fh
+                if line.startswith("  ") and ": " in line
+            )
+        self.assertEqual(got, cf.HEADERS)
+
+    def test_manual_setup_doc_matches_the_cloudflare_rule(self):
+        """Regression (2026-11-05): CLOUDFLARE-SETUP.md told the owner to paste a
+        CSP with script-src 'self' and connect-src 'self'. Pasted by hand, that
+        header would block GA4, Cloudflare Insights and the Formspree post."""
+        with open(os.path.join(ROOT, "CLOUDFLARE-SETUP.md"), encoding="utf-8") as fh:
+            doc = fh.read()
+        rows = dict(re.findall(r"^\| `([A-Za-z-]+)` \| `([^`]*)` \|$", doc, re.M))
+        for name, value in cf.HEADERS.items():
+            self.assertEqual(rows.get(name), value, "CLOUDFLARE-SETUP.md: stale %s" % name)
+
     def test_security_meta_rerun_does_not_revert_the_ga_allowlist(self):
         """Regression: this script used to write a CSP with script-src 'self'."""
         self.assertIn("googletagmanager.com", add_security_meta.META_CSP)
