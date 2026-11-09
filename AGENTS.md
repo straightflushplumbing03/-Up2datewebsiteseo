@@ -32,6 +32,10 @@ re-apply the later passes). Never run a generator over the site as a whole.
 - Hub pages are directories with `index.html` and are declared in `sitemap.xml`
   with a trailing slash (`/guides/`, `/case-studies/`)
 - Breadcrumb JSON-LD must match the visible breadcrumb trail
+- After a content change to a page, run `python3 scripts/refresh_sitemap.py` in a
+  full (non-shallow) clone and commit the `sitemap.xml` lastmod it sets. Sitewide
+  sweeps (40+ pages, e.g. footer/CSP/analytics) are ignored on purpose so lastmod
+  stays accurate enough for Google and Bing to trust
 - Service-area cities are `areaServed` only — never invent a physical address
 - No fabricated reviews, projects, licenses, or local offices
 
