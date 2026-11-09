@@ -1050,3 +1050,80 @@ unchanged); two competitor homepages fetched (`evansleakdetection.com`, `leaksta
 the one sitemap correction; ideas 01–04 are HTML changes, 05–06 are tooling/tests.
 Nothing rejected. idea-2026-11-01-02 (invalid `GEMINI_API_KEY`) remains the single
 highest-value owner action and is unchanged today (now 14+ days).
+## 2026-11-02 (weekly review) — 6 new ideas, statuses updated
+
+Evidence base: the week 2026-10-27 → 2026-11-02 (7 daily reports, 7 citation-gap
+reports, ~1.9k `competitor_observations` rows, ~120 `ai_visibility_history` rows),
+plus the Gemini 401 reproduced this run. Scored 1–5 (higher is better). Risk gate:
+**L1** read-only/docs · **L2** reversible on-page or tooling · **L3** identity/price/
+legal/area/profile (propose only).
+
+| ID | Idea | Type | Impact | Evid | Effort→Value | Rev | Risk | Status | Evidence / source |
+|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-11-02-01 | Re-provision `GEMINI_API_KEY` as a valid AI Studio **API key** (`AIza…`) and add a smoke assertion to the daily pre-stage | Tooling/ops | 5 | 5 | 2 | 5 | ✅ L2 | **prioritized** | This run: `scripts/gemini_visibility.py --smoke` → HTTP 401 `authentication_failed` / `ACCESS_TOKEN_TYPE_UNSUPPORTED`; key length 53, prefix `AQ.A` (not `AIza`). 0 usable AI rows since 2026-10-23. |
+| idea-2026-11-02-02 | Ship the **service×city coverage matrix** as a committed, regenerable artifact (exists / who-holds-the-query / last observed) | Docs/tooling | 4 | 5 | 3 | 5 | ✅ L2 | **prioritized** | Every commercial query this week is held by a service×city page: repipe→integrityrepipe/socalrepipes; water-heater→thewaterheatercompany/waterheatersonly; slab→evansleakdetection/primewest; drains→splashplumbing/jettersndrains. Extends idea-2026-11-01-01. |
+| idea-2026-11-02-03 | Owner claim/complete the **top directory listings** (HomeAdvisor → This Old House → Angi → Porch → BBB → HomeGuide) | Business | 5 | 5 | 3 | 4 | ⚠️ L3 | **proposed** | `reports/citation-gaps/2026-11-01.md`: HomeAdvisor 70 lost answers, This Old House near-me 40, Angi 30, Porch 25, HomeGuide 21, BBB 20. Directories, not plumbers, own the lost answers. |
+| idea-2026-11-02-04 | Add a **`robots.txt` guard test** asserting `Google-Extended: Allow` + named AI crawlers stay present | Tooling | 3 | 5 | 2 | 5 | ✅ L2 | **scored** | Google post 2026-10-30 (fetched, `INDUSTRY_WATCH.md`): sites that allow Google-Extended stay eligible for Gemini grounding. Restates idea-2026-11-01-03; still unshipped. |
+| idea-2026-11-02-05 | Publish a **per-city water-heater** page for the home city (Laguna Niguel), with local differentiation | Website | 4 | 4 | 3 | 5 | ✅ L2 | candidate | Water-heater queries held by single-service domains on city pages (`thewaterheatercompany.com`, `waterheatersonly.com`, `waterheatermaninc.com`); SF still has no city×water-heater page. Feature verified; causation = hypothesis. |
+| idea-2026-11-02-06 | Publish a **per-city repipe/PEX** page for Laguna Niguel, with local differentiation | Website | 4 | 4 | 3 | 5 | ✅ L2 | candidate | "PEX repipe Laguna Niguel" → `integrityrepipe.com`, `socalrepipes.com`, `pexrepipe-repiping.com`, `pacificcoastcopperrepipe.com` — all repipe-specialist city pages. SF has `/services/pex-repiping.html`, no city frame. |
+
+**Prioritization rationale:** the top two remain measurement-integrity items, not
+content, because the week's defining fact is that the AI-answer instrument is **blind**
+(idea-01) and the content gaps are still written from a one-engine board (idea-02).
+Idea-03 is the only new high-impact *owner* action this week and is a Level 3 listing
+task, so it is proposed, not executed.
+
+**Status updates this week:**
+- idea-2026-11-01-01 → **in-progress** (coverage matrix; no artifact committed yet).
+- idea-2026-11-01-02 → **prioritized** (unchanged; blocked on the owner's key).
+- idea-2026-10-12-01 / idea-2026-10-13-01 / idea-2026-10-13-08 (city × slab-leak
+  pages) → **partially shipped**: Mission Viejo slab+PEX (#97), Laguna Niguel
+  hidden-leak (#99) merged 2026-11-02.
+- idea-2026-10-13-02 (per-city repipe/PEX) → **partially shipped**: Dana Point +
+  Laguna Niguel + Mission Viejo PEX pages live; Laguna Niguel specialist-depth page
+  still a candidate.
+
+### Parked / rejected log (2026-11-02)
+
+- **idea-2026-11-02-05 / -06 per-city water-heater & repipe pages** — held as
+  `candidate` (not rejected): both need a local-differentiation pass so the pages are
+  not thin permutations; deferred behind the coverage matrix (idea-02).
+- No idea rejected this week.
+### 2026-11-03 (Intelligence HQ daily)
+
+15 conventional (Tavily) queries; SF `cited` on 1 ("who can locate a hidden water leak
+in Laguna Niguel?"), absent on 14. Gemini AI-surface sweep BLOCKED (HTTP 401, ISSUE-045).
+New competitor domains this run: `proplumbermissionviejo.com`, `proplumberlagunaniguel.com`,
+`proplumberdanapoint.com`, `repipe-san-clemente.com`, `emergencyplumbernearme.website`,
+`urgentplumberspot.com`, `bestserviceplumber.com`, `ironwoodplumbing.com`, `sewerpros.com`,
+`aterdamagemissionviejo.com`, `esternrooter.com`. Google AI-optimization guide re-fetched
+(HTTP 200, `Last updated 2026-07-10 UTC`).
+
+| ID | Date | Idea | Type | Impact | Evid | Effort→Value | Rev | Risk | Status | Evidence / source | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| idea-2026-11-03-01 | 2026-11-03 | Request **Google Search Console access scoped to the AI-features / generative reporting** (P-002), now that Google documents measuring AI visibility there | Measurement/ops | 5 | 5 | 4 | 5 | L1 (owner action) | candidate | Google AI-optimization guide (fetched 2026-11-03, HTTP 200) has a section *"Measure visibility in generative AI features with Search Console"*. | Official primary source names the exact instrument; makes AI-visibility measurable first-party instead of proxy-only. Needs owner OAuth. |
+| idea-2026-11-03-02 | 2026-11-03 | Make `check_sitemap_idempotent` distinguish **"history unavailable on shallow clone"** from **real sitemap drift**, so it stops reporting a misleading FAIL | Tooling | 3 | 5 | 4 | 5 | L2 | candidate | Today's `daily_context.json`: `sitemap_idempotent ok=false` with detail *"lastmod refreshed: 0 (unchanged, history unavailable: 93)"* and *"Sitemap is in sync with the indexable page set."* — i.e. a false negative. | Read-only tooling; makes the instrument honest (same family as idea-2026-11-02-05). |
+| idea-2026-11-03-03 | 2026-11-03 | Log the **`proplumber<city>.com` multi-city network** (Mission Viejo / Laguna Niguel / Dana Point) as a repeat competitor pattern in `COMPETITOR_DIRECTORY.md` and monitor its per-city page structure | Research/ops | 3 | 4 | 4 | 5 | L1 | candidate | Today: `proplumbermissionviejo.com` (slab leak detection Mission Viejo), `proplumberlagunaniguel.com` (hidden water leak Laguna Niguel), `proplumberdanapoint.com` (copper pipe leak Dana Point) — one brand, three city domains. | Directory update only; do **not** copy the pattern (thin per-city pages are explicitly disallowed). |
+| idea-2026-11-03-04 | 2026-11-03 | Add an **"emergency call — what to expect"** answer block to the existing `/services/emergency-plumbing.html` (no prices, no response-time promise) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today: `emergency plumber in Laguna Niguel` → `scottenglishplumbing.net`, `emergencyplumbernearme.website`, `rotorooter.com`; `emergency plumber in South Orange County` → `calischoice.com`, `bestserviceplumber.com`, `sewerpros.com`; SF absent both. Exact-match domains hold the intent. | Answer-first, human value; **no response-time claim** (would be an unverified Level 3 claim). Reuses an existing page. |
+| idea-2026-11-03-05 | 2026-11-03 | Add a **San Clemente repipe/PEX page** (extends idea-2026-11-02-04) | Website | 4 | 4 | 3 | 5 | L2 | candidate | Today: `whole house repipe San Clemente` → `repipe-san-clemente.com`, `socalrepipes.com`, `ocrepipes.com` — exact-match city domain holds the intent; SF absent. | Needs the local-differentiation pass so it is not a thin permutation; no new claims. |
+| idea-2026-11-03-06 | 2026-11-03 | Add a **measurement-provenance requirement** to the daily report template: every AI-platform row must name the exact endpoint/model (e.g. "gemini-2.5-flash, Search-grounded") | Tooling/docs | 3 | 4 | 4 | 5 | L1 | candidate | Today's `ai_visibility_sweep` rows are `inconclusive`/HTTP 401 with no model named in the report line; "platforms tested" is ambiguous when a fallback engine (Gemma) may have answered. | Documentation-only; makes the "which instrument produced this number" question answerable from the report alone. |
+
+**Prioritization (impact · evidence · effort-to-value · reversibility · risk gate):**
+
+1. **idea-2026-11-03-01 (GSC AI-features access)** — top pick. It is the only idea backed by an
+   official primary source that names the *exact* measurement instrument for the thing this
+   engine cannot currently measure first-party. High impact, fully reversible (an access grant).
+2. **idea-2026-11-03-02 (sitemap-check false negative)** — the largest *durable* correctness
+   finding today: the pre-stage reported `sitemap_idempotent` FAIL while its own detail says
+   the sitemap is in sync. A check that cries wolf erodes the audit trail. Low effort, additive.
+3. **idea-2026-11-03-04 (emergency "what to expect")** — highest-evidence content item; two
+   emergency queries today, SF absent, exact-match domains holding the intent. No prices.
+4. **idea-2026-11-03-05 (San Clemente repipe)** and **-03 (proplumber network note)** —
+   evidence-backed; -05 held behind the local-differentiation pass.
+5. **idea-2026-11-03-06 (provenance line)** — cheap guard that improves every future report.
+
+**No idea actioned this run** beyond the sitemap dedupe (a separate, evidence-justified
+correctness fix). idea-01 needs an owner OAuth grant; ideas 02/06 are tooling that warrant a
+tested PR; ideas 03/04/05 are documentation/HTML changes. Nothing rejected. Standing owner
+action `idea-2026-11-01-02` (invalid `GEMINI_API_KEY`, ISSUE-045) is unchanged and remains
+the single highest-value fix.

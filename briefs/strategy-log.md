@@ -38,10 +38,86 @@ water leak in Laguna Niguel?`), **absent** on 14. Gemini AI surface BLOCKED (HTT
 
 **Keep/modify/revert:** **keep** (sitemap correction verified idempotent; documentation is
 append-only).
+## 2026-11-03 (Intelligence HQ daily) — 15-query conventional sweep; first SF citation (1/15); sitemap dedupe
+
+**Change:** `sitemap.xml` duplicate URL removed + canonical sort (identical URL set
+otherwise). Append-only documentation: +15 conventional-proxy visibility rows, +3
+inconclusive AI-surface rows, +20 competitor observations, +6 ideas, +2 industry-watch
+entries, this daily report, and an `INTEGRATION_STATUS.md` entry. No page copy, schema,
+claim, price, or service-area change.
+
+**Reason:** a duplicate `<url>` for `/services/leak-detection-laguna-niguel.html` was
+present; deduping is a pure hygiene fix. The measurement additions record what step 0b
+actually observed.
+
+**Target:** Tier-1 cities (Laguna Niguel, Mission Viejo, San Clemente, Aliso Viejo, Dana
+Point) × core services (leak detection, slab leaks, drains, water heaters, repipe,
+emergency).
+
+**Competitor insight:** city-name and exact-match domains hold local intent — a
+`proplumber<city>.com` network (Mission Viejo / Laguna Niguel / Dana Point),
+`repipe-san-clemente.com`, `emergencyplumbernearme.website`. `efficientplumbing.com`
+appeared in 9/15 result sets; `yelp.com` in 12/15.
+
+**Expected outcome:** the sitemap stays in sync (checker already reports *"in sync"*);
+the citation on `who can locate a hidden water leak in Laguna Niguel?` is logged as a
+single observation to be re-tested, not a trend.
+
+**Result:** pending — re-measure on the next comparable run. SF `cited` 1/15, absent 14/15;
+AI surface still BLOCKED (HTTP 401, ISSUE-045).
+
+**Keep/modify/revert:** keep (dedupe is a correctness fix; documentation is append-only).
 
 ## 2026-11-02 (Claude weekly) — San Clemente slab-leak direct answer; board still 0/154
 **Change:** `cities/san-clemente.html` direct-answer hero line, linked service list, FAQ "Who does slab leak detection in San Clemente?" (visible + JSON-LD). Experiment `exp-2026-11-02-san-clemente-slab-direct-answer`, re-measure 2026-11-30.
 **Reason:** 4 San Clemente slab-leak AI answers named no business at all. Owner priority: HomeAdvisor (74 lost answers), Angi, Porch listings.
+## 2026-11-02 (Intelligence HQ weekly) — the AI-answer instrument is still blind; ship verification, not a 90th page
+
+**Status:** Read-only + additive documentation. **No website page, schema, claim, copy,
+price, or sitemap entry changed.** Branch `intelligence-hq/weekly-2026-11-02`; PR **#107**.
+
+**Change:** none to the site (deliberate). Added `growth-engine/reports/weekly/2026-11-02.md`;
+6 new ideas in `INNOVATION_IDEAS.md` with status updates; outcome records in
+`EXPERIMENT_LOG.md`; 3 new rows in `data/content_experiments.jsonl` (the pages merged
+this week); this log entry.
+
+**Reason:** the week shipped 5 content/tooling PRs (#85, #86, #89, #96, #97, #98, #99)
+and 6 daily-report PRs (#90–#95), but **the measuring apparatus did not improve**. The
+defining fact of the week is that the AI-answer surface is **blind**: `GEMINI_API_KEY`
+returns **HTTP 401 `authentication_failed`** (`ACCESS_TOKEN_TYPE_UNSUPPORTED`),
+reproduced twice this run with the key named explicitly. 0 usable AI rows since
+2026-10-23. GSC/GA4/GBP remain unconnected (P-002). Fixing verification now beats
+authoring more pages.
+
+**Target:** the next daily report carries ≥2 engines on the AI board and a timestamped
+PASS/FAIL health line; the open-PR count drops below 10 (currently 6 + this PR).
+
+**Competitor insight:** the service × city landing page holds **every** commercial query
+tested this week — for water-heater and repipe specifically a **single-service specialist
+domain with one page per city** (`thewaterheatercompany.com`, `integrityrepipe.com`,
+`socalrepipes.com`, `pexrepipe-repiping.com`). Feature verified; cause = hypothesis.
+Directories are the dominant non-plumber source in answers that skip us: HomeAdvisor 70
+lost answers, This Old House near-me 40, Angi 30, Porch 25, HomeGuide 21, BBB 20 — so the
+highest-leverage owner action is **listing/claim work, not more pages**. New this window:
+`integrityrepipe.com`, `socalrepipes.com`, `pexrepipe-repiping.com`,
+`pacificcoastcopperrepipe.com` (repipe); `thewaterheatercompany.com`, `waterheatersonly.com`
+(water heater); `splashplumbing.com`, `jettersndrains.com` (drains); plus `Lantern`
+booking listings and AI directories (`serviceagent.ai`, `pendium.ai`).
+
+**Expected outcome:** the loop regains the ability to tell whether a change worked, and
+the owner gets one concrete high-yield list (directory claims) instead of more content.
+
+**Result:** crawler access **OK** (7 crawler UAs + curl → 200, no `cf-mitigated`);
+`validate_knowledge_base.py` **OK** (151 HTML); Gemini smoke **401**. **Keep.** No
+experiment reverted this week; the conventional proxy channel
+(`exp-2026-10-09-measurement-providers`) remains recorded as reverted/superseded.
+
+**Honest limitation:** no ranking or traffic claim is made. GSC/GA4/GBP metrics are
+`unverified` (never 0). The `absent` counts fell 86 → 70 only because a smaller query
+set ran this week, not because visibility improved.
+
+---
+
 
 ## 2026-10-27 (Intelligence HQ daily) — 15-query conventional sweep; SF absent 0/15; sitemap normalized
 

@@ -140,6 +140,224 @@ planner retests them as they age. See the file for the machine-readable rows.
   electronic / thermal, locate before opening). No prices, guarantees or new facts.
 - **Re-measure:** 2026-11-30.
 
+## 2026-11-04 — Google Search Console readout (experiments crew)
+
+**New measurement channel.** Search Console *is* readable from crew sessions through the
+OpenSEO connector (property `https://straightflushplumbingoc.com/`, read-only URL Inspection
++ Search Analytics, no credits used). Repo secrets are still absent (P-002), but the GSC
+blocker no longer stops measurement. Snapshot: `data/gsc_snapshot_2026-11-04.json`.
+
+### exp-2026-11-02-dedicated-pages-vs-control — stage 1 met for Google
+
+- URL Inspection: **all target pages are "Submitted and indexed"** (crawled 2026-10-29 → 11-04).
+  The `site:` web searches used on 11-02 and 11-03 were a false zero: the search tool does
+  not honour `site:` reliably. **Do not use `site:` as the indexing metric again; use URL Inspection.**
+- The stop rule ("stage 1 still zero on 2026-11-16") is void. Stages 2–3 (cited / named) stay
+  on the original 11-09 / 11-16 / 11-30 dates.
+
+### exp-2026-11-03-indexnow-split — Bing only, still valid
+
+- All 12 pages (6 treatment, 6 holdout) are already in **Google**. That was always expected:
+  IndexNow does not feed Google. The test measures **Bing** indexing only and stays as designed.
+
+### exp-2026-11-04-gsc-rank-gate — new, pending
+
+- **Hypothesis:** the 0-of-80 AI board is a *ranking* problem, not an indexing problem.
+  Google-grounded AI answers (Gemini, AI Overviews) cite pages that already rank on page 1,
+  and our pages average position ~34–62 sitewide.
+- **Baseline (GSC, 2026-10-05 → 11-01):** 1,526 impressions, 0 clicks; daily impressions grew
+  from ~20 to ~80–110. Only 10 query×page rows sit at position ≤ 20 (see snapshot).
+  The brand query "straight flush plumbing" ranks the homepage at **8.5** (the name twins outrank it).
+- **Metric, weekly:** for each AI-board query family (city × service), the GSC average position of
+  its target page (sum the `.html` and extensionless forms) next to that week's AI result
+  (absent / cited / named).
+- **How to read it:**
+  - *Supported:* every AI citation or mention that appears comes from a page at position ≤ 10,
+    and pages at > 20 stay absent.
+  - *Refuted:* a page is cited or named while its position is > 20, or a page sits at ≤ 10
+    for 3+ weekly checks and stays absent (Laguna Niguel already ranks 2.3–5.7 for three
+    "… laguna niguel ca" queries, so watch it first).
+  - *Inconclusive:* fewer than 2 target pages reach ≤ 10 by 2026-12-02.
+- **Checks:** 2026-11-11, 11-18, 11-25, 12-02.
+- **Decision it drives:** if supported, the next effort goes to authority (citations, GBP,
+  reviews, local links) and to pushing pages from 10–20 onto page 1, not to more new pages.
+---
+
+## exp-2026-11-02-dedicated-pages-vs-control — staged read of the 2026-11-02 page merges
+- **Date:** 2026-11-02 (experiments crew). **Deployment date:** 2026-11-02T00:41–00:46Z
+  (PRs #97, #98, #99 merged via #100).
+- **Hypothesis:** queries that now have a dedicated city × service page (treatment) will
+  move through three stages before control queries that only have a generic city page:
+  (1) first-party page indexed, (2) site cited as a source, (3) business named.
+- **Treatment queries (4, fixed wording, from `ai_visibility_queries`):**
+  "who can locate a hidden water leak in Laguna Niguel?" (`services/leak-detection-laguna-niguel.html`, new);
+  "slab leak detection in Mission Viejo" (`services/slab-leak-detection-mission-viejo.html`, new);
+  "who handles whole-house repiping near Mission Viejo?" (`services/pex-repiping-mission-viejo.html`, new);
+  "who provides slab leak detection in Laguna Niguel?" (`services/slab-leak-detection-laguna-niguel.html`, live since 2026-10-24).
+- **Control queries (3, no dedicated page):** "plumber in Ladera Ranch",
+  "which plumbers serve San Clemente?" (drops out of control if PR #104 merges),
+  "emergency plumber in South Orange County".
+- **Baseline (2026-10-23 → 2026-11-01, `public.ai_visibility_observations`):** 80 usable
+  answers (70 `gemini_search`, 20 `claude_web_search`, minus 10 inconclusive errors):
+  named **0/80**, `straightflushplumbingoc.com` in sources **0/80**.
+  Leading indicator 2026-11-02: web search `site:straightflushplumbingoc.com` and a
+  domain + service query return **no first-party pages** (only directory/GBP/other-company
+  results) — stage 1 is not yet reached for any page.
+- **Metrics (tracked separately, per methodology):** stage 1 = target URL appears for a
+  `site:` / exact-title search; stage 2 = site domain in `domains[]`; stage 3 = name in answer.
+- **Read rule:** compare treatment vs control rates per stage on fixed wording, ≥3 runs per
+  query per engine per check. Call a win only if treatment ≥2 of 4 queries reach a stage in
+  ≥2 separate checks while control stays at 0. One-off hits = noise (AI answers vary run to run).
+  If stage 1 is still 0 at 2026-11-16, the bottleneck is indexing, not content; stop adding
+  pages and escalate GSC verification + sitemap submission.
+- **Follow-up:** 2026-11-09 (stage 1), 2026-11-16 (stage 1–2), 2026-11-30 (all stages).
+- **Confounders:** GSC/GA4/GBP not connected; Gemini rows are Gemma fallback; only two engines;
+  PR #101–#104 merges would change other pages mid-test (log merge dates here).
+- **Confidence:** low (baseline is a floor at zero). **Decision:** keep; measure.
+---
+
+## Weekly review 2026-11-02 — outcomes recorded
+
+The week 2026-10-27 → 2026-11-02 shipped 5 content/tooling PRs and 6 daily-report
+PRs, but **no measurement improvement**. Every open experiment is still judged
+against a one-engine board, and the one engine that could ground answers (Gemini)
+has been blind for most of the window. Outcomes below are recorded as they are —
+including the failures.
+
+### Gemini grounded AI-surface channel — **revise (failed again, blocked)**
+
+- 2026-10-16: 5 × `bad_request` HTTP 404 (retired model slug).
+- 2026-10-23: 4 × `server_error` 500, 4 × `quota_exhausted` 429, 1 usable row.
+- **2026-11-01 / 2026-11-02: HTTP 401 `authentication_failed`**
+  (`ACCESS_TOKEN_TYPE_UNSUPPORTED`), reproduced this run with the key named
+  explicitly. 0 usable AI rows since 2026-10-23.
+- **Decision: revise.** The labelled Gemma fallback only engages on quota/server
+  refusals, so an auth rejection leaves the surface UNMEASURED. Fix is
+  idea-2026-11-02-01 (owner supplies a valid `AIza…` key) — Level 3, propose only.
+  Until then the AI board must be labelled single-engine.
+
+### exp-2026-10-07-schema-orphans — **keep, inconclusive**
+
+- Follow-up 2026-11-07 not yet elapsed. No measurable SERP change is possible while
+  GSC is unconnected, and the AI channel reports 0 recommended / 0 cited.
+- **Decision: keep.** Confounder unchanged: no GSC/GA4/GBP access.
+
+### exp-2026-10-09-measurement-providers — **reverted / superseded (unchanged)**
+
+- No new evidence this week; remains reverted. Recorded so the failure is not
+  silently forgotten.
+
+### exp-2026-10-09-cloudflare-crawler-access — **resolved, holding**
+
+- Re-verified 2026-11-02T14:04Z: 7 crawler UAs + curl → **200** on `/`,
+  `/robots.txt`, `/sitemap.xml`, `/llms.txt`; no `cf-mitigated`. 22 consecutive days
+  green since the 2026-10-11 fix.
+- **Decision: resolved / keep.**
+
+### exp-2026-10-26-aliso-viejo-direct-answer — **keep, pending**
+
+- Baseline `claude_web_search` = absent for all 6 target queries. Re-measure
+  2026-11-23. No evidence of effect yet; not enough data to revise or revert.
+
+### exp-2026-10-20 / -10-23 / -10-24 city × service pages — **keep, pending**
+
+- All baselines `absent`; re-measure 2026-11-23. This week added two more pages to
+  the same family (Mission Viejo slab/PEX, Laguna Niguel hidden-leak, PRs #97/#99).
+
+### Claude-runner live-site health check — **revise (stalled)**
+
+- INCONCLUSIVE for most of the window: the unattended runner hits an unanswered
+  WebFetch permission prompt. Last real pass 2026-10-30. Needs a standing approval
+  or a `curl` fallback in the runner prompt. **Decision: revise.**
+
+### New experiment rows for the pages shipped 2026-11-01 → 11-02
+
+`data/content_experiments.jsonl` gains three rows for the pages merged this week
+(Mission Viejo slab-leak, Mission Viejo PEX, Laguna Niguel hidden-leak), each with
+its baseline `sf_status` and a 2026-11-23 re-measure date.
+---
+
+## exp-2026-11-03-indexnow-split — does IndexNow get pages into Bing faster than waiting?
+
+- **Why this test, now:** the AI board is 0 named / 0 cited across 80 usable answers
+  (2026-10-23 → 11-02), and on 2026-11-02 and again on 2026-11-03 a web search for
+  `site:straightflushplumbingoc.com` returned **no first-party pages**. Content tests
+  (exp-2026-11-02-dedicated-pages-vs-control, PR #105) cannot read until pages are
+  indexed. This test works on that first stage. It targets the Bing index because
+  Copilot and other Bing-grounded answers draw from it, and Bing accepts IndexNow.
+  Google does not use IndexNow, so Google indexing still needs Search Console (P-002).
+- **Hypothesis:** URLs submitted by IndexNow show up as indexed in Bing sooner than
+  matched URLs left to normal sitemap crawling.
+- **Change:** root key file `3ff9508dd5110375b6ea304de6df46ca.txt`,
+  `scripts/indexnow_submit.py` (dry run unless `--send`), arms in
+  `growth-engine/data/indexnow_experiment.json`. Also removed a duplicate
+  `services/leak-detection-laguna-niguel.html` entry from `sitemap.xml` (new test
+  guards against duplicates).
+- **Arms (6 v 6, matched by page type):**
+  - Treatment (submit on day 0): slab-leak-detection-mission-viejo,
+    leak-detection-laguna-niguel, pex-repiping-mission-viejo,
+    water-heater-repair-laguna-niguel, cities/laguna-niguel, cities/san-clemente.
+  - Holdout (no submission until day 14): slab-leak-detection-laguna-niguel,
+    slab-leak-detection-dana-point, pex-repiping-laguna-niguel,
+    water-heater-repair-dana-point, cities/dana-point, cities/mission-viejo.
+  - Homepage and all other pages are in neither arm.
+- **Day 0:** the day the PR is merged, GitHub Pages serves the key file, and
+  `python3 scripts/indexnow_submit.py --arm treatment --send` returns HTTP 200/202.
+- **Metric (per URL, yes/no):** "indexed in Bing". Primary reading: Bing Webmaster
+  Tools URL Inspection (owner). Fallback the crew can run: an exact-title search plus
+  a `site:` + URL-path search; record which method was used.
+- **Checks:** day 3, day 7, day 14 after day 0.
+- **How to read it:** treatment wins if, at day 14, at least 4 of 6 treatment URLs
+  are indexed **and** treatment leads holdout by 3 or more. Equal or within 2 =
+  no detectable effect at this sample size (6 v 6 only detects a large effect).
+  Both arms at 0 on day 14 = the blocker is not discovery (look at site quality,
+  duplicate root `.html` stubs, or Bing Webmaster crawl errors instead).
+- **After the read (any outcome):** submit the holdout and every other sitemap URL.
+  The cost of holding out is at most 14 days of delay on 6 pages.
+- **Rules during the test:** do not edit holdout pages (a content change can trigger
+  Cloudflare Crawler Hints, which itself sends IndexNow pings). Sitewide edits that
+  touch both arms equally are allowed but must be noted here with the date.
+- **Confounders:** Cloudflare Crawler Hints may already be on (CLOUDFLARE-SETUP.md
+  recommends it). If it is, it pings Bing on changed pages, so the 11-02 sitewide
+  commits may already have been sent for both arms. The owner should check the
+  setting; if on, the test still compares an explicit submission against no new ping.
+  Single engine (Bing). Small n.
+- **Baseline (2026-11-03):** 0/12 found by the crew's web search fallback (no
+  first-party result for `site:straightflushplumbingoc.com`). Bing Webmaster status
+  not yet read (needs owner).
+- **Status:** designed, awaiting merge and owner OK to send. **Confidence:** low
+  until read. **Decision:** run.
+## exp-2026-11-05-lake-forest-serp-title — title test on a page-2 city page (3 arms)
+
+- **Why:** the 11-04 GSC readout (PR #127) found ranking, not indexing, is the gate:
+  AI answers draw from page-1 results and most of our pages sit at position 25-60.
+  The crew has only tested *adding pages*. This tests the cheapest lever we control on a
+  page that is already close: the title.
+- **Arm A, treatment:** `cities/lake-forest.html`. Title `Leak Detection in Lake Forest, CA |
+  Straight Flush Plumbing` → `Leak Detection & Slab Leak Repair in Lake Forest, CA`;
+  description rewritten to lead with the same phrase (og/twitter copies and
+  `scripts/patch_city_meta.py` kept in sync). Body, H1 and schema unchanged, so the
+  title/description is the only variable. The page gets "slab leak repair lake forest"
+  impressions at 9.7-26.7 without using that phrase anywhere.
+- **Arm B, already shipped:** San Clemente (direct answer + FAQ 11-02, dedicated
+  leak-detection page 11-04). Lets us compare "new page" against "better title".
+- **Arm C, control:** `cities/coto-de-caza.html`, no change. **Freeze its title,
+  description, H1 and body until 2026-12-17.**
+- **Metric:** impression-weighted average GSC position over a fixed query list per arm,
+  extensionless + `.html` rows summed (baseline file:
+  `data/gsc_striking_distance_baseline_2026-11-05.json`). Secondary: cluster queries at
+  position ≤ 10. Baseline (08-02 → 11-02): **A 23.8** (41 impr, 2 queries ≤ 10),
+  **B 32.0** (43, 0), **C 34.6** (42, 0).
+- **Read it (28-day window after the merge date, vs baseline):**
+  - **Supported:** A improves ≥ 5 positions more than C *and* gains ≥ 1 query at ≤ 10.
+  - **Refuted:** A moves within ±3 of C's change.
+  - **Inconclusive:** any arm has < 20 impressions in the window, or C itself moves > 8
+    (a sitewide update swamped the test).
+  - B vs A is descriptive only (different cities, different change dates).
+- **Checks:** 2026-11-19, 2026-12-03, 2026-12-17 (GSC lags ~3 days).
+- **Decision it drives:** if supported, roll title/description rewrites to every city page
+  with page-2 service impressions (Irvine, Laguna Hills, Dana Point next) before writing
+  more new pages. If refuted, titles are not the gate; put effort into authority.
 ## exp-2026-11-09-gsc-aa-noise-check — A/A noise check before reading rank tests
 
 - **Why:** the 2026-11-05 Lake Forest title test (PR #137, unmerged) and the 2026-11-04

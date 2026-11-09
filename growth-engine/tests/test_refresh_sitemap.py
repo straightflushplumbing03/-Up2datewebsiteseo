@@ -130,5 +130,66 @@ class SitemapLastmodTest(unittest.TestCase):
         self.assertIn("Sitemap is in sync", result.stdout)
 
 
+class SitemapSweepCommitTest(unittest.TestCase):
+    """A sitewide template sweep must not restamp every URL's lastmod.
+
+    Google trusts <lastmod> only if it tracks significant page changes. Before
+    this test, the full-history path stamped all 93 URLs with the date of the
+    footer-hours sweep (2026-11-04), while the real 2026-11-07 Laguna Niguel
+    content change was the only one that mattered.
+    """
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="sitemap-sweep-")
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+        self.base = dict(os.environ)
+        self.base.update({
+            "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.com",
+            "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@example.com",
+        })
+
+    def _env(self, day):
+        env = dict(self.base)
+        env["GIT_AUTHOR_DATE"] = env["GIT_COMMITTER_DATE"] = f"{day}T00:00:00"
+        return env
+
+    def _commit(self, root, day, msg):
+        _git(root, "add", "-A", env=self._env(day))
+        _git(root, "commit", "-qm", msg, env=self._env(day))
+
+    def _write(self, root, fn, extra=""):
+        with open(os.path.join(root, fn), "w", encoding="utf-8") as fh:
+            fh.write(INDEXABLE.replace("x</body>", f"x{extra}</body>"))
+
+    def test_sweep_commit_is_ignored_but_content_commit_counts(self):
+        root = os.path.join(self.tmp, "repo")
+        os.makedirs(os.path.join(root, "scripts"))
+        for fn in ("index.html", "contact.html"):
+            self._write(root, fn)
+        with open(os.path.join(root, "sitemap.xml"), "w", encoding="utf-8") as fh:
+            fh.write(SITEMAP)
+        _git(root, "init", "-q", env=self._env("2026-01-02"))
+        self._commit(root, "2026-01-02", "seed")
+
+        # sitewide sweep: touches both pages (threshold lowered to 2 below)
+        for fn in ("index.html", "contact.html"):
+            self._write(root, fn, " footer-hours")
+        self._commit(root, "2026-02-01", "sweep")
+        # one real content change to contact.html
+        self._write(root, "contact.html", " footer-hours new-faq")
+        self._commit(root, "2026-03-01", "content")
+
+        shutil.copy(SCRIPT, os.path.join(root, "scripts", "refresh_sitemap.py"))
+        env = dict(os.environ, SF_SWEEP_THRESHOLD="2")
+        result = subprocess.run(
+            [sys.executable, os.path.join("scripts", "refresh_sitemap.py")],
+            cwd=root, capture_output=True, text=True, env=env,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        index_lm, contact_lm = _lastmods(root)
+        self.assertEqual(index_lm, "2026-01-02")    # sweep ignored
+        self.assertEqual(contact_lm, "2026-03-01")  # content change counted
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
