@@ -1,0 +1,424 @@
+{
+ "id": "exp-2026-11-09-gsc-aa-noise-check",
+ "source": "Google Search Console via OpenSEO (read-only), date x query x page, both URL forms summed",
+ "window": [
+  "2026-09-28",
+  "2026-11-08"
+ ],
+ "pulled": "2026-11-09",
+ "note": "Rows are the on-topic target queries only. Excluded as off-topic: 'trouble urinating lake forest', every 'lake forest park' query (Washington State), and one-off non-leak queries (lead-safe plumbers, repipe specialists, whole house repiping, toilet repair, gas leak detection). Coto rows pool the on-topic Coto queries (plumber / plumbing / plumbing services / emergency plumber coto de caza). Neither page changed in this window (PR #137 is unmerged), so any movement here is noise or Google-wide drift.",
+ "arms": {
+  "A_lake_forest_treatment": {
+   "page": "cities/lake-forest.html",
+   "rows": [
+    [
+     "2026-10-01",
+     "leak detection lake forest",
+     2,
+     50.5
+    ],
+    [
+     "2026-10-04",
+     "slab leak repair lake forest",
+     1,
+     17.0
+    ],
+    [
+     "2026-10-06",
+     "leak detection lake forest",
+     1,
+     6.0
+    ],
+    [
+     "2026-10-09",
+     "leak detection lake forest",
+     1,
+     9.0
+    ],
+    [
+     "2026-10-09",
+     "leak detection service lake forest",
+     1,
+     10.0
+    ],
+    [
+     "2026-10-10",
+     "leak detection lake forest",
+     1,
+     47.0
+    ],
+    [
+     "2026-10-11",
+     "leak detection lake forest",
+     1,
+     11.0
+    ],
+    [
+     "2026-10-11",
+     "leak detection lake forest ca",
+     1,
+     48.0
+    ],
+    [
+     "2026-10-12",
+     "leak detection lake forest ca",
+     3,
+     9.0
+    ],
+    [
+     "2026-10-12",
+     "slab leak repair lake forest ca",
+     2,
+     8.0
+    ],
+    [
+     "2026-10-12",
+     "water leak repair lake forest ca",
+     1,
+     13.0
+    ],
+    [
+     "2026-10-13",
+     "leak detection lake forest",
+     1,
+     8.0
+    ],
+    [
+     "2026-10-14",
+     "slab leak repair lake forest",
+     1,
+     12.0
+    ],
+    [
+     "2026-10-18",
+     "leak detection lake forest",
+     1,
+     5.0
+    ],
+    [
+     "2026-10-19",
+     "leak detection lake forest ca",
+     2,
+     11.0
+    ],
+    [
+     "2026-10-19",
+     "water leak repair lake forest ca",
+     1,
+     18.0
+    ],
+    [
+     "2026-10-22",
+     "leak detection lake forest",
+     1,
+     7.0
+    ],
+    [
+     "2026-10-23",
+     "leak detection service lake forest",
+     1,
+     9.0
+    ],
+    [
+     "2026-10-23",
+     "slab leak repair lake forest",
+     1,
+     38.0
+    ],
+    [
+     "2026-10-24",
+     "slab leak repair lake forest",
+     1,
+     9.0
+    ],
+    [
+     "2026-10-25",
+     "leak detection lake forest",
+     1,
+     12.0
+    ],
+    [
+     "2026-10-26",
+     "leak detection lake forest ca",
+     3,
+     45.0
+    ],
+    [
+     "2026-10-27",
+     "leak detection lake forest",
+     2,
+     9.5
+    ],
+    [
+     "2026-10-29",
+     "leak detection lake forest",
+     1,
+     10.0
+    ],
+    [
+     "2026-10-31",
+     "slab leak repair lake forest",
+     1,
+     12.0
+    ],
+    [
+     "2026-11-01",
+     "leak detection lake forest",
+     1,
+     11.0
+    ],
+    [
+     "2026-11-02",
+     "slab leak repair lake forest ca",
+     1,
+     13.0
+    ],
+    [
+     "2026-11-03",
+     "leak detection lake forest",
+     1,
+     11.0
+    ],
+    [
+     "2026-11-04",
+     "leak detection lake forest",
+     1,
+     18.0
+    ],
+    [
+     "2026-11-04",
+     "slab leak repair lake forest",
+     1,
+     18.0
+    ],
+    [
+     "2026-11-05",
+     "leak detection lake forest",
+     1,
+     11.0
+    ],
+    [
+     "2026-11-07",
+     "slab leak repair lake forest",
+     1,
+     13.0
+    ],
+    [
+     "2026-11-08",
+     "leak detection lake forest",
+     1,
+     13.0
+    ]
+   ]
+  },
+  "C_coto_de_caza_control": {
+   "page": "cities/coto-de-caza.html",
+   "rows": [
+    [
+     "2026-09-28",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     60.0
+    ],
+    [
+     "2026-09-30",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     56.0
+    ],
+    [
+     "2026-10-02",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     57.0
+    ],
+    [
+     "2026-10-06",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     58.0
+    ],
+    [
+     "2026-10-08",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     19.0
+    ],
+    [
+     "2026-10-10",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     36.0
+    ],
+    [
+     "2026-10-11",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     18.0
+    ],
+    [
+     "2026-10-12",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     2,
+     55.5
+    ],
+    [
+     "2026-10-13",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     13.0
+    ],
+    [
+     "2026-10-13",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     2,
+     14.0
+    ],
+    [
+     "2026-10-17",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     35.0
+    ],
+    [
+     "2026-10-17",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     55.0
+    ],
+    [
+     "2026-10-18",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     19.0
+    ],
+    [
+     "2026-10-20",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     16.0
+    ],
+    [
+     "2026-10-22",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     13.0
+    ],
+    [
+     "2026-10-22",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     20.0
+    ],
+    [
+     "2026-10-24",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     57.0
+    ],
+    [
+     "2026-10-25",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     17.0
+    ],
+    [
+     "2026-10-25",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     20.0
+    ],
+    [
+     "2026-10-26",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     59.0
+    ],
+    [
+     "2026-10-27",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     17.0
+    ],
+    [
+     "2026-10-29",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     15.0
+    ],
+    [
+     "2026-10-29",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     2,
+     19.0
+    ],
+    [
+     "2026-10-31",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     56.0
+    ],
+    [
+     "2026-11-01",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     6,
+     29.0
+    ],
+    [
+     "2026-11-01",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     2,
+     22.5
+    ],
+    [
+     "2026-11-01",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     14.0
+    ],
+    [
+     "2026-11-02",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     28.0
+    ],
+    [
+     "2026-11-03",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     13.0
+    ],
+    [
+     "2026-11-03",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     11.0
+    ],
+    [
+     "2026-11-05",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     17.0
+    ],
+    [
+     "2026-11-05",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     14.0
+    ],
+    [
+     "2026-11-08",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     13.0
+    ],
+    [
+     "2026-11-08",
+     "coto de caza (pooled: plumber / plumbing / plumbing services)",
+     1,
+     9.0
+    ]
+   ]
+  }
+ }
+}

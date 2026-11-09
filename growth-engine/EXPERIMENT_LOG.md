@@ -358,3 +358,73 @@ its baseline `sf_status` and a 2026-11-23 re-measure date.
 - **Decision it drives:** if supported, roll title/description rewrites to every city page
   with page-2 service impressions (Irvine, Laguna Hills, Dana Point next) before writing
   more new pages. If refuted, titles are not the gate; put effort into authority.
+## exp-2026-11-09-gsc-aa-noise-check — A/A noise check before reading rank tests
+
+- **Why:** the 2026-11-05 Lake Forest title test (PR #137, unmerged) and the 2026-11-04
+  rank-gate test (PR #127, unmerged) both read GSC average position. Neither had measured
+  how far that number moves when nothing changes.
+- **Method:** daily GSC rows (2026-09-28 → 11-08, both URL forms summed) for the fixed
+  on-topic queries of arm A (`cities/lake-forest.html`) and control C
+  (`cities/coto-de-caza.html`). Neither page changed in the window. `scripts/gsc_noise_check.py`
+  bootstraps two 28-day windows from the same rows. Snapshot:
+  `data/gsc_aa_noise_check_2026-11-09.json`.
+- **Result:**
+  - Volume is ~7 on-topic impressions a week per arm, about 27–29 per 28 days.
+  - Weekly weighted position swings with no change: A 9.0 → 39.3 (sd 10.7), C 15.0 → 57.7 (sd 14.4).
+  - Coto "plumber coto de caza" alternates between ~13–20 and ~55–60 from day to day,
+    so the average is a mix of two SERP states, not one rank.
+  - Null 90% band for one arm's before/after: about ±6–7 positions. For A-minus-C
+    difference-in-differences: **−9.6 to +9.8**.
+  - The PR #137 rule "supported if A beats C by ≥ 5" fires on pure noise **~20%** of the
+    time, and "refuted if within ±3" fires ~38% of the time. Both are lower bounds,
+    because the bootstrap treats impressions as independent.
+  - Both arms drifted up together in the latest week (A 13.9, C 15.0), before any change.
+    That is why a control is needed.
+- **Decision for exp-2026-11-05-lake-forest-serp-title:** keep the design but change
+  the read rule. Day 0 is the merge date of #137, not 11-05; re-pull the baseline as the
+  28 days before merge. Call it **supported** only if A beats C by **≥ 10** positions
+  (outside the null band) **and** A's share of impressions at ≤ 20 rises by ≥ 25 points.
+  Otherwise call it **inconclusive**, never "refuted": the test cannot detect an effect
+  under ~10 positions.
+- **Re-run this check** before every rank readout, with the same script, on the latest
+  pre-period.
+
+## exp-2026-11-09-city-title-batch — pooled, randomized title/description test (design, not shipped)
+
+- **Why:** one page per arm gives ~28 impressions per window, which is too few. Pooling
+  three pairs of pages gives several times more impressions per arm, so the noise
+  band shrinks.
+- **Eligible pages:** city pages with GSC impressions and **no open page-specific PR**
+  as of 2026-11-09. Excluded: aliso-viejo #115, rancho-santa-margarita #126,
+  mission-viejo #133, lake-forest #137, dana-point #143, ladera-ranch #146,
+  laguna-woods #149. Also excluded: pages with content merged since 11-04
+  (laguna-hills, laguna-niguel, san-juan-capistrano), san-clemente (other treatment),
+  and coto-de-caza (#137 control). The sitewide PRs #119 and #135 touch both arms
+  equally and do not exclude a page.
+- **Pairs and assignment:** pairs matched by impressions, then a seeded coin flip
+  (`random.Random(20261109)`):
+
+  | Pair | Treatment | Control |
+  |---|---|---|
+  | 1 | costa-mesa | newport-beach |
+  | 2 | irvine | tustin |
+  | 3 | foothill-ranch | laguna-beach |
+
+- **Change (treatment only, one PR, same day):** rewrite `<title>` and meta description
+  so they name the service the page already gets impressions for, plus the city and
+  "CA". Body, H1 and schema stay the same. Claims come only from APPROVED_CLAIMS.
+  Controls are frozen until the final check.
+- **Metric:** per page, impression-weighted position over that page's fixed on-topic
+  query list (both URL forms summed), 28 days after vs 28 days before. Pooled effect =
+  mean of the three pair differences-in-differences. Secondary metrics: share of
+  impressions at ≤ 20, and clicks.
+- **Read rule:** run `scripts/gsc_noise_check.py` on the pre-period first.
+  - **Supported** if the pooled difference-in-differences is beyond that null 90% band
+    and at least 2 of 3 pairs move the same way.
+  - **No detectable effect** if it is inside the band.
+  - **Inconclusive** if any page has fewer than 15 on-topic impressions in either
+    window, or if a control receives a page-specific change.
+- **Decision it drives:** whether one-hour title passes beat one-day new pages as the
+  next ranking lever across the city section.
+- **Status:** awaiting owner go-ahead. Shipping it adds one more open PR on top of the
+  ~24 already open.
