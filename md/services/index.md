@@ -115,7 +115,7 @@ Faucets, toilets, pipe repair, and water pressure issues, fixed right the first 
 
 
 
-- **Leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html)
+- **Leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html) · [San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html)
 
 - **Slab leak detection:** [Laguna Niguel](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html) · [Dana Point](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html) · [Mission Viejo](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html)
 
@@ -126,7 +126,7 @@ Faucets, toilets, pipe repair, and water pressure issues, fixed right the first 
 
 
 
-Plus [emergency plumbing](https://straightflushplumbingoc.com/services/emergency-plumbing.html). For every city we serve, see [service areas](https://straightflushplumbingoc.com/service-areas.html).
+Plus [emergency plumbing](https://straightflushplumbingoc.com/services/emergency-plumbing.html). For every city we serve, see [service areas](https://straightflushplumbingoc.com/service-areas.html). For pricing and repair options, see our [cost guides](https://straightflushplumbingoc.com/guides/).
 
 
 
