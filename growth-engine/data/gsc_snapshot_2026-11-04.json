@@ -1,0 +1,352 @@
+{
+ "snapshot_date": "2026-11-04",
+ "source": "Google Search Console via the OpenSEO connector (project Straightflushplumbingoc.com, property https://straightflushplumbingoc.com/), read-only URL Inspection + Search Analytics",
+ "collected_by": "crew/experiments shift 2026-11-04",
+ "url_inspection": [
+  {
+   "url": "https://straightflushplumbingoc.com/",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-29"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-03"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-02"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-02"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/water-heater-repair-laguna-niguel.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-30"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/cities/laguna-niguel.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-02"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/cities/san-clemente.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-03"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-31"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-30"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/pex-repiping-laguna-niguel.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-31"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/water-heater-repair-dana-point.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-29"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/cities/dana-point.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-18"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/cities/mission-viejo.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-20"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/leak-detection-dana-point.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-03"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-11-04"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/cities/san-juan-capistrano.html",
+   "coverage": "Submitted and indexed",
+   "last_crawl": "2026-10-30"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/academy/why-is-my-water-bill-so-high.html",
+   "coverage": "Page with redirect (stale: last crawl 2026-07-19, declared canonical then pointed at straightflushplumbing.com; current repo canonical is correct)",
+   "last_crawl": "2026-07-19"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/academy/is-leak-detection-worth-the-cost.html",
+   "coverage": "Page with redirect (stale: last crawl 2026-07-20, same old-domain canonical; current repo canonical is correct)",
+   "last_crawl": "2026-07-20"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/services/leak-detection.html",
+   "coverage": "Not found (404) (stale: last crawl 2026-08-31; file exists in repo now)",
+   "last_crawl": "2026-08-31"
+  },
+  {
+   "url": "https://straightflushplumbingoc.com/laguna-niguel.html",
+   "coverage": "URL is unknown to Google (root noindex stub, expected)",
+   "last_crawl": null
+  }
+ ],
+ "experiment_pages_indexed": {
+  "exp-2026-11-03-indexnow-split treatment": "6/6",
+  "exp-2026-11-03-indexnow-split holdout": "6/6",
+  "exp-2026-11-02-dedicated-pages-vs-control target pages": "all indexed"
+ },
+ "sitewide_daily_web": [
+  {
+   "date": "2026-10-05",
+   "impressions": 20,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-06",
+   "impressions": 18,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-07",
+   "impressions": 21,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-08",
+   "impressions": 16,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-09",
+   "impressions": 38,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-10",
+   "impressions": 29,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-11",
+   "impressions": 15,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-12",
+   "impressions": 23,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-13",
+   "impressions": 52,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-14",
+   "impressions": 29,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-15",
+   "impressions": 41,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-16",
+   "impressions": 37,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-17",
+   "impressions": 51,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-18",
+   "impressions": 33,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-19",
+   "impressions": 40,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-20",
+   "impressions": 65,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-21",
+   "impressions": 62,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-22",
+   "impressions": 113,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-23",
+   "impressions": 68,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-24",
+   "impressions": 92,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-25",
+   "impressions": 102,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-26",
+   "impressions": 103,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-27",
+   "impressions": 86,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-28",
+   "impressions": 63,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-29",
+   "impressions": 61,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-30",
+   "impressions": 68,
+   "clicks": 0
+  },
+  {
+   "date": "2026-10-31",
+   "impressions": 100,
+   "clicks": 0
+  },
+  {
+   "date": "2026-11-01",
+   "impressions": 80,
+   "clicks": 0
+  }
+ ],
+ "sitewide_28d_2026-10-05_to_2026-11-01": {
+  "impressions": 1526,
+  "clicks": 0,
+  "avg_position_range": "34-62"
+ },
+ "three_month_2026-08-01_to_2026-11-01": {
+  "homepage": {
+   "clicks": 13,
+   "impressions": 204,
+   "position": 5.6
+  },
+  "cities/laguna-niguel (extensionless)": {
+   "clicks": 3,
+   "impressions": 154,
+   "position": 24.3
+  },
+  "cities/laguna-niguel.html": {
+   "clicks": 0,
+   "impressions": 71,
+   "position": 39.2
+  },
+  "guides/leak-detection-cost (extensionless)": {
+   "clicks": 0,
+   "impressions": 381,
+   "position": 82.9
+  },
+  "academy/water-meter-still-moving-everything-off": {
+   "clicks": 1,
+   "impressions": 76,
+   "position": 9.6
+  }
+ },
+ "striking_distance_query_page_pos_le_20_min3_impr": [
+  [
+   "leak detection laguna niguel ca",
+   "cities/laguna-niguel",
+   3,
+   2.3
+  ],
+  [
+   "slab leak repair laguna niguel ca",
+   "cities/laguna-niguel",
+   3,
+   5.3
+  ],
+  [
+   "pipe leak repair laguna niguel ca",
+   "cities/laguna-niguel",
+   3,
+   5.7
+  ],
+  [
+   "slab leak detection near me",
+   "cities/rancho-santa-margarita",
+   4,
+   7.8
+  ],
+  [
+   "straight flush plumbing",
+   "/ (homepage)",
+   14,
+   8.5
+  ],
+  [
+   "best leak detection company near me",
+   "cities/san-clemente",
+   4,
+   9.0
+  ],
+  [
+   "leak detection company near me",
+   "cities/laguna-hills",
+   4,
+   9.0
+  ],
+  [
+   "leak detection near me",
+   "cities/irvine",
+   10,
+   13.4
+  ],
+  [
+   "leak detection lake forest",
+   "cities/lake-forest.html",
+   14,
+   17.6
+  ],
+  [
+   "slab leak repair lake forest",
+   "cities/lake-forest.html",
+   5,
+   17.6
+  ]
+ ],
+ "notes": [
+  "Both extensionless and .html URLs collect impressions for the same page (legacy links; internal links and canonicals now all use .html). Read experiments per page with both forms summed.",
+  "Breadcrumb rich result PASS on all inspected inner pages."
+ ]
+}

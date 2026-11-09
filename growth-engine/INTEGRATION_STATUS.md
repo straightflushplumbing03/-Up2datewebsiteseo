@@ -1,5 +1,7 @@
 # Integration Status — Straight Flush Growth Engine
 
+> **Update 2026-11-04 (experiments crew):** Google Search Console is readable from Claude crew sessions through the **OpenSEO connector** (property `https://straightflushplumbingoc.com/`, siteOwner; URL Inspection + Search Analytics, read-only, no credits). Repo secrets for GSC are still absent (P-002 stands for in-repo automations), but crew reports can now use real GSC numbers. First snapshot: `data/gsc_snapshot_2026-11-04.json`. The Ryze connector's Search Console tools returned `subscription_required` and were not used.
+
 Verified **2026-10-12** (daily run, executed 16:27–16:35 UTC) in the active
 OpenHands Cloud environment; a check is only marked ✅ after an actual successful
 call. Prior verification 2026-10-09.
