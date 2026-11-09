@@ -1,0 +1,14 @@
+node_modules/
+.next/
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+data/owner-credentials.txt
+data/snapshots/
+data/manual/
+.env
+.env.*
+!.env.example
+next-env.d.ts
+tsconfig.tsbuildinfo
