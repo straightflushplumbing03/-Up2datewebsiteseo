@@ -7,8 +7,9 @@ Sitemap maintainer for straightflushplumbingoc.com (static tree).
   noindex-duplicate and NOT 404.html) has a <url> entry.
 - Preserves each entry's existing <changefreq>/<priority> when present,
   deriving sensible defaults for additions.
-- Bumps <lastmod> to today for every URL whose target file changed today
-  (or whose lastmod is missing/stale-beyond-file-mtime); idempotent within a day.
+- Sets <lastmod> to the date of each file's last significant git commit
+  (sitewide template sweeps touching SWEEP_THRESHOLD+ pages are ignored), and
+  never moves a lastmod backwards; idempotent.
 - In a shallow clone git history and mtime both collapse to the clone date, so
   lastmod is refreshed ONLY for files the working tree actually modifies.
 - Root stub pages (aliso-viejo.html, etc.) are intentionally EXCLUDED: they are
@@ -79,6 +80,33 @@ def defaults_for(rel):
         return ("monthly", "0.6")
     return ("monthly", "0.6")
 
+# A commit touching at least this many .html files is a sitewide template
+# sweep, not a content change to any one page. The largest content commit so
+# far (cost-FAQ answer on every city page, #98) touched 21 files; the sweeps
+# (hours, email, CSP, GA4) each touched 80+.
+SWEEP_THRESHOLD = int(os.environ.get("SF_SWEEP_THRESHOLD", "40"))
+
+
+def _sweep_commit_index():
+    """Return the set of commit SHAs that touched >= SWEEP_THRESHOLD .html files."""
+    try:
+        out = subprocess.run(
+            ["git", "log", "--format=@%H", "--name-only", "--", "*.html"],
+            cwd=ROOT, capture_output=True, text=True, timeout=60,
+        ).stdout
+    except Exception:
+        return set()
+    sweeps, sha, count = set(), None, 0
+    for line in out.splitlines() + ["@"]:
+        if line.startswith("@"):
+            if sha and count >= SWEEP_THRESHOLD:
+                sweeps.add(sha)
+            sha, count = line[1:] or None, 0
+        elif line.strip().endswith(".html"):
+            count += 1
+    return sweeps
+
+
 def main():
     sm_path = os.path.join(ROOT, "sitemap.xml")
     with open(sm_path, encoding="utf-8") as fh:
@@ -126,17 +154,29 @@ def main():
             f"    <priority>{pri}</priority>\n  </url>\n"
         )
 
-    # refresh lastmod: prefer the file's last git commit date (authoritative,
-    # and stable in a fresh clone).
+    # refresh lastmod: prefer the date of the file's last *significant* git
+    # commit (authoritative, and stable in a fresh clone).
+    #
+    # Google uses <lastmod> only when it is "consistently and verifiably
+    # accurate" and reflects a significant change to the page's main content,
+    # structured data or links -- not a footer or template tweak. A sitewide
+    # sweep (new email address, CSP, analytics tag, footer hours) touches every
+    # page at once; stamping all URLs with that date tells crawlers the whole
+    # site changed and teaches them to ignore our lastmod. So commits that
+    # touch SWEEP_THRESHOLD or more HTML files are skipped, except for the
+    # commit that created the file (a page always has a creation date).
+    sweep_dates = _sweep_commit_index()
+
     def last_commit_date(rel):
         try:
             out = subprocess.run(
-                ["git", "log", "-1", "--format=%cs", "--", rel],
+                ["git", "log", "--format=%H %cs", "--", rel],
                 cwd=ROOT, capture_output=True, text=True, timeout=10,
             )
-            d = out.stdout.strip()
-            if d:
-                return d
+            rows = [ln.split() for ln in out.stdout.splitlines() if ln.strip()]
+            for i, (sha, day) in enumerate(rows):
+                if sha not in sweep_dates or i == len(rows) - 1:
+                    return day
         except Exception:
             pass
         return None

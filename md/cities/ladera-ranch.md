@@ -44,7 +44,7 @@ What that means for you: if your home still has its original copper, a pinhole l
 
 - Hidden & underground water leak detection
 
-- Whole-house PEX repiping & copper line elimination
+- [Whole-house PEX repiping & copper line elimination in Ladera Ranch](https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html)
 
 - Water heater repair & installation
 
