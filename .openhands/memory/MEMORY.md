@@ -41,8 +41,25 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   measurement — ask "latest snapshot or all-time?" first.**
 - Login lockout: 8 fails/15 min per email, counters in `schema_meta`. Clear with
   `DELETE FROM schema_meta WHERE key LIKE 'login_fail:%'`.
-- Owner-side to finish: deploy to a Node host, set `GEO_LAB_RUN_TOKEN` + repo secrets
-  `GEO_LAB_URL`/`GEO_LAB_RUN_TOKEN`, connect GSC/GA4/GBP/Bing, add an `AIza…` Gemini key.
+- **Lab `/api/v1` API** (2026-11-06, PR **#153**): scoped keys (SHA-256 hash stored, never the
+  secret; timing-safe compare; DB-backed rate limit), envelope `{data, meta:{source:"geo-lab",
+  version:"v1", ...}}`, `limit` clamped to 500. `POST /jobs` is **approval-gated**: read-only kinds
+  queue, `publish`/`deploy`/`rollback`/`spend` become `pending_approval` and never execute. Spec:
+  `geo-lab/docs/GEO_LAB_API_SPEC.md`.
+- **AI Headquarters consumes it** (PR **#28**; Supabase+Next.js — different stack, so HTTP is the
+  only coupling). `lib/integrations/geolab/{client,connector,status}.ts`, migration `032` (8
+  `geo_lab_*` tables, org-scoped RLS), routes `app/api/ai-authority/geolab/*`, UI
+  `GeoLabConnection.tsx`. Connector upserts on the source key; a partial failure records `partial`,
+  never `succeeded`.
+- **HQ `main` CI is RED pre-existing** (`cdac88fb`, 2026-10-31; prior `646e3a77` green): job
+  `migrations`/`verify-migrations.sh` fails, `verify` passes. Cause: migration **028** grants to role
+  `authenticated`, absent off-Supabase, so its own `has_table_privilege('authenticated',…)` raises.
+  Identical without our migration. **Do not fix 028.** Detail: `2026-11-06.md`.
+- **RLS only enforces for a non-superuser**: `SET ROLE postgres` sees every row; test as a
+  `NOSUPERUSER` role and `RESET ROLE` between `auth.uid()` swaps.
+- Env traps: `UID` is **readonly in bash** (`for UID in …` silently no-ops); `psql` is not
+  preinstalled (install `postgresql-client`, else every migration "fails"); `default_create_pr`
+  **422s when the branch was never pushed**.
 
 ## Repository identity
 - **Production repo:** `straightflushplumbing03/-Up2datewebsiteseo` (public, `main`).
