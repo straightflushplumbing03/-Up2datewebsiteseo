@@ -156,6 +156,20 @@ section{ padding:96px 0; }
 .hero-trust-item{ }
 .hero-trust-item strong{ display:block; font-family:'Playfair Display',serif; font-size:1.5rem; color:#fff; }
 .hero-trust-item span{ font-size:0.8rem; color:var(--muted-on-ink); }
+/* Contact page (conversion, 2026-11-09): 574 "Schedule"/"Contact" buttons site-wide land
+   here, but on a 390x664 phone the first screen was hero copy only and the form started
+   at ~751px. Compact the hero on phones, add hero buttons, and give the form an anchor. */
+.hero-contact{ padding-bottom:90px; }
+.contact-request{ scroll-margin-top:72px; }
+@media (max-width:560px){
+  .hero-contact{ padding:40px 0 36px; }
+  .hero-contact .hero-eyebrow{ margin-bottom:14px; }
+  .hero-contact .hero-sub{ margin-top:14px; font-size:1.02rem; }
+  .hero-contact .hero-ctas{ margin-top:20px; gap:10px; }
+  .hero-contact .hero-ctas .btn{ flex:1 1 100%; justify-content:center; }
+  .hero-contact .hero-ctas .btn-ghost{ display:none; }
+  .contact-request{ padding-top:36px; }
+}
 
 /* ---- Signature element: The Tell (sonar sweep house diagram) ---- */
 .tell{ position:relative; aspect-ratio:1/1.05; max-width:480px; margin:0 auto; }
