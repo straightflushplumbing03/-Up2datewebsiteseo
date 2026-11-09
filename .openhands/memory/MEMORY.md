@@ -2,7 +2,47 @@
 
 Injected-at-startup index. Keep it small (~6 KB): fold only durable, high-value
 facts here and push detail into the dated log files, read on demand.
-Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-10-13.md`.
+Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
+`2026-10-13.md`, `2026-11-06.md`.
+
+## GEO Intelligence Lab (`geo-lab/`, PR #140)
+- **A separate Next.js 16 app** (App Router, TS, Tailwind v4, `node:sqlite`) — NOT part of
+  the static site, does not deploy with it. Run from `geo-lab/`: `npm run seed`, `npm test`
+  (34 tests, real DB + real crawl, no mocks), `npx tsc --noEmit`, `npm run build`. Serves 12000.
+- **Cannot run on Cloudflare Pages / Vercel / Render free** (no persistent filesystem — Render
+  free docs: "local SQLite databases … are lost"; its free Postgres "expire[s] 30 days after
+  creation"). **Free options that DO fit:** Oracle Cloud Always Free (real VM + block volume,
+  but idle instances are reclaimed if 95th-pct CPU *and* network stay <20% over 7 days) or GCP
+  `e2-micro` + 30 GB disk (us-west1/us-central1/us-east1). **Simplest: no server at all** —
+  standard GitHub runners are free for public repos; run `npm run job` (headless, same
+  orchestrator as the HTTP route) on cron. Fly.io is NOT free (~$5/mo; "$1 of free credit …
+  lasts for 7 days").
+- **The lab crawls the checkout it lives in.** `REPO_ROOT = process.cwd()/..`, so deploying
+  `geo-lab/` alone makes the crawler walk its own parent dir and report a confident, wrong
+  answer (observed 51 pages / 0% consistency vs the real 153 / 100%). Deploy the **whole repo**;
+  `GEO_LAB_SITE_DIR` overrides, and `crawlRepo()` now throws rather than guess. **Verify a
+  deploy by running it from an isolated copy** — this class of bug exits 0 and looks healthy.
+  Also: `npm ci --omit=dev` breaks both the build and the daily job (tailwind/postcss/tsx are
+  devDeps).
+- **The lab DB is a credential store, not data — never commit it.** It holds the owner's scrypt
+  password hash + live session tokens, and this repo is **public**. `.gitignore` must cover
+  `data/geo-lab.db` *and* the `-wal`/`-shm`/`-journal` sidecars (a plain `data/*.db` rule misses
+  them). Three tests enforce this; each was negative-tested.
+- Autonomy is an **external scheduler** — `.github/workflows/geo-lab-daily.yml` cron 06:00 PT
+  POSTs `/api/run` with `GEO_LAB_RUN_TOKEN`; no session needed. `geo-lab.yml` gates PRs.
+- Publishing goes through `engine/publishing.ts` only: snapshot → validate → **branch + PR**,
+  never `main`, never merged. Locked facts (identity/NAP/pricing/warranty/licensing) are
+  rejected mechanically; a test asserts a phone change fails.
+- Honesty invariants mirrored from the growth engine: unreachable = `inconclusive` (never 0);
+  `ai_platform`/`conventional_proxy`/`manual` never mixed; mention≠recommend≠cite.
+- **Defects found by the tests** (2026-11-06): opportunity count double-counted dedupes;
+  entity consistency summed ALL history instead of the latest check; removed sections were
+  left orphaned. **Lesson: an aggregate over an append-only history table is usually the wrong
+  measurement — ask "latest snapshot or all-time?" first.**
+- Login lockout: 8 fails/15 min per email, counters in `schema_meta`. Clear with
+  `DELETE FROM schema_meta WHERE key LIKE 'login_fail:%'`.
+- Owner-side to finish: deploy to a Node host, set `GEO_LAB_RUN_TOKEN` + repo secrets
+  `GEO_LAB_URL`/`GEO_LAB_RUN_TOKEN`, connect GSC/GA4/GBP/Bing, add an `AIza…` Gemini key.
 
 ## Repository identity
 - **Production repo:** `straightflushplumbing03/-Up2datewebsiteseo` (public, `main`).
@@ -17,29 +57,18 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   empty git repo — restore with `git remote add origin ... && git fetch origin main &&
   git checkout -B main origin/main` (move `.openhands/` aside first if it collides).
 
-## Live automations (verified 2026-10-16)
-- **`SFPL AI Headquarters Daily`** — id `1485d659-8663-4776-a507-db0fefed8483`,
-  cron **`0 6 * * 1,3,5`** (Mon/Wed/Fri 06:00 PT), timeout 1800. The one content job.
-  Prompt source: `ai-headquarters-blueprint/01-MASTER-AGENT-PROMPT.md`.
-- **Retry Watchdog** — id `b946624c-79c2-40a6-be1b-258388a15fb4`,
-  `30 6,9,12,15,18 * * *`, timeout 600. Dispatch-only; never does SEO work.
-- **System Supervisor (HQ-S)** — id `c1b547c8-da3b-4fa1-ba8a-e99a55e0f59e`,
-  `0 7 * * 2,6` (Tue/Sat 07:00 PT), timeout 900. Oversight: runs
-  `scripts/system_supervisor.py` (deterministic drift detector, no LLM until the report) and
-  opens a report PR. Never merges/edits. Prompt `automations/ai-headquarters-supervisor.prompt.md`.
-- Disabled rollback points: `e6684830-...`, `df4bcd68-...`. Retired (404): `5dc89b41`,
-  `0582d219`, `4c5213f7`.
-- **Invariant: exactly ONE enabled content automation.** Check before enabling anything.
-- **Editing the blueprint does NOT change the running job.** OpenHands stores a copy of the
-  prompt at creation. Deploy with `python3 ai-headquarters-blueprint/build_payload.py
-  --deploy` (PATCHes id `1485d659-...`), then verify via the GET. The cron constants live in
-  `build_payload.py`, NOT the markdown — a second copy is how the schedule once silently
-  reverted to daily. Guarded by `growth-engine/tests/test_automation_deploy_contract.py`.
-- `growth-engine/automations/*.prompt.md` document **retired** automations (`5dc89b41` -> 404);
-  editing them changes nothing at run time.
-- Changing the schedule = `PATCH /api/automation/v1/{id}` with **only** `trigger`; verified
-  2026-10-16 that prompt/repos/timeout survive untouched. A UI form edit does NOT change
-  the live job — use the API.
+## Live automations (inventory archived in `2026-10-16.md`)
+- Exactly **ONE enabled content automation**: `SFPL AI Headquarters Daily`, id
+  `1485d659-8663-4776-a507-db0fefed8483`, cron `0 6 * * 1,3,5` (Mon/Wed/Fri 06:00 PT).
+  Plus Retry Watchdog `b946624c-...` (dispatch-only) and System Supervisor `c1b547c8-...`
+  (Tue/Sat 07:00 PT). Check before enabling anything.
+- **Editing the blueprint does NOT change the running job** — OpenHands stores a copy at
+  creation. Deploy with `python3 ai-headquarters-blueprint/build_payload.py --deploy`; the cron
+  constants live in `build_payload.py`, NOT the markdown. Guarded by
+  `growth-engine/tests/test_automation_deploy_contract.py`.
+- `growth-engine/automations/*.prompt.md` document **retired** automations; editing them does nothing.
+- Change the schedule with `PATCH /api/automation/v1/{id}` and **only** `trigger`; a UI form
+  edit does NOT change the live job.
 
 ## OpenHands automation API gotchas
 - Host `https://app.all-hands.dev`, `Authorization: Bearer $OPENHANDS_API_KEY`.
@@ -64,29 +93,25 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   currently the agent's instruction + the owner's manual merge. See the README checklist.
 
 ## Run-budget rule (ISSUE-006 / ISSUE-009)
-- **The expensive part is deciding how to measure, not measuring.** Two runs died at
-  ~1950 s producing nothing. Fix: `scripts/daily_measure.py`, a deterministic pre-stage
-  (~5 s + sweep) writing `growth-engine/data/daily_context.json`; the prompt makes it step 1.
-  After it: runs COMPLETED at 947 s / 720 s.
-- Keep: explicit phase budget, a 22-min checkpoint that stops analysis and writes the report,
-  and **report > commit > measurement > new work**.
-- `"Timed out: Sandbox not available"` is a **symptom of a budget overrun**, not a
-  provisioning failure. **Discriminate by elapsed time, not the error string:** `FAILED` +
-  `elapsed >= ~1500 s` -> fix the prompt, do NOT retry. Far below ceiling + no conversation ->
-  retry once. Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`.
+- **The expensive part is deciding how to measure, not measuring.** Two runs died at ~1950 s
+  producing nothing. Fix: `scripts/daily_measure.py` — a deterministic pre-stage (~5 s + sweep)
+  writing `growth-engine/data/daily_context.json`, made step 1 of the prompt. After it: 947 s / 720 s.
+- Keep an explicit phase budget, a 22-min checkpoint that stops analysis and writes the report, and
+  the order **report > commit > measurement > new work**.
+- `"Timed out: Sandbox not available"` is a **budget overrun**, not a provisioning failure.
+  Discriminate by **elapsed time, not the error string**: `FAILED` + `>= ~1500 s` -> fix the prompt,
+  do NOT retry. Far below ceiling + no conversation -> retry once.
+  Helper: `python3 growth-engine/tests/classify_automation_run.py <runs.json>`.
 
 ## AI visibility measurement
-- **Primary AI surface: Gemini Search API** — `growth-engine/gemini_search_client.py`,
-  CLI `scripts/gemini_visibility.py`, key `GEMINI_API_KEY`. `google_search` grounding gives a
-  real web-grounded answer **+ citations**. Records `test_type: ai_platform`,
-  `platform: gemini_search`.
-- **Gemini grounding is NOT on the free tier for the 3.x family** (Google pricing: "Not
-  available"). `gemini-2.5-flash` (last free-grounding Flash) is retired for new keys → 404,
-  so a post-2.5 key can only reach 3.x and **every grounded Gemini call 429s** while the model
-  quota is barely used. Discriminator: 429 on grounded calls + 200 on `models.list`/ungrounded
-  generate + a low model-quota number = grounding entitlement, **not** exhaustion. Waiting for
-  the daily reset does not help. Fix = billing (Tier 1 = 5,000 free grounded req/mo) or a
-  grounding-eligible key.
+- **Primary AI surface: Gemini Search API** — `growth-engine/gemini_search_client.py`, CLI
+  `scripts/gemini_visibility.py`, key `GEMINI_API_KEY`. `google_search` grounding gives a real
+  web-grounded answer + citations. Records `test_type: ai_platform`, `platform: gemini_search`.
+- **Gemini grounding is NOT on the free tier for the 3.x family.** `gemini-2.5-flash` is retired for
+  new keys (404), so a post-2.5 key can only reach 3.x and **every grounded call 429s** while the
+  model quota is barely used. Discriminator: 429 on grounded calls + 200 on `models.list`/ungrounded
+  generate + low model quota = **grounding entitlement, not exhaustion**. The daily reset won't help.
+  Fix = billing (Tier 1 = 5,000 free grounded req/mo) or a grounding-eligible key.
 - **Labelled Gemma fallback (ISSUE-032, PR #67):** when every Gemini model refuses grounding,
   a Google-Search-grounded `gemma-*` model answers on the same key/same Search index — free.
   Rows carry `engine` + `fallback_from`; `note` says it is NOT the Gemini/AI-Overviews surface.
@@ -123,22 +148,16 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   strengthens the stale association. Consolidation = removal, not linkage.
 - Editing external properties is **Level 3 / owner-only**. Agents report, never touch.
 
-## Indexing / noindex (verified 2026-10-25)
-- The **58 root-level `.html` files are intentional `noindex, nofollow` duplicate
-  stubs** (commit `2cd5fff`, PR #10). Each canonicalizes to its real page under
-  `services/|cities/|academy/|guides/|insurance/`. The canonical pages are
-  indexable (no robots meta, self-canonical, in sitemap, live 200, no X-Robots-Tag).
-  **An owner reporting "page X is noindex" is almost always seeing the stub** — check
-  the subdir twin before changing anything. 148 files = 89 indexable (= sitemap set
-  exactly) + 59 noindex (58 stubs + `about/straight-flush-plumbing-orange-county.html`,
-  `noindex,follow`, ISSUE-013 WON'T FIX). Only ONE indexable orphan existed
-  (`guides/index.html`), fixed in PR #83.
-- **`refresh_sitemap.py` rewrites every `<lastmod>`** from each file's last git commit
-  date; on a fresh/shallow clone that churns ~108 lines with no page change. Revert it
-  (`git checkout -- sitemap.xml`) unless the URL set actually changed — open sitemap
-  PRs collide otherwise.
-- Legacy root URLs return `200 + noindex` rather than a redirect; the SEO-correct fix
-  is a **301 at the Cloudflare edge** (GitHub Pages can't emit file redirects). Owner-side.
+## Indexing / noindex (verified 2026-10-25, detail in `2026-10-25.md`)
+- The **58 root-level `.html` files are intentional `noindex, nofollow` stubs** (PR #10); each
+  canonicalizes to its real page under `services/|cities/|academy/|guides/|insurance/`, which are
+  indexable + self-canonical + in sitemap. **An owner reporting "page X is noindex" is almost
+  always seeing the stub** — check the subdir twin first. 148 files = 89 indexable (= sitemap set
+  exactly) + 59 noindex. Only indexable orphan was `guides/index.html` (fixed, PR #83).
+- **`refresh_sitemap.py` rewrites every `<lastmod>`** from each file's last commit date; on a
+  shallow clone it churns ~108 lines with no page change. Revert it unless the URL set changed.
+- Legacy root URLs return `200 + noindex`, not a redirect; the SEO-correct fix is a **301 at the
+  Cloudflare edge** (GitHub Pages can't emit file redirects). Owner-side.
 
 ## Conventions that matter
 - **GitHub token in this environment is scoped to git push + PR create only.**
@@ -151,14 +170,11 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   land as a **draft** (unmergeable). Flip it with GraphQL
   `markPullRequestReadyForReview(pullRequestId: <node_id>)`; the REST
   `PATCH {"draft": false}` returns 200 but silently does nothing.
-- **Google tag/analytics:** the site's single Google tag lives once in
-  `scripts/csp_policy.py` (`MEASUREMENT_ID`); pages bake a copy into markup and the
-  meta CSP allows the inline `gtag()` bootstrap by **SHA-256 hash derived from the
-  snippet**. Changing the ID requires regenerating the hash (`add_security_meta.py`)
-  or the tag loads and records nothing (ISSUE-028, ISSUE-030). Only ONE Google tag
-  per page — a new ID is a **replace**, never a second paste. Verify a tag actually
-  runs with Chromium `--log-net-log` + grep for `gtag/js?id=<ID>`.
-  Current ID: `G-DFS6B1LV4P` (replaced `G-651QV5WYP2` 2026-10-16).
+- **Google tag:** the ID lives once in `scripts/csp_policy.py` (`MEASUREMENT_ID`);
+  the meta CSP allows the inline `gtag()` bootstrap by a **SHA-256 hash of the snippet**,
+  so changing the ID needs the hash regenerated (`add_security_meta.py`) or the tag loads
+  and records nothing (ISSUE-028/030). ONE tag per page — a new ID is a **replace**.
+  Verify with Chromium `--log-net-log` + grep `gtag/js?id=<ID>`. Current: `G-DFS6B1LV4P`.
 - Never commit to `main`; branch + PR only. **Never merge any PR — open it, request review, hand
   the merge to the owner.** No low-risk exception; review is required before merge.
 - Branches: research `intelligence-hq/daily-<date>`; site changes `intelligence-hq/site-<date>-<slug>`.
@@ -166,14 +182,20 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   `MEMORY.md` is edited in place (not appended).
 - **Concurrent sessions mutate this repo** (owner merges within minutes): `git fetch` and check
   for newer `main`/open PRs before repo work; rebase before push; one PR per day.
-- **CI now exists** (`.github/workflows/verify.yml`, added 2026-10-16): runs `unittest discover`,
-  `validate_knowledge_base.py`, `seo_audit.py`, and the sitemap URL-set invariant on every PR and
-  on pushes to `main`. Stdlib-only, `fetch-depth: 0` (refresh_sitemap.py needs git dates). Check
-  the PR's **Verify** run — it is the only evidence of "green" not authored by the change author.
-  Run the same gates by hand too (`crawler_access_check.sh` is still manual-only).
+- **CI:** `.github/workflows/verify.yml` runs `unittest discover`, `validate_knowledge_base.py`,
+  `seo_audit.py` and the sitemap URL-set invariant on every PR/push (stdlib-only, `fetch-depth: 0`).
+  `geo-lab.yml` additionally gates `geo-lab/**`. Check the PR's run — it is the only "green" not
+  authored by the change author. `crawler_access_check.sh` is still manual-only.
 - **Never run `scripts/gen_*.py` site-wide** — they revert per-page JSON-LD and unique city meta
   (4->1 JSON-LD blocks, 585 lines deleted). Edit `.html` directly. `write_page()` now guards it.
 - Root-level `.html` files are `noindex` stubs; indexable pages live in subdirectories.
+- **The git token ROTATES during a session.** A push hangs on a password prompt because
+  `.git/config` holds the *previous* `ghu_…` token while `$GITHUB_TOKEN` has moved on. Happened
+  twice in one day. Fix: `git remote set-url origin "https://${GITHUB_TOKEN}@github.com/OWNER/REPO.git"`.
+  If a push ever hangs, that is the cause — do not wait for the timeout.
+- **geo-lab is essentially complete** (audited against spec §22, 2026-11-07). Notifications (§16)
+  was the last gap and is now built. **`/api/reports` + `/api/entity` return 405 by design** —
+  POST-only actions, not missing GETs. Do not "fix" them.
 - Search-provider reality on this egress IP: Brave -> 429, DDG HTML -> 202; Tavily is the
   reliable path (DDG Lite is the only parseable scraper fallback).
 - No GSC/GA4/GBP credentials here — record as a blocker, never as zero.
@@ -183,21 +205,13 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`, `2026-
   `re.M`; append-only union is wrong for `MEMORY.md`) — detail in `2026-10-15-detail.md`.
 
 ## System supervisor (HQ-S) — measurement defects (ISSUE-031, fixed 2026-10-19)
-- `scripts/system_supervisor.py` had two false FAILs, one blind PASS, one missing check:
-  - **`self_merges` was blind**: GitHub's PR *list* endpoint omits `merged_by` (0 of 40).
-    Read it from the single-PR endpoint (`GET /pulls/{n}`). With **one collaborator** every
-    merge is by that account (agent == owner), so the check now reports **UNMEASURED/BLOCKED**,
-    not a PASS — the review gate is unenforceable until a 2nd collaborator exists.
-  - **`change_volume` counted numstat ROWS not unique paths** (292 vs 148) and scored a one-line
-    `.html` edit as a new page (268 vs 0 real). Count `len(set(paths))`; count new pages via
-    `--diff-filter=A`. `MAX_CHANGED_FILES` 120 -> 200 (a legit metadata pass reaches ~148).
-  - **`unexpected_branches`** false-flagged branches that are merged-PR heads; a branch is
-    explained if it is (or was) any PR's head (`?state=all`).
-  - **`ai_visibility_blind`** was in the LIVE prompt but absent from the repo prompt and script.
-    Added it: FAIL when 0 `test_type: ai_platform` rows exist or newest is >14 d old.
-- `git log --numstat` counts a path once per commit — merges double it. De-dup by path.
-- **Verify a check against real data, not the code's intent**: the 2026-10-17 report "passed"
+- `scripts/system_supervisor.py` had two false FAILs, one blind PASS, one missing check. Fixed:
+  `self_merges` reads the single-PR endpoint (the list endpoint omits `merged_by`) and reports
+  **UNMEASURED/BLOCKED** with one collaborator; `change_volume` counts unique paths, not numstat
+  rows (`len(set(paths))`), new pages via `--diff-filter=A`, `MAX_CHANGED_FILES` 120->200;
+  `unexpected_branches` treats a merged-PR head as explained (`?state=all`); `ai_visibility_blind`
+  added (FAIL when 0 `test_type: ai_platform` rows or newest >14 d).
+- **Verify a check against real data, not the code's intent.** The 2026-10-17 report "passed"
   self_merges while every merge was a self-merge. A check that cannot fail is worse than none.
-- Remaining owner-level FAILs (not code): daily job **disabled** (`source: user`,
-  2026-10-16T06:25Z); **GEMINI_API_KEY returns HTTP 429** (grounding quota) so AI surface is
-  UNMEASURED. The `ai_visibility_sweep` false-pass exit code is fixed by open PR #64 (don't dup).
+- Remaining owner-level FAILs (not code): daily job disabled (2026-10-16T06:25Z); GEMINI_API_KEY
+  429 so the AI surface is UNMEASURED. Detail archived in `2026-10-16.md`.
