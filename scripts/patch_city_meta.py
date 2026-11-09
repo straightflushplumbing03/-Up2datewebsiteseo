@@ -87,9 +87,10 @@ CITY_META = {
         "copper. We match the approach to your village. Call (949) 374-6524.",
     ),
     "lake-forest": (
-        "Leak Detection in Lake Forest, CA | Straight Flush Plumbing",
-        "From older El Toro-area tracts to newer development near the toll road, Lake "
-        "Forest plumbing age varies. We never assume before inspecting. Call (949) 374-6524.",
+        # exp-2026-11-05-lake-forest-serp-title (title + description are the treatment)
+        "Leak Detection & Slab Leak Repair in Lake Forest, CA",
+        "Leak detection & slab leak repair in Lake Forest, CA. We pinpoint leaks with "
+        "acoustic, electronic and thermal tools before opening floors. Call (949) 374-6524.",
     ),
     "rancho-santa-margarita": (
         "Plumber in Rancho Santa Margarita, CA | Foothill Homes",
