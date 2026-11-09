@@ -193,6 +193,18 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   `.git/config` holds the *previous* `ghu_…` token while `$GITHUB_TOKEN` has moved on. Happened
   twice in one day. Fix: `git remote set-url origin "https://${GITHUB_TOKEN}@github.com/OWNER/REPO.git"`.
   If a push ever hangs, that is the cause — do not wait for the timeout.
+- **The public site CANNOT host the geo-lab.** `straightflushplumbingoc.com` → `185.199.10x.153`
+  = **GitHub Pages** (static; `/api/run` 404s). The lab needs the Oracle VM. DNS is Cloudflare;
+  `geo-lab.straightflushplumbingoc.com` has **no record** (`NOERROR` + 0 answers ≠ propagation —
+  it means the name does not exist; don't wait it out).
+- **`geo-lab-daily.yml` is proven correct**: with a real `openssl rand -hex 32` token the exact
+  workflow curl returns 200 / `5/5 steps ok`; wrong or missing token → 401. Deployment is the
+  only remaining blocker. Detail: `2026-11-06.md`.
+- **Repo name is `straightflushplumbing03/-Up2datewebsiteseo` — leading hyphen.** A bare
+  positional arg parses as a flag; always use `--repo owner/name`. No separate geo-lab repo.
+- **Reading a secret's shape without its value:** `GET /actions/secrets` → 403; run logs mask as
+  `***`. Add a temp step printing booleans only (`${#U}`, `case` globs, `[^ -~]`). Note `secrets`
+  is **not allowed in a step-level `if`** (422), and do it on a throwaway branch.
 - **geo-lab is essentially complete** (audited against spec §22, 2026-11-07). Notifications (§16)
   was the last gap and is now built. **`/api/reports` + `/api/entity` return 405 by design** —
   POST-only actions, not missing GETs. Do not "fix" them.
