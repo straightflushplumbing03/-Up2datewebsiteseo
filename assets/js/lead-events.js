@@ -1,4 +1,5 @@
-// Lead tracking for GA4 (G-DFS6B1LV4P). Sends no personal data: only which page the lead came from.
+// Lead tracking for GA4 (G-DFS6B1LV4P). Sends no personal data: only which page the lead came from
+// and the visitor's answer to the optional fixed-list "How did you hear about us?" menu.
 // Events: phone_call_click (tap on any tel: link), generate_lead (contact form sent to Formspree),
 // form_submit_confirmed (thank-you page reached after Formspree redirect).
 (function () {
@@ -20,6 +21,10 @@
   document.addEventListener('submit', function (e) {
     var f = e.target;
     if (e.defaultPrevented || !f || !f.action || f.action.indexOf('formspree.io') === -1) return;
+    // Honeypot: real visitors never see the hidden _gotcha field, so a filled one means a bot.
+    // Formspree silently drops those, so they must not be counted as leads in GA4 either.
+    // Let the plain post go through untouched so Formspree's own spam handling still applies.
+    if (f.elements && f.elements._gotcha && f.elements._gotcha.value) return;
     // heard_about is the visitor's own answer to the optional "How did you hear about us?" menu
     // (a fixed list, no personal data). It is the only way to see AI-assistant leads, which GA4 logs as direct.
     var heard = f.elements && f.elements.heard_about ? f.elements.heard_about.value : '';
