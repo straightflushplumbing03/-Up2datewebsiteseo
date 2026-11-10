@@ -75,7 +75,7 @@ Open the cabinet under a kitchen or bathroom sink and look where the supply pipe
 
 
 
-More on [how PEX repiping works](https://straightflushplumbingoc.com/services/pex-repiping.html), [copper vs. PEX](https://straightflushplumbingoc.com/copper-vs-pex-pipes.html), [repair vs. reroute vs. repipe](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html), and [plumbing in Ladera Ranch](https://straightflushplumbingoc.com/cities/ladera-ranch.html).
+More on [how PEX repiping works](https://straightflushplumbingoc.com/services/pex-repiping.html), [copper vs. PEX](https://straightflushplumbingoc.com/academy/copper-vs-pex-pipes.html), [repair vs. reroute vs. repipe](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html), and [plumbing in Ladera Ranch](https://straightflushplumbingoc.com/cities/ladera-ranch.html).
 
 
 

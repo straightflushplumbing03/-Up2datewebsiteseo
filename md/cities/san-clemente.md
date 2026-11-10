@@ -185,4 +185,4 @@ Leaks in the street, on the city side of the meter, or a sewer overflow should b
  Do newer San Clemente homes get pinhole leaks too? +
 
 
-Yes, it is not only an older-home problem. Local news has covered pinhole-leak claims in copper water lines in South Orange County homes built in the 2000s, including cases in San Clemente. One pinhole leak is often a sign to check the rest of the system. We find the leak first, then walk you through whether a spot repair, a reroute, or a repipe makes sense (see our [repair vs. reroute vs. repipe guide](https://straightflushplumbingoc.com/repair-vs-reroute-vs-repipe.html)).
+Yes, it is not only an older-home problem. Local news has covered pinhole-leak claims in copper water lines in South Orange County homes built in the 2000s, including cases in San Clemente. One pinhole leak is often a sign to check the rest of the system. We find the leak first, then walk you through whether a spot repair, a reroute, or a repipe makes sense (see our [repair vs. reroute vs. repipe guide](https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html)).
