@@ -456,6 +456,10 @@ CREATE INDEX IF NOT EXISTS idx_vis_plat    ON visibility_results(platform, statu
 CREATE INDEX IF NOT EXISTS idx_activity_ts ON activity(ts);
 CREATE INDEX IF NOT EXISTS idx_geo_page    ON geo_scores(page_id, ts);
 CREATE INDEX IF NOT EXISTS idx_opp_status  ON opportunities(status, priority);
+-- The API rate limiter and /health count api_requests on every call. Without
+-- these indexes each count is a full table scan that grows with every request.
+CREATE INDEX IF NOT EXISTS idx_apireq_key_ts ON api_requests(key_id, ts);
+CREATE INDEX IF NOT EXISTS idx_apireq_ts     ON api_requests(ts);
 `;
 
 let _db: DatabaseSync | null = null;

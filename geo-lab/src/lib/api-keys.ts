@@ -177,6 +177,23 @@ export function listApiKeys(): (ApiKeyRecord & { revoked: boolean })[] {
   }));
 }
 
+/**
+ * Unauthenticated requests have no key to rate-limit, so without a cap anyone on
+ * the internet could add one api_requests row per request and grow the database
+ * without bound. Past this many per minute (all callers together) they are
+ * counted in the log only up to the cap; the 401 is still returned.
+ */
+export const UNAUTH_LOG_LIMIT_PER_MINUTE = Number(process.env.GEO_LAB_API_UNAUTH_LOG_LIMIT ?? 30);
+
+/** Days of api_requests kept. Older rows are pruned as new rows arrive. */
+export const API_REQUEST_RETENTION_DAYS = Number(process.env.GEO_LAB_API_LOG_RETENTION_DAYS ?? 90);
+
+/** Delete api_requests rows older than the retention window. Returns rows removed. */
+export function pruneApiRequests(days: number = API_REQUEST_RETENTION_DAYS): number {
+  const d = Math.max(1, Math.trunc(days));
+  return sqlRun(`DELETE FROM api_requests WHERE ts < datetime('now', ?)`, `-${d} days`).changes;
+}
+
 /** Record a request, update the key's usage, and enforce the rate limit. */
 export function recordRequest(args: {
   keyId: number | null;
@@ -187,15 +204,23 @@ export function recordRequest(args: {
   ip: string | null;
   note?: string;
 }): void {
-  insert("api_requests", {
+  if (!args.keyId) {
+    const recent = queryOne<{ c: number }>(
+      "SELECT COUNT(*) c FROM api_requests WHERE key_id IS NULL AND ts > datetime('now','-1 minute')",
+    );
+    if (Number(recent?.c ?? 0) >= UNAUTH_LOG_LIMIT_PER_MINUTE) return;
+  }
+  const id = insert("api_requests", {
     key_id: args.keyId,
     method: args.method,
-    path: args.path,
+    path: String(args.path).slice(0, 300),
     status: args.status,
     ms: args.ms,
     ip: args.ip,
-    note: args.note ?? null,
+    // The path and note are bounded so one request cannot write an oversized row.
+    note: args.note ? String(args.note).slice(0, 200) : null,
   });
+  if (id % 500 === 0) pruneApiRequests();
   if (args.keyId) {
     sqlRun(
       "UPDATE api_keys SET last_used_at=datetime('now'), request_count=request_count+1, last_used_ip=? WHERE id=?",
