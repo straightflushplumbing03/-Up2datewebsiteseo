@@ -339,6 +339,7 @@ async function main() {
     eq(classifyStatus("You could try " + brand + ".", [], "slab leak"), "mentioned", "a mention is not a recommendation");
     eq(classifyStatus("See the guide.", ["https://straightflushplumbingoc.com/x"], "slab leak"), "cited", "a citation is not a mention");
     eq(classifyStatus("I would call Efficient Plumbing.", ["https://efficientplumbing.com/x"], "slab leak"), "absent", "a competitor citation is absent for us");
+    eq(classifyStatus("You could try " + brand + ".", ["https://straightflushplumbingoc.com/x"], "slab leak"), "mentioned", "named + cited reports the name, not just the citation");
   });
 
   await test("visibility: metrics never mix test types and report inconclusive separately", () => {
