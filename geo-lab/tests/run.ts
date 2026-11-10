@@ -580,6 +580,58 @@ async function main() {
     assert(row?.status === "skipped", `row should record skipped: ${JSON.stringify(row)}`);
   });
 
+  // ── External API (/api/v1) ──────────────────────────────────────────────
+  await test("api: a key authenticates, a wrong secret or missing scope is refused", async () => {
+    const { createApiKey, verifyApiKey, requireScope } = await import("../src/lib/api-keys");
+    const k = createApiKey("test-reader");
+    const ok = verifyApiKey(`Bearer ${k.secret}`);
+    assert(ok.ok && ok.key, "valid key must authenticate");
+    eq(verifyApiKey(`${k.prefix}.${"0".repeat(64)}`).status, 401, "wrong secret");
+    eq(verifyApiKey(null).status, 401, "missing key");
+    assert(!requireScope(ok.key!, "write:jobs"), "read-only key must not hold write:jobs");
+  });
+
+  await test("api: unauthenticated requests cannot grow the request log without bound", async () => {
+    const { recordRequest, UNAUTH_LOG_LIMIT_PER_MINUTE } = await import("../src/lib/api-keys");
+    for (let i = 0; i < UNAUTH_LOG_LIMIT_PER_MINUTE + 200; i++) {
+      recordRequest({ keyId: null, method: "GET", path: "/api/v1/health", status: 401, ms: 0, ip: "203.0.113.9", note: "x".repeat(5000) });
+    }
+    const c = queryOne<{ c: number }>("SELECT COUNT(*) c FROM api_requests WHERE key_id IS NULL");
+    eq(Number(c?.c), UNAUTH_LOG_LIMIT_PER_MINUTE, "unauthenticated rows should stop at the per-minute cap");
+    const longest = queryOne<{ n: number }>("SELECT MAX(LENGTH(note)) n FROM api_requests");
+    assert(Number(longest?.n) <= 200, `note should be bounded, got ${longest?.n}`);
+  });
+
+  await test("api: old request-log rows are pruned and the rate-limit count is indexed", async () => {
+    const { pruneApiRequests } = await import("../src/lib/api-keys");
+    insert("api_requests", { key_id: null, method: "GET", path: "/old", status: 200, ts: "2020-01-01 00:00:00" });
+    assert(pruneApiRequests(90) >= 1, "a 2020 row should be pruned");
+    const plan = (await import("../src/lib/db")).query<{ detail: string }>(
+      "EXPLAIN QUERY PLAN SELECT COUNT(*) c FROM api_requests WHERE key_id=? AND ts > datetime('now','-1 minute')", 1,
+    );
+    assert(plan.some((p) => /idx_apireq_key_ts/.test(p.detail)), `rate-limit count should use the index: ${JSON.stringify(plan)}`);
+  });
+
+  await test("api: jobs endpoint bounds params, labels requestedBy with the key, and caps the queue", async () => {
+    const { createApiKey } = await import("../src/lib/api-keys");
+    const { POST } = await import("../src/app/api/v1/jobs/route");
+    const k = createApiKey("test-writer", ["write:jobs"]);
+    const call = (body: unknown) =>
+      POST(new Request("http://lab.test/api/v1/jobs", {
+        method: "POST",
+        headers: { authorization: `Bearer ${k.secret}`, "content-type": "application/json" },
+        body: JSON.stringify(body),
+      }));
+    eq((await call({ kind: "audit_city", params: { blob: "x".repeat(9000) } })).status, 413, "oversized params");
+    const ok = await call({ kind: "publish", requestedBy: "owner" });
+    eq(ok.status, 200, "publish request should be recorded");
+    const j = (await ok.json()) as { data: { requestedBy: string; status: string } };
+    eq(j.data.status, "pending_approval", "publish must wait for approval");
+    eq(j.data.requestedBy, "api:test-writer (owner)", "requestedBy must name the key that sent it");
+    for (let i = 0; i < 60; i++) await call({ kind: "audit_city" });
+    eq((await call({ kind: "audit_city" })).status, 429, "queue cap");
+  });
+
   // ── Report ──────────────────────────────────────────────────────────────
   const pass = results.filter((r) => r.ok).length;
   const fail = results.length - pass;

@@ -29,6 +29,10 @@ const AUTO_RUN_KINDS = new Set([
   "generate_visibility_report",
 ]);
 
+/** Bounds on what one caller can write into the job queue. */
+const MAX_PARAMS_BYTES = 8 * 1024;
+const MAX_OPEN_JOBS = Number(process.env.GEO_LAB_API_MAX_OPEN_JOBS ?? 50);
+
 /** Kinds that must never be auto-run, whatever the caller asks for. */
 const NEVER_AUTO_RUN = new Set(["publish", "deploy", "rollback", "spend"]);
 
@@ -52,7 +56,21 @@ export async function POST(req: Request) {
   }
 
   const params = (body.params as Record<string, unknown>) ?? {};
-  const requestedBy = String(body.requestedBy ?? `api:${g.ctx.key.name}`);
+  if (typeof params !== "object" || Array.isArray(params)) return fail(400, "params must be an object.");
+  if (JSON.stringify(params).length > MAX_PARAMS_BYTES) {
+    return fail(413, "params too large.", `Limit ${MAX_PARAMS_BYTES} bytes.`);
+  }
+  // requestedBy is caller-supplied text, so it is labelled with the key that sent
+  // it: a key cannot make a job look as if the owner or another key asked for it.
+  const claimed = String(body.requestedBy ?? "").trim().slice(0, 80);
+  const requestedBy = claimed ? `api:${g.ctx.key.name} (${claimed})` : `api:${g.ctx.key.name}`;
+
+  const pending = Number(
+    queryOne<{ c: number }>("SELECT COUNT(*) c FROM api_jobs WHERE status IN ('queued','pending_approval')")?.c ?? 0,
+  );
+  if (pending >= MAX_OPEN_JOBS) {
+    return fail(429, "Job queue full.", `${MAX_OPEN_JOBS} jobs are already queued or awaiting approval.`);
+  }
 
   const needsApproval = NEVER_AUTO_RUN.has(kind) || body.requireApproval === true;
   const status = needsApproval ? "pending_approval" : "queued";
