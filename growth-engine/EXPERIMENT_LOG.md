@@ -450,3 +450,49 @@ its baseline `sf_status` and a 2026-11-23 re-measure date.
 
 - All 10 Laguna Niguel / Mission Viejo leak, slab and PEX queries re-run 11-02..11-08 are
   still `absent` (named 0, cited 0). Keep; next checkpoints 11-16 and 11-30.
+
+### exp-2026-11-04-gsc-rank-gate — 2026-11-11 check 1 of 4: **consistent with supported, not yet supported**
+
+Data: `data/gsc_rank_gate_check_2026-11-11.json` (GSC page level, 11-02 → 11-09, vs the
+Gemini board run of 11-09; "named" read from `answer_excerpt`, not the stored label, until
+PR #161 and the brain-worker `classify()` reorder ship).
+
+| Board query | Target page | GSC pos (impr), wk of 11-02 | Wk of 10-26 | Gemini 11-09 |
+|---|---|---|---|---|
+| hidden water leak, Laguna Niguel | services/leak-detection-laguna-niguel | **7.0 (9)**, days 4–12 | no impr | **named + cited** |
+| slab leak, Laguna Niguel | services/slab-leak-detection-laguna-niguel | 9 (1) | 99 (1) | absent |
+| best leak detection, Laguna Niguel | services/leak-detection-laguna-niguel | 7.0 (9) | no impr | absent |
+| leak detection, Dana Point | services/leak-detection-dana-point | **5.5 (4)**, days 5–6 | no impr | absent |
+| plumber, Laguna Niguel | cities/laguna-niguel | 20.9 (7) | 38.5 (20) | absent |
+| plumbers, San Clemente (control) | cities/san-clemente | 31.2 (6) | 64.5 (2) | absent |
+| slab leak, Mission Viejo | services/slab-leak-detection-mission-viejo | 62.1 (14) | no impr | absent |
+| repiping, Mission Viejo | services/pex-repiping-mission-viejo | 75.4 (8) | no impr | absent |
+| plumber, Ladera Ranch (control) | cities/ladera-ranch | 61.4 (23) | 66.5 (4) | absent |
+| emergency, South OC (control) | services/emergency-plumbing | 57.7 (11) | 52 (5) | absent |
+
+- **No refute signal:** the one naming comes from a page at ~7; all 6 pages above 20 stay absent.
+- **Watch for refutation:** the Dana Point leak page sits at 5–6 and is absent (week 1 of the
+  3 needed), and "best leak detection company in Laguna Niguel" shares the named page but is
+  absent. Wording ("best") may need a review or authority signal the page cannot supply.
+- **Step change:** the city leak-detection pages had zero impressions until 11-03, then
+  showed on page 1 from 11-03 on (anonymized queries). That is the same week the first
+  naming appeared.
+- **Cross-engine probe (Claude web search, 3 queries, 11-11):** the site is not in the
+  15–17 results for any of them. Those results are mostly templated netlify / pages.dev /
+  ignitionlabs pages. Gemini is grounded on Google, where the page ranks; Claude's search
+  index does not surface it. So the rank-gate idea is per engine: read each engine against
+  its own index, not against GSC.
+- **Limits:** page-level position mixes all of a page's queries (on-topic rows are
+  anonymized); 1–14 impressions per page; one Gemini run in the window. A/A noise is about
+  ±10 positions at this volume, so only the ≤ 10 vs > 20 split is read, never small moves.
+- **Next checks:** 11-18, 11-25, 12-02, same table.
+
+### exp-2026-11-10-first-named-replication — cadence problem (PR #161, unmerged)
+
+- The board's Gemini runs landed on 10-23, 10-26, 11-01, 11-02 and 11-09 only: about
+  one per week. "Read after 14 conclusive Gemini runs" would mean a read around
+  **mid-February 2027**.
+- **Proposed amendment:** read at **14 runs or 2026-12-14, whichever comes first**. At the
+  calendar stop, report the count with its 90% interval and label it inconclusive if
+  fewer than 6 runs. A cheaper fix is to run only the 4 treatment queries plus 1 control
+  on Gemini daily (5 calls a day). That needs owner approval if it costs API spend.
