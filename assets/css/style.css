@@ -113,6 +113,9 @@ p{ margin:0; }
 .btn-outline{ background:transparent; color:var(--ink); border-color:var(--ink); }
 .btn-outline:hover{ background:var(--ink); color:#fff; }
 .btn-block{ width:100%; }
+/* Lead form while it sends (conversion, 2026-11-11): lead-events.js disables the button and sets
+   aria-busy; without this it looked unchanged for the whole send. No hover lift while busy. */
+.btn[aria-busy="true"], .btn:disabled{ opacity:.72; cursor:progress; transform:none; box-shadow:none; }
 .btn-sm{ padding:10px 18px; font-size:0.85rem; }
 
 /* --------------------------------- SECTIONS ------------------------------- */

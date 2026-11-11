@@ -32,6 +32,8 @@
   document.addEventListener('submit', function (e) {
     var f = e.target;
     if (e.defaultPrevented || !f || !f.action || f.action.indexOf('formspree.io') === -1) return;
+    // Already sending (a second tap, or Enter in a field): don't send or count the lead twice.
+    if (f.getAttribute('data-sending') === '1') { e.preventDefault(); return; }
     // Honeypot: real visitors never see the hidden _gotcha field, so a filled one means a bot.
     // Formspree silently drops those, so they must not be counted as leads in GA4 either.
     // Let the plain post go through untouched so Formspree's own spam handling still applies.
@@ -43,10 +45,30 @@
     if (!window.fetch || !window.FormData) return;
     e.preventDefault();
     var btn = f.querySelector('[type="submit"]');
-    if (btn) { btn.disabled = true; btn.setAttribute('aria-busy', 'true'); }
+    f.setAttribute('data-sending', '1');
+    // Show that the tap worked. On a slow phone connection the send can take several seconds,
+    // and the button used to look exactly the same while it waited, so visitors could tap again or leave.
+    if (btn) {
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      btn.setAttribute('data-label', btn.innerHTML);
+      btn.textContent = 'Sending your request\u2026';
+    }
     fetch(f.action, { method: 'POST', body: new FormData(f), headers: { Accept: 'application/json' } })
       .then(function (r) { if (r.ok) { location.href = '/thank-you.html'; } else { f.submit(); } })
       .catch(function () { f.submit(); });
+  });
+  // Back button from the thank-you page: Safari and Chrome can restore this page from memory with the
+  // button still disabled and saying "Sending". Put every lead form back to its normal state.
+  window.addEventListener('pageshow', function (ev) {
+    if (!ev.persisted) return;
+    var forms = document.querySelectorAll('form[data-sending]');
+    for (var i = 0; i < forms.length; i++) {
+      var b = forms[i].querySelector('[type="submit"]');
+      if (b && b.hasAttribute('data-label')) { b.innerHTML = b.getAttribute('data-label'); b.removeAttribute('data-label'); }
+      if (b) { b.disabled = false; b.removeAttribute('aria-busy'); }
+      forms[i].removeAttribute('data-sending');
+    }
   });
   if (/^\/thank-you(\.html)?$/.test(location.pathname)) track('form_submit_confirmed');
 })();
