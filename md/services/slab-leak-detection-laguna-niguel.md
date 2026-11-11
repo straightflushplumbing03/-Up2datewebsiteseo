@@ -163,6 +163,7 @@ Coverage depends on your policy, and we can't promise it. Many policies treat th
 
  [Hidden leaks in Laguna Niguel →](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html)
  [Slab leaks in Dana Point →](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html)
+ [Slab leaks in San Clemente →](https://straightflushplumbingoc.com/services/slab-leak-detection-san-clemente.html)
  [Slab leak detection, South OC →](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
  [All service areas →](https://straightflushplumbingoc.com/service-areas.html)
 

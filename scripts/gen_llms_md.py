@@ -41,6 +41,7 @@ PAGES = [
     ("services/pex-repiping-laguna-niguel.html", "services/pex-repiping-laguna-niguel.md", "Services"),
     ("services/pex-repiping-dana-point.html", "services/pex-repiping-dana-point.md", "Services"),
     ("services/slab-leak-detection-mission-viejo.html", "services/slab-leak-detection-mission-viejo.md", "Services"),
+    ("services/slab-leak-detection-san-clemente.html", "services/slab-leak-detection-san-clemente.md", "Services"),
     ("services/pex-repiping-mission-viejo.html", "services/pex-repiping-mission-viejo.md", "Services"),
     ("services/pex-repiping-ladera-ranch.html", "services/pex-repiping-ladera-ranch.md", "Services"),
     ("services/drain-services.html", "services/drain-services.md", "Services"),

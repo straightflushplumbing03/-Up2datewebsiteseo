@@ -44,7 +44,7 @@ For most homes, leak detection runs **$365 to $525**. Where you fall depends on 
 
 
 
-**Under the slab.** Many San Clemente homes sit on concrete slabs with water lines running underneath. A warm spot on the floor or the sound of running water with everything off are typical signs. See [how we find slab leaks](https://straightflushplumbingoc.com/services/slab-leak-detection.html).
+**Under the slab.** Many San Clemente homes sit on concrete slabs with water lines running underneath. A warm spot on the floor or the sound of running water with everything off are typical signs. See [slab leak detection in San Clemente](https://straightflushplumbingoc.com/services/slab-leak-detection-san-clemente.html).
 
 
 

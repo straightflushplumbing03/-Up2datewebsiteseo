@@ -44,7 +44,7 @@ Most of San Clemente's water is imported through the Metropolitan Water District
 
 
 
-- [Acoustic slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
+- [Acoustic slab leak detection in San Clemente](https://straightflushplumbingoc.com/services/slab-leak-detection-san-clemente.html)
 
 - [Hidden & underground water leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html)
 
@@ -102,7 +102,7 @@ Most of San Clemente's water is imported through the Metropolitan Water District
 Diagnose-first leak detection and plumbing, done right the first time.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 
