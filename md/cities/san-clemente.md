@@ -32,11 +32,11 @@ Need slab leak detection in San Clemente? Straight Flush Plumbing & Leak Detecti
 
 
 
-Whether it's an older home near the pier or a newer build in Forster Ranch or Talega, we bring the same diagnose-first standard to every San Clemente property.
+San Clemente was laid out by developer Ole Hanson as a planned Spanish-style town: home deeds required Spanish Colonial Revival design, with red tile roofs and white stucco walls, and the city dates its birth to his first big lot sale in December 1925 ([City of San Clemente](https://san-clemente.org/about-us/city-information/history)). Today it covers about 18.4 square miles of land between Dana Point and Camp Pendleton, with 64,293 residents in the 2020 Census ([Wikipedia](https://en.wikipedia.org/wiki/San_Clemente,_California)). Homes run from older properties near the pier to newer builds east of the 5 in Forster Ranch and Talega, so we bring the same diagnose-first standard to every San Clemente property and never assume what we will find.
 
 
 
-Most of San Clemente's water is imported through the Metropolitan Water District and MWDOC, with some from two city groundwater wells. On the sewer side, the city places the service lateral (the pipe from your house to the public main) on the property owner, so root intrusion and cracked laterals are an owner repair.
+Who supplies your water depends on where you live. Most of the city is served by the City of San Clemente's own water utility. Its latest water quality report (2023 data) says the city delivered imported Metropolitan Water District water plus water from Irvine Ranch Water District's Baker treatment plant, and that city groundwater was not a source that year while the groundwater plant was being rehabilitated. Talega homes get their water from Santa Margarita Water District, and parts of north San Clemente from South Coast Water District ([City of San Clemente 2024 Water Quality Report](https://san-clemente.org/home/showpublisheddocument/84313/638536107721800000); [ISDOC](https://isdoc.specialdistrict.org/santa-margarita-water-district)). The water is hard: the same report lists average hardness of 160 mg/L (about 9.4 grains per gallon) for the MWD supply and 297 mg/L (about 17 grains per gallon) for the Baker plant supply, which is why scale buildup in water heaters and fixtures is common here. On the sewer side, the city places the service lateral (the pipe from your house to the public main) on the property owner, so root intrusion and cracked laterals are an owner repair.
 
 
 
@@ -102,7 +102,7 @@ Most of San Clemente's water is imported through the Metropolitan Water District
 Diagnose-first leak detection and plumbing, done right the first time.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 
@@ -177,7 +177,15 @@ The City of San Clemente says the property owner is responsible for maintaining 
  Who do I call about a leak at the street or my water meter in San Clemente? +
 
 
-Leaks in the street, on the city side of the meter, or a sewer overflow should be reported to the City of San Clemente 24/7 Utilities hotline at 949-366-1553. Leaks on your side of the meter, such as the line to the house, under the slab, or inside a wall, are generally the property owner's to repair. That is the part we locate and fix. Call (949) 374-6524.
+Leaks in the street, on the city side of the meter, or a sewer overflow should be reported to the City of San Clemente 24/7 Utilities hotline at 949-366-1553. If you live in Talega, your water comes from Santa Margarita Water District, and parts of north San Clemente are served by South Coast Water District, so report street or meter leaks to the district named on your water bill. Leaks on your side of the meter, such as the line to the house, under the slab, or inside a wall, are generally the property owner's to repair. That is the part we locate and fix. Call (949) 374-6524.
+
+
+
+
+ Who supplies water to my San Clemente home, and is it hard water? +
+
+
+Most San Clemente homes get water from the City of San Clemente's water utility, which in 2023 delivered imported Metropolitan Water District water plus water from Irvine Ranch Water District's Baker treatment plant. Talega is served by Santa Margarita Water District, and parts of north San Clemente by South Coast Water District. Your water bill names your supplier. The water is hard: the city's latest water quality report lists average hardness of about 9.4 grains per gallon for the MWD supply and about 17 grains per gallon for the Baker plant supply. Hard water leaves scale in water heaters and on fixtures, so regular water heater flushing helps (see our [San Clemente water heater service](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)). If you are seeing a high bill or a meter that keeps moving with everything off, call (949) 374-6524 and we will find the leak first.
 
 
 

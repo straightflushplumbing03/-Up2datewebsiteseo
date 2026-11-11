@@ -98,7 +98,7 @@ Laguna Hills is split between two water districts. The city lists both El Toro W
 Diagnose-first leak detection and plumbing, done right the first time.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 

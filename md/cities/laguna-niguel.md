@@ -88,7 +88,7 @@ Most Laguna Niguel homes get their water from Moulton Niguel Water District ([MN
 Diagnose-first leak detection and plumbing, done right the first time. Lance answers the phone.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 
