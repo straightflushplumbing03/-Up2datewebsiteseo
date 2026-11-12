@@ -17,7 +17,7 @@ Hidden leaks waste water and damage homes. Straight Flush finds them with acoust
 
 
 
-Need leak detection in Aliso Viejo, Laguna Hills, San Juan Capistrano or elsewhere in South Orange County? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based in Laguna Niguel. We pinpoint the leak first, then talk through spot repair, reroute or repipe. Call (949) 374-6524.
+Need leak detection in Aliso Viejo, Laguna Hills, San Juan Capistrano or elsewhere in South Orange County? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based in Laguna Niguel. We pinpoint the leak first, then talk through spot repair, reroute or repipe. Call [(949) 374-6524](tel:+19493746524).
 
  [Schedule Leak Detection](https://straightflushplumbingoc.com/contact.html)
 
@@ -279,7 +279,7 @@ Once we have located it, we explain what we found and your realistic options, in
  Who does leak detection in Aliso Viejo, Laguna Hills and nearby South Orange County cities? +
 
 
-Straight Flush Plumbing & Leak Detection, an owner-operated plumber based in Laguna Niguel, does leak detection across South Orange County, including Aliso Viejo, Laguna Hills, San Juan Capistrano, Ladera Ranch, Mission Viejo, Dana Point and San Clemente. Lance answers the phone himself. We locate the leak first with acoustic, electronic and thermal equipment, before any wall, floor or concrete is opened, and we document what we find so you have clear findings to bring to your insurer. Call (949) 374-6524.
+Straight Flush Plumbing & Leak Detection, an owner-operated plumber based in Laguna Niguel, does leak detection across South Orange County, including Aliso Viejo, Laguna Hills, San Juan Capistrano, Ladera Ranch, Mission Viejo, Dana Point and San Clemente. Lance answers the phone himself. We locate the leak first with acoustic, electronic and thermal equipment, before any wall, floor or concrete is opened, and we document what we find so you have clear findings to bring to your insurer. Call [(949) 374-6524](tel:+19493746524).
 
 
 

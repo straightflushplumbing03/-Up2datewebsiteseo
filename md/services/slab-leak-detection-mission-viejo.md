@@ -124,7 +124,7 @@ A single leak in sound pipe is often a spot repair; repeated leaks in aging copp
  Who does slab leak detection in Mission Viejo? +
 
 
-Straight Flush Plumbing & Leak Detection does slab leak detection and repair in Mission Viejo. We're an owner-operated company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before any concrete is opened, and owner Lance answers the phone at (949) 374-6524.
+Straight Flush Plumbing & Leak Detection does slab leak detection and repair in Mission Viejo. We're an owner-operated company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before any concrete is opened, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524).
 
 
 

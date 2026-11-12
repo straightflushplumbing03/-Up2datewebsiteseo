@@ -117,7 +117,7 @@ Diagnose-first leak detection and plumbing, done right the first time.
  How much does leak detection cost in Dana Point, CA? +
 
 
-For most homes in Dana Point, leak detection runs $365 to $525. Where you fall depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Call (949) 374-6524 and Lance will walk you through what to expect for your specific situation. Our [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) explains what moves the price.
+For most homes in Dana Point, leak detection runs $365 to $525. Where you fall depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Call [(949) 374-6524](tel:+19493746524) and Lance will walk you through what to expect for your specific situation. Our [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) explains what moves the price.
 
 
 
@@ -149,7 +149,7 @@ In most cases, yes. We use acoustic listening equipment, electronic amplificatio
  How fast can you get to a leak in Dana Point? +
 
 
-We're based nearby in Laguna Niguel, so Dana Point is a short drive. Same-day appointments are often available, and we offer 24/7 service for emergencies. Call (949) 374-6524 and we'll find the earliest slot that works for you.
+We're based nearby in Laguna Niguel, so Dana Point is a short drive. Same-day appointments are often available, and we offer 24/7 service for emergencies. Call [(949) 374-6524](tel:+19493746524) and we'll find the earliest slot that works for you.
 
 
 
