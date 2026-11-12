@@ -99,7 +99,7 @@ What that means for you: if your home still has its original copper, a pinhole l
 Diagnose-first leak detection and plumbing, done right the first time.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 

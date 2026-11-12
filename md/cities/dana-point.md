@@ -98,7 +98,7 @@ Dana Point is served by two water districts. The city says its water system is o
 Diagnose-first leak detection and plumbing, done right the first time.
 
 
- [Call (949) 374-6524](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)
 
 
 

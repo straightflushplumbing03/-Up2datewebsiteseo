@@ -15,6 +15,10 @@
 
 Hidden leaks waste water and damage homes. Straight Flush finds them with acoustic, electronic, and thermal diagnostics — owner-operated in Laguna Niguel, where Lance answers the phone and we diagnose before recommending repair or repipe.
 
+
+
+Need leak detection in Aliso Viejo, Laguna Hills, San Juan Capistrano or elsewhere in South Orange County? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based in Laguna Niguel. We pinpoint the leak first, then talk through spot repair, reroute or repipe. Call (949) 374-6524.
+
  [Schedule Leak Detection](https://straightflushplumbingoc.com/contact.html)
 
 
@@ -216,7 +220,7 @@ Most homes: $365 to $525. What moves the price, and when insurance reimburses it
 
 
 
-Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html), [leak detection in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html), [leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html) and [leak detection in Mission Viejo](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html).
+Local details: [hidden water leak detection in Laguna Niguel](https://straightflushplumbingoc.com/services/leak-detection-laguna-niguel.html), [leak detection in Dana Point](https://straightflushplumbingoc.com/services/leak-detection-dana-point.html), [leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html), [leak detection in Mission Viejo](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html) and [leak detection in San Juan Capistrano](https://straightflushplumbingoc.com/services/leak-detection-san-juan-capistrano.html). We also do leak detection in [Aliso Viejo](https://straightflushplumbingoc.com/cities/aliso-viejo.html), [Laguna Hills](https://straightflushplumbingoc.com/cities/laguna-hills.html) and [Ladera Ranch](https://straightflushplumbingoc.com/cities/ladera-ranch.html).
 
 
 
@@ -268,6 +272,14 @@ For most Orange County homes, leak detection runs $365 to $525. Where you fall d
 
 
 Once we have located it, we explain what we found and your realistic options, including spot repair, reroute, or repipe, and why one may make more sense than another for your home. No repair is recommended before you understand the diagnosis.
+
+
+
+
+ Who does leak detection in Aliso Viejo, Laguna Hills and nearby South Orange County cities? +
+
+
+Straight Flush Plumbing & Leak Detection, an owner-operated plumber based in Laguna Niguel, does leak detection across South Orange County, including Aliso Viejo, Laguna Hills, San Juan Capistrano, Ladera Ranch, Mission Viejo, Dana Point and San Clemente. Lance answers the phone himself. We locate the leak first with acoustic, electronic and thermal equipment, before any wall, floor or concrete is opened, and we document what we find so you have clear findings to bring to your insurer. Call (949) 374-6524.
 
 
 
