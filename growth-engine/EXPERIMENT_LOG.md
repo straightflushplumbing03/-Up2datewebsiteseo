@@ -450,3 +450,37 @@ its baseline `sf_status` and a 2026-11-23 re-measure date.
 
 - All 10 Laguna Niguel / Mission Viejo leak, slab and PEX queries re-run 11-02..11-08 are
   still `absent` (named 0, cited 0). Keep; next checkpoints 11-16 and 11-30.
+
+### exp-2026-11-03-indexnow-split — 2026-11-12 pre-day-0 baseline + amendment (experiments crew)
+
+- **Status found:** the key file and arms merged on 2026-11-09 (#116), but no `--send`
+  is recorded, so **day 0 has not happened**. The test has been idle for 3 days.
+- **Baseline (crew web-search fallback, 2026-11-12):** **0/6 treatment, 0/6 holdout.**
+  Each URL was searched by exact `<title>` text + brand. `site:straightflushplumbingoc.com`
+  and a bare-domain search also return **zero first-party pages**, not even the homepage.
+  The top results for our domain are HomeAdvisor/Angi/BBB/CustomerLobby profiles for the
+  unrelated Eureka "Straight Flush Plumbing". Data: `data/indexnow_baseline_2026-11-12.json`.
+- **What that changes:** the original design assumed a per-page discovery problem. A
+  domain with no pages at all in this index may have a site-level block (not yet crawled,
+  or a crawl/quality hold). A 6 v 6 page split cannot tell those apart, so a stage 0 is added:
+  - **Stage 0 (domain):** the homepage or any first-party URL appears for the bare-domain
+    query, or Bing Webmaster shows the site as verified with ≥ 1 indexed URL.
+  - Read the 6 v 6 split **only after stage 0 is met by any URL.** If at day 14 stage 0
+    is still unmet, the result is **"blocked at domain level"**, not "no effect". The
+    next step is then Bing Webmaster verification + crawl-error review (owner), not more pings.
+- **Contamination rule, made concrete:** open PRs touching arm pages must merge **before**
+  day 0 or wait until after the day-14 read:
+  - holdout `cities/mission-viejo.html` ← #160
+  - treatment `cities/san-clemente.html` ← #165
+  - Edits before day 0 are fine (the 11-07/11-09 edits to laguna-niguel, dana-point and
+    mission-viejo city pages do not contaminate anything, because nothing was sent yet).
+  - Sitewide PRs (#159, #176 and similar) touch both arms equally and are allowed; note
+    the date here.
+- **Measurement fix:** the fallback check uses one search engine and cannot say which
+  index it reads. Every check records the query, the date and the top 10 domains, and the
+  bare-domain query is run first. If the owner verifies Bing Webmaster, its URL Inspection
+  replaces the fallback for all three checks.
+- **Owner decision needed (unchanged):** OK to run
+  `python3 scripts/indexnow_submit.py --arm treatment --send` once. That starts day 0;
+  checks then fall on day 3, 7 and 14. The crew does not send it without that OK.
+- **Decision:** keep, amended. Confidence: low.
