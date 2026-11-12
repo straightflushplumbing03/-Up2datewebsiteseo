@@ -120,7 +120,7 @@ One leak in otherwise sound copper is often a spot repair. Repeat leaks in aging
  Who does slab leak detection in Laguna Niguel? +
 
 
-Straight Flush Plumbing & Leak Detection does slab leak detection and repair in Laguna Niguel. We're an owner-operated company headquartered in Laguna Niguel, we use acoustic, electronic and thermal detection to find the leak before concrete is opened, and owner Lance answers the phone at (949) 374-6524.
+Straight Flush Plumbing & Leak Detection does slab leak detection and repair in Laguna Niguel. We're an owner-operated company headquartered in Laguna Niguel, we use acoustic, electronic and thermal detection to find the leak before concrete is opened, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524).
 
 
 

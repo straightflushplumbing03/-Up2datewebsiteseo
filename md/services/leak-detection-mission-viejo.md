@@ -148,7 +148,7 @@ A single leak in a sound line is usually a spot repair. Repeat leaks in aging or
  Who does leak detection in Mission Viejo? +
 
 
-Straight Flush Plumbing & Leak Detection does leak detection in Mission Viejo homes, from the original 1960s and 1970s tracts to newer builds and the hillside lots toward the Saddleback foothills. We're an owner-operated plumbing company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before anything is opened, and owner Lance answers the phone at (949) 374-6524. Whoever you call, ask what equipment they use and whether you get written findings.
+Straight Flush Plumbing & Leak Detection does leak detection in Mission Viejo homes, from the original 1960s and 1970s tracts to newer builds and the hillside lots toward the Saddleback foothills. We're an owner-operated plumbing company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before anything is opened, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524). Whoever you call, ask what equipment they use and whether you get written findings.
 
 
 

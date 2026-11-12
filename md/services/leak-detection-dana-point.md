@@ -136,7 +136,7 @@ A single leak in a sound line is usually a spot repair. Repeat leaks in aging co
  Who is a good leak detection company in Dana Point? +
 
 
-Straight Flush Plumbing & Leak Detection does leak detection in Dana Point homes, from the Lantern District and Capistrano Beach to Monarch Beach and the homes around the harbor. We're an owner-operated plumbing company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before anything is opened, and owner Lance answers the phone at (949) 374-6524. Whoever you call, ask what equipment they use and whether you get written findings.
+Straight Flush Plumbing & Leak Detection does leak detection in Dana Point homes, from the Lantern District and Capistrano Beach to Monarch Beach and the homes around the harbor. We're an owner-operated plumbing company based next door in Laguna Niguel, we pinpoint leaks with acoustic, electronic and thermal tools before anything is opened, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524). Whoever you call, ask what equipment they use and whether you get written findings.
 
 
 

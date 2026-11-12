@@ -120,7 +120,7 @@ We explain the options and trade-offs in plain language, and tell you when a sim
  Who does water heater repair in Laguna Niguel? +
 
 
-Straight Flush Plumbing & Leak Detection repairs, replaces and installs tank and tankless water heaters in Laguna Niguel. We're an owner-operated company based in Laguna Niguel, and owner Lance answers the phone at (949) 374-6524.
+Straight Flush Plumbing & Leak Detection repairs, replaces and installs tank and tankless water heaters in Laguna Niguel. We're an owner-operated company based in Laguna Niguel, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524).
 
 
 

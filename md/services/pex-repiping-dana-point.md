@@ -118,7 +118,7 @@ Most residential repipes take one to a few days depending on the size of the hom
  Who does PEX repiping in Dana Point? +
 
 
-Straight Flush Plumbing & Leak Detection does whole-house and partial PEX repiping in Dana Point. We're an owner-operated company based next door in Laguna Niguel, we diagnose before recommending a repipe, and owner Lance answers the phone at (949) 374-6524.
+Straight Flush Plumbing & Leak Detection does whole-house and partial PEX repiping in Dana Point. We're an owner-operated company based next door in Laguna Niguel, we diagnose before recommending a repipe, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524).
 
 
 
