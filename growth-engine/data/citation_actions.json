@@ -1,13 +1,13 @@
 {
-  "generated": "2026-11-11",
+  "generated": "2026-11-12",
   "window_days": 56,
   "observations_used": 154,
   "actions": [
     {
       "domain": "angi.com",
       "class": "directory",
-      "priority_score": 166.14,
-      "times_cited_when_we_lost": 64,
+      "priority_score": 177.84,
+      "times_cited_when_we_lost": 67,
       "engines": [
         "claude_web_search"
       ],
@@ -31,14 +31,14 @@
       "domain": "homeadvisor.com",
       "class": "directory",
       "priority_score": 138.58,
-      "times_cited_when_we_lost": 71,
+      "times_cited_when_we_lost": 70,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
         "https://homeadvisor.com/c.Plumbing.Rancho_Santa_Margarita.CA.-12058.html",
         "https://homeadvisor.com/c.Plumbing.San_clemente.CA.-12058.html",
-        "https://homeadvisor.com/tloc/Aliso-Viejo-CA/Gas-Piping"
+        "https://homeadvisor.com/tloc/Aliso-Viejo-CA/Water-Heater-Repair-or-Service"
       ],
       "queries": [
         "best PEX repiping in Aliso Viejo, CA",
@@ -54,8 +54,8 @@
     {
       "domain": "rooterhero.com",
       "class": "competitor",
-      "priority_score": 130.0,
-      "times_cited_when_we_lost": 57,
+      "priority_score": 131.6,
+      "times_cited_when_we_lost": 62,
       "engines": [
         "claude_web_search"
       ],
@@ -78,8 +78,8 @@
     {
       "domain": "homeguide.com",
       "class": "directory",
-      "priority_score": 89.18,
-      "times_cited_when_we_lost": 32,
+      "priority_score": 102.96,
+      "times_cited_when_we_lost": 38,
       "engines": [
         "claude_web_search"
       ],
@@ -102,8 +102,8 @@
     {
       "domain": "americanleakdetection.com",
       "class": "competitor",
-      "priority_score": 63.6,
-      "times_cited_when_we_lost": 22,
+      "priority_score": 64.2,
+      "times_cited_when_we_lost": 23,
       "engines": [
         "claude_web_search"
       ],
@@ -124,34 +124,10 @@
       "first_seen": "2026-10-20"
     },
     {
-      "domain": "bbb.org",
-      "class": "directory",
-      "priority_score": 60.84,
-      "times_cited_when_we_lost": 19,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://bbb.org/us/ca/aliso-viejo/category/repiping specialists",
-        "https://bbb.org/us/ca/irvine/category/water-leak-detector",
-        "https://bbb.org/us/ca/laguna-beach/category/leak-detection"
-      ],
-      "queries": [
-        "best PEX repiping in Aliso Viejo, CA",
-        "best PEX repiping in Rancho Santa Margarita, CA",
-        "best PEX repiping in San Juan Capistrano, CA",
-        "best emergency plumber in Dana Point, CA",
-        "best leak detection in Irvine, CA"
-      ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "todo",
-      "first_seen": "2026-10-20"
-    },
-    {
       "domain": "thumbtack.com",
       "class": "directory",
-      "priority_score": 59.02,
-      "times_cited_when_we_lost": 24,
+      "priority_score": 57.46,
+      "times_cited_when_we_lost": 23,
       "engines": [
         "claude_web_search"
       ],
@@ -172,34 +148,10 @@
       "first_seen": "2026-10-20"
     },
     {
-      "domain": "thisoldhouse.com",
-      "class": "lead_gen",
-      "priority_score": 56.4,
-      "times_cited_when_we_lost": 33,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://www.thisoldhouse.com/near-me/california/aliso-viejo/plumbing",
-        "https://www.thisoldhouse.com/near-me/california/irvine/plumbing",
-        "https://www.thisoldhouse.com/near-me/california/laguna-niguel/plumbing"
-      ],
-      "queries": [
-        "best drain cleaning in Mission Viejo, CA",
-        "best drain cleaning in Rancho Santa Margarita, CA",
-        "best drain cleaning in San Clemente, CA",
-        "best emergency plumber in Laguna Niguel, CA",
-        "best emergency plumber in Lake Forest, CA"
-      ],
-      "action": "Lead-generation network with a page for every city × service. Ask whether it lists real local pros (get listed if free); otherwise out-answer it with our own specific city × service page.",
-      "status": "todo",
-      "first_seen": "2026-10-20"
-    },
-    {
       "domain": "benjaminfranklinplumbing.com",
       "class": "competitor",
-      "priority_score": 55.8,
-      "times_cited_when_we_lost": 31,
+      "priority_score": 55.6,
+      "times_cited_when_we_lost": 28,
       "engines": [
         "claude_web_search"
       ],
@@ -220,10 +172,34 @@
       "first_seen": "2026-10-20"
     },
     {
+      "domain": "bbb.org",
+      "class": "directory",
+      "priority_score": 55.38,
+      "times_cited_when_we_lost": 18,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://bbb.org/us/ca/aliso-viejo/category/repiping specialists",
+        "https://bbb.org/us/ca/irvine/category/water-leak-detector",
+        "https://bbb.org/us/ca/laguna-beach/category/leak-detection"
+      ],
+      "queries": [
+        "best PEX repiping in Aliso Viejo, CA",
+        "best PEX repiping in Rancho Santa Margarita, CA",
+        "best PEX repiping in San Juan Capistrano, CA",
+        "best emergency plumber in Dana Point, CA",
+        "best leak detection in Irvine, CA"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-10-20"
+    },
+    {
       "domain": "mrrooter.com",
       "class": "competitor",
-      "priority_score": 47.2,
-      "times_cited_when_we_lost": 31,
+      "priority_score": 54.8,
+      "times_cited_when_we_lost": 34,
       "engines": [
         "claude_web_search"
       ],
@@ -244,10 +220,34 @@
       "first_seen": "2026-10-20"
     },
     {
+      "domain": "thisoldhouse.com",
+      "class": "lead_gen",
+      "priority_score": 52.4,
+      "times_cited_when_we_lost": 29,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://www.thisoldhouse.com/near-me/california/aliso-viejo/plumbing",
+        "https://www.thisoldhouse.com/near-me/california/irvine/plumbing",
+        "https://www.thisoldhouse.com/near-me/california/laguna-niguel/plumbing"
+      ],
+      "queries": [
+        "best drain cleaning in Mission Viejo, CA",
+        "best drain cleaning in Rancho Santa Margarita, CA",
+        "best drain cleaning in San Clemente, CA",
+        "best emergency plumber in Laguna Niguel, CA",
+        "best emergency plumber in Lake Forest, CA"
+      ],
+      "action": "Lead-generation network with a page for every city × service. Ask whether it lists real local pros (get listed if free); otherwise out-answer it with our own specific city × service page.",
+      "status": "todo",
+      "first_seen": "2026-10-20"
+    },
+    {
       "domain": "buildzoom.com",
       "class": "directory",
-      "priority_score": 45.5,
-      "times_cited_when_we_lost": 12,
+      "priority_score": 46.28,
+      "times_cited_when_we_lost": 13,
       "engines": [
         "claude_web_search"
       ],
@@ -266,30 +266,6 @@
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
       "status": "todo",
       "first_seen": "2026-10-20"
-    },
-    {
-      "domain": "prod.bbb.org",
-      "class": "directory",
-      "priority_score": 42.9,
-      "times_cited_when_we_lost": 12,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://prod.bbb.org/us/ca/dana-point/category/drain-cleaning",
-        "https://prod.bbb.org/us/ca/dana-point/category/leak-detection",
-        "https://prod.bbb.org/us/ca/dana-point/category/piping-contractors"
-      ],
-      "queries": [
-        "best leak detection in Dana Point, CA",
-        "best leak detection in Ladera Ranch, CA",
-        "best slab leak detection in Dana Point, CA",
-        "best slab leak detection in Ladera Ranch, CA",
-        "recommend a leak detection company in Dana Point"
-      ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "todo",
-      "first_seen": "2026-10-28"
     },
     {
       "domain": "lib.www.bbb.org",
@@ -317,8 +293,8 @@
     {
       "domain": "rotorooter.com",
       "class": "competitor",
-      "priority_score": 38.0,
-      "times_cited_when_we_lost": 25,
+      "priority_score": 41.0,
+      "times_cited_when_we_lost": 26,
       "engines": [
         "claude_web_search"
       ],
@@ -339,10 +315,34 @@
       "first_seen": "2026-10-20"
     },
     {
+      "domain": "prod.bbb.org",
+      "class": "directory",
+      "priority_score": 39.78,
+      "times_cited_when_we_lost": 12,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://prod.bbb.org/us/ca/dana-point/category/drain-cleaning",
+        "https://prod.bbb.org/us/ca/dana-point/category/leak-detection",
+        "https://prod.bbb.org/us/ca/dana-point/category/piping-contractors"
+      ],
+      "queries": [
+        "best leak detection in Dana Point, CA",
+        "best leak detection in Ladera Ranch, CA",
+        "best slab leak detection in Dana Point, CA",
+        "best slab leak detection in Ladera Ranch, CA",
+        "recommend a leak detection company in Dana Point"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-10-28"
+    },
+    {
       "domain": "pro.porch.com",
       "class": "directory",
-      "priority_score": 36.92,
-      "times_cited_when_we_lost": 14,
+      "priority_score": 33.8,
+      "times_cited_when_we_lost": 12,
       "engines": [
         "claude_web_search"
       ],
@@ -413,8 +413,8 @@
     {
       "domain": "todayshomeowner.com",
       "class": "lead_gen",
-      "priority_score": 22.0,
-      "times_cited_when_we_lost": 9,
+      "priority_score": 22.6,
+      "times_cited_when_we_lost": 10,
       "engines": [
         "claude_web_search"
       ],
@@ -437,8 +437,8 @@
     {
       "domain": "andrewadonis.com",
       "class": "competitor",
-      "priority_score": 20.0,
-      "times_cited_when_we_lost": 12,
+      "priority_score": 19.2,
+      "times_cited_when_we_lost": 10,
       "engines": [
         "claude_web_search"
       ],
@@ -461,7 +461,7 @@
     {
       "domain": "homeyou.com",
       "class": "competitor",
-      "priority_score": 17.8,
+      "priority_score": 16.6,
       "times_cited_when_we_lost": 7,
       "engines": [
         "claude_web_search"
@@ -505,9 +505,32 @@
       "first_seen": "2026-10-29"
     },
     {
+      "domain": "startpage.mapquest.com",
+      "class": "directory",
+      "priority_score": 14.3,
+      "times_cited_when_we_lost": 4,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://startpage.mapquest.com/us/california/kastle-plumbing-270331202",
+        "https://startpage.mapquest.com/us/california/repipe-pro-365518461",
+        "https://startpage.mapquest.com/us/california/wallace-wear-plumbing-345640219"
+      ],
+      "queries": [
+        "recommend a PEX repiping company in Mission Viejo",
+        "recommend a emergency plumber company in Dana Point",
+        "recommend a slab leak detection company in Laguna Niguel",
+        "who does slab leak detection in Laguna Niguel?"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-11-05"
+    },
+    {
       "domain": "ocrepipes.squarespace.com",
       "class": "competitor",
-      "priority_score": 15.0,
+      "priority_score": 13.8,
       "times_cited_when_we_lost": 5,
       "engines": [
         "claude_web_search"
@@ -594,27 +617,6 @@
       "first_seen": "2026-11-02"
     },
     {
-      "domain": "startpage.mapquest.com",
-      "class": "directory",
-      "priority_score": 11.7,
-      "times_cited_when_we_lost": 3,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://startpage.mapquest.com/us/california/kastle-plumbing-270331202",
-        "https://startpage.mapquest.com/us/california/repipe-pro-365518461"
-      ],
-      "queries": [
-        "recommend a PEX repiping company in Mission Viejo",
-        "recommend a slab leak detection company in Laguna Niguel",
-        "who does slab leak detection in Laguna Niguel?"
-      ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "todo",
-      "first_seen": "2026-11-05"
-    },
-    {
       "domain": "bcpsi.com",
       "class": "competitor",
       "priority_score": 11.0,
@@ -659,6 +661,72 @@
       "first_seen": "2026-10-20"
     },
     {
+      "domain": "sites.google.com",
+      "class": "directory",
+      "priority_score": 10.4,
+      "times_cited_when_we_lost": 4,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://sites.google.com/view/nick-allen-plumbing/home"
+      ],
+      "queries": [
+        "best emergency plumber in San Clemente, CA",
+        "recommend a emergency plumber company in San Clemente",
+        "who does emergency plumber in San Clemente?",
+        "who does plumber in San Clemente?"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "domain": "thebuildermarket.com",
+      "class": "other",
+      "priority_score": 10.0,
+      "times_cited_when_we_lost": 5,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://thebuildermarket.com/pros/lists/best-plumbing-pros-in-mission-viejo-ca-1840020580",
+        "https://thebuildermarket.com/us/ca/aliso-viejo/plumbing",
+        "https://thebuildermarket.com/us/ca/dana-point/plumbing"
+      ],
+      "queries": [
+        "best emergency plumber in Mission Viejo, CA",
+        "best plumber in Aliso Viejo, CA",
+        "best plumber in Mission Viejo, CA",
+        "recommend a emergency plumber company in Mission Viejo",
+        "who does plumber in Dana Point?"
+      ],
+      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
+      "status": "todo",
+      "first_seen": "2026-11-03"
+    },
+    {
+      "domain": "business.google.com",
+      "class": "directory",
+      "priority_score": 9.1,
+      "times_cited_when_we_lost": 3,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://business.google.com/v/rsm-plumbing/011057755031782716137/1f32/_",
+        "https://business.google.com/v/rsm-plumbing/011057755031782716137/1f32/_/rev/"
+      ],
+      "queries": [
+        "recommend a emergency plumber company in Mission Viejo",
+        "recommend a leak detection company in Mission Viejo",
+        "who does plumber in Mission Viejo?"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-10-23"
+    },
+    {
       "domain": "services.benjaminfranklinplumbing.com",
       "class": "competitor",
       "priority_score": 9.0,
@@ -679,7 +747,7 @@
       "first_seen": "2026-11-02"
     },
     {
-      "domain": "trustpilot.com",
+      "domain": "reviews.birdeye.com",
       "class": "other",
       "priority_score": 9.0,
       "times_cited_when_we_lost": 3,
@@ -687,57 +755,12 @@
         "claude_web_search"
       ],
       "example_urls": [
-        "https://trustpilot.com/review/integrityrepipe.com/location/ladera-ranch-ca",
-        "https://www.trustpilot.com/review/integrityrepipe.com"
+        "https://reviews.birdeye.com/integrity-repipe-167135794873838"
       ],
       "queries": [
-        "best PEX repiping in Ladera Ranch, CA",
-        "recommend a PEX repiping company in San Clemente",
-        "who does PEX repiping in San Clemente?"
-      ],
-      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
-      "status": "todo",
-      "first_seen": "2026-10-28"
-    },
-    {
-      "domain": "business.google.com",
-      "class": "directory",
-      "priority_score": 8.06,
-      "times_cited_when_we_lost": 3,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://business.google.com/v/rsm-plumbing/011057755031782716137/1f32/_",
-        "https://business.google.com/v/rsm-plumbing/011057755031782716137/1f32/_/rev/"
-      ],
-      "queries": [
-        "recommend a emergency plumber company in Mission Viejo",
-        "recommend a leak detection company in Mission Viejo",
-        "who does plumber in Mission Viejo?"
-      ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "todo",
-      "first_seen": "2026-10-23"
-    },
-    {
-      "domain": "thebuildermarket.com",
-      "class": "other",
-      "priority_score": 8.0,
-      "times_cited_when_we_lost": 4,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://thebuildermarket.com/pros/lists/best-plumbing-pros-in-mission-viejo-ca-1840020580",
-        "https://thebuildermarket.com/us/ca/aliso-viejo/plumbing",
-        "https://thebuildermarket.com/us/ca/dana-point/plumbing"
-      ],
-      "queries": [
-        "best emergency plumber in Mission Viejo, CA",
-        "best plumber in Aliso Viejo, CA",
-        "best plumber in Mission Viejo, CA",
-        "who does plumber in Dana Point?"
+        "best PEX repiping in Aliso Viejo, CA",
+        "recommend a PEX repiping company in Aliso Viejo",
+        "who does PEX repiping in Aliso Viejo?"
       ],
       "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
       "status": "todo",
@@ -788,24 +811,25 @@
       "first_seen": "2026-10-29"
     },
     {
-      "domain": "sites.google.com",
-      "class": "directory",
+      "domain": "trustpilot.com",
+      "class": "other",
       "priority_score": 7.8,
       "times_cited_when_we_lost": 3,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
-        "https://sites.google.com/view/nick-allen-plumbing/home"
+        "https://trustpilot.com/review/integrityrepipe.com/location/ladera-ranch-ca",
+        "https://www.trustpilot.com/review/integrityrepipe.com"
       ],
       "queries": [
-        "best emergency plumber in San Clemente, CA",
-        "who does emergency plumber in San Clemente?",
-        "who does plumber in San Clemente?"
+        "best PEX repiping in Ladera Ranch, CA",
+        "recommend a PEX repiping company in San Clemente",
+        "who does PEX repiping in San Clemente?"
       ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
       "status": "todo",
-      "first_seen": "2026-11-03"
+      "first_seen": "2026-10-28"
     },
     {
       "domain": "merchantcircle.com",
@@ -844,25 +868,6 @@
       "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
       "status": "todo",
       "first_seen": "2026-10-20"
-    },
-    {
-      "domain": "reviews.birdeye.com",
-      "class": "other",
-      "priority_score": 6.0,
-      "times_cited_when_we_lost": 2,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://reviews.birdeye.com/integrity-repipe-167135794873838"
-      ],
-      "queries": [
-        "best PEX repiping in Aliso Viejo, CA",
-        "who does PEX repiping in Aliso Viejo?"
-      ],
-      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
-      "status": "todo",
-      "first_seen": "2026-11-03"
     },
     {
       "domain": "seolium.com",
@@ -923,26 +928,6 @@
       "first_seen": "2026-10-29"
     },
     {
-      "domain": "homeservice.ignitionlabs.com",
-      "class": "lead_gen",
-      "priority_score": 3.6,
-      "times_cited_when_we_lost": 2,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://homeservice.ignitionlabs.com/?p=106040",
-        "https://homeservice.ignitionlabs.com/near-me/slab-leak-detection-services-in-mission-viejo-ca"
-      ],
-      "queries": [
-        "recommend a PEX repiping company in Aliso Viejo",
-        "recommend a slab leak detection company in Aliso Viejo"
-      ],
-      "action": "Lead-generation network with a page for every city × service. Ask whether it lists real local pros (get listed if free); otherwise out-answer it with our own specific city × service page.",
-      "status": "done",
-      "first_seen": "2026-10-20"
-    },
-    {
       "domain": "levelset.com",
       "class": "competitor",
       "priority_score": 3.0,
@@ -961,40 +946,22 @@
       "first_seen": "2026-11-05"
     },
     {
-      "domain": "orange-county.repipe.com",
-      "class": "competitor",
+      "domain": "au.trustpilot.com",
+      "class": "other",
       "priority_score": 3.0,
       "times_cited_when_we_lost": 1,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
-        "https://orange-county.repipe.com/local-services.html"
+        "https://au.trustpilot.com/review/integrityrepipe.com/location/aliso-viejo"
       ],
       "queries": [
-        "best PEX repiping in Laguna Beach, CA"
+        "recommend a PEX repiping company in Aliso Viejo"
       ],
-      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/pex-repiping",
+      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
       "status": "todo",
-      "first_seen": "2026-10-28"
-    },
-    {
-      "domain": "canyonplumbingusacom.ipage.com",
-      "class": "competitor",
-      "priority_score": 3.0,
-      "times_cited_when_we_lost": 1,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://canyonplumbingusacom.ipage.com/ladera-ranch-repiping--reroute.html"
-      ],
-      "queries": [
-        "best leak detection in Ladera Ranch, CA"
-      ],
-      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/leak-detection",
-      "status": "todo",
-      "first_seen": "2026-10-28"
+      "first_seen": "2026-11-12"
     },
     {
       "domain": "experience.com",
@@ -1092,6 +1059,24 @@
       "first_seen": "2026-10-20"
     },
     {
+      "domain": "networx.com",
+      "class": "directory",
+      "priority_score": 2.6,
+      "times_cited_when_we_lost": 1,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://www.networx.com/plumbers/ca/dana-point"
+      ],
+      "queries": [
+        "recommend a plumber company in Dana Point"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-11-12"
+    },
+    {
       "domain": "paylesswaterheaters.com",
       "class": "competitor",
       "priority_score": 2.0,
@@ -1132,6 +1117,24 @@
       "first_seen": "2026-11-04"
     },
     {
+      "domain": "servicemag.org",
+      "class": "competitor",
+      "priority_score": 2.0,
+      "times_cited_when_we_lost": 1,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://servicemag.org/biz/drake-wills-plumbing"
+      ],
+      "queries": [
+        "recommend a plumber company in San Clemente"
+      ],
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /",
+      "status": "todo",
+      "first_seen": "2026-10-20"
+    },
+    {
       "domain": "lagunabeachcity.net",
       "class": "other",
       "priority_score": 2.0,
@@ -1150,6 +1153,42 @@
       "first_seen": "2026-10-30"
     },
     {
+      "domain": "orange-county.repipe.com",
+      "class": "competitor",
+      "priority_score": 1.8,
+      "times_cited_when_we_lost": 1,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://orange-county.repipe.com/local-services.html"
+      ],
+      "queries": [
+        "best PEX repiping in Laguna Beach, CA"
+      ],
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/pex-repiping",
+      "status": "todo",
+      "first_seen": "2026-10-28"
+    },
+    {
+      "domain": "canyonplumbingusacom.ipage.com",
+      "class": "competitor",
+      "priority_score": 1.8,
+      "times_cited_when_we_lost": 1,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://canyonplumbingusacom.ipage.com/ladera-ranch-repiping--reroute.html"
+      ],
+      "queries": [
+        "best leak detection in Ladera Ranch, CA"
+      ],
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/leak-detection",
+      "status": "todo",
+      "first_seen": "2026-10-28"
+    },
+    {
       "domain": "yp.superpages.com",
       "class": "directory",
       "priority_score": 1.3,
@@ -1166,42 +1205,6 @@
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
       "status": "todo",
       "first_seen": "2026-11-10"
-    },
-    {
-      "domain": "tidy.com",
-      "class": "competitor",
-      "priority_score": 1.2,
-      "times_cited_when_we_lost": 1,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://www.tidy.com/locations/dana-point-ca/plumbing"
-      ],
-      "queries": [
-        "recommend a emergency plumber company in Dana Point"
-      ],
-      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/emergency-plumbing",
-      "status": "todo",
-      "first_seen": "2026-10-20"
-    },
-    {
-      "domain": "servicemag.org",
-      "class": "competitor",
-      "priority_score": 1.2,
-      "times_cited_when_we_lost": 1,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://www.servicemag.org/biz/drake-wills-plumbing"
-      ],
-      "queries": [
-        "recommend a plumber company in San Clemente"
-      ],
-      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /",
-      "status": "todo",
-      "first_seen": "2026-10-20"
     },
     {
       "domain": "servicechampions.com",
