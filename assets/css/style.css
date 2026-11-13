@@ -259,7 +259,7 @@ section{ padding:96px 0; }
 .founder > *{ min-width:0; }
 @media (max-width:880px){ .founder{ grid-template-columns:1fr; } }
 .founder-photo{ position:relative; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow); }
-.founder-photo img{ width:100%; }
+.founder-photo img{ width:100%; height:auto; }
 .founder-badge{
   position:absolute; bottom:18px; left:18px; background:rgba(14,27,46,0.88); backdrop-filter:blur(6px);
   color:#fff; padding:12px 18px; border-radius:12px; font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.06em;
@@ -338,7 +338,7 @@ footer.site-footer{ background:var(--ink); color:var(--muted-on-ink); padding:64
 .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
 @media (max-width:880px){ .footer-grid{ grid-template-columns:1fr 1fr; } }
 @media (max-width:560px){ .footer-grid{ grid-template-columns:1fr; } }
-.footer-brand img{ height:44px; background:#fff; border-radius:6px; padding:4px 8px; margin-bottom:14px; }
+.footer-brand img{ height:44px; width:auto; background:#fff; border-radius:6px; padding:4px 8px; margin-bottom:14px; }
 .footer-brand p{ font-size:0.9rem; max-width:32ch; }
 .footer-col h4{ color:#fff; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; font-family:'IBM Plex Mono',monospace; font-weight:500; margin-bottom:16px; }
 .footer-col ul{ display:flex; flex-direction:column; gap:10px; }
@@ -368,7 +368,7 @@ footer.site-footer{ background:var(--ink); color:var(--muted-on-ink); padding:64
 .sonar-hero{ position:relative; overflow:hidden; background:radial-gradient(ellipse at 50% 60%, #1c2c42 0%, var(--ink) 72%); padding:110px 0 90px; }
 .sonar-content{ position:relative; z-index:10; text-align:center; max-width:720px; margin:0 auto; }
 .sonar-content .badge-pill, .sonar-content .hero-eyebrow{ justify-content:center; }
-.sonar-logo{ height:56px; background:#fff; border-radius:10px; padding:8px 14px; margin-bottom:26px; box-shadow:0 10px 30px rgba(0,0,0,0.35); }
+.sonar-logo{ height:56px; width:auto; background:#fff; border-radius:10px; padding:8px 14px; margin-bottom:26px; box-shadow:0 10px 30px rgba(0,0,0,0.35); }
 .sonar-hero h1{ font-size:clamp(2rem,4.6vw,3.4rem); max-width:18ch; color:#fff; margin:0 auto; }
 .sonar-hero h1 em{ font-style:normal; color:var(--straight); display:block; }
 .sonar-hero p{ margin-top:20px; color:var(--muted-on-ink); font-size:1.05rem; max-width:44ch; margin-left:auto; margin-right:auto; }
