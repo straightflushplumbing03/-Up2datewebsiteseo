@@ -1,5 +1,6 @@
 // Lead tracking for GA4 (G-DFS6B1LV4P). Sends no personal data: only which page the lead came from
-// and the visitor's answer to the optional fixed-list "How did you hear about us?" menu.
+// and the visitor's answer to the optional fixed-list "How did you hear about us?" menu. Form leads also
+// carry visit_source and landing_page (see firstTouch below) so each Formspree email says where the visit began.
 // Events: phone_call_click (tap on any tel: link), generate_lead (contact form sent to Formspree),
 // form_submit_confirmed (thank-you page reached after Formspree redirect).
 (function () {
@@ -16,6 +17,47 @@
       if (m) return m[2];
     }
     return location.pathname;
+  }
+  // Where this visit started, for the lead email. GA4 already knows the session source, but the
+  // owner reads leads in the Formspree email, and GA4 can't tie one email to one visit. On the
+  // first page of a visit we keep the source (utm_source, else the referring site's host name,
+  // else "direct") and the landing page in sessionStorage, so a visitor who arrives from
+  // chatgpt.com on a city page and sends the form from /contact.html still shows "chatgpt.com".
+  // Host names and our own page paths only: no personal data, no query strings, nothing stored after the tab closes.
+  var VISIT_KEY = 'sf_visit';
+  function clean(v) { return String(v || '').toLowerCase().replace(/[^a-z0-9.\-_]/g, '').slice(0, 60); }
+  function firstTouch() {
+    var src = '';
+    try { src = clean(new URLSearchParams(location.search).get('utm_source')); } catch (err) { src = ''; }
+    if (!src && document.referrer) {
+      try {
+        var h = new URL(document.referrer).hostname.replace(/^www\./i, '');
+        if (!/(^|\.)straightflushplumbingoc\.com$/i.test(h)) src = clean(h);
+      } catch (err) { src = ''; }
+    }
+    return { s: src || 'direct', l: leadPage() };
+  }
+  function visit() {
+    var v = null;
+    try { v = JSON.parse(sessionStorage.getItem(VISIT_KEY) || 'null'); } catch (err) { v = null; }
+    if (!v || !v.s || !v.l) {
+      v = firstTouch();
+      try { sessionStorage.setItem(VISIT_KEY, JSON.stringify(v)); } catch (err) { /* private mode: keep this page's value */ }
+    }
+    return v;
+  }
+  var VISIT = visit();
+  function stampForm(f) {
+    [['visit_source', VISIT.s], ['landing_page', VISIT.l]].forEach(function (pair) {
+      var el = f.elements ? f.elements[pair[0]] : null;
+      if (!el) {
+        el = document.createElement('input');
+        el.type = 'hidden';
+        el.name = pair[0];
+        f.appendChild(el);
+      }
+      el.value = pair[1];
+    });
   }
   function track(name, params) {
     if (LIVE && typeof window.gtag === 'function') {
@@ -39,7 +81,8 @@
     // heard_about is the visitor's own answer to the optional "How did you hear about us?" menu
     // (a fixed list, no personal data). It is the only way to see AI-assistant leads, which GA4 logs as direct.
     var heard = f.elements && f.elements.heard_about ? f.elements.heard_about.value : '';
-    track('generate_lead', { lead_source: 'website_form', heard_about: heard || 'not_answered' });
+    stampForm(f);
+    track('generate_lead', { lead_source: 'website_form', heard_about: heard || 'not_answered', visit_source: VISIT.s });
     if (!window.fetch || !window.FormData) return;
     e.preventDefault();
     var btn = f.querySelector('[type="submit"]');
