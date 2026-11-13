@@ -1,0 +1,29 @@
+{
+  "experiment": "exp-2026-11-03-indexnow-split",
+  "check": "pre-day-0 baseline (day 0 not yet reached: key file merged 2026-11-09 via #116, no --send recorded)",
+  "date": "2026-11-12",
+  "method": "crew web-search fallback: exact <title> text + brand, one search per URL; plus site: and bare-domain queries. Bing Webmaster URL Inspection not available to the crew.",
+  "domain_level": {
+    "site:straightflushplumbingoc.com": "0 first-party results (top results: HomeAdvisor/Angi/BBB/CustomerLobby profiles for the unrelated Eureka 'Straight Flush Plumbing')",
+    "straightflushplumbingoc.com": "0 first-party results (same Eureka profiles + a business.google.com link + prelien.co)"
+  },
+  "urls": {
+    "treatment": {
+      "services/slab-leak-detection-mission-viejo.html": false,
+      "services/leak-detection-laguna-niguel.html": false,
+      "services/pex-repiping-mission-viejo.html": false,
+      "services/water-heater-repair-laguna-niguel.html": false,
+      "cities/laguna-niguel.html": false,
+      "cities/san-clemente.html": false
+    },
+    "holdout": {
+      "services/slab-leak-detection-laguna-niguel.html": false,
+      "services/slab-leak-detection-dana-point.html": false,
+      "services/pex-repiping-laguna-niguel.html": false,
+      "services/water-heater-repair-dana-point.html": false,
+      "cities/dana-point.html": false,
+      "cities/mission-viejo.html": false
+    }
+  },
+  "summary": "0/6 treatment, 0/6 holdout, homepage also absent"
+}
