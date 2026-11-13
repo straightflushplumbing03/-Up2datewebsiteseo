@@ -65,7 +65,7 @@ A repipe doesn't have to be all or nothing. If the trouble is limited to one are
 
 
 
-We're a short drive from Laguna Niguel. More on [how PEX repiping works](https://straightflushplumbingoc.com/services/pex-repiping.html), [copper vs. PEX](https://straightflushplumbingoc.com/copper-vs-pex-pipes.html), and [plumbing in Mission Viejo](https://straightflushplumbingoc.com/cities/mission-viejo.html).
+We're a short drive from Laguna Niguel. More on [how PEX repiping works](https://straightflushplumbingoc.com/services/pex-repiping.html), [copper vs. PEX](https://straightflushplumbingoc.com/academy/copper-vs-pex-pipes.html), and [plumbing in Mission Viejo](https://straightflushplumbingoc.com/cities/mission-viejo.html).
 
 
 
