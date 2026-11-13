@@ -97,7 +97,8 @@ SF_NAMES = (
 
 _RECOMMEND_RE = re.compile(
     r"\b(recommend(?:ed|ation)?|best|top|excellent|trusted|reliable|"
-    r"i would (?:choose|call)|go with|leading)\b",
+    r"i would (?:choose|call)|go with|leading|highly[- ]rated|top[- ]rated|"
+    r"reputable|well[- ]reviewed)\b",
     re.I,
 )
 _SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?])\s+|\n+")
@@ -198,16 +199,50 @@ def classify_visibility(answer, sources, citations):
     cited = any(SF_DOMAIN in (e.get("url") or "") for e in list(sources) + list(citations))
     mentioned = (SF_DOMAIN in lowered) or any(n in lowered for n in SF_NAMES)
 
-    if cited:
-        return "cited"
+    # Being NAMED outranks being used as a source. Until 2026-11-10 `cited`
+    # short-circuited first, so the 2026-11-09 Gemini answer that listed
+    # Straight Flush first under "Highly Rated Local Leak Detection Companies"
+    # was stored as `cited` and every report said "named in 0". The citation
+    # is still recoverable from the record's `domains`.
     if not mentioned:
-        return "absent"
-    for sentence in _SENTENCE_SPLIT_RE.split(text):
-        s = sentence.lower()
-        if SF_DOMAIN in s or any(n in s for n in SF_NAMES):
-            if _RECOMMEND_RE.search(sentence):
-                return "recommended"
+        return "cited" if cited else "absent"
+    if _recommends_sf(text):
+        return "recommended"
     return "mentioned"
+
+
+def _names_sf(s):
+    s = s.lower()
+    return SF_DOMAIN in s or any(n in s for n in SF_NAMES)
+
+
+_LIST_ITEM_RE = re.compile(r"^(?:[*\-\u2022]\s|\d+[.)]\s)")
+
+
+def _is_heading(line):
+    """A markdown heading, or a non-list line that is bold-only or ends in ':'."""
+    t = line.strip()
+    if t.startswith("#"):
+        return True
+    if not t or _LIST_ITEM_RE.match(t):
+        return False
+    return t.endswith(":") or (t.startswith("**") and t.rstrip(":").endswith("**"))
+
+
+def _recommends_sf(text):
+    """True if a sentence naming SF recommends it, or SF is a list item under a
+    heading that recommends ("### Highly Rated Local Companies", "Top picks:")."""
+    for sentence in _SENTENCE_SPLIT_RE.split(text):
+        if _names_sf(sentence) and _RECOMMEND_RE.search(sentence):
+            return True
+    heading = ""
+    for line in text.splitlines():
+        t = line.strip()
+        if _is_heading(t):
+            heading = t
+        elif _LIST_ITEM_RE.match(t) and _names_sf(t) and _RECOMMEND_RE.search(heading):
+            return True
+    return False
 
 
 def _engine_of(model):

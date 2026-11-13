@@ -246,7 +246,8 @@ class RecordTests(unittest.TestCase):
             self.assertIn(field, rec)
         self.assertEqual(rec["platform"], "gemini_search")
         self.assertEqual(rec["test_type"], "ai_platform")
-        self.assertEqual(rec["straight_flush"], "cited")
+        # Named + cited: the name outranks the citation (domains keep the citation).
+        self.assertEqual(rec["straight_flush"], "mentioned")
         self.assertNotIn("answer", rec)  # full answer is never stored
 
     def test_failure_record_is_inconclusive_not_absent(self):

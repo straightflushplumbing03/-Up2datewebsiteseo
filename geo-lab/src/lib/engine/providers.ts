@@ -61,11 +61,12 @@ const LEADGEN = [
 function classify(answer: string, urls: string[], query: string): ProviderResult["status"] {
   const named = mentionsBrand(answer);
   const cited = urls.some((u) => SF_DOMAINS.some((d) => u.includes(d)));
-  if (cited) return "cited";
+  // Being named outranks being cited (fixed 2026-11-10: a first-place Gemini
+  // listing was stored as "cited" because this check ran first).
+  void query;
   if (named && /recommend|suggest|best|top|consider|call/i.test(answer)) return "recommended";
   if (named) return "mentioned";
-  void query;
-  return "absent";
+  return cited ? "cited" : "absent";
 }
 
 /** Tavily Search API — the working conventional-search proxy. */

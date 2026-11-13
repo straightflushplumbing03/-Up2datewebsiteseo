@@ -450,3 +450,59 @@ its baseline `sf_status` and a 2026-11-23 re-measure date.
 
 - All 10 Laguna Niguel / Mission Viejo leak, slab and PEX queries re-run 11-02..11-08 are
   still `absent` (named 0, cited 0). Keep; next checkpoints 11-16 and 11-30.
+
+---
+
+## 2026-11-10 — classifier precedence bug + first named answer (experiments crew)
+
+### Measurement fix: `cited` was hiding a first-place listing
+- **What happened:** on 2026-11-09 15:31Z, `gemini_search` (gemini-flash-latest) answered
+  "who can locate a hidden water leak in Laguna Niguel?" by listing **Straight Flush Plumbing &
+  Leak Detection first** under "### Highly Rated Local Leak Detection Companies Serving Laguna
+  Niguel" ("Headquartered directly in Laguna Niguel"), and cited `straightflushplumbingoc.com`.
+- **How it was stored:** `classification = cited`. Every classifier checked the citation first
+  and returned before looking for the name. The daily report printed "Recommended 0 · Mentioned 0",
+  and the 11-09 owner top-5 said "AI answers naming us: 0 of 30". Both understate the result.
+- **Second gap:** even without the citation, the old rule could only return `recommended` when the
+  *same sentence* held the name and a word like "best". A list item under a recommending heading
+  ("Highly Rated …", "Top picks:") was `mentioned`.
+- **Fix (this PR):** `growth-engine/gemini_search_client.py`, `growth-engine/ai_agent_client.py`
+  and `geo-lab/src/lib/engine/providers.ts` now check the name first, so the order is
+  recommended > mentioned > cited > absent. The citation stays recoverable from `domains`. The
+  Python clients also treat a list item under a recommending heading as `recommended`, and the
+  regex adds "highly rated / top rated / reputable / well reviewed". Regression test:
+  `growth-engine/tests/test_visibility_precedence.py` (fixture = the real 11-09 answer, trimmed).
+- **Not fixed here (different repo):** the rows in `public.ai_visibility_observations` are
+  written by `straight-flush-brain/supabase/functions/brain-worker/ai_visibility.ts`, whose
+  `classify()` has the same `cited`-first line (line 34). It needs the same reorder, or the
+  board keeps under-counting. The stored 11-09 row is still labelled `cited`.
+- **Back-check:** all 120 stored observations (10-23 → 11-09) were re-read for the brand
+  name. Only this one answer names us, so no other row is mislabelled.
+
+### exp-2026-11-02-dedicated-pages-vs-control — first stage-2 + stage-3 hit
+- The 11-09 query is a **treatment** query (dedicated page `services/leak-detection-laguna-niguel.html`).
+  It reached stage 2 (cited) and stage 3 (named, first in the list) on one Gemini run.
+  Controls: still 0 named, 0 cited.
+- That query's history on `gemini_search`: **0 of 7** conclusive runs named before 11-09, then
+  **1 of 1** on 11-09 (1 of 8 overall). Claude: 0 of 3.
+- Per this test's read rule, a one-off hit is noise until it repeats: a win needs ≥2 of 4
+  treatment queries hitting a stage in ≥2 separate checks. **Status: signal, not a win.**
+- **Confounder:** about 30 PRs merged on 11-09, including Laguna Niguel and leak-detection hub
+  copy, so this run can't be pinned to any one change.
+
+### exp-2026-11-10-first-named-replication — is the 11-09 listing real or a lucky draw?
+- **Question:** what share of Gemini runs on this query now name Straight Flush?
+- **Data:** the existing AI board runs only. No extra API calls or spend. Count each run, not
+  each day, because the board does not run every day.
+- **Metric (tracked separately):** named on the target query; named on the 3 other treatment
+  queries (pooled); domain in `domains[]`; controls named.
+- **Read after 14 conclusive Gemini runs of the target query:**
+  - **≥ 4 of 14 named → foothold.** The 90% lower bound is above 10%. That is 64% likely if the
+    true rate is 30%, and 4% likely if it is 10%.
+  - **0 of 14 → lucky draw.** The 95% upper bound is about 19%. That is 23% likely at a 10% rate
+    and 4% likely at 20%.
+  - **1–3 → inconclusive.** Keep reading and don't claim a trend.
+  - Any control query named in the window means a sitewide or brand effect, not a page effect.
+- **Prerequisite:** the brain-worker classifier must be reordered first, or named runs keep
+  landing as `cited`. Until then, read the name straight from `answer_excerpt ILIKE
+  '%straight flush plumbing%'`.

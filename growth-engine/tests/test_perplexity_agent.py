@@ -400,7 +400,7 @@ class TestBuildRecord(unittest.TestCase):
         for key in ("ts", "platform", "test_type", "query", "city", "web_search",
                     "straight_flush", "top_results", "confidence", "note"):
             self.assertIn(key, rec)
-        self.assertEqual(rec["straight_flush"], "cited")
+        self.assertEqual(rec["straight_flush"], "recommended")  # named as best + cited
         self.assertEqual(rec["test_type"], "ai_platform")
         self.assertEqual(rec["web_search"], "yes")
         self.assertEqual(rec["ts"], "2026-10-15T00:00:00Z")
