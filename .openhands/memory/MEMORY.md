@@ -3,7 +3,7 @@
 Injected-at-startup index. Keep it small (~6 KB): fold only durable, high-value
 facts here and push detail into the dated log files, read on demand.
 Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
-`2026-10-13.md`, `2026-11-06.md`.
+`2026-10-13.md`, `2026-11-06.md`, `2026-11-13.md`.
 
 ## GEO Intelligence Lab (`geo-lab/`, PR #140)
 - **A separate Next.js 16 app** (App Router, TS, Tailwind v4, `node:sqlite`) — NOT part of
@@ -24,6 +24,20 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   deploy by running it from an isolated copy** — this class of bug exits 0 and looks healthy.
   Also: `npm ci --omit=dev` breaks both the build and the daily job (tailwind/postcss/tsx are
   devDeps).
+- **The no-server option runs the lab's brain but CANNOT serve `/api/v1`** (a cron job that
+  exits has no URL) — so once HQ is in scope a persistent host is required, not optional.
+  Verified headless 2026-11-13: `npm run job` → 155 pages, 294 competitors, 33 opportunities.
+  **Deploy target = Oracle Always Free VM + Cloudflare Tunnel** for free HTTPS with no inbound
+  ports (the domain is Cloudflare-managed: NS `braden`/`dara.ns.cloudflare.com`). Runbook:
+  `growth-engine/proposals/2026-11-13-geo-lab-deploy-and-merge-order.md`; the previously
+  **missing** "Public HTTPS access (Cloudflare Tunnel)" section now exists in `geo-lab/DEPLOYMENT.md`
+  (bootstrap.sh and the Oracle README both referenced it before it was written).
+- **Merge order (2026-11-13): #163 → #153 (Lab), then #28 (HQ).** #163's base is #153's
+  *branch*, so merging it into `main` directly would land the hardening without the API.
+- **Never commit the SQLite file.** Also: running `npm run job`/`npm test` creates
+  `geo-lab/node_modules/` + `.next/` full of `.html`; the repo validators then scan them and
+  report **false failures**. They are gitignored, so CI never sees them — `rm -rf` before
+  running the validators locally. Detail: `2026-11-13.md`.
 - **The lab DB is a credential store, not data — never commit it.** It holds the owner's scrypt
   password hash + live session tokens, and this repo is **public**. `.gitignore` must cover
   `data/geo-lab.db` *and* the `-wal`/`-shm`/`-journal` sidecars (a plain `data/*.db` rule misses
@@ -45,7 +59,7 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   secret; timing-safe compare; DB-backed rate limit), envelope `{data, meta:{source:"geo-lab",
   version:"v1", ...}}`, `limit` clamped to 500. `POST /jobs` is **approval-gated**: read-only kinds
   queue, `publish`/`deploy`/`rollback`/`spend` become `pending_approval` and never execute. Spec:
-  `geo-lab/docs/GEO_LAB_API_SPEC.md`.
+  `geo-lab/docs/GEO_LAB_API_SPEC.md` — **this path exists only on PR #153's branch**, not on `main`.
 - **AI Headquarters consumes it** (PR **#28**; Supabase+Next.js — different stack, so HTTP is the
   only coupling). `lib/integrations/geolab/{client,connector,status}.ts`, migration `032` (8
   `geo_lab_*` tables, org-scoped RLS), routes `app/api/ai-authority/geolab/*`, UI
@@ -199,6 +213,14 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   `MEMORY.md` is edited in place (not appended).
 - **Concurrent sessions mutate this repo** (owner merges within minutes): `git fetch` and check
   for newer `main`/open PRs before repo work; rebase before push; one PR per day.
+- **The owner also RENAMES repos mid-session — and the REST API does not follow the redirect
+  (git does).** 2026-11-13: `-Up2updatewebsiteseo` → **`-Up2datewebsiteseo`** (id `1326249049`
+  unchanged) while a session ran. `git push` worked; every `GET/POST /repos/<old-name>…` and
+  `gh pr create` returned **404 / GraphQL "Could not resolve"**, while the repo still appeared in
+  `GET /user/repos`. **When the API 404s on a repo git can clearly reach, suspect a rename, not
+  the token.** Resolve by id (`GET /repositories/<id>` → `.full_name`), then
+  `git remote set-url origin https://github.com/<owner>/<new>.git` (and the `--push` URL) or the
+  next push fails too. Detail: `2026-11-13.md`.
 - **CI:** `.github/workflows/verify.yml` runs `unittest discover`, `validate_knowledge_base.py`,
   `seo_audit.py` and the sitemap URL-set invariant on every PR/push (stdlib-only, `fetch-depth: 0`).
   `geo-lab.yml` additionally gates `geo-lab/**`. Check the PR's run — it is the only "green" not
