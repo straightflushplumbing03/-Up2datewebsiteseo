@@ -41,7 +41,10 @@ re-apply the later passes). Never run a generator over the site as a whole.
 
 ## Verification
 
-There is **no CI** on this repository. Run the checks by hand before pushing:
+CI: `.github/workflows/verify.yml` runs the unit tests, the knowledge-base
+validator and `seo_audit.py` on every pull request and push to `main`. The
+`geo-lab` test workflow is currently disabled. Still run the checks by hand
+before pushing:
 
 ```bash
 python3 growth-engine/tests/validate_knowledge_base.py   # must pass; checks

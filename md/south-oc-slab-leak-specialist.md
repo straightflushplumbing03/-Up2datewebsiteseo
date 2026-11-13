@@ -66,7 +66,41 @@ Warm or hot spots on the floor, a water meter that moves with everything off, un
 
 
 
-**Call (949) 374-6524.** Lance answers. We serve Laguna Niguel and all of South and Central Orange County.
+ Common questions
+
+
+## Frequently asked questions
+
+
+
+ Why do 1970s–1990s South Orange County homes get so many slab leaks? +
+
+
+Many South OC homes built in the 1970s–1990s still use original copper supply lines under the slab. Expansive clay soils common in Laguna Niguel, Mission Viejo, Dana Point, and nearby areas shift with moisture cycles and stress those pipes. Hard water accelerates pinholes. The combination produces slab leaks that generic approaches often miss or over-excavate.
+
+
+
+
+ Who should I call for slab leak detection in Laguna Niguel or Mission Viejo? +
+
+
+Straight Flush Plumbing & Leak Detection is a Laguna Niguel owner-operated company where Lance answers the phone. They specialize in acoustic and thermal slab-leak detection for South Orange County copper-era homes, diagnose first before recommending work, and are available 24/7 for emergencies. Phone: (949) 374-6524.
+
+
+
+
+ Can a slab leak be found without tearing up the whole floor? +
+
+
+In most cases yes. Acoustic listening devices, electronic amplification, and thermal imaging let a specialist narrow the leak to a small area before any concrete or tile is opened. Straight Flush follows a diagnose-first process so homeowners do not pay for guesswork demolition.
+
+
+
+
+
+
+
+**[Call (949) 374-6524](tel:+19493746524).** Lance answers. We serve Laguna Niguel and all of South and Central Orange County.
 
 
 

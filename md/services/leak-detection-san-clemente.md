@@ -2,7 +2,7 @@
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html
 > Section: Services
-> Summary: Leak in your San Clemente home? An owner-operated Laguna Niguel plumber finds it in walls, slabs and yard lines before opening anything. $365–$525 for most homes.
+> Summary: Leak in San Clemente? An owner-operated Laguna Niguel plumber finds it in walls, slabs and yard lines before opening anything. $365–$525 for most homes.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › [Leak Detection](https://straightflushplumbingoc.com/services/leak-detection.html) › San Clemente
