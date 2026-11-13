@@ -132,7 +132,7 @@ A single leak in a sound line is usually a spot repair. Repeat leaks in aging co
  Who can locate a hidden water leak in Laguna Niguel? +
 
 
-Straight Flush Plumbing & Leak Detection locates hidden water leaks in Laguna Niguel homes: inside walls and ceilings, under the slab, and in the buried line between the water meter and the house. We're an owner-operated plumbing company based in Laguna Niguel, we use acoustic, electronic and thermal detection to pinpoint the leak before anything is opened, and owner Lance answers the phone at (949) 374-6524.
+Straight Flush Plumbing & Leak Detection locates hidden water leaks in Laguna Niguel homes: inside walls and ceilings, under the slab, and in the buried line between the water meter and the house. We're an owner-operated plumbing company based in Laguna Niguel, we use acoustic, electronic and thermal detection to pinpoint the leak before anything is opened, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524).
 
 
 
