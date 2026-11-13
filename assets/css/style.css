@@ -685,3 +685,10 @@ ul.footer-cities .footer-cities-all{ grid-column:1 / -1; margin-top:6px; }
      !important because contact.html sets field sizes inline). */
   form input, form select, form textarea{ font-size:16px !important; }
 }
+
+/* Inline phone numbers (conversion, 2026-11-12): "Call (949) 374-6524" inside FAQ answers and
+   body copy was plain text, so Android phones could not tap it and iOS auto-detected taps
+   skipped the phone_call_click event. They are now tel: links; a plain `a` inherits colour
+   with no underline, so mark them with a bold red underline (text keeps its own colour for contrast). */
+a.tel-inline{ color:inherit; font-weight:700; text-decoration:underline; text-decoration-color:var(--straight); text-decoration-thickness:2px; text-underline-offset:3px; white-space:nowrap; }
+a.tel-inline:hover{ color:var(--straight); }
