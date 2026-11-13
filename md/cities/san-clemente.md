@@ -44,7 +44,7 @@ Who supplies your water depends on where you live. Most of the city is served by
 
 
 
-- [Acoustic slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
+- [Acoustic slab leak detection in San Clemente](https://straightflushplumbingoc.com/services/slab-leak-detection-san-clemente.html)
 
 - [Hidden & underground water leak detection in San Clemente](https://straightflushplumbingoc.com/services/leak-detection-san-clemente.html)
 
