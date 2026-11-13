@@ -2,14 +2,14 @@
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/water-heater-services.html
 > Section: Services
-> Summary: Water heater repair, replacement, and tankless installation in Laguna Niguel, Dana Point & San Clemente. Same-day diagnosis, honest recommendations.
+> Summary: Water heater repair, replacement, and tankless installation in Laguna Niguel, Dana Point & San Clemente. Diagnose-first repair vs. replace advice.
 
 ---
 [Home](https://straightflushplumbingoc.com/) › Water Heater Services
  Traditional & tankless
 
 
-# Hot water problems, diagnosed and fixed right the first time.
+# Hot water problems, diagnosed before anything gets replaced.
 
 
 
@@ -50,7 +50,7 @@ From a pilot light that won't stay lit to a full tankless conversion, we repair,
 
  5
 
-**Your unit is 8–12+ years old**Most tank water heaters are nearing the end of their service life by then.
+**Your tank is 10+ years old**The U.S. Department of Energy puts typical tank life at about 10–15 years.
 
 
  6
@@ -132,7 +132,7 @@ It depends on your household's hot water usage, existing gas/electric setup, and
  How long do water heaters typically last? +
 
 
-Traditional tank water heaters usually last 8 to 12 years, while tankless units can last considerably longer with proper maintenance.
+The U.S. Department of Energy estimates that storage tank water heaters last about 10 to 15 years and tankless units about 20 years. Hard water, sediment and heavy use can shorten that, so a unit's age is a guide, not a deadline.
 
 
 
@@ -141,6 +141,22 @@ Traditional tank water heaters usually last 8 to 12 years, while tankless units 
 
 
 A failing water heater can leak at its base or connections, but a true slab leak involves a pipe under the foundation. If you're not sure which you're dealing with, we can diagnose it directly.
+
+
+
+
+ Does a replacement water heater have to be strapped in California? +
+
+
+Yes. California Health and Safety Code section 19211 requires new, replacement and existing residential water heaters to be braced, anchored or strapped to resist falling or moving in an earthquake, at a minimum as the California Plumbing Code and your city require. Strapping kits must be approved by the State of California.
+
+
+
+
+ Do I need an expansion tank with a new water heater? +
+
+
+If your home's water system is closed, yes. The City of Laguna Niguel's water heater handout says an expansion tank is required when the system is closed, which includes homes with a backflow device or check valve. We check for this when we look at your setup.
 
 
 

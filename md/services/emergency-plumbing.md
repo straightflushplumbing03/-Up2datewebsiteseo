@@ -21,7 +21,7 @@ A burst pipe, slab leak, or sudden water heater failure can't wait until Monday.
 
 
 
-For emergencies, always call directly. For non-urgent service, use the form.
+For emergencies, always call directly. For non-urgent service, use the [request form on our contact page](https://straightflushplumbingoc.com/contact.html).
 
 
 
