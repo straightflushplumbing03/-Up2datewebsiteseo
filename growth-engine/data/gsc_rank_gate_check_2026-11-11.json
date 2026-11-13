@@ -1,0 +1,39 @@
+{
+  "experiment": "exp-2026-11-04-gsc-rank-gate",
+  "check": 1,
+  "check_date": "2026-11-11",
+  "source": "Google Search Console via OpenSEO (read-only, page dimension; position is the page's impression-weighted average across all its queries)",
+  "gsc_windows": {"prior": "2026-10-26..2026-11-01", "current": "2026-11-02..2026-11-09"},
+  "ai_source": "public.ai_visibility_observations, gemini_search run 2026-11-09 15:31 UTC (only board run since 2026-11-02); named = answer_excerpt ILIKE '%straight flush%'",
+  "rows": [
+    {"query": "who can locate a hidden water leak in Laguna Niguel?", "arm": "treatment", "page": "services/leak-detection-laguna-niguel.html", "prior_pos": null, "prior_impr": 0, "pos": 7.0, "impr": 9, "daily_range": [4, 12], "ai": "named+cited"},
+    {"query": "who provides slab leak detection in Laguna Niguel?", "arm": "treatment", "page": "services/slab-leak-detection-laguna-niguel.html", "prior_pos": 99, "prior_impr": 1, "pos": 9, "impr": 1, "daily_range": [9, 9], "ai": "absent"},
+    {"query": "slab leak detection in Mission Viejo", "arm": "treatment", "page": "services/slab-leak-detection-mission-viejo.html", "prior_pos": null, "prior_impr": 0, "pos": 62.1, "impr": 14, "daily_range": [38, 78.5], "ai": "absent"},
+    {"query": "who handles whole-house repiping near Mission Viejo?", "arm": "treatment", "page": "services/pex-repiping-mission-viejo.html", "prior_pos": null, "prior_impr": 0, "pos": 75.4, "impr": 8, "daily_range": [65, 99], "ai": "absent"},
+    {"query": "best leak detection company in Laguna Niguel", "arm": "other", "page": "services/leak-detection-laguna-niguel.html", "prior_pos": null, "prior_impr": 0, "pos": 7.0, "impr": 9, "daily_range": [4, 12], "ai": "absent"},
+    {"query": "plumber in Laguna Niguel", "arm": "other", "page": "cities/laguna-niguel.html", "prior_pos": 38.5, "prior_impr": 20, "pos": 20.9, "impr": 7, "ai": "absent"},
+    {"query": "leak detection company in Dana Point", "arm": "other", "page": "services/leak-detection-dana-point.html", "prior_pos": null, "prior_impr": 0, "pos": 5.5, "impr": 4, "daily_range": [5, 6], "ai": "absent"},
+    {"query": "which plumbers serve San Clemente?", "arm": "control", "page": "cities/san-clemente.html", "prior_pos": 64.5, "prior_impr": 2, "pos": 31.2, "impr": 6, "ai": "absent"},
+    {"query": "plumber in Ladera Ranch", "arm": "control", "page": "cities/ladera-ranch.html", "prior_pos": 66.5, "prior_impr": 4, "pos": 61.4, "impr": 23, "ai": "absent"},
+    {"query": "emergency plumber in South Orange County", "arm": "control", "page": "services/emergency-plumbing.html", "prior_pos": 52, "prior_impr": 5, "pos": 57.7, "impr": 11, "ai": "absent"}
+  ],
+  "summary": {
+    "pages_at_or_below_10": 3,
+    "pages_at_or_below_10_named_or_cited": 1,
+    "pages_above_20": 6,
+    "pages_above_20_named_or_cited": 0,
+    "refute_signal": false,
+    "watch": "services/leak-detection-dana-point.html: <=10 and absent, week 1 of 3 needed for refutation; 'best leak detection company in Laguna Niguel' shares the named page and is absent"
+  },
+  "cross_engine_probe_2026-11-11": {
+    "engine": "Claude web search (this shift, 3 queries)",
+    "queries": ["who can locate a hidden water leak in Laguna Niguel?", "leak detection company in Dana Point", "who provides slab leak detection in Laguna Niguel?"],
+    "straightflushplumbingoc_in_results": [false, false, false],
+    "note": "15-17 results each, dominated by templated *.netlify.app / *.pages.dev / ignitionlabs pages plus Rooter Hero and American Leak Detection"
+  },
+  "caveats": [
+    "Page-level position blends every query the page shows for; on-topic query rows for the leak pages are anonymized by GSC, so the board query's own rank is not observable.",
+    "Impressions per page are 1-14 a week; per the 2026-11-09 A/A check a single page's weekly position SD is ~10-14 positions at this volume.",
+    "Only one Gemini board run fell in the window."
+  ]
+}
