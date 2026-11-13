@@ -450,3 +450,46 @@ its baseline `sf_status` and a 2026-11-23 re-measure date.
 
 - All 10 Laguna Niguel / Mission Viejo leak, slab and PEX queries re-run 11-02..11-08 are
   still `absent` (named 0, cited 0). Keep; next checkpoints 11-16 and 11-30.
+
+## exp-2026-11-13-claude-directory-path — can a directory profile get us named by Claude before the site is indexed?
+
+- **Status:** designed, not started. Needs an owner action (crew does not create or edit
+  listings). No site pages changed.
+- **Evidence (`scripts/claude_naming_paths.py`, snapshot
+  `growth-engine/data/claude_naming_paths_2026-11-13.json`):** across all 256
+  `claude_web_search` board rows (10-20 → 11-13), 520 business namings. **65%** came with
+  the business's own site among the cited URLs, **22%** only through a directory profile,
+  13% unmatched. Since 11-01 the directory share is 26% (79 of 299). Own-site namings are
+  almost all chains with city landing pages (Benjamin Franklin 54, Roto-Rooter 54, Rooter
+  Hero 48, Mr. Rooter 31, American Leak Detection 26, Zoom Drain 24). The small local
+  independents Claude names get there through directories: OC Leak Detection 9, Ladera
+  Ranch Repiping 8, Nick Allen 6, Drake Wills 5, RSM 5, A to Z Leak Detection 4.
+  Directory sources carrying those namings: Angi 30, HomeGuide 21, MapQuest 16,
+  BuildZoom 15, Google Business links 9, Thumbtack 7, HomeAdvisor 7. Our domain: cited 0
+  of 256, named 0 of 256.
+- **Hypothesis:** for Claude (Brave/Bing-family index, where our domain is absent — see
+  exp-2026-11-03-indexnow-split stage 0), one correctly attributed directory profile on a
+  source that index already uses produces a Claude naming sooner than site indexing does.
+- **Treatment (owner):** claim or create one profile on **HomeGuide** and one on
+  **BuildZoom**, with name, Laguna Niguel location, phone, website and services exactly as
+  on the site and APPROVED_CLAIMS. Avoid Angi/HomeAdvisor for this test: the existing
+  "Straight Flush Plumbing" profiles there are the Eureka business (name twin), so a hit
+  could not be attributed. Cost of each profile: needs owner confirmation; the crew spends
+  nothing. Record the go-live date (day 0) here.
+- **Metric:** the existing daily board (10 queries/day, no new spend). Per row, run
+  `classify("Straight Flush Plumbing", cited_urls)`:
+  - `directory` with a homeguide/buildzoom URL = **directory hit**;
+  - `own_site` = site-index hit (credited to the IndexNow / indexing work, not this test);
+  - named with a Eureka URL (Angi/HomeAdvisor/BBB `/eureka/`) = **wrong entity**, logged
+    separately, never a win.
+- **Read rule (day 28, about 280 rows):** ≥ 2 directory hits on separate days =
+  **supported**; 1 = signal, extend to day 42; 0 = **not sufficient alone**. Power: the
+  directory-only independents above are named in about 2–4% of rows; at 2% the chance of
+  0 hits in 280 rows is about 0.4%, so a 0 is informative. Inconclusive if the profile is
+  not yet visible in a plain search for its URL by day 14.
+- **Confounders:** the IndexNow test and pending PRs change the site, not directory
+  pages; URL classification keeps the two paths apart. Board query mix rotates by
+  city/service, so compare against the 10-20 → day-0 baseline of 0.
+- **Decision it drives:** whether to spend owner time on a directory push (HomeGuide,
+  BuildZoom, MapQuest via the data aggregators) in parallel with Bing indexing, or to wait
+  for indexing alone.

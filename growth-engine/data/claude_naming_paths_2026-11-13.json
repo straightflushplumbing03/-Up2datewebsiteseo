@@ -1,0 +1,178 @@
+{
+  "observations": 256,
+  "observations_with_a_named_business": 219,
+  "observations_citing_our_domain": 0,
+  "observations_naming_straight_flush": 0,
+  "namings": 520,
+  "paths": {
+    "own_site": 338,
+    "directory": 114,
+    "unmatched": 68
+  },
+  "path_share": {
+    "own_site": 0.65,
+    "directory": 0.219,
+    "unmatched": 0.131
+  },
+  "directory_sources": {
+    "angi": 30,
+    "homeguide": 21,
+    "mapquest": 16,
+    "buildzoom": 15,
+    "google": 9,
+    "thumbtack": 7,
+    "homeadvisor": 7,
+    "servicemag": 5,
+    "lantern": 2,
+    "expertise": 1,
+    "yp.com": 1
+  },
+  "named_only_via_directory": [
+    [
+      "OC Leak Detection",
+      9
+    ],
+    [
+      "Ladera Ranch Repiping",
+      8
+    ],
+    [
+      "Nick Allen Plumbing",
+      6
+    ],
+    [
+      "Drake Wills Plumbing",
+      5
+    ],
+    [
+      "RSM Plumbing",
+      5
+    ],
+    [
+      "A to Z Leak Detection",
+      4
+    ],
+    [
+      "Precision Plumbing",
+      4
+    ],
+    [
+      "Santa Margarita Plumbing, Heating & Air",
+      3
+    ],
+    [
+      "Evans Leak Detection",
+      3
+    ],
+    [
+      "Pipe Bros Repipe Experts",
+      3
+    ],
+    [
+      "The Passionate Plumber",
+      3
+    ],
+    [
+      "San Clemente Plumbing",
+      2
+    ],
+    [
+      "Paul Vinciguerra",
+      2
+    ],
+    [
+      "Santa Margarita Plumbing, Heating and Air",
+      2
+    ],
+    [
+      "USA Water Heaters",
+      2
+    ],
+    [
+      "Repipe Specialists Inc",
+      2
+    ],
+    [
+      "Kastle Plumbing",
+      2
+    ],
+    [
+      "Robertson Plumbing Services",
+      2
+    ],
+    [
+      "Hanson Plumbing & Repipe",
+      2
+    ],
+    [
+      "Slab Leaks Plus Leak Detection Specialist",
+      2
+    ]
+  ],
+  "named_via_own_site": [
+    [
+      "Benjamin Franklin Plumbing",
+      54
+    ],
+    [
+      "Roto-Rooter",
+      54
+    ],
+    [
+      "Rooter Hero",
+      48
+    ],
+    [
+      "Mr. Rooter Plumbing",
+      31
+    ],
+    [
+      "American Leak Detection",
+      26
+    ],
+    [
+      "Zoom Drain",
+      24
+    ],
+    [
+      "Andrew Adonis Plumbing",
+      23
+    ],
+    [
+      "Rooter Hero Plumbing",
+      18
+    ],
+    [
+      "Mr. Rooter",
+      13
+    ],
+    [
+      "American Leak Detection of Orange County",
+      6
+    ],
+    [
+      "OC Repipes",
+      5
+    ],
+    [
+      "American Leak Detection (Orange County)",
+      3
+    ],
+    [
+      "Dial One Sonshine",
+      3
+    ],
+    [
+      "BCPSI",
+      3
+    ],
+    [
+      "Fast Water Heater",
+      3
+    ]
+  ],
+  "window": {
+    "since": "2026-10-20",
+    "until": "2026-11-13"
+  }
+}
