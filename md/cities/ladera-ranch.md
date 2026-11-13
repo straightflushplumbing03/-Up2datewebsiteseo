@@ -36,6 +36,10 @@ What that means for you: if your home still has its original copper, a pinhole l
 
 
 
+Ladera Ranch is not a city. It is an unincorporated community governed by the Orange County Board of Supervisors, split into nine villages, from Oak Knoll and Bridgepark to Covenant Hills and Terramor, with 8,139 housing units at the 2020 census, about 70.6% of them owner-occupied ([Wikipedia, citing the U.S. Census](https://en.wikipedia.org/wiki/Ladera_Ranch,_California)). Two practical results for plumbing work: building permits come from the County of Orange (OC Public Works), which lists plumbing systems among the work that typically needs a permit ([OC Public Works](https://pwds.oc.gov/service-areas/oc-development-services/building-safety/building-grading-information/building-permit)), and the community association, the Ladera Ranch Maintenance Corporation (LARMAC), sits alongside your village association. Ladera Ranch water is also hard: the Santa Margarita Water District's 2026 water quality report, which covers Ladera Ranch ([Ladera Ranch Chamber](https://laderaranchochamber.org/page-1369159/13648521)), lists average hardness in the district system at 256 mg/L, about 15 grains per gallon ([SMWD](https://smwd.com/CivicAlerts.aspx?AID=438)).
+
+
+
  Services available in Ladera Ranch
 
 
@@ -159,3 +163,19 @@ They have been. Starting in 2013, hundreds of Ladera Ranch homeowners sued build
 
 
 An unexplained jump in your water bill, a water meter that keeps moving with everything off, the sound of running water behind a wall, a warm spot on the floor, or dropping pressure. Any one of these in a Ladera Ranch home is worth a professional diagnosis before it becomes water damage.
+
+
+
+
+ Is Ladera Ranch water hard, and can it affect my plumbing? +
+
+
+Yes, it is hard. The Santa Margarita Water District's 2026 water quality report covers Ladera Ranch and lists average hardness in the district system at 256 mg/L, about 15 grains per gallon. Hard water builds scale inside water heaters, shutoff valves and faucet cartridges, which can shorten their life and cause drips or pressure changes. Scale does not by itself mean you have a hidden leak, so if your bill jumps or the meter moves with everything off, we locate the source with acoustic, electronic and thermal tools before anything is opened. Our guide to [water pressure and pipe health](https://straightflushplumbingoc.com/academy/water-pressure-and-pipe-health.html) explains more.
+
+
+
+
+ Who issues plumbing permits in Ladera Ranch? +
+
+
+Ladera Ranch is unincorporated, so there is no city building department. Permits come from the County of Orange through OC Public Works, which lists plumbing systems among the work that typically requires a permit. Water heater replacements and repipes are the jobs this most often comes up for. If the work changes the outside of the home, such as a new vent or an exterior tankless unit, also check the rules of LARMAC and your village association before work starts.
