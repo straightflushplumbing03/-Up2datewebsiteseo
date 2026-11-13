@@ -343,6 +343,57 @@ CREATE TABLE IF NOT EXISTS notifications (
   detail      TEXT
 );
 
+-- ── External API access (HQ integration) ───────────────────────────────────
+-- Scoped, read-only API keys for server-to-server consumers. The secret is
+-- never stored: only a SHA-256 hash plus a short prefix used for lookup, so a
+-- database leak does not yield usable credentials.
+CREATE TABLE IF NOT EXISTS api_keys (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts            TEXT NOT NULL DEFAULT (datetime('now')),
+  name          TEXT NOT NULL,
+  prefix        TEXT NOT NULL UNIQUE,
+  key_hash      TEXT NOT NULL,
+  scopes        TEXT NOT NULL,
+  last_used_at  TEXT,
+  last_used_ip  TEXT,
+  request_count INTEGER NOT NULL DEFAULT 0,
+  revoked_at    TEXT,
+  expires_at    TEXT
+);
+
+-- Every external API call, for audit and for rate limiting. Rate limiting reads
+-- this table rather than keeping in-process counters, so the limit survives a
+-- restart and holds across processes.
+CREATE TABLE IF NOT EXISTS api_requests (
+  id      INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts      TEXT NOT NULL DEFAULT (datetime('now')),
+  key_id  INTEGER REFERENCES api_keys(id) ON DELETE SET NULL,
+  method  TEXT NOT NULL,
+  path    TEXT NOT NULL,
+  status  INTEGER NOT NULL,
+  ms      INTEGER,
+  ip      TEXT,
+  note    TEXT
+);
+
+-- Approved job submissions from Headquarters (spec Phase 6). A job that needs
+-- approval lands in 'pending_approval' and is never executed until an owner
+-- approves it; the endpoint cannot be used to change production directly.
+CREATE TABLE IF NOT EXISTS api_jobs (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts          TEXT NOT NULL DEFAULT (datetime('now')),
+  job_id      TEXT NOT NULL UNIQUE,
+  kind        TEXT NOT NULL,
+  params      TEXT,
+  status      TEXT NOT NULL,
+  requested_by TEXT,
+  approved_by TEXT,
+  approved_at TEXT,
+  result      TEXT,
+  error       TEXT,
+  finished_at TEXT
+);
+
 -- ── Costs ──────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS cost_entries (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
