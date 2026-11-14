@@ -182,7 +182,7 @@ Thermal imaging cross-checks the finding when applicable, and the exact spot is 
 
  Related reading
 
-[Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html)
+[Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html) · [Slab leak vs. foundation crack: how to tell them apart](https://straightflushplumbingoc.com/academy/slab-leak-vs-foundation-crack.html) · [The hidden costs of ignoring a suspected leak](https://straightflushplumbingoc.com/academy/hidden-costs-of-ignoring-a-leak.html)
 
 
 
