@@ -218,6 +218,25 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   so changing the ID needs the hash regenerated (`add_security_meta.py`) or the tag loads
   and records nothing (ISSUE-028/030). ONE tag per page — a new ID is a **replace**.
   Verify with Chromium `--log-net-log` + grep `gtag/js?id=<ID>`. Current: `G-DFS6B1LV4P`.
+- **HQ repo = `straightflushplumbing03/AI-Headquarters`** (separate from the Lab). Its `migrations`
+  CI job was red from 2026-10-31 on every run incl. `main`, skipping 3 later steps (the
+  agent-runner e2e had never run). Root cause: `tests/sql/supabase_shim.sql` did not reproduce
+  **Supabase's default table grants**, so `028_sensitive_table_least_privilege.sql` — which
+  REVOKEs then asserts the app still holds a grant — found nothing to revoke, raised, and under
+  `psql -1` **rolled back its own GRANTs**, re-breaking itself every retry. Fixed by adding
+  `ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT SELECT,INSERT,UPDATE,DELETE
+  ON TABLES TO anon,authenticated,service_role;` to the shim (PR #29, verified green).
+  **Generalization: a retry loop + `ON_ERROR_STOP` + `-1` reports a self-rolling-back migration
+  as "non-converging" — measure the real privilege/state with `has_table_privilege()`, don't
+  read the file's intent.**
+- **Lab daily-job artifact is safe to upload only in headless mode.** `geo-lab-daily.yml` uploads
+  `geo-lab/data/geo-lab.db`; public-repo artifacts are readable by anyone with repo access. A
+  headless DB has 0 rows in `users`/`sessions` and no credential columns; a **remote-mode DB
+  holds the owner password hash + live session tokens**, so the `mode == 'headless'` gate on that
+  step must not be relaxed (documented at the step, commit `8ba65ff`).
+- **Check the whole repo for red before assuming a fix is scoped.** Enumerate every workflow's
+  last runs: `GET /repos/{R}/actions/workflows` then `/runs?per_page=6`. Job vs step granularity
+  needs `/actions/runs/{id}/jobs` — `check_runs` alone hides `skipped` steps.
 - Never commit to `main`; branch + PR only. **Never merge any PR — open it, request review, hand
   the merge to the owner.** No low-risk exception; review is required before merge.
 - Branches: research `intelligence-hq/daily-<date>`; site changes `intelligence-hq/site-<date>-<slug>`.
