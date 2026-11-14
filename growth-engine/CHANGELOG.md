@@ -3,6 +3,18 @@
 Reverse-chronological. Documents creation and updates to the growth-engine
 knowledge base so changes are auditable and reversible.
 
+## 2026-11-14 — 50-question homeowner FAQ hub (AI Search Authority campaign)
+
+- New `/faq/` hub: the owner's 50 target AI-search questions in 5 categories,
+  visible accordion answers + matching `FAQPage` JSON-LD (50 Q&As) +
+  `BreadcrumbList`. Every answer links to existing service/city/academy pages.
+- Claims limited to `APPROVED_CLAIMS.md`: no superlatives ("best" questions are
+  answered with selection criteria), only owner-confirmed $365–$525 detection
+  price, 24/7 emergency calls per owner-confirmed hours, no coverage promises.
+- Source of truth: `scripts/build_faq_hub.py` (edit there, re-run, then
+  `scripts/gen_llms_md.py`). Added to `sitemap.xml`, `llms.txt`,
+  `llms-full.txt`, `md/faq.md`; linked from homepage, services and academy hubs.
+
 ## 2026-10-25 — Technical + reviews audit response (owner request)
 
 - Re-verified the external audit's "Not confirmed" technical rows against the
