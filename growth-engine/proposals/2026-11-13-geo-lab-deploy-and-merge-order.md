@@ -26,8 +26,8 @@ Headquarters reads. Until it is hosted, the HQ screen correctly reports
 
 | Step | PR | Repo | Base | Why this order |
 |---|---|---|---|---|
-| 1 | **#163** | `-Up2updatewebsiteseo` | `intelligence-hq/geo-lab-api` | Security hardening of the `/api/v1` API. **It targets #153's branch, not `main`.** Merge it first so the API goes live already hardened. |
-| 2 | **#153** | `-Up2updatewebsiteseo` | `main` | The scoped read-only `/api/v1` itself (15 files). Merging it also carries in #163. |
+| 1 | **#163** | `-Up2datewebsiteseo` | `intelligence-hq/geo-lab-api` | Security hardening of the `/api/v1` API. **It targets #153's branch, not `main`.** Merge it first so the API goes live already hardened. |
+| 2 | **#153** | `-Up2datewebsiteseo` | `main` | The scoped read-only `/api/v1` itself (15 files). Merging it also carries in #163. |
 | 3 | **#28** | `AI-Headquarters` | `main` | The HQ-side connector that calls that API. Only useful once #153 is on `main`. |
 
 Verified against the live PRs on 2026-11-13:
@@ -114,7 +114,7 @@ at 06:00 America/Los_Angeles with `Persistent=true`).
 
 ```bash
 # 1. On the Oracle VM (Ubuntu 22.04/24.04), as ubuntu:
-curl -fsSLO https://raw.githubusercontent.com/straightflushplumbing03/-Up2updatewebsiteseo/main/geo-lab/deploy/oracle/bootstrap.sh
+curl -fsSLO https://raw.githubusercontent.com/straightflushplumbing03/-Up2datewebsiteseo/main/geo-lab/deploy/oracle/bootstrap.sh
 sudo bash bootstrap.sh
 
 # 2. Add keys to /etc/geo-lab/geo-lab.env (mode 600, root-owned), then:
