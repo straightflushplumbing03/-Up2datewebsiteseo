@@ -204,10 +204,35 @@ Add two repository secrets to the GitHub repo:
 - `GEO_LAB_URL` — e.g. `https://geo-lab.example.com`
 - `GEO_LAB_RUN_TOKEN` — the same value as the lab's environment variable
 
-`.github/workflows/geo-lab-daily.yml` then fires at 06:00 America/Los_Angeles
-daily. The cron entry (`0 6 * * *`) carries `timezone: "America/Los_Angeles"`,
-so it stays 06:00 local across the PST/PDT changeover. If the secrets are missing
-the workflow exits with a notice, so it is safe to merge before deployment.
+`.github/workflows/geo-lab-daily.yml` fires at 06:00 America/Los_Angeles
+daily, including weekends. The cron entry (`0 6 * * *`) carries
+`timezone: "America/Los_Angeles"`, so it stays 06:00 local across the PST/PDT
+changeover.
+
+**The workflow runs in one of two modes, chosen automatically on every run:**
+
+| Mode | When | Behaviour |
+|---|---|---|
+| `remote` | `GEO_LAB_URL` is a real `https://` URL **and** `GEO_LAB_RUN_TOKEN` is set | POSTs `/api/run` to the deployed lab. Preferred: history accumulates in the lab's persistent database. |
+| `headless` | otherwise | Runs `npm run job` on the runner. No server, no secrets, no cost. |
+
+The headless fallback exists because the lab's orchestrator is designed to run
+with no server at all (see "The no-server option"). Before it existed, a missing
+or malformed `GEO_LAB_URL` made every scheduled run **fail** — 11 of the first 12
+runs, all ending `GEO_LAB_URL must start with https:// - refusing to send the run
+token.` That guard only fires when the secrets are *present*, so the failure meant
+"secret set to a non-URL", not "not deployed". The workflow now falls back instead
+of failing, so the schedule does real work from the moment it lands.
+
+**Headless runs are ephemeral.** The database lives in the runner's filesystem
+and is uploaded as a build artifact (`geo-lab-db-<run_id>`, 14-day retention).
+Each run therefore starts fresh — the crawl, scoring and opportunity detection all
+run, but trend history does not accumulate across days. Point `GEO_LAB_URL` at a
+deployed lab to get cumulative history. Treat headless as the honest stopgap, not
+the destination.
+
+Do **not** commit the database file in either mode; it holds the owner password
+hash and session tokens, and this repository is public.
 
 You can also drive the lab from the existing OpenHands daily automation:
 
@@ -218,14 +243,18 @@ curl -X POST "$GEO_LAB_URL/api/run?trigger=openhands-daily&report=daily" \
 
 ## CI
 
-`.github/workflows/geo-lab.yml` runs on every PR touching `geo-lab/**`:
+`.github/workflows/geo-lab.yml` was written to run on every PR touching
+`geo-lab/**`:
 
 - `npx tsc --noEmit`
-- `npm test` (32 tests — real SQLite, real site crawl)
+- `npm test` (real SQLite, real site crawl)
 - `npm run build`
 
-This is the evidence that a change is green; it does not rely on the change
-author's word.
+**It is currently disabled** (`if: false`, commit `ee5d72e`, "retract the
+automation change without touching the static site files"). So it is *not*
+evidence that a `geo-lab/**` change is green. Until it is re-enabled, run those
+three commands by hand in `geo-lab/` before merging lab changes, and note that
+the only automated gate on a lab PR is the repository-wide `verify.yml`.
 
 ## Backups
 

@@ -1,20 +1,37 @@
 name: GEO Lab daily operations
 
-# Persistent autonomous operation (spec §13). This workflow is the scheduler:
-# it drives the lab over HTTP so the lab never needs an open browser, terminal
-# or OpenHands session.
+# Persistent autonomous operation (spec §13). This workflow is the scheduler.
 #
-# It requires ONE repository secret:
+# It runs in one of two modes, chosen automatically on every run:
+#
+#   remote    GEO_LAB_URL is a real https:// URL -> POST /api/run to the
+#             deployed lab. Preferred: it uses the lab's persistent database,
+#             so history accumulates in one place.
+#
+#   headless  No deployed lab yet -> run `npm run job` directly on the runner.
+#             The lab's orchestrator is built to run with no server at all, so
+#             the daily job still executes. The database lives in the runner's
+#             filesystem, which is ephemeral: each run starts fresh and the
+#             result is uploaded as an artifact. Use this to keep the schedule
+#             honest until a host exists, NOT as a permanent replacement for a
+#             deployed lab.
+#
+# Secrets (both optional):
 #   GEO_LAB_URL        e.g. https://geo-lab.example.com   (the deployed lab)
 #   GEO_LAB_RUN_TOKEN  the same value as the lab's GEO_LAB_RUN_TOKEN env var
 #
-# If the secrets are absent the job exits successfully with a notice, so the
-# workflow is safe to merge before the lab is deployed.
+# Neither secret is required. With no secrets the job runs headless instead of
+# failing, so the schedule is useful from the moment this file lands.
+#
+# Optional provider keys enable the live parts. Without them those agents
+# report UNMEASURED (never a false zero):
+#   Tavily_api_key (or TAVILY_API_KEY), GEMINI_API_KEY, OPENAI_API_KEY,
+#   PERPLEXITY_API_KEY, ANTHROPIC_API_KEY
 
 on:
   schedule:
     # 06:00 every day, including weekends, in the business's own timezone.
-    # GitHub Actions supports an IANA timezone on a schedule, so this stays
+    # GitHub Actions accepts an IANA timezone on a schedule, so this stays
     # 06:00 local across the PST/PDT changeover without a second cron entry.
     # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
     - cron: "0 6 * * *"
@@ -36,33 +53,113 @@ permissions:
 jobs:
   daily:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - name: Trigger the daily run
+      - name: Choose mode
+        id: mode
+        env:
+          GEO_LAB_URL: ${{ secrets.GEO_LAB_URL }}
+          GEO_LAB_RUN_TOKEN: ${{ secrets.GEO_LAB_RUN_TOKEN }}
+        run: |
+          # A run token is only ever sent to a real https endpoint.
+          case "$GEO_LAB_URL" in
+            https://*)
+              if [ -n "$GEO_LAB_RUN_TOKEN" ]; then
+                echo "mode=remote" >> "$GITHUB_OUTPUT"
+                echo "Remote mode: the lab is deployed." >> "$GITHUB_STEP_SUMMARY"
+                exit 0
+              fi
+              echo "GEO_LAB_URL is an https URL but GEO_LAB_RUN_TOKEN is empty." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            "")
+              echo "No GEO_LAB_URL secret set." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+            *)
+              # Deliberately not echoed: a malformed value may carry a secret.
+              echo "GEO_LAB_URL is set but is not an https:// URL (value not echoed in case it carries a secret)." >> "$GITHUB_STEP_SUMMARY"
+              ;;
+          esac
+          echo "mode=headless" >> "$GITHUB_OUTPUT"
+          echo "Falling back to headless mode: running the daily job on the runner." >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Check out the website and the lab
+        if: steps.mode.outputs.mode == 'headless'
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        if: steps.mode.outputs.mode == 'headless'
+        uses: actions/setup-node@v4
+        with:
+          # node:sqlite (the lab's db layer) needs Node >= 22.5.
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: geo-lab/package-lock.json
+
+      - name: Install the lab
+        if: steps.mode.outputs.mode == 'headless'
+        working-directory: geo-lab
+        run: npm ci --no-audit --no-fund
+
+      - name: Run the daily job (headless)
+        if: steps.mode.outputs.mode == 'headless'
+        working-directory: geo-lab
+        env:
+          REPORT: ${{ inputs.report || 'daily' }}
+          VISIBILITY: ${{ inputs.visibility || '1' }}
+          # Provider keys are optional. Unset ones make the live agents report
+          # UNMEASURED rather than a false zero, which is the intended design.
+          TAVILY_API_KEY: ${{ secrets.Tavily_api_key || secrets.TAVILY_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set -o pipefail
+          ARGS=(--report "$REPORT")
+          if [ "$VISIBILITY" = "1" ]; then ARGS+=(--visibility --limit 20); fi
+          npm run job -- "${ARGS[@]}" 2>&1 | tee /tmp/job.log
+          # This repository is public, so the step summary must stay free of
+          # page contents and provider responses. Publish only the agent lines.
+          {
+            echo "### GEO Lab headless run"
+            echo '```'
+            grep -E '^  \[(ok|failed)\]|^  report saved' /tmp/job.log || echo "no agent summary produced"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Keep this step headless-only. The artifact is a full copy of the run
+      # database, and artifacts of a public repository are downloadable by
+      # anyone who can read the repo. A headless run builds the database from
+      # scratch, so it holds no owner account, no session tokens and no secret
+      # values -- verified: 0 rows in `users` and `sessions`, and the
+      # `integrations` table stores only status/detail, never credentials.
+      # A remote-mode database DOES hold the owner password hash and live
+      # session tokens, so uploading it would disclose them. Do not relax this
+      # condition.
+      - name: Upload the run database
+        if: steps.mode.outputs.mode == 'headless' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: geo-lab-db-${{ github.run_id }}
+          path: geo-lab/data/geo-lab.db*
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Trigger the daily run (remote)
+        if: steps.mode.outputs.mode == 'remote'
         env:
           GEO_LAB_URL: ${{ secrets.GEO_LAB_URL }}
           GEO_LAB_RUN_TOKEN: ${{ secrets.GEO_LAB_RUN_TOKEN }}
           REPORT: ${{ inputs.report || 'daily' }}
           VISIBILITY: ${{ inputs.visibility || '1' }}
         run: |
-          if [ -z "$GEO_LAB_URL" ] || [ -z "$GEO_LAB_RUN_TOKEN" ]; then
-            echo "GEO_LAB_URL / GEO_LAB_RUN_TOKEN are not configured — the lab is not deployed yet. Nothing to do." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          # The bearer token must never travel in clear text.
-          case "$GEO_LAB_URL" in
-            https://*) ;;
-            *) echo "GEO_LAB_URL must start with https:// - refusing to send the run token." >&2; exit 1 ;;
-          esac
           echo "Triggering $REPORT run"
           HTTP=$(curl -sS --proto '=https' -o /tmp/run.json -w "%{http_code}" \
             -X POST "$GEO_LAB_URL/api/run?trigger=github-cron&report=$REPORT&visibility=$VISIBILITY" \
             -H "Authorization: Bearer $GEO_LAB_RUN_TOKEN" \
             --max-time 600)
           echo "HTTP $HTTP"
-          # This repository is public, so Actions logs and step summaries are
-          # public too. Publish only the outcome, never the lab's full response
-          # (step details, provider errors, internal paths). The full report
-          # stays inside the lab.
+          # Public repo: publish only the outcome, never the lab's full response.
           OUTCOME=$(jq -c '{ok, skipped, startedAt, finishedAt}' /tmp/run.json 2>/dev/null || echo '{"ok":null,"note":"response was not JSON"}')
           echo "$OUTCOME"
           echo "### GEO Lab run: HTTP $HTTP" >> "$GITHUB_STEP_SUMMARY"
