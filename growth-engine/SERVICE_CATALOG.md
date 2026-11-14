@@ -51,7 +51,7 @@ fixture work, bathroom-remodel plumbing.
 
 **Tankless water heater service — owner-confirmed 2026-10-23** (repair, descaling and
 tank-to-tankless conversion). Covered on `/services/water-heater-services.html` and the
-city pages `/services/water-heater-repair-{laguna-niguel,dana-point,san-clemente}.html`.
+city pages `/services/water-heater-repair-{laguna-niguel,dana-point,san-clemente,mission-viejo}.html`.
 
 > Do not create pages or copy for these until the owner confirms the company
 > performs them. Until then, treat the core seven service pages as the canonical

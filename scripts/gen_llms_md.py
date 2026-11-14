@@ -32,6 +32,7 @@ PAGES = [
     ("services/water-heater-repair-laguna-niguel.html", "services/water-heater-repair-laguna-niguel.md", "Services"),
     ("services/water-heater-repair-dana-point.html", "services/water-heater-repair-dana-point.md", "Services"),
     ("services/water-heater-repair-san-clemente.html", "services/water-heater-repair-san-clemente.md", "Services"),
+    ("services/water-heater-repair-mission-viejo.html", "services/water-heater-repair-mission-viejo.md", "Services"),
     ("services/leak-detection-laguna-niguel.html", "services/leak-detection-laguna-niguel.md", "Services"),
     ("services/leak-detection-dana-point.html", "services/leak-detection-dana-point.md", "Services"),
     ("services/leak-detection-san-clemente.html", "services/leak-detection-san-clemente.md", "Services"),
