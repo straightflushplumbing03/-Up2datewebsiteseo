@@ -73,6 +73,10 @@ We've traced pressure issues on buried lines back to a pressure regulator instal
 
 
 
+Catch small problems early with our [annual plumbing checkup checklist](https://straightflushplumbingoc.com/academy/annual-plumbing-checkup-checklist.html), or read how [water pressure affects pipe health](https://straightflushplumbingoc.com/academy/water-pressure-and-pipe-health.html).
+
+
+
 
 
 

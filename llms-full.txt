@@ -2136,7 +2136,7 @@ Thermal imaging cross-checks the finding when applicable, and the exact spot is 
 
  Related reading
 
-[Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html)
+[Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html) · [Slab leak vs. foundation crack: how to tell them apart](https://straightflushplumbingoc.com/academy/slab-leak-vs-foundation-crack.html) · [The hidden costs of ignoring a suspected leak](https://straightflushplumbingoc.com/academy/hidden-costs-of-ignoring-a-leak.html)
 
 
 
@@ -2428,6 +2428,10 @@ Diagnosing low or fluctuating pressure — from PRV problems to hidden leaks.
 
 
 We've traced pressure issues on buried lines back to a pressure regulator installed on the wrong end of the run — downstream instead of at the source. Moving it upstream solved what looked, at first, like a much bigger problem. That's the value of diagnosing before repairing: sometimes the fix is smaller than it looks, and sometimes it's in a different place than expected.
+
+
+
+Catch small problems early with our [annual plumbing checkup checklist](https://straightflushplumbingoc.com/academy/annual-plumbing-checkup-checklist.html), or read how [water pressure affects pipe health](https://straightflushplumbingoc.com/academy/water-pressure-and-pipe-health.html).
 
 
 
@@ -6795,6 +6799,10 @@ After a leak is located, we make the repair—from spot fixes on a single pipe t
 
  [Plumbing Repair Services](https://straightflushplumbingoc.com/services/plumbing-repair.html)
 
+
+
+
+While you wait: [Emergency plumbing checklist: what to do right now](https://straightflushplumbingoc.com/academy/emergency-plumbing-checklist.html) · [Water meter still moving with everything off?](https://straightflushplumbingoc.com/academy/water-meter-still-moving-everything-off.html)
 
 
 
