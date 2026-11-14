@@ -23,6 +23,7 @@ PAGES = [
     ("about/straight-flush-plumbing-orange-county.html", "about/straight-flush-plumbing-orange-county.md", "Company"),
     ("contact.html", "contact.md", "Company"),
     ("service-areas.html", "service-areas.md", "Service areas"),
+    ("faq/index.html", "faq.md", "Homeowner FAQ"),
     ("services/index.html", "services/index.md", "Services"),
     ("services/leak-detection.html", "services/leak-detection.md", "Services"),
     ("services/slab-leak-detection.html", "services/slab-leak-detection.md", "Services"),

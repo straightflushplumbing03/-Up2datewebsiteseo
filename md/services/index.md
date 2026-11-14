@@ -126,7 +126,7 @@ Faucets, toilets, pipe repair, and water pressure issues, fixed right the first 
 
 
 
-Plus [emergency plumbing](https://straightflushplumbingoc.com/services/emergency-plumbing.html). For every city we serve, see [service areas](https://straightflushplumbingoc.com/service-areas.html). For pricing and repair options, see our [cost guides](https://straightflushplumbingoc.com/guides/).
+Plus [emergency plumbing](https://straightflushplumbingoc.com/services/emergency-plumbing.html). For every city we serve, see [service areas](https://straightflushplumbingoc.com/service-areas.html). For pricing and repair options, see our [cost guides](https://straightflushplumbingoc.com/guides/), or browse answers to [50 common homeowner questions](https://straightflushplumbingoc.com/faq/).
 
 
 

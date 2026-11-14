@@ -52,6 +52,7 @@
 
 ## Education & guides (highly citable)
 - Leak Detection Academy (20+ articles): https://straightflushplumbingoc.com/academy/
+- Homeowner FAQ (50 questions: hidden leaks, slab leaks, PEX repiping, emergencies, pricing, insurance): https://straightflushplumbingoc.com/faq/ (Markdown: https://straightflushplumbingoc.com/md/faq.md)
 - Leak detection cost guide: https://straightflushplumbingoc.com/guides/leak-detection-cost.html
 - Slab leak repair cost guide: https://straightflushplumbingoc.com/guides/slab-leak-repair-cost.html
 - Repair vs reroute vs repipe: https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html
