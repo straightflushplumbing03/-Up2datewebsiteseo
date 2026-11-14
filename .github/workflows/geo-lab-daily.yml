@@ -127,6 +127,15 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
+      # Keep this step headless-only. The artifact is a full copy of the run
+      # database, and artifacts of a public repository are downloadable by
+      # anyone who can read the repo. A headless run builds the database from
+      # scratch, so it holds no owner account, no session tokens and no secret
+      # values -- verified: 0 rows in `users` and `sessions`, and the
+      # `integrations` table stores only status/detail, never credentials.
+      # A remote-mode database DOES hold the owner password hash and live
+      # session tokens, so uploading it would disclose them. Do not relax this
+      # condition.
       - name: Upload the run database
         if: steps.mode.outputs.mode == 'headless' && always()
         uses: actions/upload-artifact@v4
