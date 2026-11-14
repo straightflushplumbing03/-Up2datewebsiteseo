@@ -44,6 +44,17 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   them). Three tests enforce this; each was negative-tested.
 - Autonomy is an **external scheduler** — `.github/workflows/geo-lab-daily.yml` cron 06:00 PT
   POSTs `/api/run` with `GEO_LAB_RUN_TOKEN`; no session needed. `geo-lab.yml` gates PRs.
+  **It has NEVER completed a scheduled run: 12 runs, 11 failures** (checked 2026-11-13). Every
+  failure ends `GEO_LAB_URL must start with https:// - refusing to send the run token.` — a guard
+  that only fires when **both** secrets are set, so the secrets exist and `GEO_LAB_URL` holds a
+  placeholder/bare host, not a deployed https URL. The lone success (`#6`, 2026-11-08) predates
+  the secret. So the real state is **"secret set to a non-URL"**, not "not configured" — and the
+  daily autonomy the owner believes is running has never actually run.
+  Run logs: `GET /actions/runs/{id}/logs` returns a **zip**; read with Python `zipfile` (`unzip`
+  is not installed here).
+- **Never report "zero / absent / no runs" from a single glance.** I told the owner the workflow
+  had "NO RUNS EVER"; the endpoint returns 12. Page and count before asserting absence — an
+  absence claim is a measurement, and it needs the same rigour as a positive one.
 - Publishing goes through `engine/publishing.ts` only: snapshot → validate → **branch + PR**,
   never `main`, never merged. Locked facts (identity/NAP/pricing/warranty/licensing) are
   rejected mechanically; a test asserts a phone change fails.
@@ -191,14 +202,15 @@ Detail archive: `2026-10-15-detail.md`, `2026-10-16.md`, `2026-10-12.md`,
   Cloudflare edge** (GitHub Pages can't emit file redirects). Owner-side.
 
 ## Conventions that matter
-- **GitHub token in this environment is scoped to git push + PR create only.**
-  `PATCH /pulls/{n}` (edit body/title) and `POST /issues/{n}/comments` return
-  `403 Resource not accessible by personal access token`; the secondary
-  `GITHUB_PERSONAL_ACCESS_TOKEN` returns `401 Bad credentials`. So an agent can
-  push a branch and open a PR but **cannot edit the PR description or comment**.
-  Put everything needed in the initial PR body; if a change needs an explanation
-  the owner must be told in chat. **Draft gotcha:** a PR opened via the tool can
-  land as a **draft** (unmergeable). Flip it with GraphQL
+- **GitHub token scope has WIDENED — retest before routing around a limitation.**
+  As of 2026-11-13 `PATCH /repos/{r}/pulls/{n}` returns **200 and actually edits the body**
+  (it used to 403 `Resource not accessible by personal access token`). `git push` + PR create
+  still work. So the old advice "an agent cannot edit the PR description" is **stale** — and
+  stale *permissively*, which is the dangerous direction. **Read the current body before
+  probing**: a capability test that PATCHes a throwaway body will destroy the real description
+  (did exactly that to PR #188 and had to restore it). `POST /issues/{n}/comments` was 404 —
+  but against the OLD repo name, so it proves nothing about the new one. **Draft gotcha:** a PR
+  opened via the tool can land as a **draft** (unmergeable). Flip it with GraphQL
   `markPullRequestReadyForReview(pullRequestId: <node_id>)`; the REST
   `PATCH {"draft": false}` returns 200 but silently does nothing.
 - **Google tag:** the ID lives once in `scripts/csp_policy.py` (`MEASUREMENT_ID`);
