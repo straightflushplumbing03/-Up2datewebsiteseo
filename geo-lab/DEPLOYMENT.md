@@ -78,6 +78,83 @@ install. Two things that are easy to get wrong:
 | **A small VPS** | Cheapest at scale; you manage updates. |
 | **Vercel** | **Only** if you move state off the filesystem (e.g. to Postgres) — its filesystem is ephemeral. |
 
+### Public HTTPS access (Cloudflare Tunnel)
+
+The API key that AI Headquarters presents must travel over HTTPS — the lab's own
+client refuses plain HTTP. The Oracle bootstrap leaves port 12000 bound to
+localhost and tells you **not** to open it in the VCN security list, so the VM has
+no inbound port to serve TLS on. The bridge is Cloudflare Tunnel, which the domain
+already supports (it is Cloudflare-managed).
+
+> "Cloudflare Tunnel provides you with a secure way to connect your resources to
+> Cloudflare without a publicly routable IP address. With Tunnel, you do not send
+> traffic to an external IP — instead, a lightweight daemon in your infrastructure
+> (`cloudflared`) creates outbound-only connections to Cloudflare's global network."
+
+Source: <https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/>
+
+Cloudflare One "offers both Free and Paid plans"
+(<https://developers.cloudflare.com/cloudflare-one/>), and a public hostname route
+works on the free plan — the only caveat is about serving large video files:
+
+> "Public hostname routes make applications available on the Internet through
+> Cloudflare's reverse proxy. On Free, Pro, and Business plans, the
+> service-specific terms require you to use a specific paid service to serve video
+> and other large files."
+
+Source: <https://developers.cloudflare.com/cloudflare-one/faq/cloudflare-tunnels-faq/>
+
+The lab serves HTML and JSON, so that restriction does not apply. The result is a
+real HTTPS hostname with **no inbound ports open** — the safe configuration, and the
+one the bootstrap's closing notes assume.
+
+```bash
+# On the VM. Install cloudflared from Cloudflare's own apt repository.
+sudo mkdir -p --mode=0755 /usr/share/keyrings
+curl -fsSL https://pkg.cloudflare.com/cloudflare-main.gpg \
+  | sudo tee /usr/share/keyrings/cloudflare-main.gpg >/dev/null
+echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudflare.com/cloudflared any main' \
+  | sudo tee /etc/apt/sources.list.d/cloudflared.list
+sudo apt-get update && sudo apt-get install -y cloudflared
+
+cloudflared tunnel login                 # opens a browser link, once
+cloudflared tunnel create geo-lab        # writes a credentials JSON
+```
+
+Point the tunnel at the lab and give it the hostname. `/etc/cloudflared/config.yml`:
+
+```yaml
+tunnel: <Tunnel-UUID>
+credentials-file: /etc/cloudflared/<Tunnel-UUID>.json
+ingress:
+  - hostname: geo-lab.straightflushplumbingoc.com
+    service: http://127.0.0.1:12000
+  - service: http_status:404
+```
+
+```bash
+cloudflared tunnel route dns geo-lab geo-lab.straightflushplumbingoc.com
+sudo cloudflared service install
+sudo systemctl start cloudflared
+```
+
+Then set `GEO_LAB_PUBLIC_URL=https://geo-lab.straightflushplumbingoc.com` in
+`/etc/geo-lab/geo-lab.env` and restart the service.
+
+**Protect it.** The API is key-authenticated per request, but the dashboard should
+not be open to the world. Add a Cloudflare Access policy on the hostname allowing
+only the owner's email (and a service token for Headquarters), or front the whole
+hostname with an IP allowlist. Without this, `/login` is reachable from anywhere.
+
+Verify from a machine outside the VM before wiring Headquarters:
+
+```bash
+curl -sS -o /dev/null -w '%{http_code}\n' https://geo-lab.straightflushplumbingoc.com/api/v1/health
+# 401 = reachable, and the lab is rejecting the unauthenticated call (expected).
+# If Cloudflare Access is in front, expect a 302/403 from Access instead —
+# that is Access working, and it means Headquarters needs a service token.
+```
+
 ## Environment variables
 
 | Variable | Required | Purpose |
@@ -171,8 +248,11 @@ Keep at least 30 days. To restore, stop the app, replace the file, restart.
 
 These are not done here because the credentials or accounts are owner-side:
 
-- Deploy the lab to a Node host with a persistent disk.
+- Deploy the lab to a Node host with a persistent disk. **Step-by-step, with the
+  merge order for the open PRs, is in
+  [`growth-engine/proposals/2026-11-13-geo-lab-deploy-and-merge-order.md`](../growth-engine/proposals/2026-11-13-geo-lab-deploy-and-merge-order.md).**
 - Set `GEO_LAB_RUN_TOKEN` and the GitHub repo secrets.
 - Connect Google Search Console, GA4, Google Business Profile and Bing Webmaster.
 - Provide an `AIza…` Gemini key (or Perplexity) to add a second visibility engine.
-- Put the lab behind Cloudflare Access or an IP allowlist.
+- Put the lab behind Cloudflare Access or an IP allowlist (see "Public HTTPS
+  access" above).
