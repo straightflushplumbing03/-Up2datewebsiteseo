@@ -11,7 +11,11 @@ catalog entry that names it. This test keeps it that way:
 
 1. each hub page declares its Service with the shared @id and its canonical url;
 2. any Service node whose name is a core-service name carries that @id;
-3. every @id ending in "/services/<hub>.html#service" points to a real hub.
+3. every @id ending in "/services/<page>.html#service" points to a real hub,
+   or to a city-service page that declares that @id itself;
+4. each city-service landing page (e.g. leak-detection-dana-point.html) gives
+   its own Service an @id and links it to its hub with isRelatedTo (added
+   2026-11-15: all 18 of these pages had anonymous Service nodes).
 """
 import glob
 import json
@@ -30,6 +34,13 @@ HUBS = {
     "plumbing-repair": {"Plumbing Repair", "General Plumbing Repair"},
 }
 NAME_TO_HUB = {n: h for h, names in HUBS.items() for n in names}
+# city-service landing pages: filename prefix -> hub (longest prefix first)
+CITY_PREFIXES = (
+    ("slab-leak-detection-", "slab-leak-detection"),
+    ("leak-detection-", "leak-detection"),
+    ("pex-repiping-", "pex-repiping"),
+    ("water-heater-repair-", "water-heater-services"),
+)
 SKIP_DIRS = ("ai-headquarters-blueprint", "briefs", "growth-engine", "node_modules", "scripts", "geo-lab", "md")
 LD_RE = re.compile(r'<script[^>]*application/ld\+json[^>]*>(.*?)</script>', re.S | re.I)
 NOINDEX_RE = re.compile(r'<meta[^>]+name="robots"[^>]+noindex', re.I)
@@ -95,9 +106,40 @@ class ServiceEntityIdTest(unittest.TestCase):
                     sid = node.get("@id", "")
                     if isinstance(sid, str) and sid.startswith(BASE) and sid.endswith("#service"):
                         hub = sid[len(BASE):-len(".html#service")]
-                        if hub not in HUBS:
+                        if hub not in HUBS and hub not in self._city_pages():
                             bad.append(f"{rel}: {sid}")
         self.assertEqual(bad, [])
+
+    @staticmethod
+    def _city_pages():
+        pages = {}
+        for path in glob.glob(os.path.join(ROOT, "services", "*.html")):
+            name = os.path.basename(path)[:-len(".html")]
+            if name in HUBS:
+                continue
+            for prefix, hub in CITY_PREFIXES:
+                if name.startswith(prefix):
+                    pages[name] = hub
+                    break
+        return pages
+
+    def test_city_service_pages_link_to_hub(self):
+        pages = self._city_pages()
+        self.assertGreaterEqual(len(pages), 18)
+        missing = []
+        for name, hub in sorted(pages.items()):
+            url = f"{BASE}{name}.html"
+            path = os.path.join(ROOT, "services", f"{name}.html")
+            tops = [n for b in _ld(path) for n in _nodes(b)
+                    if n.get("@type") == "Service" and n.get("url") == url]
+            if not tops:
+                continue  # noindex page or no page-level Service
+            node = tops[0]
+            if node.get("@id") != f"{url}#service":
+                missing.append(f"{name}: @id {node.get('@id')}")
+            if node.get("isRelatedTo", {}).get("@id") != _hub_id(hub):
+                missing.append(f"{name}: isRelatedTo {node.get('isRelatedTo')}")
+        self.assertEqual(missing, [], "\n".join(missing))
 
 
 if __name__ == "__main__":

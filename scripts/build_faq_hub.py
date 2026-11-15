@@ -46,7 +46,7 @@ CATEGORIES = [
         ("Who should I call for plumbing repairs in San Clemente?",
          f"For everyday repairs such as leaking fixtures, shutoff valves, toilets and supply lines, call a residential plumber who serves San Clemente regularly. Straight Flush covers San Clemente for {a(REP, 'plumbing repair')}, {a(S + 'leak-detection-san-clemente.html', 'leak detection')} and {a(S + 'water-heater-repair-san-clemente.html', 'water heaters')}. See {a(C + 'san-clemente.html', 'San Clemente service details')} or call {PHONE}."),
         ("What plumbing companies specialize in residential plumbing in Mission Viejo?",
-         f"Straight Flush is a residential-only, owner-operated plumber serving Mission Viejo. Many Mission Viejo homes are on slab foundations with aging copper lines, so our main focus there is {a(S + 'leak-detection-mission-viejo.html', 'leak detection')}, {a(S + 'slab-leak-detection-mission-viejo.html', 'slab leak detection')} and {a(S + 'pex-repiping-mission-viejo.html', 'PEX repiping')}. Details: {a(C + 'mission-viejo.html', 'Mission Viejo')}."),
+         f"Straight Flush is a residential, owner-operated plumber serving Mission Viejo. Many Mission Viejo homes are on slab foundations with aging copper lines, so our main focus there is {a(S + 'leak-detection-mission-viejo.html', 'leak detection')}, {a(S + 'slab-leak-detection-mission-viejo.html', 'slab leak detection')} and {a(S + 'pex-repiping-mission-viejo.html', 'PEX repiping')}. Details: {a(C + 'mission-viejo.html', 'Mission Viejo')}."),
         ("Who is a trustworthy plumber in Laguna Hills?",
          f"Look for a plumber who explains what they found, shows you the evidence, and gives you options instead of one expensive answer. Straight Flush serves Laguna Hills from nearby Laguna Niguel with a diagnose-first approach to leaks and repairs. See {a(C + 'laguna-hills.html', 'Laguna Hills plumbing')} and read our {a('../about.html', 'about page')} to see how we work."),
         ("Which plumbing company serves Ladera Ranch and Rancho Santa Margarita?",
@@ -118,7 +118,7 @@ CATEGORIES = [
     ]),
     ("trust", "Trust, pricing &amp; specialized services", [
         ("Which plumbers in Orange County are owner-operated?",
-         f"Straight Flush Plumbing &amp; Leak Detection is owner-operated. Owner Lance answers the phone and does the work himself. The company was founded in 2019 and is based in Laguna Niguel. See {a('../about.html', 'about Straight Flush')}."),
+         f"Straight Flush Plumbing &amp; Leak Detection is owner-operated. Owner Lance answers the phone himself and works as the company's lead technician. The company was founded in 2019 and is based in Laguna Niguel. See {a('../about.html', 'about Straight Flush')}."),
         ("Who offers honest plumbing estimates without unnecessary upselling?",
          f"An honest estimate starts with a real diagnosis, separates what's needed now from what can wait, and lists the smallest workable option first. That is how Straight Flush quotes. To check any quote, read {a(A + 'why-two-plumbers-give-different-quotes.html', 'why two plumbers give different quotes')}."),
         ("What does professional slab leak detection cost in Orange County?",
