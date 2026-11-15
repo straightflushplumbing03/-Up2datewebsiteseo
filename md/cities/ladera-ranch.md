@@ -1,4 +1,4 @@
-# Leak Detection in Ladera Ranch, CA | Straight Flush Plumbing
+# Plumber in Ladera Ranch, CA | Leak Detection & Repiping
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/cities/ladera-ranch.html
 > Section: Service areas
@@ -46,7 +46,7 @@ Ladera Ranch is not a city. It is an unincorporated community governed by the Or
 
 - Acoustic slab leak detection
 
-- Hidden & underground water leak detection
+- [Hidden & underground water leak detection](https://straightflushplumbingoc.com/services/leak-detection-ladera-ranch.html)
 
 - [Whole-house PEX repiping & copper line elimination in Ladera Ranch](https://straightflushplumbingoc.com/services/pex-repiping-ladera-ranch.html)
 
