@@ -1,0 +1,25 @@
+{
+  "generated": "2026-11-15",
+  "source": "Supabase public.ai_visibility_observations, platform=gemini_search, error_type is null (80 rows, 10 queries, runs 2026-10-23..2026-11-09; 2 rows with empty domains excluded from slate stats)",
+  "method": "Per query: domains[] treated as the run's source slate. mean_jaccard = mean pairwise overlap of slates; core = domains in >=75% of the query's runs; new_domain_share = share of a run's domains never seen on that query before (runs 2..n).",
+  "citations": {"total": 635, "directory": 32, "directory_share": 0.05, "rows_with_any_directory": 24, "editorial_todayshomeowner": 14,
+    "directories_claude_uses_seen_in_gemini": {"homeguide.com": 0, "buildzoom.com": 0, "mapquest.com": 0, "yelp.com": 0, "porch.com": 0}},
+  "per_query": [
+    {"query": "best leak detection company in Laguna Niguel", "runs": 8, "distinct_domains": 28, "mean_jaccard": 0.34, "new_domain_share": 0.31, "core": ["streamlineplumbing.org", "efficientplumbing.com", "leakstar.com"]},
+    {"query": "emergency plumber in South Orange County", "runs": 8, "distinct_domains": 19, "mean_jaccard": 0.44, "new_domain_share": 0.24, "core": ["barkerandsonsplumbing.com", "olsonsuperior.com", "rotorooter.com", "appliedrooter.com"]},
+    {"query": "leak detection company in Dana Point", "runs": 8, "distinct_domains": 16, "mean_jaccard": 0.64, "new_domain_share": 0.14, "core": ["evansleakdetection.com", "hummelplumbing.com", "plumbingdanapointca.com", "americanleakdetection.com", "efficientplumbing.com", "mckplumb.com"]},
+    {"query": "plumber in Ladera Ranch", "runs": 8, "distinct_domains": 18, "mean_jaccard": 0.32, "new_domain_share": 0.28, "core": ["boothneyandsonsplumbing.com", "hummelplumbing.com", "scottenglishplumbing.net"]},
+    {"query": "plumber in Laguna Niguel", "runs": 8, "distinct_domains": 14, "mean_jaccard": 0.41, "new_domain_share": 0.19, "core": ["hummelplumbing.com", "efficientplumbing.com", "boothneyandsonsplumbing.com"]},
+    {"query": "slab leak detection in Mission Viejo", "runs": 6, "distinct_domains": 15, "mean_jaccard": 0.51, "new_domain_share": 0.19, "core": ["calischoice.com", "evansleakdetection.com", "ezplumbingusa.com", "clearwaterplumbingoc.com", "saddlebackplumbing.com"]},
+    {"query": "which plumbers serve San Clemente?", "runs": 8, "distinct_domains": 17, "mean_jaccard": 0.56, "new_domain_share": 0.12, "core": ["thepassionateplumber.com", "billmetzgerplumbing.com", "benjaminfranklinplumbing.com", "clearwaterplumbingoc.com", "rotorooter.com", "todayshomeowner.com", "lomonacocoast.com"]},
+    {"query": "who can locate a hidden water leak in Laguna Niguel?", "runs": 8, "distinct_domains": 21, "mean_jaccard": 0.45, "new_domain_share": 0.21, "core": ["streamlineplumbing.org", "efficientplumbing.com", "lagunaniguelcaplumbingpros.com", "leakstar.com"]},
+    {"query": "who handles whole-house repiping near Mission Viejo?", "runs": 8, "distinct_domains": 22, "mean_jaccard": 0.46, "new_domain_share": 0.21, "core": ["pipebros.com", "pexrepipe-repiping.com", "creativerepipe.com", "ocrepipes.com", "repipepro.net", "integrityrepipe.com", "positivecontractor.com"]},
+    {"query": "who provides slab leak detection in Laguna Niguel?", "runs": 8, "distinct_domains": 17, "mean_jaccard": 0.63, "new_domain_share": 0.14, "core": ["leakstar.com", "efficientplumbing.com", "streamlineplumbing.org", "lagunaniguelcaplumbingpros.com", "evansleakdetection.com", "saddlebackplumbing.com", "aslplumbing.com", "clearwaterplumbingoc.com"]}
+  ],
+  "persistence": {
+    "incumbents_first_run": 74, "incumbents_core": 46, "incumbent_appearance_rate": 0.72,
+    "entrants_with_later_runs": 100, "entrants_reappeared_at_least_once": 50, "entrant_followup_rate_per_later_run": 0.25
+  },
+  "claude_comparison": {"source": "growth-engine/data/citation_observations.jsonl grouped by (city, service) because wording varies", "groups": 35, "runs": 210, "mean_jaccard": 0.34, "incumbent_rate": 0.60, "entrant_followup_rate": 0.49, "domains_per_row": 3.6},
+  "straight_flush": {"query": "who can locate a hidden water leak in Laguna Niguel?", "first_cited": "2026-11-09", "runs_since": 0}
+}

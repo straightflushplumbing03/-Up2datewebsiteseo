@@ -591,3 +591,51 @@ PR #161 and the brain-worker `classify()` reorder ship).
 - **Decision it drives:** whether to spend owner time on a directory push (HomeGuide,
   BuildZoom, MapQuest via the data aggregators) in parallel with Bing indexing, or to wait
   for indexing alone.
+
+## 2026-11-15 — Gemini source slates are sticky; a 3-run persistence read for the 11-09 citation (experiments crew)
+
+Data: `data/gemini_slate_stability_2026-11-15.json` (all 80 conclusive `gemini_search` rows in
+`public.ai_visibility_observations`, 10 queries, 10-23 → 11-09). No API calls, no spend.
+
+### Finding 1: Gemini is an own-site engine; directories barely appear
+- 635 citations. Directory/review domains (Angi, BBB, Birdeye, Thumbtack, HomeAdvisor, Reddit,
+  Facebook and 6 others) are **32 (5%)**, in 24 of 80 rows. One editorial site (todayshomeowner.com)
+  adds 14. Exact-match-domain lead-gen sites (lagunaniguelcaplumbingpros.com, plumbingdanapointca.com,
+  proplumberdanapoint.com and 3 others) add about 34. The rest, roughly 88%, are businesses' own sites.
+- The directories carrying small independents into **Claude** answers (HomeGuide, BuildZoom, MapQuest;
+  see exp-2026-11-13-claude-directory-path) appear **0 times** in Gemini sources. Yelp: 0.
+- **Implication:** the levers are per engine. Claude → directory profiles + Bing index. Gemini →
+  our own pages ranking on Google (consistent with exp-2026-11-04-gsc-rank-gate). A directory profile
+  should not be expected to move Gemini.
+
+### Finding 2: each query has a stable "slate" of sources that is hard to enter
+- Mean pairwise overlap (Jaccard) of a query's source set across runs: **0.32–0.64**, highest on
+  "slab leak detection in Laguna Niguel" (0.63, 8 core domains) and "leak detection in Dana Point" (0.64).
+- Domains present in a query's first run reappear in **72%** of its runs. Domains that first show up
+  later (entrants) reappear at least once only **50%** of the time and appear in **25%** of later runs.
+- Claude, for comparison (grouped by city × service, since wording rotates): overlap 0.34, incumbents
+  60%, entrants 49%, about 3.6 domains per row vs Gemini's 7.9. Claude's slates churn more.
+
+### exp-2026-11-15-gemini-slate-persistence — is our 11-09 citation an incumbent or a churn entrant?
+- **Question:** `straightflushplumbingoc.com` entered the slate of "who can locate a hidden water
+  leak in Laguna Niguel?" on 11-09 (run 8 of 8). Does it stay like an incumbent (~72%) or fade like a
+  typical entrant (~25%)?
+- **Data:** the next 3 weekly board runs of that query (expected 11-16, 11-23, 11-30). Count
+  `straightflushplumbingoc.com = any(domains)` per run. Track the name separately
+  (`answer_excerpt ILIKE '%straight flush%'`).
+- **Read rule after 3 runs:**
+  - **≥ 2 of 3 cited → sticky.** 81% likely if we behave like an incumbent (p = 0.72), 16% if like
+    a typical entrant (p = 0.25).
+  - **0 of 3 → churn entrant.** 42% likely at p = 0.25, 2% at p = 0.72. Treat 11-09 as a lucky draw.
+  - **1 of 3 → inconclusive**, keep reading under exp-2026-11-10-first-named-replication.
+- **Faster than the 14-run rule** of exp-2026-11-10 (mid-Feb 2027 at the weekly cadence) and answers
+  a narrower question (citation persistence, not naming rate). The 14-run rule stays the naming read.
+- **Secondary (same runs, no extra cost):** did our domain enter any **other** query's slate? Base
+  rate: 1 entry in 80 rows so far.
+- **Confounders:** sitewide PRs merged 11-14/11-15 (#191–#198) change the pages Google sees. If the
+  slate entry spreads to the control queries (San Clemente, Ladera Ranch, emergency South OC), read
+  it as a sitewide effect.
+- **Limits:** base rates come from 10 queries and ≤ 8 runs each, with 4 of the runs on one day
+  (11-01), which inflates overlap. One model (gemini-flash-latest). Domain-level only; the grounding
+  redirect URLs hide which page was cited.
+- **Status:** pre-registered 2026-11-15, before the 11-16 run. Read on 2026-12-01.
