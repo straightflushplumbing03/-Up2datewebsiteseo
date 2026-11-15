@@ -141,7 +141,7 @@ It depends on your address. Dana Point is split between South Coast Water Distri
  Who do I call about a sewer backup in Dana Point? +
 
 
-South Coast Water District owns and runs the sewer system across all of Dana Point, including the parts of the city that get their water from Moulton Niguel ([City of Dana Point, Utilities](https://www.danapoint.org/department/public-works-engineering/utilities)). If sewage is coming up from a manhole or a street sewer, or a neighbor has the same problem, call South Coast Water District at (949) 499-4555. If the backup is only inside your home, such as a slow tub, a gurgling toilet or several drains backing up at once, the blockage is usually in your own drain line between the house and the street, and that is a plumbing call: (949) 374-6524. See our [drain services](https://straightflushplumbingoc.com/services/drain-services.html) page for what we check.
+South Coast Water District owns and runs the sewer system across all of Dana Point, including the parts of the city that get their water from Moulton Niguel ([City of Dana Point, Utilities](https://www.danapoint.org/department/public-works-engineering/utilities)). If sewage is coming up from a manhole or a street sewer, or a neighbor has the same problem, call South Coast Water District at (949) 499-4555. If the backup is only inside your home, such as a slow tub, a gurgling toilet or several drains backing up at once, the blockage is usually in your own drain line between the house and the street, and that is a plumbing call: [(949) 374-6524](tel:+19493746524). See our [drain services](https://straightflushplumbingoc.com/services/drain-services.html) page for what we check.
 
 
 

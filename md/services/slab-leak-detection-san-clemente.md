@@ -120,7 +120,7 @@ A single leak in sound pipe is often a spot repair; repeated leaks in the same c
  Who does slab leak detection in San Clemente? +
 
 
-Straight Flush Plumbing & Leak Detection does slab leak detection and repair in San Clemente. We are an owner-operated plumbing company based nearby in Laguna Niguel. We pinpoint the leak with acoustic, electronic and thermal tools before any concrete is opened, and owner Lance answers the phone at (949) 374-6524.
+Straight Flush Plumbing & Leak Detection does slab leak detection and repair in San Clemente. We are an owner-operated plumbing company based nearby in Laguna Niguel. We pinpoint the leak with acoustic, electronic and thermal tools before any concrete is opened, and owner Lance answers the phone at [(949) 374-6524](tel:+19493746524).
 
 
 

@@ -17,7 +17,7 @@ San Clemente's Spanish-village charm comes with a wide range of home ages and pl
 
 
 
-Need slab leak detection in San Clemente? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based nearby in Laguna Niguel. We pinpoint the leak first with acoustic, electronic, and thermal equipment, before any concrete, tile, or drywall is opened, then talk through repair or reroute options. Call (949) 374-6524.
+Need slab leak detection in San Clemente? Straight Flush Plumbing & Leak Detection is an owner-operated plumber based nearby in Laguna Niguel. We pinpoint the leak first with acoustic, electronic, and thermal equipment, before any concrete, tile, or drywall is opened, then talk through repair or reroute options. Call [(949) 374-6524](tel:+19493746524).
 
  [Schedule Service in San Clemente](https://straightflushplumbingoc.com/contact.html)
 
@@ -121,7 +121,7 @@ Diagnose-first leak detection and plumbing, done right the first time.
  How much does leak detection cost in San Clemente, CA? +
 
 
-For most homes in San Clemente, leak detection runs $365 to $525. Where you fall depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Call (949) 374-6524 and Lance will walk you through what to expect for your specific situation. Our [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) explains what moves the price.
+For most homes in San Clemente, leak detection runs $365 to $525. Where you fall depends on the type of leak, how deep it sits, and how accessible the plumbing is, which is why we diagnose before quoting any repair. Call [(949) 374-6524](tel:+19493746524) and Lance will walk you through what to expect for your specific situation. Our [leak detection cost guide](https://straightflushplumbingoc.com/guides/leak-detection-cost.html) explains what moves the price.
 
 
 
@@ -137,7 +137,7 @@ Yes — San Clemente's Spanish-village charm comes with a wide range of home age
  Who does slab leak detection in San Clemente? +
 
 
-Straight Flush Plumbing & Leak Detection, an owner-operated plumber based nearby in Laguna Niguel, provides slab leak detection in San Clemente. We use acoustic listening equipment, electronic amplification, and thermal imaging to locate the leak before anything is opened, then explain repair, reroute, or repipe options. Call (949) 374-6524 or see our [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html) page.
+Straight Flush Plumbing & Leak Detection, an owner-operated plumber based nearby in Laguna Niguel, provides slab leak detection in San Clemente. We use acoustic listening equipment, electronic amplification, and thermal imaging to locate the leak before anything is opened, then explain repair, reroute, or repipe options. Call [(949) 374-6524](tel:+19493746524) or see our [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html) page.
 
 
 
@@ -153,7 +153,7 @@ In most cases, yes. We use acoustic listening equipment, electronic amplificatio
  How fast can you get to a leak in San Clemente? +
 
 
-We're based nearby in Laguna Niguel, so San Clemente is a short drive. Same-day appointments are often available, and we offer 24/7 service for emergencies. Call (949) 374-6524 and we'll find the earliest slot that works for you.
+We're based nearby in Laguna Niguel, so San Clemente is a short drive. Same-day appointments are often available, and we offer 24/7 service for emergencies. Call [(949) 374-6524](tel:+19493746524) and we'll find the earliest slot that works for you.
 
 
 
@@ -177,7 +177,7 @@ The City of San Clemente says the property owner is responsible for maintaining 
  Who do I call about a leak at the street or my water meter in San Clemente? +
 
 
-Leaks in the street, on the city side of the meter, or a sewer overflow should be reported to the City of San Clemente 24/7 Utilities hotline at 949-366-1553. If you live in Talega, your water comes from Santa Margarita Water District, and parts of north San Clemente are served by South Coast Water District, so report street or meter leaks to the district named on your water bill. Leaks on your side of the meter, such as the line to the house, under the slab, or inside a wall, are generally the property owner's to repair. That is the part we locate and fix. Call (949) 374-6524.
+Leaks in the street, on the city side of the meter, or a sewer overflow should be reported to the City of San Clemente 24/7 Utilities hotline at 949-366-1553. If you live in Talega, your water comes from Santa Margarita Water District, and parts of north San Clemente are served by South Coast Water District, so report street or meter leaks to the district named on your water bill. Leaks on your side of the meter, such as the line to the house, under the slab, or inside a wall, are generally the property owner's to repair. That is the part we locate and fix. Call [(949) 374-6524](tel:+19493746524).
 
 
 
@@ -185,7 +185,7 @@ Leaks in the street, on the city side of the meter, or a sewer overflow should b
  Who supplies water to my San Clemente home, and is it hard water? +
 
 
-Most San Clemente homes get water from the City of San Clemente's water utility, which in 2023 delivered imported Metropolitan Water District water plus water from Irvine Ranch Water District's Baker treatment plant. Talega is served by Santa Margarita Water District, and parts of north San Clemente by South Coast Water District. Your water bill names your supplier. The water is hard: the city's latest water quality report lists average hardness of about 9.4 grains per gallon for the MWD supply and about 17 grains per gallon for the Baker plant supply. Hard water leaves scale in water heaters and on fixtures, so regular water heater flushing helps (see our [San Clemente water heater service](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)). If you are seeing a high bill or a meter that keeps moving with everything off, call (949) 374-6524 and we will find the leak first.
+Most San Clemente homes get water from the City of San Clemente's water utility, which in 2023 delivered imported Metropolitan Water District water plus water from Irvine Ranch Water District's Baker treatment plant. Talega is served by Santa Margarita Water District, and parts of north San Clemente by South Coast Water District. Your water bill names your supplier. The water is hard: the city's latest water quality report lists average hardness of about 9.4 grains per gallon for the MWD supply and about 17 grains per gallon for the Baker plant supply. Hard water leaves scale in water heaters and on fixtures, so regular water heater flushing helps (see our [San Clemente water heater service](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)). If you are seeing a high bill or a meter that keeps moving with everything off, call [(949) 374-6524](tel:+19493746524) and we will find the leak first.
 
 
 

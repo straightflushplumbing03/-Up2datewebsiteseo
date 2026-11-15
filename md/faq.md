@@ -483,7 +483,7 @@ Straight Flush Plumbing & Leak Detection is a locally owned, owner-operated comp
 
 
 
-Call Lance directly at (949) 374-6524. Emergency calls are taken 24/7.
+Call Lance directly at [(949) 374-6524](tel:+19493746524). Emergency calls are taken 24/7.
 
 
  [Call (949) 374-6524](tel:+19493746524)
