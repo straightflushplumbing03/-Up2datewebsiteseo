@@ -12,7 +12,8 @@
     "seed": "tsx scripts/seed.ts",
     "job": "tsx scripts/run.ts",
     "refresh": "tsx scripts/refresh.ts",
-    "test": "tsx tests/run.ts"
+    "test": "tsx tests/run.ts",
+    "apikey": "tsx scripts/apikey.ts"
   },
   "dependencies": {
     "next": "^16.4.5",
