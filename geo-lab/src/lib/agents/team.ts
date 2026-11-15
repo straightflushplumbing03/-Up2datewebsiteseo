@@ -51,6 +51,14 @@ export const AGENT_TEAM: AgentDef[] = [
     boundaries: ["Never edits an external property (owner-only).", "Never adds sameAs to a duplicate host."],
   },
   {
+    id: "geographic",
+    name: "Geographic Opportunity Agent",
+    responsibility:
+      "Reviews each verified service-area city, starting with Laguna Niguel, and records page, schema, and measured-visibility gaps.",
+    layers: ["System Memory Readiness"],
+    boundaries: ["Never treats an unmeasured city as invisible.", "Never invents search volume or a rank."],
+  },
+  {
     id: "competitor-intelligence",
     name: "Competitor Intelligence Agent",
     responsibility:

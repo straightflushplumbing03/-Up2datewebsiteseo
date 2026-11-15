@@ -1,6 +1,7 @@
 import { insert, query, queryOne, run as sqlRun, logActivity } from "../db";
 import { nowIso, pct, round1, unique } from "../util";
 import { QUERY_LIBRARY } from "./queries";
+import { seedPriorityPrompts } from "./priority-market";
 import type { Provider, ProviderEnv, ProviderResult } from "./providers";
 import { providerRegistry } from "./providers";
 
@@ -29,6 +30,7 @@ export function seedQueries(): number {
     });
     n++;
   }
+  seedPriorityPrompts();
   return n;
 }
 
@@ -64,7 +66,7 @@ export function pickQueries(limit: number, families?: string[]): { id: number; t
             (SELECT MAX(ts) FROM visibility_results r WHERE r.query=q.text) AS last
        FROM queries q
       WHERE q.active=1 ${familyFilter}
-      ORDER BY q.priority ASC, (last IS NULL) DESC, last ASC
+      ORDER BY CASE WHEN q.city='Laguna Niguel' THEN 0 ELSE 1 END, q.priority ASC, (last IS NULL) DESC, last ASC
       LIMIT ?`,
     ...params,
     limit,
@@ -115,6 +117,7 @@ export async function runSweep(opts: SweepOptions): Promise<SweepSummary> {
       }
       if (res.status === "inconclusive") inconclusive++;
       else ok++;
+      const meta = queryOne<{ city: string | null; service: string | null }>("SELECT city, service FROM queries WHERE id=?", pick.id);
       insert("visibility_results", {
         run_id: runId,
         query_id: pick.id,
@@ -126,8 +129,8 @@ export async function runSweep(opts: SweepOptions): Promise<SweepSummary> {
         answer: res.answer ? res.answer.slice(0, 4000) : null,
         cited_urls: JSON.stringify(res.citedUrls),
         competitors: JSON.stringify(res.competitors),
-        city: null,
-        service: null,
+        city: meta?.city ?? null,
+        service: meta?.service ?? null,
         confidence: res.confidence,
         note: res.note,
       });

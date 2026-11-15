@@ -581,6 +581,50 @@ async function main() {
     assert(row?.status === "skipped", `row should record skipped: ${JSON.stringify(row)}`);
   });
 
+  await test("competitors: Laguna Niguel owner-named businesses stay distinct from discovered domains", async () => {
+    const { seedTrackedCompetitors, listTrackedCompetitors } = await import("../src/lib/engine/tracked-competitors");
+    seedTrackedCompetitors();
+    const rows = listTrackedCompetitors();
+    const eff = rows.find((r) => r.domain === "efficientplumbing.com");
+    assert(eff, "Efficient Plumbing was not seeded");
+    eq(eff.name, "Efficient Plumbing", "name");
+    eq(eff.homeCity, "Laguna Niguel", "office city");
+    eq(eff.origin, "owner_named_and_discovered", "Efficient Plumbing is in the stored results");
+    assert((eff.appearances ?? 0) > 0, "appearance count missing");
+    const ald = rows.find((r) => r.domain === "americanleakdetection.com");
+    assert(ald, "American Leak Detection was not seeded");
+    eq(ald.name, "American Leak Detection of Orange County", "local office name");
+    eq(ald.homeCity, "Anaheim", "office is Anaheim, not Laguna Niguel");
+    assert(ald.origin === "owner_named" || ald.origin === "owner_named_and_discovered", ald.origin);
+    const discovered = rows.find((r) => r.domain === "leakstar.com");
+    assert(discovered, "Leak Star should be discovered from stored results");
+    eq(discovered.origin, "discovered", "Leak Star was not owner-named");
+    eq(discovered.name, "Leak Star", "name from their site");
+    assert(!rows.some((r) => r.domain === "google.com" || r.domain === "yelp.com"), "directories and Google must not be seeded as competitors");
+  });
+
+  // ── External API (/api/v1) ──────────────────────────────────────────────
+  await test("api: a key authenticates, a wrong secret or missing scope is refused", async () => {
+    const { createApiKey, verifyApiKey, requireScope } = await import("../src/lib/api-keys");
+    const k = createApiKey("test-reader");
+    const ok = verifyApiKey(`Bearer ${k.secret}`);
+    assert(ok.ok && ok.key, "valid key must authenticate");
+    eq(verifyApiKey(`${k.prefix}.${"0".repeat(64)}`).status, 401, "wrong secret");
+    eq(verifyApiKey(null).status, 401, "missing key");
+    assert(!requireScope(ok.key!, "write:jobs"), "read-only key must not hold write:jobs");
+  });
+
+  await test("api: unauthenticated requests cannot grow the request log without bound", async () => {
+    const { recordRequest, UNAUTH_LOG_LIMIT_PER_MINUTE } = await import("../src/lib/api-keys");
+    for (let i = 0; i < UNAUTH_LOG_LIMIT_PER_MINUTE + 5; i++) {
+      recordRequest({ keyId: null, method: "GET", path: "/api/v1/health", status: 401, ms: 0, ip: "203.0.113.9", note: "x".repeat(500) });
+    }
+    const c = queryOne<{ c: number }>("SELECT COUNT(*) c FROM api_requests WHERE key_id IS NULL AND path='/api/v1/health'");
+    eq(Number(c?.c), UNAUTH_LOG_LIMIT_PER_MINUTE, "unauthenticated rows should stop at the per-minute cap");
+    const longest = queryOne<{ n: number }>("SELECT MAX(LENGTH(note)) n FROM api_requests");
+    assert(Number(longest?.n) <= 200, `note should be bounded, got ${longest?.n}`);
+  });
+
   // ── Report ──────────────────────────────────────────────────────────────
   const pass = results.filter((r) => r.ok).length;
   const fail = results.length - pass;

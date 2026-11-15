@@ -1,5 +1,6 @@
 import { mentionsBrand } from "../company";
 import { baseDomain, domainOf, unique } from "../util";
+import { completeLlm, type LlmProviderName } from "../llm/adapter";
 
 /**
  * AI / search visibility providers (spec §4 and §10).
@@ -135,63 +136,72 @@ export function tavilyProvider(apiKey: string | undefined): Provider {
  * Language API rejects with HTTP 401 ACCESS_TOKEN_TYPE_UNSUPPORTED, so it is
  * reported as blocked rather than silently skipped.
  */
-export function geminiProvider(apiKey: string | undefined, model = "gemini-2.5-flash"): Provider {
-  return {
+/** AIza… keys are Generative Language API keys. Other shapes (AQ.…) are rejected by Google. */
+export function geminiKeyUsable(apiKey: string | undefined): { ok: boolean; reason?: string } {
+  if (!apiKey) return { ok: false, reason: "GEMINI_API_KEY is not set." };
+  if (!apiKey.startsWith("AIza")) {
+    return {
+      ok: false,
+      reason:
+        "GEMINI_API_KEY is set but is not an AIza… API key, so Google rejects it (ACCESS_TOKEN_TYPE_UNSUPPORTED). The AI surface is UNMEASURED, not zero.",
+    };
+  }
+  return { ok: true };
+}
+
+export function geminiProvider(apiKey: string | undefined, model = process.env.GEMINI_MODEL || "gemini-2.5-flash"): Provider {
+  const key = geminiKeyUsable(apiKey);
+  return groundedProvider({
     id: "gemini_search",
     label: "Gemini Search API (grounded)",
+    provider: "google",
+    apiKey: key.ok ? apiKey : undefined,
+    model,
+    unavailableReason: key.reason,
+    note: "Gemini API answer with Google Search grounding. This is the API, not a screenshot of the Gemini app.",
+  });
+}
+
+function groundedProvider(opts: {
+  id: string;
+  label: string;
+  provider: LlmProviderName;
+  apiKey: string | undefined;
+  model?: string;
+  unavailableReason?: string;
+  note: string;
+}): Provider {
+  return {
+    id: opts.id,
+    label: opts.label,
     testType: "ai_platform",
-    available: false,
-    unavailableReason:
-      "GEMINI_API_KEY is set but rejected with HTTP 401 ACCESS_TOKEN_TYPE_UNSUPPORTED (the value is not an AIza… API key). The AI surface is UNMEASURED, not zero.",
+    available: Boolean(opts.apiKey),
+    unavailableReason: opts.apiKey ? undefined : opts.unavailableReason,
     async run(query: string): Promise<ProviderResult> {
-      if (!apiKey) return inconclusive("gemini_search", "ai_platform", "No Gemini API key available.");
-      try {
-        const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(apiKey)}`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: query }] }],
-              tools: [{ google_search: {} }],
-            }),
-          },
-        );
-        if (!res.ok) {
-          const body = await res.text();
-          const reason = body.match(/"reason"\s*:\s*"([^"]+)"/)?.[1] ?? "";
-          return inconclusive(
-            "gemini_search",
-            "ai_platform",
-            `Gemini grounded call returned HTTP ${res.status}${reason ? ` (${reason})` : ""}. UNMEASURED — not zero visibility.`,
-          );
-        }
-        const data = (await res.json()) as {
-          candidates?: {
-            content?: { parts?: { text?: string }[] };
-            groundingMetadata?: { groundingChunks?: { web?: { uri?: string; title?: string } }[] };
-          }[];
-        };
-        const answer = data.candidates?.[0]?.content?.parts?.map((p) => p.text ?? "").join("\n") ?? "";
-        const urls = (data.candidates?.[0]?.groundingMetadata?.groundingChunks ?? [])
-          .map((c) => c.web?.uri ?? "")
-          .filter(Boolean);
-        const status = classify(answer, urls, query);
-        return {
-          platform: "gemini_search",
-          testType: "ai_platform",
-          status,
-          rank: null,
-          answer,
-          citedUrls: urls,
-          competitors: unique(urls.map((u) => baseDomain(domainOf(u)))).slice(0, 10),
-          confidence: "medium",
-          note: "Gemini Search-grounded answer with citations.",
-          engine: model,
-        };
-      } catch (e) {
-        return inconclusive("gemini_search", "ai_platform", `Gemini request failed: ${(e as Error).message}`);
+      if (!opts.apiKey) return inconclusive(opts.id, "ai_platform", opts.unavailableReason ?? "No API key.");
+      const result = await completeLlm({
+        provider: opts.provider,
+        apiKey: opts.apiKey,
+        model: opts.model,
+        input: query,
+        webSearch: true,
+      });
+      if (!result.ok) {
+        return inconclusive(opts.id, "ai_platform", `${result.error} UNMEASURED — not zero visibility.`);
       }
+      const status = classify(result.text, result.citations, query);
+      return {
+        platform: opts.id,
+        testType: "ai_platform",
+        status,
+        rank: null,
+        answer: result.text || null,
+        citedUrls: result.citations,
+        competitors: unique(result.citations.map((u) => baseDomain(domainOf(u)))).filter((d) => d && !SF_DOMAINS.some((s) => d.includes(s))).slice(0, 10),
+        confidence: "medium",
+        note: opts.note,
+        engine: result.model,
+      };
     },
   };
 }
@@ -229,6 +239,8 @@ export interface ProviderEnv {
   gemini?: string;
   perplexity?: string;
   openai?: string;
+  anthropic?: string;
+  xai?: string;
 }
 
 /**
@@ -239,25 +251,46 @@ export function providerRegistry(env: ProviderEnv): Provider[] {
   return [
     tavilyProvider(env.tavily),
     geminiProvider(env.gemini),
+    groundedProvider({
+      id: "chatgpt_search",
+      label: "OpenAI web search",
+      provider: "openai",
+      apiKey: env.openai,
+      model: process.env.OPENAI_MODEL,
+      unavailableReason: "OPENAI_API_KEY is not set. chatgpt.com itself is not scraped. UNMEASURED, not zero.",
+      note: "OpenAI Responses API with the web_search tool. This is not the chatgpt.com consumer product.",
+    }),
+    groundedProvider({
+      id: "claude_web_search",
+      label: "Claude web search",
+      provider: "anthropic",
+      apiKey: env.anthropic,
+      model: process.env.ANTHROPIC_MODEL,
+      unavailableReason: "ANTHROPIC_API_KEY is not set. UNMEASURED, not zero.",
+      note: "Anthropic Messages API with the web_search tool. This is not claude.ai in a browser.",
+    }),
+    groundedProvider({
+      id: "perplexity",
+      label: "Perplexity",
+      provider: "perplexity",
+      apiKey: env.perplexity,
+      model: process.env.PERPLEXITY_MODEL,
+      unavailableReason: "PERPLEXITY_API_KEY is not set. The API is metered. UNMEASURED, not zero.",
+      note: "Perplexity sonar answer with the citations the API returned.",
+    }),
+    groundedProvider({
+      id: "grok_search",
+      label: "Grok web search",
+      provider: "xai",
+      apiKey: env.xai,
+      model: process.env.XAI_MODEL,
+      unavailableReason: "XAI_API_KEY is not set. grok.com is not scraped. UNMEASURED, not zero.",
+      note: "xAI Responses API with the web_search tool. This is not the Grok consumer app.",
+    }),
     blockedProvider(
       "google_ai_overviews",
       "Google AI Overviews / AI Mode",
       "No SERP API key; the SERP is a JS shell to non-browser clients and returns a CAPTCHA from this egress IP.",
-    ),
-    blockedProvider(
-      "chatgpt_search",
-      "ChatGPT Search",
-      "chatgpt.com returns 403 to non-browser clients; no OPENAI_API_KEY is present in this environment.",
-    ),
-    blockedProvider(
-      "claude_web_search",
-      "Claude web search",
-      "Not scriptable from this environment without a Claude API key; owner manual sweep supported via data/manual.",
-    ),
-    blockedProvider(
-      "perplexity",
-      "Perplexity",
-      "PERPLEXITY_API_KEY not set. Metered, no free tier — optional second engine.",
     ),
     blockedProvider(
       "copilot",

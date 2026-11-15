@@ -5,6 +5,7 @@ import { seedIntegrations } from "../src/lib/integrations";
 import { seedCanonicalExperiments } from "../src/lib/engine/experiment";
 import { ingestEntityHistory } from "../src/lib/engine/entity";
 import { ingestCompetitorObservations, recordFromVisibility } from "../src/lib/engine/competitor";
+import { seedTrackedCompetitors } from "../src/lib/engine/tracked-competitors";
 import { ingestCitationActions, deriveOpportunities } from "../src/lib/engine/optimize";
 import { crawlRepo, auditSite } from "../src/lib/engine/site";
 import { scorePage } from "../src/lib/engine/geo";
@@ -35,6 +36,8 @@ function main() {
   console.log(`  canonical experiments: +${ex}`);
 
   const eh = ingestEntityHistory();
+  const tracked = seedTrackedCompetitors();
+  console.log(`  tracked competitors: ${tracked.ownerNamed} owner-named, ${tracked.discovered} discovered`);
   const co = ingestCompetitorObservations();
   const cr = recordFromVisibility();
   const ca = ingestCitationActions();

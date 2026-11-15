@@ -2,12 +2,14 @@ import { competitorsDetailed } from "@/lib/queries";
 import { competitorScorecard } from "@/lib/engine/competitor";
 import { Card, StatCard, Table, Pill, SectionHeader, Bar } from "@/components/ui";
 import { COMPETITOR_DIRECTORY_NOTE } from "@/lib/notes";
+import { listTrackedCompetitors } from "@/lib/engine/tracked-competitors";
 
 export const dynamic = "force-dynamic";
 
 export default async function CompetitorsPage() {
   const { scorecard, observations } = competitorsDetailed();
   const all = competitorScorecard(365);
+  const tracked = listTrackedCompetitors();
 
   return (
     <div className="space-y-6">
@@ -22,6 +24,31 @@ export default async function CompetitorsPage() {
         <StatCard label="Top domain" value={all[0]?.domain ?? "—"} sub={all[0] ? `${all[0].appearances} appearances` : "no data"} source="share of voice" />
         <StatCard label="Lead-gen/aggregator share" value={`${leadgenShare(all)}%`} sub="yelp, angi, homeadvisor…" source="derived" tone="warn" />
       </div>
+
+      <Card>
+        <SectionHeader
+          title="Laguna Niguel competitors"
+          subtitle="Owner-named businesses were checked on their own sites. Discovered domains are counted from stored search results, not from a live ranking."
+        />
+        <Table
+          head={["Business", "Domain", "How we know", "Office", "Times in stored Laguna Niguel results"]}
+          empty="No tracked competitors yet. Run the competitor agent."
+          rows={tracked.map((c) => [
+            c.name ?? "Name not verified",
+            c.domain,
+            c.origin === "owner_named"
+              ? "Owner-named"
+              : c.origin === "owner_named_and_discovered"
+                ? "Owner-named, and in stored results"
+                : "Discovered",
+            c.homeCity ?? "Not verified",
+            c.appearances == null ? "—" : String(c.appearances),
+          ])}
+        />
+        <p className="mt-3 text-[11px] text-ink-faint">
+          American Leak Detection’s Orange County office publishes an Anaheim address and lists Laguna Niguel as a city it serves. Efficient Plumbing publishes a Laguna Niguel address. Counts are how often the domain showed up in stored results. They are not a rank.
+        </p>
+      </Card>
 
       <Card>
         <SectionHeader title="Competitor scorecard" subtitle="Ranked by observed appearances across all measured queries." />

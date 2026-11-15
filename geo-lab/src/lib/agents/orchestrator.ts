@@ -6,10 +6,16 @@ import { scorePage, type PageScore } from "../engine/geo";
 import { persistPages, persistScores } from "../engine/persist";
 import { runEntityCheck, ingestEntityHistory } from "../engine/entity";
 import { ingestCompetitorObservations, recordFromVisibility, competitorScorecard } from "../engine/competitor";
+import { seedTrackedCompetitors } from "../engine/tracked-competitors";
 import { runSweep, computeVisibilityMetrics, seedQueries } from "../engine/visibility";
 import { deriveOpportunities, ingestCitationActions, listOpportunities } from "../engine/optimize";
-import { seedCanonicalExperiments } from "../engine/experiment";
+import { seedCanonicalExperiments, listExperiments, evaluateVisibilityExperiment } from "../engine/experiment";
 import { seedResearchNotes } from "../engine/research";
+import { analyzeGeography, saveCoverage, recordGeographicOpportunities } from "../engine/geography";
+import { reviewPriorityCity, savePriorityReview, recordPriorityActions } from "../engine/priority-market";
+import { saveReport } from "../reporting";
+import { runQueuedJobs } from "../jobs";
+import { runPublishingAgent } from "../engine/publishing";
 import { AGENT_TEAM } from "./team";
 import { providerRegistry, type ProviderEnv } from "../engine/providers";
 
@@ -52,9 +58,37 @@ export interface OrchestratorOptions {
   publish?: boolean;
   /** Skip the overlap guard (manual force). */
   force?: boolean;
+  /** Skip network steps that already succeeded in the last 12 hours. */
+  resume?: boolean;
 }
 
 const OVERLAP_WINDOW_MIN = 40;
+
+/** A killed process leaves status=running. Close those rows so the next run is not blocked. */
+export function closeStaleRuns(): number {
+  const rows = query<{ id: number; ts: string }>("SELECT id, ts FROM agent_runs WHERE status='running'");
+  let closed = 0;
+  for (const row of rows) {
+    const age = Date.now() - new Date(row.ts.replace(" ", "T") + "Z").getTime();
+    if (Number.isNaN(age) || age >= OVERLAP_WINDOW_MIN * 60_000) {
+      sqlRun(
+        "UPDATE agent_runs SET status='failed', error=?, finished_at=datetime('now') WHERE id=?",
+        "Interrupted: the process ended before this step finished.",
+        row.id,
+      );
+      closed += 1;
+    }
+  }
+  return closed;
+}
+
+function recentlySucceeded(agent: string): boolean {
+  const row = queryOne<{ id: number }>(
+    "SELECT id FROM agent_runs WHERE agent=? AND status='ok' AND ts > datetime('now','-12 hours') LIMIT 1",
+    agent,
+  );
+  return Boolean(row);
+}
 
 export function isRunInProgress(): boolean {
   const row = queryOne<{ id: number; ts: string }>(
@@ -68,16 +102,17 @@ export function isRunInProgress(): boolean {
 async function step(
   agent: string,
   trigger: string,
-  fn: () => Promise<{ summary: string; detail?: unknown }> | { summary: string; detail?: unknown },
+  fn: () => Promise<{ summary: string; detail?: unknown; status?: "ok" | "skipped" }> | { summary: string; detail?: unknown; status?: "ok" | "skipped" },
 ): Promise<StepResult> {
   const t0 = Date.now();
   const runId = insert("agent_runs", { agent, orchestrator: "orchestrator", trigger, status: "running" });
   try {
     const out = await fn();
     const ms = Date.now() - t0;
-    sqlRun("UPDATE agent_runs SET status='ok', summary=?, detail=?, finished_at=datetime('now'), duration_ms=? WHERE id=?",
-      out.summary, out.detail ? JSON.stringify(out.detail).slice(0, 8000) : null, ms, runId);
-    return { agent, status: "ok", summary: out.summary, durationMs: ms, detail: out.detail };
+    const status = out.status ?? "ok";
+    sqlRun("UPDATE agent_runs SET status=?, summary=?, detail=?, finished_at=datetime('now'), duration_ms=? WHERE id=?",
+      status, out.summary, out.detail ? JSON.stringify(out.detail).slice(0, 8000) : null, ms, runId);
+    return { agent, status, summary: out.summary, durationMs: ms, detail: out.detail };
   } catch (e) {
     const ms = Date.now() - t0;
     const msg = (e as Error).message;
@@ -91,6 +126,7 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
   const startedAt = nowIso();
   const trigger = opts.trigger ?? "manual";
   const steps: StepResult[] = [];
+  closeStaleRuns();
 
   if (!opts.force && isRunInProgress()) {
     return {
@@ -160,7 +196,9 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
   );
 
   // 3. Entity Intelligence Agent.
-  steps.push(
+  if (opts.resume && recentlySucceeded("Entity Intelligence Agent")) {
+    steps.push({ agent: "Entity Intelligence Agent", status: "skipped", summary: "Resume: this step already succeeded in the last 12 hours.", durationMs: 0 });
+  } else steps.push(
     await step("Entity Intelligence Agent", trigger, async () => {
       const ingested = ingestEntityHistory();
       const report = await runEntityCheck({ live: opts.liveEntity !== false });
@@ -176,10 +214,11 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
   // 4. Competitor Intelligence Agent.
   steps.push(
     await step("Competitor Intelligence Agent", trigger, () => {
+      const tracked = seedTrackedCompetitors();
       const a = ingestCompetitorObservations();
       const b = recordFromVisibility();
       const scorecard = competitorScorecard();
-      logActivity("Competitor Intelligence Agent", `Competitor map updated (+${a} historical, +${b} from visibility); ${scorecard.length} competitor domains tracked.`, {
+      logActivity("Competitor Intelligence Agent", `Competitor map updated (+${a} historical, +${b} from visibility); ${scorecard.length} observed domains; ${tracked.ownerNamed} owner-named and ${tracked.discovered} discovered Laguna Niguel competitors seeded.`, {
         level: "success",
         evidence: scorecard.slice(0, 3).map((c) => `${c.domain} (${c.appearances})`).join(", "),
         runId: orchRunId,
@@ -188,9 +227,33 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
     }),
   );
 
-  // 5. GEO Research Agent — live visibility sweep.
+  // 5. Geographic Opportunity Agent — files, scores, and stored tests only.
+  steps.push(
+    await step("Geographic Opportunity Agent", trigger, () => {
+      const rows = analyzeGeography();
+      const saved = saveCoverage(rows);
+      const created = recordGeographicOpportunities(rows);
+      const priority = reviewPriorityCity();
+      savePriorityReview(priority);
+      const priorityCreated = recordPriorityActions(priority);
+      const focusGaps = rows.filter((r) => r.focus !== "extended" && r.gaps.length);
+      logActivity("Geographic Opportunity Agent", `Reviewed ${saved} cities; ${focusGaps.length} focus cities have a measured gap; ${created} new opportunities.`, {
+        level: focusGaps.length ? "warning" : "success",
+        evidence: focusGaps.slice(0, 3).map((r) => `${r.name}: ${r.gaps[0]}`).join(" | ") || "no focus-city gaps",
+        runId: orchRunId,
+      });
+      return {
+        summary: `${saved} cities reviewed, ${created + priorityCreated} new opportunities`,
+        detail: { top: focusGaps.slice(0, 8).map((r) => ({ city: r.name, focus: r.focus, mentionRate: r.mentionRate, gaps: r.gaps.slice(0, 3) })) },
+      };
+    }),
+  );
+
+  // 6. GEO Research Agent — live visibility sweep.
   if (opts.visibility !== false) {
-    steps.push(
+    if (opts.resume && recentlySucceeded("GEO Research Agent")) {
+      steps.push({ agent: "GEO Research Agent", status: "skipped", summary: "Resume: a sweep already succeeded in the last 12 hours.", durationMs: 0 });
+    } else steps.push(
       await step("GEO Research Agent", trigger, async () => {
         const registry = providerRegistry(opts.env);
         const available = registry.filter((p) => p.available);
@@ -214,7 +277,7 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
     );
   }
 
-  // 6. Analytics Agent — metrics + opportunities.
+  // 7. Analytics Agent — metrics + opportunities.
   steps.push(
     await step("Analytics Agent", trigger, () => {
       const pages = crawlRepo();
@@ -229,6 +292,69 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
         runId: orchRunId,
       });
       return { summary: `${created} new opportunities`, detail: { metrics: { ...metrics, byPlatform: metrics.byPlatform, shareOfVoice: metrics.shareOfVoice.slice(0, 10) } } };
+    }),
+  );
+
+  // 8. Experiment Agent — compare stored windows. A small sample is not a result.
+  steps.push(
+    await step("Experiment Agent", trigger, () => {
+      const experiments = listExperiments();
+      let insufficient = 0;
+      for (const exp of experiments) {
+        const ev = evaluateVisibilityExperiment(String(exp.code));
+        if (ev && !ev.sufficientSample) insufficient += 1;
+      }
+      logActivity("Experiment Agent", `Evaluated ${experiments.length} experiment(s); ${insufficient} lack a large enough sample to conclude anything.`, {
+        level: "info",
+        evidence: "evaluateVisibilityExperiment",
+        runId: orchRunId,
+      });
+      return { summary: `${experiments.length} evaluated, ${insufficient} inconclusive samples` };
+    }),
+  );
+
+  // 9. Security & Quality Agent — names missing credentials, never their values.
+  steps.push(
+    await step("Security & Quality Agent", trigger, () => {
+      const missing = [
+        "GITHUB_TOKEN",
+        "GEO_LAB_RUN_TOKEN",
+        "TAVILY_API_KEY",
+        "GEMINI_API_KEY",
+        "OPENAI_API_KEY",
+        "ANTHROPIC_API_KEY",
+        "PERPLEXITY_API_KEY",
+        "XAI_API_KEY",
+      ].filter((name) => !(process.env[name] || (name === "TAVILY_API_KEY" && process.env.Tavily_api_key)));
+      logActivity("Security & Quality Agent", missing.length ? `Missing credentials: ${missing.join(", ")}.` : "Checked credential presence.", {
+        level: missing.length ? "warning" : "success",
+        evidence: "env presence only",
+        runId: orchRunId,
+      });
+      return { summary: missing.length ? `missing: ${missing.join(", ")}` : "credential check ok", detail: { missing } };
+    }),
+  );
+
+  // 10. Queued Headquarters jobs. Publish/deploy/spend are held, not run.
+  steps.push(
+    await step("Job Runner", trigger, async () => {
+      const jobs = await runQueuedJobs(opts.env, 3);
+      return { summary: `${jobs.ran} ran, ${jobs.failed} failed, ${jobs.held} held`, detail: jobs.summaries };
+    }),
+  );
+
+  // 11. Reporting Agent — daily, plus weekly on Sunday in the business timezone.
+  steps.push(
+    await step("Reporting Agent", trigger, () => {
+      const dailyId = saveReport("daily");
+      const weekday = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", weekday: "short" }).format(new Date());
+      const weeklyId = weekday === "Sun" ? saveReport("weekly") : null;
+      logActivity("Reporting Agent", `Saved daily report #${dailyId}${weeklyId ? ` and weekly report #${weeklyId}` : ""}.`, {
+        level: "success",
+        evidence: `reports#${dailyId}`,
+        runId: orchRunId,
+      });
+      return { summary: weeklyId ? `daily #${dailyId}, weekly #${weeklyId}` : `daily #${dailyId}` };
     }),
   );
 
@@ -290,8 +416,39 @@ export async function runSingleAgent(agentId: string, opts: OrchestratorOptions)
         const created = deriveOpportunities(audit, scores, metrics);
         return { summary: `${created} new opportunities`, detail: { mentionRate: metrics.mentionRate } };
       });
+    case "geographic":
+      return step(agent.name, opts.trigger ?? "manual", () => {
+        const rows = analyzeGeography();
+        saveCoverage(rows);
+        const created = recordGeographicOpportunities(rows);
+        const priority = reviewPriorityCity();
+        savePriorityReview(priority);
+        recordPriorityActions(priority);
+        return { summary: `${rows.length} cities, ${created} new coverage opportunities`, detail: { lagunaNiguelTests: priority.conclusiveTests } };
+      });
+    case "experiment":
+      return step(agent.name, opts.trigger ?? "manual", () => {
+        const experiments = listExperiments();
+        const insufficient = experiments.filter((exp) => {
+          const ev = evaluateVisibilityExperiment(String(exp.code));
+          return ev ? !ev.sufficientSample : true;
+        }).length;
+        return { summary: `${experiments.length} evaluated, ${insufficient} without a large enough sample` };
+      });
+    case "security-quality":
+      return step(agent.name, opts.trigger ?? "manual", () => {
+        const missing = ["GITHUB_TOKEN", "GEO_LAB_RUN_TOKEN", "OPENAI_API_KEY", "GEMINI_API_KEY", "ANTHROPIC_API_KEY", "XAI_API_KEY", "PERPLEXITY_API_KEY"].filter((name) => !process.env[name]);
+        return { summary: missing.length ? `missing: ${missing.join(", ")}` : "credential check ok", detail: { missing } };
+      });
+    case "publishing":
+      return step(agent.name, opts.trigger ?? "manual", async () => {
+        const out = await runPublishingAgent(2);
+        return { summary: `${out.published} pull request(s) opened`, detail: out.results.map((r) => r.message) };
+      });
+    case "orchestrator":
+      return { agent: agent.name, status: "skipped", summary: "Use Run daily operations. A nested orchestrator is not started from this button.", durationMs: 0 };
     default:
-      return step(agent.name, opts.trigger ?? "manual", () => ({ summary: `${agent.name} executed (no-op in this build)`, detail: {} }));
+      return { agent: agentId, status: "failed", summary: `No runner for ${agentId}.`, durationMs: 0 };
   }
 }
 
@@ -301,6 +458,8 @@ export function providerEnvFromProcess(): ProviderEnv {
     gemini: process.env.GEMINI_API_KEY,
     perplexity: process.env.PERPLEXITY_API_KEY,
     openai: process.env.OPENAI_API_KEY,
+    anthropic: process.env.ANTHROPIC_API_KEY,
+    xai: process.env.XAI_API_KEY,
   };
 }
 

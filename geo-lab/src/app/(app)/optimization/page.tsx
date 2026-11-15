@@ -10,8 +10,6 @@ export default async function OptimizationPage() {
   const open = all.filter((o) => o.status === "open");
   const byLayer = new Map<string, number>();
   for (const o of open) byLayer.set(o.geoLayer, (byLayer.get(o.geoLayer) ?? 0) + 1);
-  const byImpact = (n: number) => open.filter((o) => o.impact === n).length;
-
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -22,7 +20,7 @@ export default async function OptimizationPage() {
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <StatCard label="Open" value={open.length} sub={`of ${all.length} total`} source="opportunities" tone={open.length ? "warn" : "good"} />
-        <StatCard label="High impact" value={byImpact(3)} sub="impact 3 of 3" source="opportunities" tone="brand" />
+        <StatCard label="High impact" value={open.filter((o) => o.impact >= 4).length} sub="impact 4–5 of 5" source="opportunities" tone="brand" />
         <StatCard label="In progress" value={all.filter((o) => o.status === "in_progress").length} source="opportunities" />
         <StatCard label="Completed" value={all.filter((o) => o.status === "done").length} source="opportunities" tone="good" />
       </div>
@@ -58,13 +56,15 @@ export default async function OptimizationPage() {
                 <div className="space-y-2 text-xs">
                   <div><span className="font-semibold text-ink-soft">Problem:</span> {o.problem}</div>
                   <div><span className="font-semibold text-ink-soft">Evidence:</span> <span className="text-ink-soft">{o.evidence}</span></div>
+                  <div><span className="font-semibold text-ink-soft">Why it matters:</span> {o.why || o.evidence}</div>
                   <div><span className="font-semibold text-ink-soft">Expected benefit:</span> {o.expectedBenefit}</div>
-                  <div><span className="font-semibold text-ink-soft">Proposed solution:</span> {o.proposed}</div>
+                  <div><span className="font-semibold text-ink-soft">Do this:</span> {o.proposed}</div>
+                  <div><span className="font-semibold text-ink-soft">Approval:</span> {o.approval === "automated" ? "The publishing agent may open a pull request." : "Needs your approval."}</div>
                 </div>
                 <div className="space-y-2 text-xs">
                   <div><span className="font-semibold text-ink-soft">URL:</span> <code className="text-[11px]">{o.url ?? "—"}</code></div>
                   <div><span className="font-semibold text-ink-soft">Section:</span> {o.section ?? "—"}</div>
-                  <div><span className="font-semibold text-ink-soft">Impact / difficulty:</span> {o.impact}/3 · {o.difficulty}</div>
+                  <div><span className="font-semibold text-ink-soft">Impact / difficulty:</span> {o.impact}/5 · {o.difficulty}</div>
                   {o.result ? <div><span className="font-semibold text-ink-soft">Result:</span> {o.result}</div> : null}
                   <OpportunityActions id={o.id} status={o.status} />
                 </div>

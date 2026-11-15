@@ -3,6 +3,8 @@ import { listQueries } from "@/lib/queries";
 import { Card, StatCard, LayerBars, Bar, LineChart, Pill, SectionHeader, Table, statusTone, ScoreRing } from "@/components/ui";
 import { RunControls } from "@/components/run-controls";
 import { COMPANY } from "@/lib/company";
+import { reviewPriorityCity } from "@/lib/engine/priority-market";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +16,8 @@ export default async function CommandCenter() {
 
   const v = s.visibility;
   const lastActivity = s.activity[0];
+  const priority = reviewPriorityCity();
+  const next = s.opportunities.top;
 
   return (
     <div className="space-y-6">
@@ -57,6 +61,37 @@ export default async function CommandCenter() {
         <StatCard label="Published Improvements" value={`${s.publications.total}`} sub={`${s.publications.verified} verified live`} source="publications" tone="brand" />
         <StatCard label="Integrations" value={`${s.integrations.connected}/${s.integrations.total}`} sub="connected / total" source="integrations" tone={s.integrations.connected ? "good" : "warn"} />
       </div>
+
+      <Card>
+        <SectionHeader
+          title="Laguna Niguel — get recommended here first"
+          subtitle="Mention and recommendation rates stay blank until a real test is stored."
+          right={<Link href="/geography" className="text-xs font-medium text-[color:var(--color-brand)]">Service areas →</Link>}
+        />
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+          <StatCard label="Conclusive tests" value={priority.conclusiveTests} source="visibility_results" />
+          <StatCard label="Mention rate" value={priority.mentionRate == null ? "unmeasured" : `${priority.mentionRate}%`} source="stored answers" />
+          <StatCard label="Recommended" value={priority.recommendationRate == null ? "unmeasured" : `${priority.recommendationRate}%`} source="status = recommended" />
+          <StatCard label="Open actions" value={priority.actions.length} sub="each needs approval" source="file checks" tone={priority.actions.length ? "warn" : "good"} />
+        </div>
+      </Card>
+
+      <Card>
+        <SectionHeader title="Next actions" subtitle="What is wrong, why it matters, what to do, and whether you have to approve it." />
+        <div className="space-y-3">
+          {(next.length ? next.slice(0, 4) : []).map((o) => (
+            <div key={o.id} className="rounded-xl border border-[color:var(--color-line)] p-3 text-xs">
+              <div className="font-semibold">{o.title}</div>
+              <div className="mt-1">{o.problem}</div>
+              <div className="mt-1 text-ink-soft">Why: {o.why || o.evidence}</div>
+              <div className="mt-1">Do this: {o.proposed}</div>
+              <div className="mt-1 text-ink-soft">Benefit: {o.expectedBenefit}</div>
+              <div className="mt-1"><Pill tone={o.approval === "automated" ? "good" : "warn"}>{o.approval === "automated" ? "can open a pull request" : "needs your approval"}</Pill></div>
+            </div>
+          ))}
+          {!next.length ? <p className="text-xs text-ink-faint">No stored actions yet. Run daily operations to build them from the crawl.</p> : null}
+        </div>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Card className="lg:col-span-2">
