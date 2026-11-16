@@ -639,3 +639,16 @@ Data: `data/gemini_slate_stability_2026-11-15.json` (all 80 conclusive `gemini_s
   (11-01), which inflates overlap. One model (gemini-flash-latest). Domain-level only; the grounding
   redirect URLs hide which page was cited.
 - **Status:** pre-registered 2026-11-15, before the 11-16 run. Read on 2026-12-01.
+
+## 2026-11-16 — exp-2026-11-16-pex-hub-direct-answer (Claude weekly)
+
+- **Page:** `/services/pex-repiping.html` — hero direct-answer line; FAQ "Who does PEX repiping in
+  Lake Forest, San Juan Capistrano and nearby South Orange County cities?" (visible + FAQPage JSON-LD);
+  "By city" line links Lake Forest, San Juan Capistrano, Laguna Hills, Rancho Santa Margarita. Approved
+  claims only (owner-operated, Laguna Niguel, Lance answers, diagnose-first). No prices.
+- **Why:** repipe SERPs in these cities are mostly templated doorway pages (≈14/19 for SJC on 11-16) with
+  few legitimate local pages; all 22 PEX queries measured are `absent`.
+- **Target queries (baseline `absent`, claude_web_search):** best PEX repiping in Lake Forest (11-16),
+  San Juan Capistrano (11-16), Laguna Hills (11-14), Rancho Santa Margarita (11-15).
+- **Re-measure:** 2026-12-14. Read: any target `cited`/`mentioned`/`recommended` = signal; 0/4 = no effect yet.
+- **Confounders:** open PRs #207/#209 may merge in the window; single engine; one search per query.

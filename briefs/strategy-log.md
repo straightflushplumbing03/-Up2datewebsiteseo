@@ -5,6 +5,13 @@ competitor insight, expected outcome, result, keep/modify/revert.
 
 ---
 
+## 2026-11-16 (Claude weekly) — PEX hub answers "who does PEX repiping in <city>"; owner to-dos
+
+**Change:** `/services/pex-repiping.html` hero direct answer + FAQ (visible + JSON-LD) + links to Lake Forest / SJC / Laguna Hills / RSM; exp `exp-2026-11-16-pex-hub-direct-answer`, re-measure 2026-12-14.
+**Why:** repipe SERPs there are mostly doorway spam (open slot); 22/22 PEX queries absent. Scoreboard still 0/154. Owner: Angi (73), HomeAdvisor (60), allow WebFetch.
+
+---
+
 ## 2026-11-09 (Claude weekly) — leak-detection hub answers "who does leak detection in <city>"; owner to-dos
 
 **Change:** `/services/leak-detection.html` hero direct answer + FAQ (visible + JSON-LD) + links to Aliso Viejo / Laguna Hills / SJC / Ladera Ranch; exp `exp-2026-11-09-leak-detection-hub-direct-answer`, re-measure 2026-12-07.
