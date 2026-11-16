@@ -30,6 +30,10 @@ jobs:
             https://straightflushplumbingoc.com/cities/laguna-niguel
             https://straightflushplumbingoc.com/cities/mission-viejo
           runs: 2
+          # Block GA4 (and Cloudflare beacon) requests during audits. Lighthouse runs a real
+          # Chrome, so without this every Monday run logged 12 fake "direct" visits
+          # (6 URLs x 2 runs, 0 engagement) in GA4 and diluted the lead/traffic numbers.
+          configPath: ./lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
 
