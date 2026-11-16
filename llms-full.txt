@@ -2460,7 +2460,7 @@ Schedule a professional leak detection visit anywhere in South or Central Orange
 
 
 
-Straight Flush is the South Orange County specialist for slab leaks under 1970s–1990s copper systems in expansive clay soils. Lance answers the phone. We use acoustic, electronic, and thermal detection to pinpoint the leak before any concrete is opened.
+A slab leak is a leak in a water line that runs under your home’s concrete foundation. Slab leak detection finds the exact spot before anyone opens the floor. We use acoustic, electronic, and thermal detection to narrow it to a small area first. Many South Orange County homes built in the 1970s–1990s still have copper lines under the slab, the kind of system these leaks most often start in. Lance answers the phone.
 
  [Schedule Slab Leak Detection](https://straightflushplumbingoc.com/contact.html)
 
@@ -2536,11 +2536,11 @@ This is the most reliable check you can run yourself before calling anyone.
 
 - Write down the meter reading, or take a photo of it.
 
-- Wait 20–30 minutes without using any water.
+- Wait 30 minutes without using any water.
 
 - Check the meter again. Any change means water is leaving your system somewhere.
 
-- If it moved, close the supply valves to your toilets and irrigation and repeat. If the meter still moves, the leak is most likely in a supply line, which is where acoustic detection comes in.
+- If it moved, close the shutoff valve behind each toilet and check again. A worn flapper or running fill valve is a common cause. If the meter still moves, close the house valve where the main line enters the home. If the meter stops, the leak is inside the home, possibly under the slab, which is where acoustic detection comes in. If it keeps moving, the leak is more likely on the service line between the meter and the house. Moulton Niguel Water District’s [troubleshooting guide](https://mnwd.com/troubleshooting-guide) walks through the same checks.
 
 
 
@@ -2598,7 +2598,7 @@ Pressurized water escaping a pipe underground makes a distinct sound. Our acoust
 
 
 
-Pressure testing confirms which water line is affected, hot or cold, and which zone of the home it runs through.
+Pressure testing confirms which water line is affected, hot or cold, and [electronic pipe locating](https://straightflushplumbingoc.com/academy/electronic-pipe-locating-explained.html) traces where that line runs under the slab.
 
 
 
