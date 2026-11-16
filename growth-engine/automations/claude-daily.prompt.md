@@ -42,7 +42,19 @@ is committed beats a long run that is lost.
 
 ## Step 1 — site health (≤ 3 minutes)
 
-The workspace shell usually cannot reach the live site, so use **WebFetch**:
+The checks run in the GitHub Action **`Live site health`** (`.github/workflows/live-health.yml`,
+daily 12:07 UTC, before this run), because WebFetch permission prompts go unanswered in
+unattended runs (untested 10 runs in a row, 11-05 → 11-16). Read its result with the GitHub
+connector:
+1. `actions_list` (method `list_workflow_runs`, resource_id `live-health.yml`, perPage 1).
+   Use the latest run if it started within the last 26 hours; otherwise trigger one with
+   `actions_run_trigger` (workflow `live-health.yml`, ref `main`), wait ~1 minute and re-list.
+2. `get_job_logs` for that run: the "Homepage, robots.txt, llms.txt" step prints one JSON line
+   per check (`check`, `target`, `result` pass/fail/inconclusive, `detail`, `severity`).
+3. If the run is missing or the logs can't be read, try **WebFetch** once per URL below; if
+   that also fails, record `inconclusive` (never `pass`, never `fail`).
+
+What the checks mean:
 - `https://straightflushplumbingoc.com/` → loads, shows the business name and phone.
 - `https://straightflushplumbingoc.com/robots.txt` → no `Disallow: /` for GPTBot,
   OAI-SearchBot, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended,
@@ -50,9 +62,12 @@ The workspace shell usually cannot reach the live site, so use **WebFetch**:
   that is CRITICAL** (the owner fixed it in Cloudflare on 2026-10-19 — Security →
   Settings → Bot traffic → AI bot policies).
 - `https://straightflushplumbingoc.com/llms.txt` → exists.
+- An `inconclusive` from the Action means Cloudflare challenged GitHub's runner — report
+  it as inconclusive, not as an outage.
 
 Append one JSON line per check to `growth-engine/data/technical_health_history.jsonl`:
-`{"ts","check","target","result","detail","severity","runner":"claude"}`.
+`{"ts","check","target","result","detail","severity","runner":"claude"}` (add
+`"source":"gha-live-health"` or `"source":"webfetch"`).
 
 ## Step 2 — AI citation sweep (the core, ≤ 15 minutes)
 
