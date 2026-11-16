@@ -3,15 +3,16 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const AGENTS = [
+export const MANUAL_AGENT_ACTIONS = [
   { id: "geo-research", label: "GEO Research" },
   { id: "seo-technical", label: "SEO Technical" },
-  { id: "content", label: "Content Intelligence" },
-  { id: "entity", label: "Entity Intelligence" },
-  { id: "competitor", label: "Competitor Intelligence" },
+  { id: "content-intelligence", label: "Content Intelligence" },
+  { id: "entity-intelligence", label: "Entity Intelligence" },
+  { id: "competitor-intelligence", label: "Competitor Intelligence" },
+  { id: "geographic", label: "Service Areas" },
   { id: "experiment", label: "Experiment" },
   { id: "analytics", label: "Analytics" },
-  { id: "quality", label: "Security & Quality" },
+  { id: "security-quality", label: "Security & Quality" },
   { id: "publishing", label: "Publishing" },
   { id: "geo-research-sweep", label: "Visibility Sweep" },
 ];
@@ -42,7 +43,7 @@ export function AgentControls() {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      {AGENTS.map((a) => (
+      {MANUAL_AGENT_ACTIONS.map((a) => (
         <button
           key={a.id}
           onClick={() => run(a.id)}

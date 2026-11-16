@@ -161,6 +161,8 @@ CREATE TABLE IF NOT EXISTS competitors (
   tier       TEXT,
   home_city  TEXT,
   notes      TEXT,
+  origin     TEXT,   -- owner_named | discovered | owner_named_and_discovered
+  evidence   TEXT,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -250,6 +252,8 @@ CREATE TABLE IF NOT EXISTS opportunities (
   effort        INTEGER,
   priority      REAL,
   proposed      TEXT,
+  why           TEXT,
+  approval      TEXT,   -- automated | requires_approval
   status        TEXT NOT NULL DEFAULT 'open',   -- open | in_progress | done | dismissed
   implemented_at TEXT,
   result        TEXT,
@@ -343,6 +347,69 @@ CREATE TABLE IF NOT EXISTS notifications (
   detail      TEXT
 );
 
+-- ── External API access (Headquarters integration) ─────────────────────────
+-- The secret is never stored: only a SHA-256 hash and a public prefix.
+CREATE TABLE IF NOT EXISTS api_keys (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts            TEXT NOT NULL DEFAULT (datetime('now')),
+  name          TEXT NOT NULL,
+  prefix        TEXT NOT NULL UNIQUE,
+  key_hash      TEXT NOT NULL,
+  scopes        TEXT NOT NULL,
+  last_used_at  TEXT,
+  last_used_ip  TEXT,
+  request_count INTEGER NOT NULL DEFAULT 0,
+  revoked_at    TEXT,
+  expires_at    TEXT
+);
+
+CREATE TABLE IF NOT EXISTS api_requests (
+  id      INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts      TEXT NOT NULL DEFAULT (datetime('now')),
+  key_id  INTEGER REFERENCES api_keys(id) ON DELETE SET NULL,
+  method  TEXT NOT NULL,
+  path    TEXT NOT NULL,
+  status  INTEGER NOT NULL,
+  ms      INTEGER,
+  ip      TEXT,
+  note    TEXT
+);
+
+-- Jobs requested by Headquarters. publish/deploy/rollback/spend stay
+-- pending_approval and are never executed by this process.
+CREATE TABLE IF NOT EXISTS api_jobs (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts          TEXT NOT NULL DEFAULT (datetime('now')),
+  job_id      TEXT NOT NULL UNIQUE,
+  kind        TEXT NOT NULL,
+  params      TEXT,
+  status      TEXT NOT NULL,
+  requested_by TEXT,
+  approved_by TEXT,
+  approved_at TEXT,
+  result      TEXT,
+  error       TEXT,
+  finished_at TEXT
+);
+
+-- One row per city per geographic review, so coverage can be compared over time.
+-- mention_rate is NULL when no conclusive test exists (unmeasured, not zero).
+CREATE TABLE IF NOT EXISTS geo_coverage_snapshots (
+  id               INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts               TEXT NOT NULL DEFAULT (datetime('now')),
+  city             TEXT NOT NULL,
+  slug             TEXT NOT NULL,
+  focus            TEXT NOT NULL,
+  page_url         TEXT,
+  indexable        INTEGER,
+  geo_overall      REAL,
+  conclusive_tests INTEGER,
+  mention_rate     REAL,
+  gap_count        INTEGER NOT NULL,
+  priority         REAL NOT NULL,
+  detail           TEXT NOT NULL
+);
+
 -- ── Costs ──────────────────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS cost_entries (
   id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -405,15 +472,40 @@ CREATE INDEX IF NOT EXISTS idx_vis_plat    ON visibility_results(platform, statu
 CREATE INDEX IF NOT EXISTS idx_activity_ts ON activity(ts);
 CREATE INDEX IF NOT EXISTS idx_geo_page    ON geo_scores(page_id, ts);
 CREATE INDEX IF NOT EXISTS idx_opp_status  ON opportunities(status, priority);
+CREATE INDEX IF NOT EXISTS idx_apireq_key_ts ON api_requests(key_id, ts);
+CREATE INDEX IF NOT EXISTS idx_apireq_ts     ON api_requests(ts);
+CREATE INDEX IF NOT EXISTS idx_coverage_slug ON geo_coverage_snapshots(slug, id);
+
+-- Priority-market reviews (Laguna Niguel first). Rates are NULL when unmeasured.
+CREATE TABLE IF NOT EXISTS priority_reviews (
+  id                   INTEGER PRIMARY KEY AUTOINCREMENT,
+  ts                   TEXT NOT NULL DEFAULT (datetime('now')),
+  city                 TEXT NOT NULL,
+  checks               TEXT NOT NULL,
+  conclusive_tests     INTEGER,
+  mention_rate         REAL,
+  recommendation_rate  REAL,
+  detail               TEXT
+);
 `;
 
 let _db: DatabaseSync | null = null;
+
+/** Add a column to a database created before it existed. CREATE TABLE IF NOT EXISTS does not. */
+function ensureColumn(db: DatabaseSync, table: string, column: string, ddl: string): void {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+  if (!cols.some((c) => c.name === column)) db.exec(`ALTER TABLE ${table} ADD COLUMN "${column}" ${ddl}`);
+}
 
 export function getDb(): DatabaseSync {
   if (_db) return _db;
   ensureDirs();
   _db = new DatabaseSync(DB_PATH);
   _db.exec(SCHEMA);
+  ensureColumn(_db, "opportunities", "why", "TEXT");
+  ensureColumn(_db, "opportunities", "approval", "TEXT");
+  ensureColumn(_db, "competitors", "origin", "TEXT");
+  ensureColumn(_db, "competitors", "evidence", "TEXT");
   const meta = _db.prepare("SELECT value FROM schema_meta WHERE key='version'").get() as
     | { value: string }
     | undefined;

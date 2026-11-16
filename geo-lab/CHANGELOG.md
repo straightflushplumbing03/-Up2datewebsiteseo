@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## 2026-11-15 — Laguna Niguel competitors, priority market, and the /api/v1 port
+
+### Added
+- Owner-named competitors checked on their own sites: Efficient Plumbing (Laguna Niguel office) and American Leak Detection of Orange County (Anaheim office, lists Laguna Niguel). Discovered domains come from stored Laguna Niguel search results and are flagged separately. A display name is stored only when it was read off that company's site.
+- Priority-market prompts and file checks for Laguna Niguel, run before the other primary cities. Mention, recommendation, citation, and rank stay empty until a test is stored.
+- Geographic review, provider calls for OpenAI, Anthropic, Gemini, Perplexity, and xAI when a key is set, a provider-agnostic LLM adapter, backup/restore, and the scoped `/api/v1` from PRs #153 and #163.
+
+### Not claimed
+- No live AI-search sweep was run in this environment. No rank change is claimed.
+- The lab is not on a public host.
+
 ## 2026-11-07 — Notifications (spec §16), the last missing spec item
 
 ### Added

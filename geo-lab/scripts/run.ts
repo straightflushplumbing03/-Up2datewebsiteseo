@@ -40,6 +40,7 @@ async function main() {
     visibility,
     visibilityLimit: Number(arg("limit") ?? 20),
     liveEntity,
+    resume: process.argv.includes("--resume"),
   });
 
   for (const step of result.steps) {

@@ -27,6 +27,10 @@ export interface OpportunityInput {
   impact: number; // 1..5
   effort: number; // 1..5
   proposed: string;
+  /** Why the gap matters to the plumbing business. Defaults to the evidence. */
+  why?: string;
+  /** automated = the publishing agent may open a PR; requires_approval = owner decides. */
+  approval?: "automated" | "requires_approval";
   dedupeKey: string;
 }
 
@@ -67,6 +71,8 @@ export function createOpportunity(o: OpportunityInput): number | null {
     effort: o.effort,
     priority,
     proposed: o.proposed,
+    why: o.why ?? o.evidence,
+    approval: o.approval ?? "requires_approval",
     status: "open",
     dedupe_key: o.dedupeKey,
   });
@@ -93,6 +99,8 @@ export function deriveOpportunities(audit: SiteAudit, pageScores: PageScore[], m
       impact: 4,
       effort: 1,
       proposed: `Repoint or remove the link to ${b.href}.`,
+      why: "A broken link drops the visitor and stops a crawler from reaching the page that should earn the call.",
+      approval: "automated",
       dedupeKey: `broken-link:${b.from}:${b.href}`,
     });
   }
@@ -216,6 +224,8 @@ export function listOpportunities(status?: string): OpportunityRow[] {
     effort: Number(r.effort),
     priority: Number(r.priority),
     proposed: String(r.proposed ?? ""),
+    why: String(r.why ?? r.evidence ?? ""),
+    approval: r.approval === "automated" ? "automated" : "requires_approval",
     dedupeKey: String(r.dedupe_key ?? ""),
     ts: String(r.ts),
     status: String(r.status),

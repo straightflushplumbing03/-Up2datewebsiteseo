@@ -9,6 +9,7 @@ const ITEMS: { href: string; label: string; icon: string }[] = [
   { href: "/geo-console", label: "GEO Console", icon: "▤" },
   { href: "/website", label: "Website Intelligence", icon: "◧" },
   { href: "/competitors", label: "Competitor Intelligence", icon: "◈" },
+  { href: "/geography", label: "Service Areas", icon: "⌖" },
   { href: "/entity", label: "Entity Intelligence", icon: "⬡" },
   { href: "/experiments", label: "GEO Experiment Lab", icon: "⚗" },
   { href: "/optimization", label: "Optimization Engine", icon: "⚙" },
@@ -20,10 +21,10 @@ const ITEMS: { href: string; label: string; icon: string }[] = [
   { href: "/settings", label: "Settings", icon: "⚑" },
 ];
 
-export function Nav() {
+export function Nav({ horizontal = false }: { horizontal?: boolean }) {
   const path = usePathname();
   return (
-    <nav className="card sticky top-20 p-2">
+    <nav className={horizontal ? "flex gap-1 overflow-x-auto pb-1" : "card sticky top-20 p-2"}>
       {ITEMS.map((it) => {
         const active = it.href === "/" ? path === "/" : path.startsWith(it.href);
         return (
@@ -31,6 +32,8 @@ export function Nav() {
             key={it.href}
             href={it.href}
             className={`flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm transition-colors ${
+              horizontal ? "shrink-0 whitespace-nowrap" : ""
+            } ${
               active
                 ? "bg-[color:var(--color-brand-soft)] font-semibold text-[color:var(--color-brand-dark)]"
                 : "text-ink-soft hover:bg-[color:var(--color-canvas)]"

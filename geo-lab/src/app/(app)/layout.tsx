@@ -47,7 +47,12 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <aside className="hidden w-60 shrink-0 lg:block">
           <Nav />
         </aside>
-        <main className="min-w-0 flex-1 animate-fade-up">{children}</main>
+        <div className="min-w-0 flex-1">
+          <div className="mb-4 lg:hidden">
+            <Nav horizontal />
+          </div>
+          <main className="animate-fade-up">{children}</main>
+        </div>
       </div>
 
       <footer className="border-t border-[color:var(--color-line)] bg-white">

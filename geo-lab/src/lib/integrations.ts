@@ -34,7 +34,9 @@ export function seedIntegrations(env: ProviderEnv): void {
       status: p.available ? "connected" : "not_testable",
       lastSync: null,
       lastError: p.available ? null : (p.unavailableReason ?? null),
-      detail: p.available ? "Verified reachable in this environment." : (p.unavailableReason ?? "Not reachable."),
+      detail: p.available
+        ? "API key is present. A live call happens only during a visibility sweep; this row is not a successful sweep."
+        : (p.unavailableReason ?? "Not reachable."),
       requiredEnv: requiredEnvFor(p.id),
     });
   }
@@ -146,6 +148,7 @@ function requiredEnvFor(id: string): string | null {
     chatgpt_search: "OPENAI_API_KEY",
     perplexity: "PERPLEXITY_API_KEY",
     claude_web_search: "ANTHROPIC_API_KEY",
+    grok_search: "XAI_API_KEY",
   };
   return map[id] ?? null;
 }
