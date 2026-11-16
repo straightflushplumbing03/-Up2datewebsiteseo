@@ -40,6 +40,7 @@ PAGES = [
     ("services/leak-detection-mission-viejo.html", "services/leak-detection-mission-viejo.md", "Services"),
     ("services/leak-detection-laguna-hills.html", "services/leak-detection-laguna-hills.md", "Services"),
     ("services/leak-detection-rancho-santa-margarita.html", "services/leak-detection-rancho-santa-margarita.md", "Services"),
+    ("services/leak-detection-aliso-viejo.html", "services/leak-detection-aliso-viejo.md", "Services"),
     ("services/leak-detection-laguna-beach.html", "services/leak-detection-laguna-beach.md", "Services"),
     ("services/leak-detection-san-juan-capistrano.html", "services/leak-detection-san-juan-capistrano.md", "Services"),
     ("services/leak-detection-ladera-ranch.html", "services/leak-detection-ladera-ranch.md", "Services"),
