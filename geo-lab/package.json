@@ -15,7 +15,8 @@
     "test": "tsx tests/run.ts",
     "apikey": "tsx scripts/apikey.ts",
     "backup": "tsx scripts/backup.ts",
-    "restore": "tsx scripts/restore.ts"
+    "restore": "tsx scripts/restore.ts",
+    "host-check": "tsx scripts/host-check.ts"
   },
   "dependencies": {
     "next": "^16.4.5",

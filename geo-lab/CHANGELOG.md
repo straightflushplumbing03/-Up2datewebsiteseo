@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2026-11-16 — Agents, backups, and the hosting boundary
+
+### Added
+- The daily run records the GEO Research Agent as UNMEASURED when no sweep was requested.
+- Tests for backup/restore, a held `publish` job, and one full orchestrator run with no provider keys.
+- `verify.yml` now runs the lab's tests and typecheck on every pull request.
+- `npm run host-check` and `RUNBOOK.md`. `DEPLOYMENT.md` states that the `up2datewebsiteseo` worker is not a host for this app.
+
 ## 2026-11-15 — Laguna Niguel competitors, priority market, and the /api/v1 port
 
 ### Added

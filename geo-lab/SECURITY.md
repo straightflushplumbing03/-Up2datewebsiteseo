@@ -85,8 +85,9 @@ Both logs append; nothing is overwritten or deleted by normal operation.
 
 ## Dependency and code checks
 
-- `npx tsc --noEmit` and `npm test` run in CI on every PR that touches
-  `geo-lab/**`.
+- `.github/workflows/verify.yml` runs `npm test` and `npx tsc --noEmit` for
+  `geo-lab/` on every pull request and every push to `main`. The older
+  `geo-lab.yml` workflow remains disabled on purpose.
 - `npm run build` must succeed before merge.
 - No runtime dependency performs network calls outside the provider adapters, so
   the reachable surface is small and reviewable.

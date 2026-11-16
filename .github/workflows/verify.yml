@@ -50,3 +50,19 @@ jobs:
           python3 scripts/refresh_sitemap.py | tee /tmp/sitemap.out
           grep -Fq 'missing: []' /tmp/sitemap.out
           grep -Fq 'extra: []' /tmp/sitemap.out
+
+  geo-lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: geo-lab/package-lock.json
+      - name: Install, test, and typecheck the lab
+        working-directory: geo-lab
+        run: |
+          npm ci --no-audit --no-fund
+          npm test
+          npx tsc --noEmit

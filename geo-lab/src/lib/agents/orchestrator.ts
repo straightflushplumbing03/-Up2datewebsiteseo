@@ -275,6 +275,13 @@ export async function runOrchestrator(opts: OrchestratorOptions): Promise<Orches
         return { summary: `${sweep.rows.length} tests, ${conclusive} conclusive`, detail: sweep.providerResults };
       }),
     );
+  } else {
+    steps.push({
+      agent: "GEO Research Agent",
+      status: "skipped",
+      summary: "Visibility sweep not requested. AI visibility is UNMEASURED, not zero.",
+      durationMs: 0,
+    });
   }
 
   // 7. Analytics Agent — metrics + opportunities.

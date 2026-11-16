@@ -50,10 +50,20 @@ request, and reports honestly.
 
 ```bash
 cd geo-lab
-npm test          # 40 tests, real DB + real crawl
+npm test          # real SQLite and a real crawl of this repository
 npx tsc --noEmit
 npm run build
+# or: make test typecheck build
 ```
+
+`LLM_PROVIDER` is optional and has no default. Visibility probes use
+`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GEMINI_API_KEY`, `XAI_API_KEY`,
+`PERPLEXITY_API_KEY`, or `TAVILY_API_KEY` independently. An unset key is
+unmeasured, not zero.
+
+Do not deploy this app onto the Cloudflare Workers project
+`up2datewebsiteseo`. That project is the live plumbing site. See
+`DEPLOYMENT.md`.
 
 All three must pass. The tests are the contract: they encode the regressions that
 have already happened (the FK guard, phone normalisation, script-stripping,
