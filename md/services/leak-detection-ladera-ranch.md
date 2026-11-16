@@ -64,6 +64,18 @@ Turn off every faucet, appliance and irrigation zone, note the reading on your w
 
 
 
+## Recent work in Ladera Ranch
+
+
+
+**July 2026, laundry overflow.** Water came out of a laundry room and the homeowner feared a broken pipe. We tested the wall drain, the bathroom behind it and the pressurized lines with acoustic equipment, found no pipe leak, and traced the overflow to a blocked washer drain pump. No wall was opened. [Read the case study](https://straightflushplumbingoc.com/case-studies/ladera-ranch-laundry-overflow-leak-investigation.html).
+
+
+
+**August 2026, whole-home leak protection.** An insurer required leak protection, so we installed the homeowner's smart main shutoff, a new pressure regulator and check valve, and leak sensors at the dishwasher, washer, water heater and toilets. [Read the case study](https://straightflushplumbingoc.com/case-studies/ladera-ranch-whole-home-leak-protection.html).
+
+
+
  Leak detection services in Ladera Ranch
 
 

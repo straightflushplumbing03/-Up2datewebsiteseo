@@ -42,7 +42,7 @@ Laguna Hills is split between two water districts. The city lists both El Toro W
 
 - Acoustic slab leak detection
 
-- Hidden & underground water leak detection
+- [Hidden & underground water leak detection in Laguna Hills](https://straightflushplumbingoc.com/services/leak-detection-laguna-hills.html)
 
 - Whole-house PEX repiping & copper line elimination
 
