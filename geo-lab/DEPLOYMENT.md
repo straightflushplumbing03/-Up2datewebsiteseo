@@ -14,6 +14,58 @@ functions; it has no persistent filesystem and no long-lived Node process, so
 SQLite and background work do not fit. The public plumbing website stays on
 Cloudflare Pages; the lab is a separate deployment.
 
+## Do not deploy onto the live site's worker
+
+The repository's Cloudflare Workers Builds project **`up2datewebsiteseo`**
+(production) is wired to this Git repo and is the path that serves
+`straightflushplumbingoc.com`. Do not add a Worker script, route, D1 binding,
+or environment variable to that project. A lab deploy belongs on a **new**
+hostname, `geo-lab.straightflushplumbingoc.com`, reached by a Cloudflare Tunnel
+to a VM. The tunnel is a DNS record and an outbound connection. It does not
+change the existing worker.
+
+Workers and D1 are not a drop-in host for this app. The database calls are
+synchronous `node:sqlite`. D1 is asynchronous, and a Worker cannot run this
+Next.js server. Putting the lab there would be a rewrite, not a deploy. That
+rewrite is not done.
+
+## What is still required before the dashboard has a URL
+
+Nobody with this repository's credentials can create the VM or the tunnel from
+here. The owner does these steps once. Nothing else is blocking the code.
+
+1. Create the Oracle Always Free VM and run `deploy/oracle/bootstrap.sh`
+   (`deploy/oracle/README.md`). That clone is the whole repository, not only
+   `geo-lab/`.
+2. On the VM, set `/etc/geo-lab/geo-lab.env` (mode 600). Required:
+   - `GEO_LAB_RUN_TOKEN` — `openssl rand -hex 32`. The bootstrap can generate it.
+   - `GEO_LAB_OWNER_PASSWORD` — choose one, sign in, then change it and delete
+     `data/owner-credentials.txt`.
+3. Optional, and still unmeasured until set: `TAVILY_API_KEY` or `Tavily_api_key`,
+   `GEMINI_API_KEY` (must start with `AIza`), `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`,
+   `PERPLEXITY_API_KEY`, `XAI_API_KEY`, `GITHUB_TOKEN` (pull requests only; never
+   push to `main`).
+4. Create a Cloudflare Tunnel named `geo-lab` and a DNS record only for
+   `geo-lab.straightflushplumbingoc.com` pointing at that tunnel, proxied, to
+   `http://127.0.0.1:12000`. Token, if you use the API instead of the dashboard:
+   - Account — Cloudflare Tunnel: Edit
+   - Zone `straightflushplumbingoc.com` — DNS: Edit
+   - Do not grant Workers Scripts: Edit. That permission can change
+     `up2datewebsiteseo`.
+5. Put the same `GEO_LAB_RUN_TOKEN` in the GitHub Actions secret
+   `GEO_LAB_RUN_TOKEN`, and set `GEO_LAB_URL` to
+   `https://geo-lab.straightflushplumbingoc.com`. The daily workflow then
+   switches from the ephemeral runner to the VM. Until both are set, the
+   schedule still runs `npm run job` on the runner and uploads the database as
+   an artifact. That artifact is not a durable history.
+6. First login: `https://geo-lab.straightflushplumbingoc.com/login`. The owner
+   email is `lance@straightflushplumbingoc.com` unless `GEO_LAB_OWNER_EMAIL` was
+   set. Change the password immediately.
+
+Backups on the VM are the cron in `deploy/oracle/README.md`. From any checkout,
+`npm run backup -- /var/lib/geo-lab/backup.db` uses `VACUUM INTO` and
+`npm run restore -- <backup> <new-file>` refuses to overwrite the live file.
+
 ## Where to deploy
 
 ### Free options, ranked

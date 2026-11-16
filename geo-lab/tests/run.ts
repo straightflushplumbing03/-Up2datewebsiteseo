@@ -625,6 +625,60 @@ async function main() {
     assert(Number(longest?.n) <= 200, `note should be bounded, got ${longest?.n}`);
   });
 
+  await test("backup: a copy restores onto a new file and refuses to overwrite the live database", async () => {
+    const { backupDatabase, restoreDatabase } = await import("../src/lib/backup");
+    const dest = path.join(tmpDir, "backup.db");
+    const copy = path.join(tmpDir, "restored.db");
+    const written = backupDatabase(dest);
+    assert(written.bytes > 0, "backup was empty");
+    const restored = restoreDatabase(dest, copy);
+    eq(restored.integrity, "ok", "integrity");
+    let refused = false;
+    try {
+      restoreDatabase(dest, process.env.GEO_LAB_DB!);
+    } catch (e) {
+      refused = /Refusing to overwrite the live database/.test((e as Error).message);
+    }
+    assert(refused, "restore must refuse to replace the live database");
+  });
+
+  await test("jobs: a queued publish is held and not executed", async () => {
+    const { runQueuedJobs } = await import("../src/lib/jobs");
+    insert("api_jobs", { job_id: "job_test_hold", kind: "publish", params: "{}", status: "queued", requested_by: "test" });
+    const out = await runQueuedJobs({}, 3);
+    eq(out.held, 1, "publish must be held");
+    const row = queryOne<{ status: string; error: string }>("SELECT status, error FROM api_jobs WHERE job_id='job_test_hold'");
+    eq(row?.status, "approved_held", "status");
+    assert(/not executed/i.test(row?.error ?? ""), "the hold must say nothing was executed");
+  });
+
+  await test("orchestrator: the six working agents finish without a failure when no provider is configured", async () => {
+    const { runOrchestrator } = await import("../src/lib/agents/orchestrator");
+    const result = await runOrchestrator({
+      trigger: "test",
+      env: {},
+      visibility: false,
+      liveEntity: false,
+      force: true,
+    });
+    const required = [
+      "SEO Technical Agent",
+      "Content Intelligence Agent",
+      "Competitor Intelligence Agent",
+      "Geographic Opportunity Agent",
+      "GEO Research Agent",
+      "Reporting Agent",
+    ];
+    for (const name of required) {
+      const step = result.steps.find((s) => s.agent === name);
+      assert(step, `missing step ${name}`);
+      assert(step.status !== "failed", `${name} failed: ${step.summary}`);
+    }
+    const geo = result.steps.find((s) => s.agent === "GEO Research Agent");
+    assert(/UNMEASURED/.test(geo?.summary ?? ""), "a skipped sweep must say UNMEASURED");
+    assert(result.steps.every((s) => s.status !== "failed"), result.steps.filter((s) => s.status === "failed").map((s) => `${s.agent}: ${s.summary}`).join("; "));
+  });
+
   // ── Report ──────────────────────────────────────────────────────────────
   const pass = results.filter((r) => r.ok).length;
   const fail = results.length - pass;
