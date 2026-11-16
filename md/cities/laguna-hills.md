@@ -125,7 +125,7 @@ For most homes in Laguna Hills, leak detection runs $365 to $525. Where you fall
  Do you serve my neighborhood in Laguna Hills? +
 
 
-Yes — Laguna Hills sits right in the heart of our service area, with a mix of established neighborhoods where accurate leak diagnosis really pays off. We serve all of Laguna Hills and the surrounding South and Central Orange County communities, and Lance personally answers the phone.
+Yes. We serve every Laguna Hills neighborhood, from Nellie Gail Ranch to North Laguna Hills, which joined the city on July 1, 1996. Much of Laguna Hills grew out of the Moulton Ranch, which was subdivided in the early 1960s, and the city incorporated on December 20, 1991 ([City of Laguna Hills, History](https://lagunahillsca.gov/247/History-of-Laguna-Hills)), so many homes here have plumbing that has been in place for decades. We serve all of Laguna Hills and the surrounding South and Central Orange County communities, and Lance personally answers the phone.
 
 
 
@@ -158,3 +158,11 @@ An unexplained jump in your water bill, a water meter that keeps moving with eve
 
 
 Laguna Hills is served by two water districts: El Toro Water District (949-837-0660) and Moulton Niguel Water District (949-831-2500), according to the City of Laguna Hills. Your water bill names your district. If a leak has pushed your bill up, call your district for your usage history and ask whether it offers a leak adjustment, and keep the leak detection findings and repair invoice to show them.
+
+
+
+
+ Who do I call about a sewer backup in Laguna Hills? +
+
+
+Sewer service in Laguna Hills is split between the same two districts that supply water. [El Toro Water District](https://etwd.com/about-us/) provides drinking water, sewer and recycled water in portions of Laguna Hills, and [Moulton Niguel Water District](https://www.mnwd.com/operations/) runs the wastewater system in its part of the city. Your bill names your district. If sewage is coming up from a manhole or a street sewer, or a neighbor has the same problem, call your district: El Toro Water District at (949) 837-0660 or Moulton Niguel Water District at (949) 831-2500. If the backup is only inside your home, such as a slow tub, a gurgling toilet or several drains backing up at once, the blockage is usually in your own drain line between the house and the street, and that is a plumbing call: [(949) 374-6524](tel:+19493746524). See our [drain services](https://straightflushplumbingoc.com/services/drain-services.html) page for what we check.
