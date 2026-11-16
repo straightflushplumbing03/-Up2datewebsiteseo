@@ -144,6 +144,38 @@ The median Laguna Niguel home was built in 1986, according to 2023 Census survey
 
 
 
+ Who supplies water and sewer service in Laguna Niguel? +
+
+
+Moulton Niguel Water District ([MNWD](https://www.mnwd.com/servicearea/)) provides drinking water, recycled water and wastewater service in Laguna Niguel, along with Aliso Viejo, Mission Viejo, Laguna Hills, Dana Point and San Juan Capistrano. On a leak, the dividing line is the meter: MNWD says it is responsible for the pipes from the main under the street to the meter outlet coupling, and the homeowner is responsible for the service line from the meter to the house and everything after it, including the house valve ([MNWD, Fix a Leak](https://mnwd.com/fix-a-leak)). If water is coming up on the street side of the meter, call MNWD at (949) 831-2500. If it is on your side, that is where we come in.
+
+
+
+
+ Will Moulton Niguel Water District adjust my bill after a leak? +
+
+
+It may. MNWD says customers who repair leaks in a timely manner and return to using water within their customized water budget may request a bill adjustment for one high bill. The request form has to be submitted within 30 days of the high bill, and an approved adjustment is issued as a credit on a future bill ([MNWD troubleshooting guide](https://mnwd.com/troubleshooting-guide)). Approval is up to the district, not us. What helps is having the leak located and repaired quickly, so keep our leak detection findings and your repair invoice with the request.
+
+
+
+
+ Is Laguna Niguel water hard? +
+
+
+Moderately to very hard. All of MNWD’s drinking water is imported from the Metropolitan Water District and treated at the Diemer and Baker plants, and the district’s 2023 water quality report, the most recent one posted on its site when we checked in November 2026, lists an average hardness of 13.3 grains per gallon ([MNWD 2023 report](https://mnwd.com/2023ccr)). Hard water leaves scale in water heaters, tankless units and fixtures, so flushing a tank or tankless heater on a regular schedule matters here. Hardness alone does not cause slab leaks.
+
+
+
+
+ Who issues plumbing permits in Laguna Niguel? +
+
+
+The City of Laguna Niguel Building & Safety Division, at 30111 Crown Valley Parkway, takes permit applications through its Online Permit Center ([City of Laguna Niguel](https://cityoflagunaniguel.org/113/Building-Safety)). Its water heater handout calls for state-approved strapping, an expansion tank when the water system is closed (for example, with a backflow device or check valve), a full-way valve on the inlet, a sediment trap and, for indoor installs, a drain pan ([Handout 115](https://www.cityoflagunaniguel.org/DocumentCenter/View/22682/115---Water-Heater)). Call Building & Safety at (949) 362-4360 to confirm what your project needs.
+
+
+
+
  What are the warning signs of a hidden leak in a Laguna Niguel home? +
 
 
