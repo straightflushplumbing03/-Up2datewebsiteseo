@@ -98,7 +98,7 @@ CITY_META = {
         "developments \u2014 a factor in slab leaks worth understanding. Call (949) 374-6524.",
     ),
     "ladera-ranch": (
-        "Leak Detection in Ladera Ranch, CA | Straight Flush Plumbing",
+        "Plumber in Ladera Ranch, CA | Copper & PEX Homes",
         "Ladera Ranch is a younger South OC community, so leaks more often trace to "
         "installation quality or soil settling. Professional diagnosis. Call (949) 374-6524.",
     ),
