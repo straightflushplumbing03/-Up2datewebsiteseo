@@ -695,3 +695,15 @@ ul.footer-cities .footer-cities-all{ grid-column:1 / -1; margin-top:6px; }
    with no underline, so mark them with a bold red underline (text keeps its own colour for contrast). */
 a.tel-inline{ color:inherit; font-weight:700; text-decoration:underline; text-decoration-color:var(--straight); text-decoration-thickness:2px; text-underline-offset:3px; white-space:nowrap; }
 a.tel-inline:hover{ color:var(--straight); }
+
+/* Inline links people can see (conversion, 2026-11-15): the global `a{color:inherit;text-decoration:none}`
+   made links inside FAQ answers and body paragraphs look exactly like plain text on a phone.
+   236 tel: links on 101 indexable pages had no class (the FAQ hub alone had 14 "Call (949) 374-6524"
+   links that read as gray text), and 219 links inside FAQ answers ("See emergency plumbing",
+   cost guides, city pages) were invisible as links. Same treatment as a.tel-inline for phone
+   numbers; a quiet underline for every other link in an answer. Footer lists and buttons are unchanged. */
+p a[href^="tel:"]:not(.btn):not(.nav-phone),
+.faq-a a[href^="tel:"]:not(.btn){ font-weight:700; text-decoration:underline; text-decoration-color:var(--straight); text-decoration-thickness:2px; text-underline-offset:3px; white-space:nowrap; }
+.faq-a a:not(.btn):not([href^="tel:"]){ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
+p a[href^="tel:"]:not(.btn):hover,
+.faq-a a:not(.btn):hover{ color:var(--straight); }
