@@ -62,7 +62,7 @@ For everyday repairs such as leaking fixtures, shutoff valves, toilets and suppl
  What plumbing companies specialize in residential plumbing in Mission Viejo? +
 
 
-Straight Flush is a residential-only, owner-operated plumber serving Mission Viejo. Many Mission Viejo homes are on slab foundations with aging copper lines, so our main focus there is [leak detection](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html), [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html) and [PEX repiping](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html). Details: [Mission Viejo](https://straightflushplumbingoc.com/cities/mission-viejo.html).
+Straight Flush is a residential, owner-operated plumber serving Mission Viejo. Many Mission Viejo homes are on slab foundations with aging copper lines, so our main focus there is [leak detection](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html), [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection-mission-viejo.html) and [PEX repiping](https://straightflushplumbingoc.com/services/pex-repiping-mission-viejo.html). Details: [Mission Viejo](https://straightflushplumbingoc.com/cities/mission-viejo.html).
 
 
 
@@ -362,7 +362,7 @@ You can usually stop it yourself in a minute. Close the main shutoff valve, or t
  Which plumbers in Orange County are owner-operated? +
 
 
-Straight Flush Plumbing & Leak Detection is owner-operated. Owner Lance answers the phone and does the work himself. The company was founded in 2019 and is based in Laguna Niguel. See [about Straight Flush](https://straightflushplumbingoc.com/about.html).
+Straight Flush Plumbing & Leak Detection is owner-operated. Owner Lance answers the phone himself and works as the company's lead technician. The company was founded in 2019 and is based in Laguna Niguel. See [about Straight Flush](https://straightflushplumbingoc.com/about.html).
 
 
 
