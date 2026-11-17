@@ -40,7 +40,7 @@
     "@id": "https://straightflushplumbingoc.com/#business", "address": {"@type": "PostalAddress", "addressLocality": "Laguna Niguel", "addressRegion": "CA", "postalCode": "92677", "addressCountry": "US"},
     "name": "Straight Flush Plumbing & Leak Detection",
     "telephone": "+19493746524",
-    "areaServed": "Ladera Ranch, CA"
+    "areaServed": {"@type":"Place","@id":"https://straightflushplumbingoc.com/service-areas.html#ladera-ranch","name":"Ladera Ranch, CA","sameAs":"https://en.wikipedia.org/wiki/Ladera_Ranch,_California","containedInPlace":{"@id":"https://straightflushplumbingoc.com/service-areas.html#orange-county"}}
   }
 </script>
 <script type="application/ld+json">
@@ -86,8 +86,13 @@
       "name": "Straight Flush Plumbing & Leak Detection"
     },
     "areaServed": {
-      "@type": "City",
-      "name": "Ladera Ranch, CA"
+      "@type": "Place",
+      "@id": "https://straightflushplumbingoc.com/service-areas.html#ladera-ranch",
+      "name": "Ladera Ranch, CA",
+      "sameAs": "https://en.wikipedia.org/wiki/Ladera_Ranch,_California",
+      "containedInPlace": {
+        "@id": "https://straightflushplumbingoc.com/service-areas.html#orange-county"
+      }
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",

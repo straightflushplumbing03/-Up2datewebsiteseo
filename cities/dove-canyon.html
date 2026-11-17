@@ -40,7 +40,7 @@
   "@id": "https://straightflushplumbingoc.com/#business", "address": {"@type": "PostalAddress", "addressLocality": "Laguna Niguel", "addressRegion": "CA", "postalCode": "92677", "addressCountry": "US"},
   "name": "Straight Flush Plumbing & Leak Detection",
   "telephone": "+19493746524",
-  "areaServed": "Dove Canyon, CA"
+  "areaServed": {"@type":"Place","@id":"https://straightflushplumbingoc.com/service-areas.html#dove-canyon","name":"Dove Canyon, CA","containedInPlace":{"@id":"https://straightflushplumbingoc.com/service-areas.html#rancho-santa-margarita"}}
 }
 </script>
 <script type="application/ld+json">
@@ -80,8 +80,12 @@
     "name": "Straight Flush Plumbing & Leak Detection"
   },
   "areaServed": {
-    "@type": "City",
-    "name": "Dove Canyon, CA"
+    "@type": "Place",
+    "@id": "https://straightflushplumbingoc.com/service-areas.html#dove-canyon",
+    "name": "Dove Canyon, CA",
+    "containedInPlace": {
+      "@id": "https://straightflushplumbingoc.com/service-areas.html#rancho-santa-margarita"
+    }
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
