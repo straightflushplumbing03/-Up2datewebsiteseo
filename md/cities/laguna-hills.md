@@ -46,9 +46,9 @@ Laguna Hills is split between two water districts. The city lists both El Toro W
 
 - Whole-house PEX repiping & copper line elimination
 
-- Water heater repair & installation
+- [Water heater repair & installation in Laguna Hills](https://straightflushplumbingoc.com/services/water-heater-repair-laguna-hills.html)
 
-- Drain services & general plumbing repair
+- [Drain cleaning & sewer service in Laguna Hills](https://straightflushplumbingoc.com/services/drain-cleaning-laguna-hills.html) & general plumbing repair
 
 
 
