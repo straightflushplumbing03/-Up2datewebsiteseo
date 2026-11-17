@@ -55,7 +55,7 @@ A single slow drain is often a simple, local clog. Recurring or whole-house drai
 
 
 
-We explain what the camera shows in plain language, then walk through every reasonable option.
+We explain what the camera shows in plain language, then walk through every reasonable option. See [sewer camera inspection](https://straightflushplumbingoc.com/services/sewer-camera-inspection.html) for when it is worth it and what it shows.
 
 
 
