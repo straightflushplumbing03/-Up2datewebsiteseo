@@ -39,6 +39,10 @@ introduced. When in doubt, omit the claim.
   inspection reports, Laguna Beach pre-certified plumber status, or sewer
   camera work in Laguna Beach.
 
+- 2026-11-17, Lance (owner): drain services include **hydro jetting, sewer camera
+  inspection and main sewer line clearing**. Published on
+  `services/drain-cleaning-laguna-hills.html`.
+
 ## FORBIDDEN (never publish)
 
 - "Best", "#1", "top-rated", "award-winning", or superlatives not corroborated
