@@ -1,0 +1,15 @@
+{
+  "ci": {
+    "collect": {
+      "settings": {
+        "blockedUrlPatterns": [
+          "*googletagmanager.com*",
+          "*google-analytics.com*",
+          "*analytics.google.com*",
+          "*doubleclick.net*",
+          "*cloudflareinsights.com*"
+        ]
+      }
+    }
+  }
+}
