@@ -179,6 +179,7 @@ Not always the heater. Running out of hot water, a gas or electric bill that cli
 
  [Water heaters in Laguna Niguel →](https://straightflushplumbingoc.com/services/water-heater-repair-laguna-niguel.html)
  [Water heaters in San Clemente →](https://straightflushplumbingoc.com/services/water-heater-repair-san-clemente.html)
+ [Water heaters in Laguna Hills →](https://straightflushplumbingoc.com/services/water-heater-repair-laguna-hills.html)
  [Leak detection in Mission Viejo →](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html)
  [All service areas →](https://straightflushplumbingoc.com/service-areas.html)
 

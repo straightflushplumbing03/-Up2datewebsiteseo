@@ -32,6 +32,10 @@ introduced. When in doubt, omit the claim.
 - 2026-10-31, Lance (owner): when a customer files an insurance claim, insurance
   typically reimburses the leak detection cost. Published on the same page.
 
+- 2026-11-17, Lance (owner): drain services include **hydro jetting, sewer camera
+  inspection and main sewer line clearing**. Published on
+  `services/drain-cleaning-laguna-hills.html`.
+
 ## FORBIDDEN (never publish)
 
 - "Best", "#1", "top-rated", "award-winning", or superlatives not corroborated
