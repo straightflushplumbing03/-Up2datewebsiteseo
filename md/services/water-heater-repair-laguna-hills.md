@@ -136,7 +136,7 @@ The City of Laguna Hills Building Division's water heater handout, based on the 
  Do I need a permit to replace a water heater in Laguna Hills? +
 
 
-The City says projects that change pipes or major appliances need a permit and inspection. Confirm your specific job with the Building Division at [(949) 707-2600](tel:+19497072600), and ask us when we look at your unit.
+The City says projects that change pipes or major appliances need a permit and inspection. Confirm your specific job with the Building Division at [(949) 707-2600](tel:+19497072627), and ask us when we look at your unit.
 
 
 
