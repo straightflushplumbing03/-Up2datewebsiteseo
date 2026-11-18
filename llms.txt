@@ -59,10 +59,15 @@
 ## Education & guides (highly citable)
 - Leak Detection Academy (20+ articles): https://straightflushplumbingoc.com/academy/
 - Homeowner FAQ (50 questions: hidden leaks, slab leaks, PEX repiping, emergencies, pricing, insurance): https://straightflushplumbingoc.com/faq/ (Markdown: https://straightflushplumbingoc.com/md/faq.md)
-- Leak detection cost guide: https://straightflushplumbingoc.com/guides/leak-detection-cost.html
-- Slab leak repair cost guide: https://straightflushplumbingoc.com/guides/slab-leak-repair-cost.html
-- Repair vs reroute vs repipe: https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html
-- Insurance Resource Center: https://straightflushplumbingoc.com/insurance/
+- Leak detection cost guide: https://straightflushplumbingoc.com/guides/leak-detection-cost.html (Markdown: https://straightflushplumbingoc.com/md/guides/leak-detection-cost.md)
+- Slab leak repair cost guide: https://straightflushplumbingoc.com/guides/slab-leak-repair-cost.html (Markdown: https://straightflushplumbingoc.com/md/guides/slab-leak-repair-cost.md)
+- Repair vs reroute vs repipe: https://straightflushplumbingoc.com/guides/repair-vs-reroute-vs-repipe.html (Markdown: https://straightflushplumbingoc.com/md/guides/repair-vs-reroute-vs-repipe.md)
+- Insurance Resource Center: https://straightflushplumbingoc.com/insurance/ (Markdown: https://straightflushplumbingoc.com/md/insurance/index.md)
+  - Does insurance cover slab leaks?: https://straightflushplumbingoc.com/insurance/does-insurance-cover-slab-leaks.html (Markdown: https://straightflushplumbingoc.com/md/insurance/does-insurance-cover-slab-leaks.md)
+  - What to do after a leak: https://straightflushplumbingoc.com/insurance/what-to-do-after-a-leak.html (Markdown: https://straightflushplumbingoc.com/md/insurance/what-to-do-after-a-leak.md)
+  - Claim documentation checklist: https://straightflushplumbingoc.com/insurance/documentation-checklist.html (Markdown: https://straightflushplumbingoc.com/md/insurance/documentation-checklist.md)
+  - Questions to ask your insurer: https://straightflushplumbingoc.com/insurance/questions-to-ask-your-insurer.html (Markdown: https://straightflushplumbingoc.com/md/insurance/questions-to-ask-your-insurer.md)
+  - Do's and don'ts when talking to your insurer: https://straightflushplumbingoc.com/insurance/dos-and-donts-talking-to-insurance.html (Markdown: https://straightflushplumbingoc.com/md/insurance/dos-and-donts-talking-to-insurance.md)
 - South OC copper-era slab leak specialist guide: https://straightflushplumbingoc.com/south-oc-slab-leak-specialist.html
 
 ## Machine-readable files (for AI agents and crawlers)
