@@ -48,7 +48,7 @@ For most homes, leak detection runs **$365 to $525**. Where you fall depends on 
 
 
 
-**Under the slab.** A warm spot on the floor or the sound of running water with everything off are typical signs of a leak in a line under the concrete. See [slab leak detection](https://straightflushplumbingoc.com/services/slab-leak-detection.html) for how we find it.
+**Under the slab.** A warm spot on the floor or the sound of running water with everything off are typical signs of a leak in a line under the concrete. See [slab leak detection in Laguna Hills](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-hills.html) for how we find it.
 
 
 
