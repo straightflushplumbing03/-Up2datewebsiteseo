@@ -72,5 +72,24 @@ class SecurityHeaders(unittest.TestCase):
         self.assertEqual(lhc.header_gaps(declared), [])
 
 
+class EdgeEvidence(unittest.TestCase):
+    def test_cloudflare_response_is_detected(self):
+        cf, detail = lhc.edge_evidence({"Server": "cloudflare", "CF-RAY": "8f00abc-LAX",
+                                        "cf-cache-status": "HIT"})
+        self.assertTrue(cf)
+        self.assertIn("cf-cache-status=HIT", detail)
+
+    def test_github_pages_direct_is_not_cloudflare(self):
+        cf, detail = lhc.edge_evidence({"Server": "GitHub.com",
+                                        "Access-Control-Allow-Origin": "*"})
+        self.assertFalse(cf)
+        self.assertIn("access-control-allow-origin=*", detail)
+
+    def test_no_headers(self):
+        cf, detail = lhc.edge_evidence({})
+        self.assertFalse(cf)
+        self.assertIn("server=none", detail)
+
+
 if __name__ == "__main__":
     unittest.main()
