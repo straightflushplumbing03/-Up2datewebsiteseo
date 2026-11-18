@@ -1,0 +1,30 @@
+{
+  "experiment": "exp-2026-11-18-bing-domain-entry",
+  "closes": "exp-2026-11-03-indexnow-split (day-15 read: never started, contaminated)",
+  "check": "pre-day-0 baseline",
+  "date": "2026-11-18",
+  "method": "crew web search (Claude web search, Bing-family index) with allowed_domains restricted to one domain; count distinct URLs returned",
+  "target_domain": "straightflushplumbingoc.com",
+  "target_queries": {
+    "Straight Flush Plumbing leak detection": 0,
+    "plumber Laguna Niguel slab leak": 0,
+    "Straight Flush Plumbing Laguna Niguel water heater repair": 0,
+    "PEX repiping Mission Viejo Straight Flush": 0,
+    "leak detection Dana Point slab leak": 0,
+    "Straight Flush Plumbing & Leak Detection Laguna Niguel": 0
+  },
+  "positive_controls": {
+    "hummelplumbing.com | plumber Laguna Niguel": 7,
+    "evansleakdetection.com | leak detection Laguna Niguel": 10,
+    "lagunaniguelcaplumbingpros.com | plumber Laguna Niguel": 10
+  },
+  "other_domains": {
+    "straightflushplumbing.com (old domain) | Straight Flush Plumbing leak detection Laguna Niguel": 0,
+    "base44.app | Straight Flush Plumbing": "4 results, none is the Straight Flush app"
+  },
+  "exact_title_searches": {
+    "Hidden Leak Detection in Laguna Niguel, CA (treatment arm)": "0 first-party in 18 results",
+    "Slab Leak Detection in Dana Point, CA (holdout arm)": "0 first-party in 17 results"
+  },
+  "summary": "domain absent (0 URLs on 6/6 queries) while 3 controls return 7-10 pages; indexnow split 0/6 v 0/6, never started"
+}

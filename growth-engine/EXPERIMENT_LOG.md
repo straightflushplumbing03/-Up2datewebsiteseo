@@ -652,3 +652,76 @@ Data: `data/gemini_slate_stability_2026-11-15.json` (all 80 conclusive `gemini_s
   San Juan Capistrano (11-16), Laguna Hills (11-14), Rancho Santa Margarita (11-15).
 - **Re-measure:** 2026-12-14. Read: any target `cited`/`mentioned`/`recommended` = signal; 0/4 = no effect yet.
 - **Confounders:** open PRs #207/#209 may merge in the window; single engine; one search per query.
+
+## 2026-11-18 — exp-2026-11-03-indexnow-split: day-15 read = never started; closed as contaminated; replaced by a domain-level Bing entry test (experiments crew)
+
+- **Day 0 never happened.** #116 merged 11-09, but no `indexnow_submit.py --send` is recorded in
+  this log, the repo, or the HQ database (events/tasks/approvals/work_orders searched for "indexnow").
+  The 11-18 ai-visibility reading "the treatment arm is also unindexed, so IndexNow alone did not work"
+  is therefore **not supported**: the treatment was never applied as designed.
+- **Unlogged possible submission:** commit `3a611d0` (11-13 21:06 UTC, crew-merge session, direct to
+  main) added a second key file `a7ad86cb40104ee0916b19bbfae2d8b6.txt` "for OpenSEO submissions". No
+  record says which URLs (if any) were sent through OpenSEO `submit_indexnow_urls`. If the whole
+  sitemap was sent, both arms were treated on 11-13.
+- **Holdout rule broken:** every holdout page was edited after 11-03 (sitewide 11-09/11-12/11-15 and
+  page-specific: `cities/dana-point` 11-09 + 11-13, `cities/mission-viejo` 11-10 + 11-14). If
+  Cloudflare Crawler Hints is ON (CLOUDFLARE-SETUP recommends it; state still unread), those edits
+  pinged Bing for both arms.
+- **Day-15 reading anyway (2026-11-18), crew fallback + a better probe:**
+  - Exact-title searches (2 arm URLs: LN hidden leak = treatment, DP slab = holdout): 0 first-party
+    results; top results are ignitionlabs / netlify / pages.dev templates, Rooter Hero, BBB.
+  - **New method: domain-restricted search** (`allowed_domains = [domain]` on the crew's web search,
+    i.e. "does this index hold *any* page from the domain for an on-topic query").
+    - straightflushplumbingoc.com: **0 results on 6 of 6** on-topic queries (brand, brand+leak detection,
+      LN slab, LN water heater, MV PEX, DP slab).
+    - Positive controls, same tool, same minute: hummelplumbing.com **7** pages,
+      evansleakdetection.com **10**, lagunaniguelcaplumbingpros.com **10**. The probe works; the
+      domain is simply not in this index. Old domain straightflushplumbing.com: 0. The base44 twin app:
+      not returned (good).
+  - Result: **0/6 treatment, 0/6 holdout, 0 pages domain-wide**, unchanged from the 11-03 and 11-12
+    baselines. Google, by contrast, has most of these pages indexed (URL Inspection, 11-04 → 11-18).
+- **Verdict:** exp-2026-11-03-indexnow-split is **closed — not run / contaminated**. Nothing can be
+  concluded about IndexNow. What *is* now established: 15+ days after the merge and ~5 weeks after the
+  Cloudflare crawler block was lifted (ISSUE-001, resolved 10-11), the Bing-family index used by
+  Claude search still holds zero first-party pages while it holds young template sites. That points to
+  a **domain-level** Bing state (never verified/submitted, or crawl errors left over from the Aug–Oct
+  403s), not a per-page discovery problem. Per-page split tests are the wrong instrument until the
+  domain has at least one page in.
+
+## exp-2026-11-18-bing-domain-entry — does a Bing Webmaster submission get the domain into the Bing-family index?
+
+- **Question:** after the owner verifies the site in Bing Webmaster Tools and submits `sitemap.xml`
+  (plus, with owner OK, one full-sitemap IndexNow send), does any first-party page appear in the
+  Bing-family index within 14 days?
+- **Intervention (owner, ~10 min):** Bing Webmaster → add/verify site (BingSiteAuth.xml is live in the
+  repo; "Import from Google Search Console" also works) → Sitemaps → submit → URL Inspection on
+  `/`, `/services/leak-detection-laguna-niguel.html`, `/services/slab-leak-detection-dana-point.html`.
+  **Record before submitting:** verified yes/no, indexed page count, any crawl errors / blocked-by
+  messages (screenshots are enough). Optional second step, owner OK required:
+  `python3 scripts/indexnow_submit.py --url <each sitemap URL> --send`. The crew sends nothing.
+- **Day 0:** the date the owner reports the sitemap submitted.
+- **Metric (primary):** domain-restricted probe, 6 fixed queries × `allowed_domains =
+  ["straightflushplumbingoc.com"]`: (1) Straight Flush Plumbing leak detection, (2) plumber Laguna
+  Niguel slab leak, (3) Straight Flush Plumbing Laguna Niguel water heater repair, (4) PEX repiping
+  Mission Viejo Straight Flush, (5) leak detection Dana Point slab leak, (6) Straight Flush Plumbing &
+  Leak Detection Laguna Niguel. Count distinct first-party URLs. Always run the 3 positive controls
+  (hummelplumbing.com, evansleakdetection.com, lagunaniguelcaplumbingpros.com, query "plumber Laguna
+  Niguel" / "leak detection Laguna Niguel"); if any control returns 0, the reading is void (tool fault).
+- **Metric (secondary):** Bing Webmaster "indexed pages" (owner screenshot) and the claude_web_search
+  board rows that cite our domain.
+- **Checks:** pre-day-0 (done 11-18: 0 URLs on 6/6, controls 7/10/10), day 3, day 7, day 14.
+- **Read rule:**
+  - **Works:** ≥1 first-party URL by day 14 → the gap was "never submitted". Then re-run the 6v6 split
+    idea only if indexing stays partial (<50% of sitemap) at day 28.
+  - **Bing shows errors:** Webmaster reports crawl/fetch errors or "blocked" → Cloudflare is still
+    challenging Bingbot; fix CLOUDFLARE-SETUP §2b (verified-bot skip rule) before anything else.
+  - **No effect:** 0 URLs at day 14 with no Webmaster errors → domain-quality/trust filter
+    (name-twin confusion, root `.html` stubs, thin-template look-alikes); escalate to entity-schema +
+    authority work, and keep the BuildZoom/HomeGuide directory path (exp-2026-11-13) as the Claude lever.
+  - **Pre-day-0 drift:** if the probe finds a first-party URL *before* the owner acts, log it as
+    spontaneous entry (likely the 11-13 OpenSEO ping or Crawler Hints) and read Webmaster anyway.
+- **Confounders:** possible 11-13 OpenSEO IndexNow submission of unknown scope; Crawler Hints state
+  unknown; open PRs editing pages (allowed — this test is domain-level, no frozen pages); the probe
+  tool's index is Bing-family but not guaranteed identical to bing.com.
+- **Status:** pre-registered 2026-11-18, waiting on the owner's Bing Webmaster step.
+  **Confidence:** medium that the probe is valid (3 positive controls); low on outcome.
