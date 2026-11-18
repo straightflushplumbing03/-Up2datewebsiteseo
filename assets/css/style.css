@@ -707,3 +707,16 @@ p a[href^="tel:"]:not(.btn):not(.nav-phone),
 .faq-a a:not(.btn):not([href^="tel:"]){ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
 p a[href^="tel:"]:not(.btn):hover,
 .faq-a a:not(.btn):hover{ color:var(--straight); }
+
+/* Breadcrumb + article CTA (conversion, 2026-11-18).
+   1) `a{overflow-wrap:anywhere}` let the flex-shrunk breadcrumb links break inside
+      words on phones ("Ho / me", "Leak / Detection / Academy" over 3 lines at 390px).
+      Keep each link whole and let the trail wrap between items instead.
+   2) .article-cta: an in-article next step for long Academy articles, where the only
+      contact link between the hero and the end-of-page band was 4,000+ px apart. */
+.breadcrumbs{ flex-wrap:wrap; row-gap:4px; }
+.breadcrumbs a{ overflow-wrap:normal; white-space:nowrap; }
+.article-cta{ max-width:760px; margin:8px 0 36px; padding:22px 24px; border:1px solid var(--line, #e3dcd2); border-left:4px solid var(--straight); border-radius:var(--radius, 12px); background:var(--sand, #f6f1ea); }
+.article-cta p{ margin:0 0 14px; color:var(--ink-text, inherit); }
+.article-cta-actions{ display:flex; flex-wrap:wrap; gap:10px; }
+@media (max-width:560px){ .article-cta{ padding:18px; } .article-cta-actions .btn{ flex:1 1 100%; justify-content:center; } }
