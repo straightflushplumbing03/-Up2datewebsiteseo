@@ -40,6 +40,7 @@ CITY_PREFIXES = (
     ("leak-detection-", "leak-detection"),
     ("pex-repiping-", "pex-repiping"),
     ("water-heater-repair-", "water-heater-services"),
+    ("drain-cleaning-", "drain-services"),
 )
 SKIP_DIRS = ("ai-headquarters-blueprint", "briefs", "growth-engine", "node_modules", "scripts", "geo-lab", "md")
 LD_RE = re.compile(r'<script[^>]*application/ld\+json[^>]*>(.*?)</script>', re.S | re.I)

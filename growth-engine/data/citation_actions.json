@@ -1,13 +1,13 @@
 {
-  "generated": "2026-11-16",
+  "generated": "2026-11-17",
   "window_days": 56,
   "observations_used": 154,
   "actions": [
     {
       "domain": "angi.com",
       "class": "directory",
-      "priority_score": 186.16,
-      "times_cited_when_we_lost": 73,
+      "priority_score": 192.4,
+      "times_cited_when_we_lost": 74,
       "engines": [
         "claude_web_search"
       ],
@@ -30,8 +30,8 @@
     {
       "domain": "rooterhero.com",
       "class": "competitor",
-      "priority_score": 147.6,
-      "times_cited_when_we_lost": 72,
+      "priority_score": 148.8,
+      "times_cited_when_we_lost": 71,
       "engines": [
         "claude_web_search"
       ],
@@ -54,7 +54,7 @@
     {
       "domain": "homeadvisor.com",
       "class": "directory",
-      "priority_score": 133.38,
+      "priority_score": 135.98,
       "times_cited_when_we_lost": 60,
       "engines": [
         "claude_web_search"
@@ -78,7 +78,7 @@
     {
       "domain": "homeguide.com",
       "class": "directory",
-      "priority_score": 101.4,
+      "priority_score": 105.56,
       "times_cited_when_we_lost": 38,
       "engines": [
         "claude_web_search"
@@ -125,7 +125,7 @@
     {
       "domain": "bbb.org",
       "class": "directory",
-      "priority_score": 57.72,
+      "priority_score": 60.32,
       "times_cited_when_we_lost": 19,
       "engines": [
         "claude_web_search"
@@ -149,7 +149,7 @@
     {
       "domain": "thumbtack.com",
       "class": "directory",
-      "priority_score": 56.16,
+      "priority_score": 60.32,
       "times_cited_when_we_lost": 26,
       "engines": [
         "claude_web_search"
@@ -162,11 +162,35 @@
       "queries": [
         "best PEX repiping in Mission Viejo, CA",
         "best drain cleaning in Irvine, CA",
+        "best emergency plumber in Irvine, CA",
         "best emergency plumber in Mission Viejo, CA",
-        "best emergency plumber in Rancho Santa Margarita, CA",
-        "best emergency plumber in San Juan Capistrano, CA"
+        "best emergency plumber in Rancho Santa Margarita, CA"
       ],
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-10-20"
+    },
+    {
+      "domain": "mrrooter.com",
+      "class": "competitor",
+      "priority_score": 57.4,
+      "times_cited_when_we_lost": 36,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://www.mrrooter.com/locations/california/aliso-viejo/emergency-plumber",
+        "https://www.mrrooter.com/locations/california/aliso-viejo/water-heater/",
+        "https://www.mrrooter.com/locations/california/dana-point"
+      ],
+      "queries": [
+        "best drain cleaning in Dana Point, CA",
+        "best drain cleaning in Irvine, CA",
+        "best drain cleaning in San Juan Capistrano, CA",
+        "best emergency plumber in Aliso Viejo, CA",
+        "best emergency plumber in Dana Point, CA"
+      ],
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/emergency-plumbing",
       "status": "todo",
       "first_seen": "2026-10-20"
     },
@@ -198,45 +222,21 @@
       "domain": "benjaminfranklinplumbing.com",
       "class": "competitor",
       "priority_score": 54.6,
-      "times_cited_when_we_lost": 27,
+      "times_cited_when_we_lost": 26,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
+        "https://benjaminfranklinplumbing.com/areas-we-service/laguna-hills-ca",
         "https://benjaminfranklinplumbing.com/areas-we-service/mission-viejo-ca",
-        "https://benjaminfranklinplumbing.com/southern-orange-county/areas-we-service/laguna-hills",
-        "https://benjaminfranklinplumbing.com/southern-orange-county/areas-we-service/mission-viejo"
+        "https://benjaminfranklinplumbing.com/southern-orange-county/areas-we-service/laguna-hills"
       ],
       "queries": [
         "best drain cleaning in Laguna Hills, CA",
         "best emergency plumber in Dana Point, CA",
-        "best emergency plumber in Irvine, CA",
         "best emergency plumber in Laguna Hills, CA",
-        "best emergency plumber in Mission Viejo, CA"
-      ],
-      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/emergency-plumbing",
-      "status": "todo",
-      "first_seen": "2026-10-20"
-    },
-    {
-      "domain": "mrrooter.com",
-      "class": "competitor",
-      "priority_score": 54.6,
-      "times_cited_when_we_lost": 35,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://www.mrrooter.com/locations/california/aliso-viejo/emergency-plumber",
-        "https://www.mrrooter.com/locations/california/aliso-viejo/water-heater/",
-        "https://www.mrrooter.com/locations/california/dana-point"
-      ],
-      "queries": [
-        "best drain cleaning in Dana Point, CA",
-        "best drain cleaning in Irvine, CA",
-        "best drain cleaning in San Juan Capistrano, CA",
-        "best emergency plumber in Aliso Viejo, CA",
-        "best emergency plumber in Dana Point, CA"
+        "best emergency plumber in Mission Viejo, CA",
+        "best emergency plumber in San Juan Capistrano, CA"
       ],
       "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/emergency-plumbing",
       "status": "todo",
@@ -245,24 +245,48 @@
     {
       "domain": "thisoldhouse.com",
       "class": "lead_gen",
-      "priority_score": 49.6,
-      "times_cited_when_we_lost": 28,
+      "priority_score": 47.6,
+      "times_cited_when_we_lost": 25,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
         "https://www.thisoldhouse.com/near-me/california/aliso-viejo/plumbing",
-        "https://www.thisoldhouse.com/near-me/california/irvine/plumbing",
-        "https://www.thisoldhouse.com/near-me/california/laguna-niguel/plumbing"
+        "https://www.thisoldhouse.com/near-me/california/laguna-niguel/plumbing",
+        "https://www.thisoldhouse.com/near-me/california/mission-viejo/plumbing"
       ],
       "queries": [
         "best drain cleaning in Mission Viejo, CA",
         "best drain cleaning in Rancho Santa Margarita, CA",
         "best drain cleaning in San Clemente, CA",
         "best emergency plumber in Laguna Niguel, CA",
-        "best emergency plumber in Lake Forest, CA"
+        "best emergency plumber in Mission Viejo, CA"
       ],
       "action": "Lead-generation network with a page for every city × service. Ask whether it lists real local pros (get listed if free); otherwise out-answer it with our own specific city × service page.",
+      "status": "todo",
+      "first_seen": "2026-10-20"
+    },
+    {
+      "domain": "rotorooter.com",
+      "class": "competitor",
+      "priority_score": 43.6,
+      "times_cited_when_we_lost": 25,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://rotorooter.com/alisoviejoca",
+        "https://www.rotorooter.com/alisoviejoca/commercial-plumbing/",
+        "https://www.rotorooter.com/alisoviejoca/emergency-plumber/"
+      ],
+      "queries": [
+        "best drain cleaning in Irvine, CA",
+        "best emergency plumber in Aliso Viejo, CA",
+        "best emergency plumber in Irvine, CA",
+        "best emergency plumber in Laguna Hills, CA",
+        "best emergency plumber in Lake Forest, CA"
+      ],
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/drain-services",
       "status": "todo",
       "first_seen": "2026-10-20"
     },
@@ -316,8 +340,8 @@
     {
       "domain": "match.angi.com",
       "class": "directory",
-      "priority_score": 40.04,
-      "times_cited_when_we_lost": 23,
+      "priority_score": 41.34,
+      "times_cited_when_we_lost": 24,
       "engines": [
         "claude_web_search"
       ],
@@ -331,40 +355,16 @@
         "best drain cleaning in Ladera Ranch, CA",
         "best leak detection in Aliso Viejo, CA",
         "best water heater repair in Dana Point, CA",
-        "best water heater repair in Laguna Niguel, CA"
+        "best water heater repair in Laguna Hills, CA"
       ],
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
       "status": "todo",
       "first_seen": "2026-10-31"
     },
     {
-      "domain": "rotorooter.com",
-      "class": "competitor",
-      "priority_score": 40.0,
-      "times_cited_when_we_lost": 24,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://rotorooter.com/alisoviejoca",
-        "https://www.rotorooter.com/alisoviejoca/commercial-plumbing/",
-        "https://www.rotorooter.com/alisoviejoca/emergency-plumber/"
-      ],
-      "queries": [
-        "best drain cleaning in Irvine, CA",
-        "best emergency plumber in Aliso Viejo, CA",
-        "best emergency plumber in Laguna Hills, CA",
-        "best emergency plumber in Lake Forest, CA",
-        "best emergency plumber in San Juan Capistrano, CA"
-      ],
-      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/drain-services",
-      "status": "todo",
-      "first_seen": "2026-10-20"
-    },
-    {
       "domain": "rheem.com",
       "class": "listicle",
-      "priority_score": 31.8,
+      "priority_score": 33.0,
       "times_cited_when_we_lost": 8,
       "engines": [
         "claude_web_search"
@@ -412,15 +412,15 @@
     {
       "domain": "expertise.com",
       "class": "listicle",
-      "priority_score": 24.3,
+      "priority_score": 27.9,
       "times_cited_when_we_lost": 8,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
         "https://www.expertise.com/ca/irvine/plumbing",
-        "https://www.expertise.com/ca/lake-forest/plumbing",
-        "https://www.expertise.com/home-improvement/emergency-plumber/california/irvine"
+        "https://www.expertise.com/home-improvement/emergency-plumber/california/irvine",
+        "https://www.expertise.com/home-improvement/plumbing/california/lake-forest"
       ],
       "queries": [
         "best PEX repiping in Mission Viejo, CA",
@@ -436,8 +436,8 @@
     {
       "domain": "todayshomeowner.com",
       "class": "lead_gen",
-      "priority_score": 21.2,
-      "times_cited_when_we_lost": 9,
+      "priority_score": 20.0,
+      "times_cited_when_we_lost": 8,
       "engines": [
         "claude_web_search"
       ],
@@ -448,10 +448,10 @@
       ],
       "queries": [
         "best emergency plumber in Ladera Ranch, CA",
-        "best emergency plumber in San Juan Capistrano, CA",
         "best leak detection in Ladera Ranch, CA",
         "best plumber in Ladera Ranch, CA",
-        "recommend a leak detection company in Aliso Viejo"
+        "recommend a leak detection company in Aliso Viejo",
+        "who does leak detection in Aliso Viejo?"
       ],
       "action": "Lead-generation network with a page for every city × service. Ask whether it lists real local pros (get listed if free); otherwise out-answer it with our own specific city × service page.",
       "status": "todo",
@@ -460,7 +460,7 @@
     {
       "domain": "andrewadonis.com",
       "class": "competitor",
-      "priority_score": 18.4,
+      "priority_score": 20.0,
       "times_cited_when_we_lost": 10,
       "engines": [
         "claude_web_search"
@@ -480,6 +480,30 @@
       "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/emergency-plumbing",
       "status": "todo",
       "first_seen": "2026-10-22"
+    },
+    {
+      "domain": "startpage.mapquest.com",
+      "class": "directory",
+      "priority_score": 16.9,
+      "times_cited_when_we_lost": 5,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://startpage.mapquest.com/us/california/kastle-plumbing-270331202",
+        "https://startpage.mapquest.com/us/california/repipe-pro-365518461",
+        "https://startpage.mapquest.com/us/california/sun-coast-plumbing-377852458"
+      ],
+      "queries": [
+        "best plumber in San Juan Capistrano, CA",
+        "recommend a PEX repiping company in Mission Viejo",
+        "recommend a emergency plumber company in Dana Point",
+        "recommend a slab leak detection company in Laguna Niguel",
+        "who does slab leak detection in Laguna Niguel?"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-11-05"
     },
     {
       "domain": "mapquest.com",
@@ -528,29 +552,6 @@
       "first_seen": "2026-10-27"
     },
     {
-      "domain": "startpage.mapquest.com",
-      "class": "directory",
-      "priority_score": 14.3,
-      "times_cited_when_we_lost": 4,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://startpage.mapquest.com/us/california/kastle-plumbing-270331202",
-        "https://startpage.mapquest.com/us/california/repipe-pro-365518461",
-        "https://startpage.mapquest.com/us/california/wallace-wear-plumbing-345640219"
-      ],
-      "queries": [
-        "recommend a PEX repiping company in Mission Viejo",
-        "recommend a emergency plumber company in Dana Point",
-        "recommend a slab leak detection company in Laguna Niguel",
-        "who does slab leak detection in Laguna Niguel?"
-      ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
-      "status": "todo",
-      "first_seen": "2026-11-05"
-    },
-    {
       "domain": "zoomdrain.com",
       "class": "competitor",
       "priority_score": 14.2,
@@ -573,6 +574,30 @@
       "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/drain-services",
       "status": "todo",
       "first_seen": "2026-10-20"
+    },
+    {
+      "domain": "thebuildermarket.com",
+      "class": "other",
+      "priority_score": 14.0,
+      "times_cited_when_we_lost": 7,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://thebuildermarket.com/pros/lists/best-plumbing-pros-in-laguna-beach-ca-1840020587",
+        "https://thebuildermarket.com/pros/lists/best-plumbing-pros-in-mission-viejo-ca-1840020580",
+        "https://thebuildermarket.com/us/ca/aliso-viejo/plumbing"
+      ],
+      "queries": [
+        "best emergency plumber in Mission Viejo, CA",
+        "best plumber in Aliso Viejo, CA",
+        "best plumber in Laguna Beach, CA",
+        "best plumber in Mission Viejo, CA",
+        "best plumber in Rancho Santa Margarita, CA"
+      ],
+      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
+      "status": "todo",
+      "first_seen": "2026-11-03"
     },
     {
       "domain": "dk.yp.com",
@@ -616,30 +641,6 @@
       "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/pex-repiping",
       "status": "todo",
       "first_seen": "2026-10-28"
-    },
-    {
-      "domain": "thebuildermarket.com",
-      "class": "other",
-      "priority_score": 12.0,
-      "times_cited_when_we_lost": 6,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://thebuildermarket.com/pros/lists/best-plumbing-pros-in-laguna-beach-ca-1840020587",
-        "https://thebuildermarket.com/pros/lists/best-plumbing-pros-in-mission-viejo-ca-1840020580",
-        "https://thebuildermarket.com/us/ca/aliso-viejo/plumbing"
-      ],
-      "queries": [
-        "best emergency plumber in Mission Viejo, CA",
-        "best plumber in Aliso Viejo, CA",
-        "best plumber in Laguna Beach, CA",
-        "best plumber in Mission Viejo, CA",
-        "recommend a emergency plumber company in Mission Viejo"
-      ],
-      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
-      "status": "todo",
-      "first_seen": "2026-11-03"
     },
     {
       "domain": "phoenix.aws.mapquest.com",
@@ -807,7 +808,7 @@
     {
       "domain": "lantern.llc",
       "class": "competitor",
-      "priority_score": 6.8,
+      "priority_score": 7.6,
       "times_cited_when_we_lost": 5,
       "engines": [
         "claude_web_search"
@@ -815,11 +816,11 @@
       "example_urls": [
         "https://lantern.llc/b/always-plumbing-drain-cleaning-laguna-hills/book",
         "https://lantern.llc/b/drain-town-rooter-mission-viejo/book",
-        "https://lantern.llc/b/irvine-plumbing-drain-irvine"
+        "https://lantern.llc/b/olson-superior-plumbing-lake-forest/book"
       ],
       "queries": [
-        "best emergency plumber in Irvine, CA",
         "best emergency plumber in Laguna Hills, CA",
+        "best emergency plumber in Lake Forest, CA",
         "best water heater repair in Irvine, CA",
         "who does emergency plumber in Mission Viejo?",
         "who does water heater repair in Mission Viejo?"
@@ -867,6 +868,27 @@
       "first_seen": "2026-10-20"
     },
     {
+      "domain": "seolium.com",
+      "class": "competitor",
+      "priority_score": 6.0,
+      "times_cited_when_we_lost": 3,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://www.seolium.com/blog/best-10-plumbers-in-mission-viejo",
+        "https://www.seolium.com/blog/best-15-plumbers-in-irvine"
+      ],
+      "queries": [
+        "best plumber in Irvine, CA",
+        "best plumber in Mission Viejo, CA",
+        "who does plumber in Mission Viejo?"
+      ],
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /",
+      "status": "todo",
+      "first_seen": "2026-10-30"
+    },
+    {
       "domain": "trustpilot.com",
       "class": "other",
       "priority_score": 6.0,
@@ -905,25 +927,43 @@
       "first_seen": "2026-11-14"
     },
     {
-      "domain": "seolium.com",
-      "class": "other",
-      "priority_score": 5.2,
-      "times_cited_when_we_lost": 3,
+      "domain": "threebestrated.com",
+      "class": "listicle",
+      "priority_score": 6.0,
+      "times_cited_when_we_lost": 2,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
-        "https://www.seolium.com/blog/best-10-plumbers-in-mission-viejo",
-        "https://www.seolium.com/blog/best-15-plumbers-in-irvine"
+        "https://threebestrated.com/local-plumbers-in-irvine-ca"
       ],
       "queries": [
-        "best plumber in Irvine, CA",
-        "best plumber in Mission Viejo, CA",
-        "who does plumber in Mission Viejo?"
+        "best emergency plumber in Irvine, CA",
+        "best plumber in Irvine, CA"
       ],
-      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
+      "action": "Get included: find the 'suggest a business' / editor contact and submit with license #, reviews and services.",
       "status": "todo",
       "first_seen": "2026-10-30"
+    },
+    {
+      "domain": "networx.com",
+      "class": "directory",
+      "priority_score": 5.2,
+      "times_cited_when_we_lost": 2,
+      "engines": [
+        "claude_web_search"
+      ],
+      "example_urls": [
+        "https://www.networx.com/plumbers/ca/dana-point",
+        "https://www.networx.com/plumbers/ca/lake-forest"
+      ],
+      "queries": [
+        "best plumber in Lake Forest, CA",
+        "recommend a plumber company in Dana Point"
+      ],
+      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "status": "todo",
+      "first_seen": "2026-11-12"
     },
     {
       "domain": "bestprosintown.com",
@@ -982,25 +1022,6 @@
       "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
       "status": "todo",
       "first_seen": "2026-11-15"
-    },
-    {
-      "domain": "threebestrated.com",
-      "class": "listicle",
-      "priority_score": 3.6,
-      "times_cited_when_we_lost": 2,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://threebestrated.com/local-plumbers-in-irvine-ca"
-      ],
-      "queries": [
-        "best emergency plumber in Irvine, CA",
-        "best plumber in Irvine, CA"
-      ],
-      "action": "Get included: find the 'suggest a business' / editor contact and submit with license #, reviews and services.",
-      "status": "todo",
-      "first_seen": "2026-10-30"
     },
     {
       "domain": "levelset.com",
@@ -1112,22 +1133,24 @@
       "first_seen": "2026-11-10"
     },
     {
-      "domain": "networx.com",
-      "class": "directory",
+      "domain": "serviceagent.ai",
+      "class": "competitor",
       "priority_score": 2.6,
-      "times_cited_when_we_lost": 1,
+      "times_cited_when_we_lost": 2,
       "engines": [
         "claude_web_search"
       ],
       "example_urls": [
-        "https://www.networx.com/plumbers/ca/dana-point"
+        "https://serviceagent.ai/directory/california/lake-forest/plumbing/drain-cleaning/",
+        "https://serviceagent.ai/directory/california/lake-forest/plumbing/emergency/"
       ],
       "queries": [
-        "recommend a plumber company in Dana Point"
+        "best drain cleaning in Lake Forest, CA",
+        "best emergency plumber in Lake Forest, CA"
       ],
-      "action": "Claim / complete this listing with the exact name, phone and service list; ask recent customers for a review here.",
+      "action": "AI quotes this competitor page for this topic. Make our matching page clearly better (more specific answer, local proof, cost info). Our page: /services/emergency-plumbing",
       "status": "todo",
-      "first_seen": "2026-11-12"
+      "first_seen": "2026-10-31"
     },
     {
       "domain": "paylesswaterheaters.com",
@@ -1223,26 +1246,6 @@
       "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
       "status": "todo",
       "first_seen": "2026-10-30"
-    },
-    {
-      "domain": "serviceagent.ai",
-      "class": "other",
-      "priority_score": 1.8,
-      "times_cited_when_we_lost": 2,
-      "engines": [
-        "claude_web_search"
-      ],
-      "example_urls": [
-        "https://serviceagent.ai/directory/california/lake-forest/plumbing/drain-cleaning/",
-        "https://serviceagent.ai/directory/california/lake-forest/plumbing/emergency/"
-      ],
-      "queries": [
-        "best drain cleaning in Lake Forest, CA",
-        "best emergency plumber in Lake Forest, CA"
-      ],
-      "action": "Review manually: decide whether to get listed, pitched, or out-answer it.",
-      "status": "todo",
-      "first_seen": "2026-10-31"
     },
     {
       "domain": "servicechampions.com",
