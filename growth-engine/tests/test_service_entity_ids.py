@@ -15,7 +15,10 @@ catalog entry that names it. This test keeps it that way:
    or to a city-service page that declares that @id itself;
 4. each city-service landing page (e.g. leak-detection-dana-point.html) gives
    its own Service an @id and links it to its hub with isRelatedTo (added
-   2026-11-15: all 18 of these pages had anonymous Service nodes).
+   2026-11-15: all 18 of these pages had anonymous Service nodes);
+5. every other page in services/ that declares a Service for itself (provider
+   #business) gives it an @id on that page's url (added 2026-11-19:
+   emergency-plumbing.html was the last anonymous one).
 """
 import glob
 import json
@@ -107,9 +110,17 @@ class ServiceEntityIdTest(unittest.TestCase):
                     sid = node.get("@id", "")
                     if isinstance(sid, str) and sid.startswith(BASE) and sid.endswith("#service"):
                         hub = sid[len(BASE):-len(".html#service")]
-                        if hub not in HUBS and hub not in self._city_pages():
+                        if hub not in HUBS and hub not in self._city_pages() and not self._declares(hub, sid):
                             bad.append(f"{rel}: {sid}")
         self.assertEqual(bad, [])
+
+    @staticmethod
+    def _declares(name, sid):
+        path = os.path.join(ROOT, "services", f"{name}.html")
+        if not os.path.exists(path):
+            return False
+        return any(n.get("@id") == sid and n.get("@type") == "Service"
+                   for b in _ld(path) for n in _nodes(b))
 
     @staticmethod
     def _city_pages():
@@ -140,6 +151,20 @@ class ServiceEntityIdTest(unittest.TestCase):
                 missing.append(f"{name}: @id {node.get('@id')}")
             if node.get("isRelatedTo", {}).get("@id") != _hub_id(hub):
                 missing.append(f"{name}: isRelatedTo {node.get('isRelatedTo')}")
+        self.assertEqual(missing, [], "\n".join(missing))
+
+    def test_every_service_page_names_its_service(self):
+        missing = []
+        for path in sorted(glob.glob(os.path.join(ROOT, "services", "*.html"))):
+            name = os.path.basename(path)[:-len(".html")]
+            url = f"{BASE}{name}.html"
+            for block in _ld(path):
+                if not isinstance(block, dict) or block.get("@type") != "Service":
+                    continue
+                if (block.get("provider") or {}).get("@id", "").endswith("/#business"):
+                    sid = block.get("@id", "")
+                    if not (isinstance(sid, str) and sid.startswith(url + "#")):
+                        missing.append(f"{name}: @id {sid!r}")
         self.assertEqual(missing, [], "\n".join(missing))
 
 
