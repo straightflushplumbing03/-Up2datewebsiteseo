@@ -52,6 +52,7 @@ PAGES = [
     ("services/pex-repiping-mission-viejo.html", "services/pex-repiping-mission-viejo.md", "Services"),
     ("services/pex-repiping-ladera-ranch.html", "services/pex-repiping-ladera-ranch.md", "Services"),
     ("services/water-heater-repair-laguna-hills.html", "services/water-heater-repair-laguna-hills.md", "Services"),
+    ("services/water-heater-repair-rancho-santa-margarita.html", "services/water-heater-repair-rancho-santa-margarita.md", "Services"),
     ("services/drain-services.html", "services/drain-services.md", "Services"),
     ("services/drain-cleaning-laguna-hills.html", "services/drain-cleaning-laguna-hills.md", "Services"),
     ("services/emergency-plumbing.html", "services/emergency-plumbing.md", "Services"),

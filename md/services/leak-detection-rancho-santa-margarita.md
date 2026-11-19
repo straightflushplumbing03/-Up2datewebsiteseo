@@ -248,6 +248,7 @@ If you're filing an insurance claim, insurance typically reimburses the leak det
 
  [Water main leak case study →](https://straightflushplumbingoc.com/case-studies/rancho-santa-margarita-water-main-leak-detection.html)
  [Plumbing in Rancho Santa Margarita →](https://straightflushplumbingoc.com/cities/rancho-santa-margarita.html)
+ [Water heaters in Rancho Santa Margarita →](https://straightflushplumbingoc.com/services/water-heater-repair-rancho-santa-margarita.html)
  [Leak detection in Ladera Ranch →](https://straightflushplumbingoc.com/services/leak-detection-ladera-ranch.html)
  [Leak detection in Mission Viejo →](https://straightflushplumbingoc.com/services/leak-detection-mission-viejo.html)
 
