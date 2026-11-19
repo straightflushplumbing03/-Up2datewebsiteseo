@@ -328,6 +328,17 @@ section{ padding:96px 0; }
 .cta-band p{ color:rgba(255,255,255,0.85); margin-top:10px; }
 .cta-band .btn-primary{ background:#fff; color:var(--straight); }
 .cta-band .btn-primary:hover{ background:#f2e9ea; }
+/* CTA band on phones (conversion, 2026-11-19): the 56px padding left ~222px for copy and an
+   auto-width button on a 390px phone. Tighter padding, full-width buttons, and an optional
+   .cta-band-actions wrapper so a band can offer Call + Schedule side by side. */
+.cta-band-actions{ display:flex; gap:12px; flex-wrap:wrap; }
+.cta-band .btn-ghost{ color:#fff; border-color:rgba(255,255,255,0.65); }
+.cta-band .btn-ghost:hover{ border-color:#fff; }
+@media (max-width:560px){
+  .cta-band{ padding:32px 24px; gap:20px; }
+  .cta-band h2{ max-width:none; }
+  .cta-band > .btn, .cta-band-actions, .cta-band-actions .btn{ width:100%; }
+}
 
 /* --------------------------------- QR BLOCK -------------------------------- */
 .qr-block{ display:flex; align-items:center; gap:22px; background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:22px; }

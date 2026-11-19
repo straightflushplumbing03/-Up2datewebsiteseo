@@ -79,4 +79,4 @@ The right questions before you assume anything is or isn't covered.
 We provide clear diagnostic reporting you can bring straight to your insurer.
 
 
- [Schedule Now](https://straightflushplumbingoc.com/contact.html)
+ [Call (949) 374-6524](tel:+19493746524)[Schedule Online](https://straightflushplumbingoc.com/contact.html)
