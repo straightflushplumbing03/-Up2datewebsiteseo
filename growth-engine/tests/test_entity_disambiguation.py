@@ -4,6 +4,9 @@
   across the homepage founder, article authors and the about page.
 - Every multi-city areaServed list names cities with their state ("Orange, CA"),
   because a bare "Orange" or "Irvine" matches places in other states/countries.
+- Every "Lance" node that states a jobTitle states the same one, matching the
+  visible About page badge (2026-11-19: the homepage founder said
+  "Owner-Operator" while the About page said "Owner & Lead Technician").
 (Added 2026-11-05 by the entity-schema shift.)
 """
 import json
@@ -32,6 +35,13 @@ class EntityDisambiguationTest(unittest.TestCase):
                if n.get("@type") == "Person" and n.get("name") == "Lance"
                and n.get("@id") != LANCE_ID]
         self.assertEqual(bad, [], "Person 'Lance' nodes missing %s" % LANCE_ID)
+
+    def test_lance_job_title_is_consistent(self):
+        titles = {}
+        for rel, n in _all_nodes():
+            if n.get("@id") == LANCE_ID and n.get("jobTitle"):
+                titles.setdefault(n["jobTitle"], []).append(rel)
+        self.assertLessEqual(len(titles), 1, "conflicting jobTitles for Lance: %s" % titles)
 
     def test_about_page_declares_owner(self):
         ids = {n.get("@id") for rel, n in _all_nodes() if rel == "about.html"}
