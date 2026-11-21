@@ -652,3 +652,72 @@ Data: `data/gemini_slate_stability_2026-11-15.json` (all 80 conclusive `gemini_s
   San Juan Capistrano (11-16), Laguna Hills (11-14), Rancho Santa Margarita (11-15).
 - **Re-measure:** 2026-12-14. Read: any target `cited`/`mentioned`/`recommended` = signal; 0/4 = no effect yet.
 - **Confounders:** open PRs #207/#209 may merge in the window; single engine; one search per query.
+
+## 2026-11-16 — interim read 1/3 of exp-2026-11-15-gemini-slate-persistence + two new pre-registered reads
+
+Source: `public.ai_visibility_observations`, Gemini weekly board run of 2026-11-16 15:31 UTC
+(10 rows, gemini-flash-latest, 0 errors). Docs only; no site pages changed.
+
+### Run 1 of 3: miss
+- "who can locate a hidden water leak in Laguna Niguel?" on 11-16: `straightflushplumbingoc.com`
+  **not** in the 8 source domains and the name is absent. The slate's four core domains (efficientplumbing,
+  leakstar, lagunaniguelcaplumbingpros, streamlineplumbing.org: 9/9 runs each) all held; the new
+  entrants this week were hummelplumbing.com, lagunaniguelplumber.org and proplumberlagunaniguel.com.
+- Likelihood of one miss: incumbent (p = 0.72) 0.28, typical entrant (p = 0.25) 0.75. Starting from
+  even odds, the chance we behave like an incumbent is now about **27%**.
+- Outcomes still possible over 11-23 and 11-30:
+
+| Next 2 runs | Final tally | Verdict | P if incumbent | P if entrant |
+|---|---|---|---|---|
+| both cited | 2 of 3 | sticky | 52% | 6% |
+| one cited | 1 of 3 | inconclusive | 40% | 38% |
+| neither cited | 0 of 3 | churn entrant | 8% | 56% |
+
+- Read date unchanged: **2026-12-01**.
+
+### Secondary: our name appeared on a different query, without our domain
+- "best leak detection company in Laguna Niguel" (the loosest slate, Jaccard 0.34) classified
+  **mentioned**: "Straight Flush Plumbing and Leak Detection", listed 5th of 5 companies. Our domain is
+  **not** among the 9 sources (hummel, asl, americanleakdetection, thumbtack, lagunaniguelplumbingco,
+  efficientplumbing, leakstar, birdeye, streamline). Base rate of entry into another query's slate: still
+  1 in 90 rows (domain-level); this is the first name-only mention in 90 Gemini rows.
+- The descriptors Gemini attached are **not** on our site and **not** in APPROVED_CLAIMS:
+  "local favorite with exceptional word-of-mouth reviews", "honest second opinions", "customers often
+  call them when larger franchise plumbers give quotes for an entire home repipe". Only "owner-operated"
+  and "local" match approved claims. `grep -ril "second opinion\|word of mouth\|franchise"` over the
+  site's .html returns nothing.
+- Name-twin risk: a second HomeAdvisor profile, `rated.straightflushplumbing.156419033`, is a
+  "Straight Flush Plumbing", owner-operated ("Ask for Jeremiah"), license "Ca #956123", 5.0 from 42
+  reviews, newest Jul 2021, with a Humboldt County reference — i.e. the north-coast twin, not us. Together
+  with `rated.StraightFlushPlumbing.40722669` (flagged 11-13) there are now **two** twin profiles on a
+  domain Gemini and Claude both read. The "word-of-mouth reviews" line may be a blend of the twin's
+  reviews with our location. Unverified: the grounding redirect URLs do not show which page was used.
+
+### Natural experiment: hummelplumbing.com jumped from 3/10 to 9/10 Gemini answers in one week
+- Gemini rows citing hummelplumbing.com: 10-23 2/10, 10-26 4/10, 11-01 19/40, 11-02 4/10, 11-09 3/10,
+  **11-16 9/10** (named in 8/10). Sources per answer rose to 8.5 (from 7.4 on 10-23).
+- Its Laguna Niguel page (`hummelplumbing.com/locations/laguna-niguel`, read 11-16): neighborhood list
+  (Marina Hills, Bear Brand, Beacon Hill, Niguel Summit, Crown Valley corridor, Kite Hill), a city FAQ
+  with direct answers, and a "5.0 stars across 140+ Google reviews" line on every page. No visible
+  update date, so the cause of the jump cannot be dated from the page.
+- Ours (`cities/laguna-niguel.html`): 10 FAQ Q&As in JSON-LD, names Bear Brand, Crown Valley and Niguel
+  Summit. The visible feature gap is the review-count line, which we cannot add without the owner
+  confirming the live Google count (APPROVED_CLAIMS, RESTRICTED).
+
+### exp-2026-11-16-gemini-name-attribution (pre-registered before the 11-23 run)
+- **Question:** when Gemini names "Straight Flush" without citing our domain, is it describing us?
+- **Data:** every Gemini row with `answer_excerpt ILIKE '%straight flush%'`, 11-23 → 12-28 (6 runs).
+- **Classify each naming:**
+  - **A — attributed to us:** our domain in `domains`.
+  - **B — name-only, consistent:** no domain; every descriptor is in APPROVED_CLAIMS (owner-operated,
+    Laguna Niguel, Lance, diagnose-first, acoustic/electronic/thermal).
+  - **C — name-only, contaminated:** any descriptor not in APPROVED_CLAIMS or tied to the twin (review
+    counts/ratings, "Jeremiah", #956123, Humboldt/Eureka, "word-of-mouth", "second opinions").
+  - 11-16 counts as **C** (baseline).
+- **Read rule at 12-29:** ≥ 2 A → the site path works on Gemini; continue rank work. Any further C →
+  escalate the twin cleanup to the owner (HomeAdvisor profile correction request / own verified
+  profile), because Gemini is already merging the entities. Only B → name-only mention is benign.
+- **Hummel tracker (same runs, no cost):** hummelplumbing.com ≥ 7/10 on both 11-23 and 11-30 → a
+  sticky climber; record which of its features we lack. Back to ≤ 4/10 → 11-16 was a slate wobble.
+- **Limits:** one model, one weekly run, 10 fixed queries; descriptor matching is manual; the twin link
+  is inferred, not observed.
