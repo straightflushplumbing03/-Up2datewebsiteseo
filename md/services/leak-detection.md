@@ -1,4 +1,4 @@
-# Leak Detection Services | Acoustic & Thermal Detection
+# Leak Detection in South Orange County | Acoustic & Thermal
 
 > AI-readable Markdown mirror of the canonical HTML page: https://straightflushplumbingoc.com/services/leak-detection.html
 > Section: Services
@@ -158,7 +158,7 @@ We explain what we found and your realistic options.
 
 
 
- Related reading
+ From the blog
 
 [Why plumbing quotes vary so much](https://straightflushplumbingoc.com/academy/why-two-plumbers-give-different-quotes.html) · [How long slab leak repair takes](https://straightflushplumbingoc.com/academy/how-long-does-slab-leak-repair-take.html)
 
@@ -236,6 +236,14 @@ Local details: [hidden water leak detection in Laguna Niguel](https://straightfl
 
 
 
+ How can I tell if I have a hidden leak before calling anyone? +
+
+
+Use your water meter. Turn off every faucet, appliance and irrigation zone, note the meter reading, and check it again after 30 minutes without using any water. If it moved, water is leaving the system somewhere. Next, close the shutoff valve behind each toilet and check again, because a worn flapper is a common cause. If the meter still moves, close the main valve where the line enters the house: if the meter stops, the leak is inside the home, possibly under the slab; if it keeps moving, the leak is more likely on the line between the meter and the house. That result is exactly what leak detection then pinpoints. Our [water meter test guide](https://straightflushplumbingoc.com/academy/water-meter-still-moving-everything-off.html) walks through each step.
+
+
+
+
  How do you find a leak without cutting into walls or floors? +
 
 
@@ -255,7 +263,7 @@ General leak detection covers leaks anywhere in the system, including walls, cei
  Will my insurance cover leak detection? +
 
 
-Coverage depends on your policy and the cause of the loss. Many policies address the resulting water damage rather than the plumbing repair itself. We document what we find so you have clear evidence for a claim, and our insurance resources cover what to ask your provider.
+If you are filing an insurance claim, insurance typically reimburses the leak detection cost. Coverage for the repair and any water damage depends on your policy and the cause of the loss, and many policies address the resulting water damage rather than the plumbing repair itself. We document what we find so you have clear findings to bring to your insurer, and our [insurance resources](https://straightflushplumbingoc.com/insurance/) cover what to ask your provider.
 
 
 
