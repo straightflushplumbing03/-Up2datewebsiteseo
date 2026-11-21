@@ -31,6 +31,13 @@ introduced. When in doubt, omit the claim.
   Published on `guides/leak-detection-cost.html`.
 - 2026-10-31, Lance (owner): when a customer files an insurance claim, insurance
   typically reimburses the leak detection cost. Published on the same page.
+- 2026-11-17, Lance (owner): Straight Flush **does sewer camera inspections**.
+  Published on `services/sewer-camera-inspection.html` (no price, no recording
+  or report promise).
+- 2026-11-17, Lance (owner): Straight Flush does **not** hold a City of Laguna
+  Beach business license. Do not claim Laguna Beach private sewer lateral (PSL)
+  inspection reports, Laguna Beach pre-certified plumber status, or sewer
+  camera work in Laguna Beach.
 
 - 2026-11-17, Lance (owner): drain services include **hydro jetting, sewer camera
   inspection and main sewer line clearing**. Published on
