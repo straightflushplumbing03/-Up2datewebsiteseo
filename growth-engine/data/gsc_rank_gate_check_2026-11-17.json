@@ -1,0 +1,34 @@
+{
+  "experiment": "exp-2026-11-04-gsc-rank-gate",
+  "check": 2,
+  "check_date": "2026-11-17",
+  "note": "Scheduled 11-18; read one day early because the paired Gemini board run (11-16 15:31 UTC) is already in and GSC 11-10..11-16 is available (last ~3 days may be incomplete).",
+  "source": "Google Search Console via OpenSEO (read-only, page x date dimension; position = impression-weighted average of daily page rows)",
+  "gsc_windows": {"prior": "2026-11-02..2026-11-09", "current": "2026-11-10..2026-11-16"},
+  "ai_source": "public.ai_visibility_observations, gemini_search run 2026-11-16 15:31 UTC; cited = 'straightflushplumbingoc.com' = any(domains); named = answer_excerpt ILIKE '%straight flush%'",
+  "rows": [
+    {"query": "who can locate a hidden water leak in Laguna Niguel?", "arm": "treatment", "page": "services/leak-detection-laguna-niguel.html", "prior_pos": 7.0, "prior_impr": 9, "pos": null, "impr": 0, "last_impression_date": "2026-11-07", "ai_prior": "named+cited", "ai": "absent"},
+    {"query": "best leak detection company in Laguna Niguel", "arm": "treatment", "page": "services/leak-detection-laguna-niguel.html", "prior_pos": 7.0, "prior_impr": 9, "pos": null, "impr": 0, "ai_prior": "absent", "ai": "named (not cited; our domain not among 9 sources)"},
+    {"query": "who provides slab leak detection in Laguna Niguel?", "arm": "treatment", "page": "services/slab-leak-detection-laguna-niguel.html", "prior_pos": 9, "prior_impr": 1, "pos": null, "impr": 0, "last_impression_date": "2026-11-03", "ai_prior": "absent", "ai": "absent"},
+    {"query": "leak detection company in Dana Point", "arm": "treatment", "page": "services/leak-detection-dana-point.html", "prior_pos": 5.5, "prior_impr": 4, "pos": 2, "impr": 1, "daily_range": [2, 2], "ai_prior": "absent", "ai": "absent"},
+    {"query": "plumber in Laguna Niguel", "arm": "treatment", "page": "cities/laguna-niguel.html", "prior_pos": 20.9, "prior_impr": 7, "pos": 51.3, "impr": 6, "daily_range": [51, 51.4], "ai_prior": "absent", "ai": "absent"},
+    {"query": "which plumbers serve San Clemente?", "arm": "control", "page": "cities/san-clemente.html", "prior_pos": 31.2, "prior_impr": 6, "pos": 76.9, "impr": 8, "daily_range": [51, 94], "ai_prior": "absent", "ai": "absent"},
+    {"query": "slab leak detection in Mission Viejo", "arm": "treatment", "page": "services/slab-leak-detection-mission-viejo.html", "prior_pos": 62.1, "prior_impr": 14, "pos": 75.0, "impr": 4, "daily_range": [72.5, 77.5], "ai_prior": "absent", "ai": "absent"},
+    {"query": "who handles whole-house repiping near Mission Viejo?", "arm": "treatment", "page": "services/pex-repiping-mission-viejo.html", "prior_pos": 75.4, "prior_impr": 8, "pos": 80.0, "impr": 8, "daily_range": [63, 89], "ai_prior": "absent", "ai": "absent"},
+    {"query": "plumber in Ladera Ranch", "arm": "control", "page": "cities/ladera-ranch.html", "prior_pos": 61.4, "prior_impr": 23, "pos": 63.5, "impr": 22, "daily_range": [1, 81.8], "ai_prior": "absent", "ai": "absent"},
+    {"query": "emergency plumber in South Orange County", "arm": "control", "page": "services/emergency-plumbing.html", "prior_pos": 57.7, "prior_impr": 11, "pos": 56.1, "impr": 9, "daily_range": [3, 96.5], "ai_prior": "absent", "ai": "absent"}
+  ],
+  "url_inspection_2026-11-17": {
+    "services/leak-detection-laguna-niguel.html": {"coverage": "Submitted and indexed", "last_crawl": "2026-11-02T09:32:46Z", "google_canonical": "self"},
+    "services/leak-detection-dana-point.html": {"coverage": "Submitted and indexed", "last_crawl": "2026-11-03T15:35:33Z", "google_canonical": "self"},
+    "services/slab-leak-detection-laguna-niguel.html": {"coverage": "Submitted and indexed", "last_crawl": "2026-10-31T05:19:58Z", "google_canonical": "self"},
+    "cities/laguna-niguel.html": {"coverage": "Submitted and indexed", "last_crawl": "2026-11-10T19:15:34Z", "google_canonical": "self"}
+  },
+  "named_page_daily_gsc": [
+    {"date": "2026-11-03", "impr": 3, "pos": 6.7}, {"date": "2026-11-04", "impr": 1, "pos": 4},
+    {"date": "2026-11-05", "impr": 1, "pos": 7}, {"date": "2026-11-06", "impr": 3, "pos": 6.7},
+    {"date": "2026-11-07", "impr": 1, "pos": 12}, {"date": "2026-11-08..2026-11-16", "impr": 0}
+  ],
+  "sitewide_daily_gsc": {"2026-11-02..11-09": {"impr": 739, "wavg_pos_approx": 59.4}, "2026-11-10..11-16": {"impr": 597, "wavg_pos_approx": 66.5}},
+  "live_serp_probe": "attempted (OpenSEO get_serp_results, 3 Laguna Niguel local queries); failed INSUFFICIENT_CREDITS, no spend"
+}

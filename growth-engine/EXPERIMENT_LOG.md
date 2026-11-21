@@ -652,3 +652,58 @@ Data: `data/gemini_slate_stability_2026-11-15.json` (all 80 conclusive `gemini_s
   San Juan Capistrano (11-16), Laguna Hills (11-14), Rancho Santa Margarita (11-15).
 - **Re-measure:** 2026-12-14. Read: any target `cited`/`mentioned`/`recommended` = signal; 0/4 = no effect yet.
 - **Confounders:** open PRs #207/#209 may merge in the window; single engine; one search per query.
+
+### exp-2026-11-04-gsc-rank-gate — 2026-11-17 check 2 of 4: **still consistent with supported; the cited page fell off Google and the citation went with it**
+
+Data: `data/gsc_rank_gate_check_2026-11-17.json` (GSC page × date, current window 11-10 → 11-16,
+vs the Gemini board run of 11-16). Read one day before the scheduled 11-18 date because the paired
+Gemini run is already in.
+
+| Board query | Target page | GSC pos (impr), 11-10 → 11-16 | 11-02 → 11-09 | Gemini 11-09 → 11-16 |
+|---|---|---|---|---|
+| hidden water leak, Laguna Niguel | services/leak-detection-laguna-niguel | **no impr since 11-07** | 7.0 (9) | named + cited → **absent** |
+| best leak detection, Laguna Niguel | services/leak-detection-laguna-niguel | no impr | 7.0 (9) | absent → **named, not cited** |
+| slab leak, Laguna Niguel | services/slab-leak-detection-laguna-niguel | no impr since 11-03 | 9 (1) | absent → absent |
+| leak detection, Dana Point | services/leak-detection-dana-point | 2 (1), 11-11 only | 5.5 (4) | absent → absent |
+| plumber, Laguna Niguel | cities/laguna-niguel | 51.3 (6) | 20.9 (7) | absent → absent |
+| plumbers, San Clemente (control) | cities/san-clemente | 76.9 (8) | 31.2 (6) | absent → absent |
+| slab leak, Mission Viejo | services/slab-leak-detection-mission-viejo | 75.0 (4) | 62.1 (14) | absent → absent |
+| repiping, Mission Viejo | services/pex-repiping-mission-viejo | 80.0 (8) | 75.4 (8) | absent → absent |
+| plumber, Ladera Ranch (control) | cities/ladera-ranch | 63.5 (22) | 61.4 (23) | absent → absent |
+| emergency, South OC (control) | services/emergency-plumbing | 56.1 (9) | 57.7 (11) | absent → absent |
+
+- **The one cited page lost its Google visibility, then lost the Gemini citation.** The Laguna Niguel
+  leak page showed at 4–12 on 11-03 → 11-07 and has had **zero impressions from 11-08 to 11-16**. It is
+  still "Submitted and indexed", self-canonical, last crawled 11-02. So this is not de-indexing, and it
+  can't come from our edits after 11-02, because Google has not re-crawled the page since then. The most
+  likely reading is the usual new-page bump fading: a new page is tried near the top for a few days, then
+  re-ranked. The 11-09 citation came inside that window. The 11-16 miss came after it.
+- **What this means for the persistence test (exp-2026-11-15):** the "incumbent" prior (p = 0.72)
+  assumed our position holds. The page now has no measured position, so read 11-23 and 11-30 expecting
+  the entrant rate or lower. A hit on either date while GSC still shows no impressions would be a
+  **refute signal** for this test.
+- **The 11-16 name-only mention is not a page-rank event.** "Best leak detection company in Laguna
+  Niguel" named us while our domain was not among the sources and the page had no impressions. Under
+  the letter of the pre-registered rule ("cited **or named** while > 20 = refuted") that is a refute
+  candidate. Recorded as such. Our reading: the name came from a third-party source, possibly the
+  HomeAdvisor name twin (see exp-2026-11-16-gemini-name-attribution). A page rank can't gate a name that
+  didn't come from our page. **Proposed amendment, stated after the data and so flagged as post hoc:**
+  from check 3 on, the gate counts **cited** rows only. Name-only rows go to the name-attribution test.
+  Both readings are reported here: cited-only = 0 refute signals; cited-or-named = 1 refute candidate
+  with an off-site source.
+- **Dana Point refutation watch:** week 2 at ≤ 10, but on a single impression (pos 2, 11-11), absent on
+  Gemini. That is 2 of the 3 weeks the refute rule needs, on thin data. Check 3 decides it. If 11-25
+  again shows ≤ 10 on ≥ 3 impressions and absent, record **refuted for Dana Point**.
+- **Sitewide drift (confounder, both arms):** 739 → 597 impressions, weighted position ≈ 59 → 66 week over
+  week. The two controls with volume (Ladera, emergency) held at ±2. San Clemente and the Laguna Niguel
+  city page fell, but on 6–8 impressions, inside the ±10 A/A noise band.
+- **Live SERP probe:** attempted for 3 Laguna Niguel queries; OpenSEO returned INSUFFICIENT_CREDITS
+  (no spend). The "fell off page 1" reading rests on GSC impressions alone.
+- **Limits:** page-level position mixes queries; 0–22 impressions per page; GSC's last ~3 days may be
+  incomplete (a late 11-14 → 11-16 impression for the Laguna Niguel page would weaken the "zero since
+  11-08" claim, so re-pull at check 3). One Gemini model, one weekly run.
+- **Decision it moves:** the gate looks real in both directions. Visibility on page 1 came with a
+  citation, and losing it came with losing the citation. Getting a page cited once is not enough; it
+  has to *hold* page 1 after the new-page window. That favours authority and links over more new
+  pages, which is the decision this test was built to drive. Not yet a final read (2 of 4 checks).
+- **Next checks:** 11-25, 12-02, same table, plus the named-page daily series.
