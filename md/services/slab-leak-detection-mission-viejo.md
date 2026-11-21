@@ -175,6 +175,7 @@ It depends on what we find. A single, accessible leak in otherwise sound plumbin
 
  [Slab leaks in Laguna Niguel →](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-niguel.html)
  [Slab leaks in Dana Point →](https://straightflushplumbingoc.com/services/slab-leak-detection-dana-point.html)
+ [Slab leaks in Laguna Hills →](https://straightflushplumbingoc.com/services/slab-leak-detection-laguna-hills.html)
  [Slab leak detection, South OC →](https://straightflushplumbingoc.com/services/slab-leak-detection.html)
  [All service areas →](https://straightflushplumbingoc.com/service-areas.html)
 
