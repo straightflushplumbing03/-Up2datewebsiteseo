@@ -2,7 +2,8 @@ name: Live site health
 
 # Daily check of the LIVE site: homepage (name + phone), robots.txt AI-bot
 # access (no Disallow: / for AI crawlers, no Cloudflare Managed block) and
-# llms.txt. Runs before the 5:37 AM Pacific Claude daily, which reads this
+# llms.txt, plus security headers and whether Cloudflare is in front (both
+# informational, warn-only). Runs before the 5:37 AM Pacific Claude daily, which reads this
 # run's result through the GitHub connector instead of WebFetch (WebFetch
 # permission prompts go unanswered in unattended scheduled runs).
 #
@@ -25,7 +26,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Homepage, robots.txt, llms.txt
+      - name: Homepage, robots.txt, llms.txt, security headers, Cloudflare edge
         run: python3 scripts/live_health_check.py
       - name: Crawler user-agent access (informational)
         if: always()

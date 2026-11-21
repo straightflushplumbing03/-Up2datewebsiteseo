@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Live-site health check: homepage, robots.txt AI-bot access, llms.txt,
-security response headers.
+security response headers, and whether Cloudflare is actually in front.
 
 Runs in GitHub Actions (.github/workflows/live-health.yml) so the daily Claude
 run does not depend on a WebFetch permission prompt that nobody answers in an
@@ -129,6 +129,39 @@ def check_security_headers():
                f"all {len(EXPECTED_HEADERS)} expected security headers served", "info")
 
 
+def edge_evidence(headers):
+    """Return (behind_cloudflare, detail) from response headers.
+
+    Cloudflare adds `cf-ray` (and `server: cloudflare`) to every proxied
+    response. If they are absent the request reached GitHub Pages directly and a
+    Cloudflare Transform Rule could not add headers, so the fix path differs.
+    """
+    h = {k.lower(): str(v) for k, v in headers.items()}
+    server = h.get("server", "")
+    cf = "cf-ray" in h or server.lower() == "cloudflare"
+    parts = [f"server={server or 'none'}",
+             "cf-ray " + ("present" if "cf-ray" in h else "absent")]
+    if "cf-cache-status" in h:
+        parts.append("cf-cache-status=" + h["cf-cache-status"])
+    if "access-control-allow-origin" in h:
+        parts.append("access-control-allow-origin=" + h["access-control-allow-origin"])
+    return cf, ", ".join(parts)
+
+
+def check_edge():
+    url = DOMAIN + "/"
+    status, _body, headers = fetch(url)
+    if status is None:
+        return row("edge_proxy", url, "inconclusive", "fetch failed", "info")
+    cf, detail = edge_evidence(headers)
+    if cf:
+        return row("edge_proxy", url, "pass",
+                   "Cloudflare is proxying (a Transform Rule will apply): " + detail, "info")
+    return row("edge_proxy", url, "warn",
+               "no Cloudflare markers; a Transform Rule would not reach visitors: " + detail,
+               "medium")
+
+
 def check_homepage():
     url = DOMAIN + "/"
     status, body, headers = fetch(url)
@@ -171,7 +204,7 @@ def check_llms():
 
 
 def main():
-    rows = [check_homepage(), check_robots(), check_llms(), check_security_headers()]
+    rows = [check_homepage(), check_robots(), check_llms(), check_security_headers(), check_edge()]
     for r in rows:
         print(json.dumps(r))
     with open("live-health.json", "w") as f:

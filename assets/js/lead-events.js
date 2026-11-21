@@ -1,12 +1,13 @@
 // Lead tracking for GA4 (G-DFS6B1LV4P). Sends no personal data: only which page the lead came from
 // and the visitor's answer to the optional fixed-list "How did you hear about us?" menu. Form leads also
 // carry visit_source and landing_page (see firstTouch below) so each Formspree email says where the visit began.
-// Events: phone_call_click (tap on any tel: link), generate_lead (contact form sent to Formspree),
+// Events: phone_call_click (tap on a tel: link to the business number), generate_lead (contact form sent to Formspree),
 // form_submit_confirmed (thank-you page reached after Formspree redirect).
 (function () {
   // Count leads only on the real site. The same files are also served from a Cloudflare
   // workers.dev preview host; test taps and form sends there must not show up as leads.
   var LIVE = /^(www\.)?straightflushplumbingoc\.com$/i.test(location.hostname);
+  var BUSINESS_PHONE = '9493746524';
   // lead_page is the page's canonical path, so one page reports as one row. The same page is
   // reached as /cities/x, /cities/x.html, /x.html (root stub) or /index.html, and GA4 would
   // otherwise split its leads across those spellings. Pages without a canonical (404) keep the raw path.
@@ -66,7 +67,11 @@
   }
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('a[href^="tel:"]') : null;
-    if (a) track('phone_call_click', { link_text: (a.textContent || '').trim().slice(0, 60) });
+    // Only our own number is a lead. Pages also link public agency lines (water districts,
+    // city building departments); a tap on those must not count as a phone lead in GA4.
+    if (a && a.getAttribute('href').replace(/\D/g, '').slice(-10) === BUSINESS_PHONE) {
+      track('phone_call_click', { link_text: (a.textContent || '').trim().slice(0, 60) });
+    }
   });
   // Send the form in the background and land on our own thank-you page.
   // (Formspree ignored the redirect field and showed its own page, so visitors left the site
