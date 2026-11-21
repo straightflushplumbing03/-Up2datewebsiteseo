@@ -707,3 +707,20 @@ p a[href^="tel:"]:not(.btn):not(.nav-phone),
 .faq-a a:not(.btn):not([href^="tel:"]){ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; }
 p a[href^="tel:"]:not(.btn):hover,
 .faq-a a:not(.btn):hover{ color:var(--straight); }
+
+/* Small-phone header (conversion, 2026-11-16): the "Schedule Detection" button and the
+   menu toggle do not shrink, so on 320-375px screens the brand text was squeezed into a
+   one-letter column and the sticky header grew to 125px (375), 144px (360), 299px (340)
+   and 525px (320) -- on a 320px phone it covered the whole page above the call bar.
+   The logo image already reads "Straight Flush Plumbing & Leak Detection", so drop the
+   small subtitle below 480px and the whole text label below 400px; keep the CTA from
+   shrinking. Breadcrumbs wrap between items instead of breaking "Home" mid-word. */
+@media (max-width:480px){
+  .nav-brand{ min-width:0; flex-shrink:1; }
+  .nav-brand-text span{ display:none; }
+  .nav-cta{ flex-shrink:0; }
+}
+@media (max-width:400px){
+  .nav-brand-text{ display:none; }
+}
+.breadcrumbs{ flex-wrap:wrap; row-gap:2px; }
